@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="divche"></div>
+    <style>
+        .divche{
+            height: 10px;
+            background-color: green;
+            transition: 3s;
+        }
+    </style>
+    <script>
+        setTimeout(()=>{
+            document.querySelector("div").style.height ="300px";
+        },2000)
+    </script>
+</body>
+</html>
