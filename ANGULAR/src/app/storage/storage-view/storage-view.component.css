@@ -1,0 +1,9 @@
+.mainWrapper{
+    display: flex;
+}
+.mainWrapper main, .mainWrapper{
+    width: 100%;
+}
+.wholeStorage{
+    height: 100%;
+}

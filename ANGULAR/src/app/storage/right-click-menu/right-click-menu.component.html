@@ -1,0 +1,11 @@
+<div #menu class="menu">
+    <div #option (click)="StorageService.getDetails(menu)" class="option">
+        <p>Details</p>
+    </div>
+    <div #option  class="option">
+        <p>Rename</p>
+    </div>
+    <div #option (click)="StorageService.deleteItem(menu)" class="option delete">
+        <p>Delete</p>
+    </div>
+</div>

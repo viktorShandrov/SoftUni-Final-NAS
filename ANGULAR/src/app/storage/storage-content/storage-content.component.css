@@ -1,0 +1,42 @@
+ .storage{
+     height: 100vh;
+     display: grid;
+     padding: 50px;
+     grid-template-columns: repeat(auto-fit,minmax(100px,150px));
+    grid-template-rows: repeat(auto-fit,minmax(100px,150px)); 
+    gap: 20px;
+    overflow-y: scroll;
+}
+
+  
+
+.storage .cell{
+    width: 100%;
+    aspect-ratio: 1/1;
+    text-align: center;
+}
+.storage .cell:hover{
+    background-color: #c2e7ff
+}
+
+.storage .cell h3{
+    text-overflow: ellipsis;
+    margin: 5px 0;
+}
+
+ .storage .directory i{
+    font-size: 720%;
+}
+ .storage .file i{
+    font-size: 720%;
+}
+
+.addFileOrDirBtn{
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    cursor: pointer;
+}
+.addFileOrDirBtn i{
+    font-size: 70px;
+}

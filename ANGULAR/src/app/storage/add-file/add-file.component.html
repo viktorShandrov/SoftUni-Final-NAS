@@ -1,0 +1,32 @@
+<form [formGroup]="fileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="titleContainer">
+        <label for="">Title:</label>
+        <input #fileNameInput type="text" formControlName="fileName" placeholder="File name">
+        <input #sameAsOriginalCheckBox type="checkbox" name="isSameTitle" id="isSameTitle">
+        <label for="isSameTitle">Same as original</label>
+    </div>
+    <div class="upload">
+        <label for="fileUpload">Select file</label>
+        <input type="file" name="file" id="fileUpload" (change)="onFileSelected($event)">
+    </div>
+    <div class="fileInfo">
+        <div class="fileLength">
+            <h5>Total length</h5>
+            <p>{{selectedFileSizeInMB||0}} MB</p>
+        </div>
+        <div class="fileType">
+            <h5>FileType</h5>
+            <p>{{selectedFile?.type||"unknown"}}</p>
+        </div>
+    </div>
+    <div class="navigation">
+        <div class="proceed">
+            <label for="proceedBtn">Proceed</label>
+            <button id="proceedBtn" type="submit"></button>
+        </div>
+        <div class="abort">
+            <label (click)="PopupService.hidePopup()">Abort</label>
+        </div>
+    </div>
+</form>
+<label id="progress-bar"></label>

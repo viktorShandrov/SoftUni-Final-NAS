@@ -1,0 +1,39 @@
+.aside{
+    width: 250px;
+    height: calc(100vh - var(--header-height));
+    background-color: #a6a6a6;
+}
+.aside .toggleAsideBar{
+    display: flex;
+    justify-content: start;
+    background-color: #3e3c3c;
+}
+.aside .toggleAsideBar i{
+    padding: 10px;
+    background-color: #545454;
+}
+
+.aside .elements .asideElement , .aside .upgardeButton{
+    
+    font-weight: bolder;
+    padding: 15px 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+.aside .upgardeButton{
+    margin-bottom: 70px;
+}
+
+.aside .elements .asideElement:hover , .aside .upgardeButton:hover{
+    background-color: white;
+    transition: 0.3s;
+}
+.aside .wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    
+}

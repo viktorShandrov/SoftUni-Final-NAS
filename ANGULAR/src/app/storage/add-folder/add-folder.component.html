@@ -1,0 +1,17 @@
+<form [formGroup]="folderForm" (ngSubmit)="onFormSubmit()" enctype="multipart/form-data">
+    <div class="titleContainer">
+        <label for="">Title:</label>
+        <input type="text" formControlName="folderName" placeholder="Folder name">
+    </div>
+
+    <div class="navigation">
+        <div class="proceed">
+            <label for="proceedFolderFormBtn">Proceed</label>
+            <button id="proceedFolderFormBtn" type="submit"></button>
+        </div>
+        <div class="abort">
+            <label (click)="PopupService.hidePopup()">Abort</label>
+        </div>
+    </div>
+</form>
+<p class="errorMessage"></p>

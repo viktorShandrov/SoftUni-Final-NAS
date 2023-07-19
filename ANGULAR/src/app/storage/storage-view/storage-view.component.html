@@ -1,0 +1,15 @@
+<app-header></app-header>
+<div class="mainWrapper">
+    <app-aside></app-aside>
+    <main>
+        <div class="dashboardWrapper"></div>
+        <div #wholeStorage class="wholeStorage">
+            <app-right-click-menu></app-right-click-menu>
+            <app-create-folder-or-file-menu></app-create-folder-or-file-menu>
+            <app-storage-navigation></app-storage-navigation>
+            <!-- <app-storage-content></app-storage-content> -->
+            <router-outlet name="storage-router-outlet"></router-outlet>
+        </div>
+
+    </main>
+</div>

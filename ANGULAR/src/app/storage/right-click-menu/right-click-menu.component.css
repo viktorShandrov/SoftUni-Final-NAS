@@ -1,0 +1,28 @@
+.menu{
+    display:  none;
+    flex-direction: column;
+    position: absolute ;
+    width: 100px;
+    border-radius: 20px;
+    border: 0.1cm solid tan;
+    border-top-left-radius: 0;
+    transition: 0.3s;
+}
+.option {
+    padding: 7px 5px;
+    margin: 0px;
+    background-color: chocolate;
+   display:flex ;
+   justify-content: center;
+}
+.option p {
+    margin: 0;
+}
+.delete{
+    background-color: red;
+}
+.option:hover {
+   background-color: antiquewhite;
+   transition: 0.2s;
+   cursor: pointer;
+}

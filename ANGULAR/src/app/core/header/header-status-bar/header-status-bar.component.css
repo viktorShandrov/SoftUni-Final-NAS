@@ -1,0 +1,49 @@
+ .storage-info{
+    width: 1000px;
+    height: 70px;
+    /* background-color: blueviolet; */
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+ .storage-info .storageLeft{
+    width:12%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0cc0df;
+    border-radius: 100px;
+    
+}
+
+ .storage-info .storageBar{
+    width: 70%;
+    height: 30px;
+    background-color: white;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+ .storage-info .storageBar .progressBar{
+    width: 70%;
+    height: 20px;
+    background-color: #0cc0df;
+    border-radius: 100px;
+}
+
+ .storage-info .addToStorage{
+    width:12%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0cc0df;
+    border-radius: 100px;
+    text-align: center;
+    font-size: 10px;
+    
+}

@@ -1,0 +1,25 @@
+.popupBG{
+    position: absolute;
+    background-color: rgba(165, 126, 126, 0.5);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+app-add-file,app-add-folder{
+    background-color: white;
+    width: 40%;
+    height: 60%;
+    border-radius: 50px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+app-add-folder{
+    height: 40%;
+
+    width: 20%;
+    justify-content: center;
+}
