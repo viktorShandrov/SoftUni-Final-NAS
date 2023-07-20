@@ -47,7 +47,8 @@ export class StorageContentComponent implements AfterViewInit {
     this.http
       .get(`api/files/${dirId}/getDirectory`)
       .subscribe((folder: any) => {
-
+        console.log(folder);
+        
         if (folder) {
           this.haveFolder = true;
           this.StorageService.completions.splice(0);

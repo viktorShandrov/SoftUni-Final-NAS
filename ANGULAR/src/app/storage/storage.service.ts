@@ -22,7 +22,7 @@ export class StorageService {
     this.completions = [];
     this.dirs = [];
     this.currentFolder = '';
-    this.rootId = '64b28bab92d52538ca4449c2';
+    this.rootId = '64b908bce5f2cedd50b2d90c';
   }
 
   createFolder(folderName: string) {
@@ -123,14 +123,17 @@ export class StorageService {
     });
   }
 
-  deleteItem(menu: HTMLDivElement) {
+  deleteItem(menu: HTMLDivElement,renderer:Renderer2) {
+    const elementId= menu.getAttribute('element-id')
     const payload = {
-      elementId: menu.getAttribute('element-id'),
+      elementId,
       elementType: menu.getAttribute('element-type'),
       parentFolderId: this.currentFolder,
     };
     this.http.post('api/files/deleteItem', payload).subscribe(
       (response) => {
+        renderer.setStyle(this.rightClickMenu.nativeElement,"display","none")
+        this.files.splice(this.files.findIndex((el)=>el._id===elementId),1)
         console.log(response);
       },
       (error) => {

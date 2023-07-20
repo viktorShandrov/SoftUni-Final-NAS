@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     HeaderComponent,
-    HeaderStatusBarComponent
+    HeaderStatusBarComponent,
   ],
   imports: [
     CommonModule,
@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports:[
     HeaderComponent,
-    HeaderStatusBarComponent
+    HeaderStatusBarComponent,
   ]
 })
 export class HeaderModule { }

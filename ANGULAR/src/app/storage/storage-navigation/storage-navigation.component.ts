@@ -13,6 +13,7 @@ import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { StorageService } from '../storage.service';
 import { enviroments } from 'src/app/shared/enviroment';
 import { Location } from '@angular/common';
+import { HeaderService } from 'src/app/core/header/header.service';
 
 @Component({
   selector: 'app-storage-navigation',
@@ -36,12 +37,14 @@ export class StorageNavigationComponent implements AfterViewInit {
     private router: Router,
     private ActivatedRoute: ActivatedRoute,
     private StorageService: StorageService,
+    private HeaderService: HeaderService,
     private location: Location
-  ) {}
-
-  ngAfterViewInit() {
-    this.dirs = this.StorageService.dirs;
-    this.StorageService.dirDivsRefs = this.dirDivsRefs;
+    ) {}
+    
+    ngAfterViewInit() {
+      this.dirs = this.StorageService.dirs;
+      this.StorageService.dirDivsRefs = this.dirDivsRefs;
+      this.rootId = this.StorageService.rootId;
     if (enviroments.initialLoad) {
       console.log('initialLoad');
       const fullUrl = window.location.href;
@@ -74,11 +77,22 @@ export class StorageNavigationComponent implements AfterViewInit {
               }
             }, 0);
           });
+
+
+
+          this.http
+          .get(`api/files/${this.rootId}/getOnlyRootInfo`)
+          .subscribe(({root}:any) => {
+            this.HeaderService.updateUsedStorage(root.storageVolume,root.usedStorage)
+          },
+          (error)=>{
+            console.log(error.error.message);
+            
+          })
         enviroments.initialLoad = false;
       }
     }
 
-    this.rootId = this.StorageService.rootId;
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

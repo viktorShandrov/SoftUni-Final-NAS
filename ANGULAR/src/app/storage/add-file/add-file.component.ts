@@ -71,55 +71,62 @@ export class AddFileComponent {
           this.selectedFile.name.substring(
             this.selectedFile.name.lastIndexOf('.')
           );
-      }
+        }
+     this.http.post("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.StorageService.rootId}),{headers:{"Content-type":"application/json"}}).subscribe(
+      (response)=>{
 
-      this.http
-        .get(
-          `api/files/${this.StorageService.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`
-        )
-        .subscribe(
-          (response: any) => {
-            const originalName = this.selectedFile!.name; //contains the extension of the file
-            formData.append('file', this.selectedFile!, FinalFileName);
-            formData.append('rootId', this.StorageService.rootId);
-            formData.append(
-              'parentFolderId',
-              this.StorageService.currentFolder
-            );
-
-            this.http
-              .post('api/files/upload', formData, {
-                reportProgress: true,
-                observe: 'events',
-              })
-              .subscribe((event:any) => {
-                if (event.type === HttpEventType.UploadProgress) {
-                  const progress = Math.round(
-                    (100 * event.loaded) / (event.total?.valueOf() || 1)
-                  );
-                  document.getElementById(
-                    'progress-bar'
-                  )!.innerText = `Upload progress: ${progress}%`;
-                } else if (event instanceof HttpResponse) {
-                  if(event.body?.message){
-                    //if error
-                    document.getElementById('progress-bar')!.innerText =
-                      event.body.message?.toString();
-                  }else{
-                    //returns the newFile info
-                    this.StorageService.files.push(event.body)
-                    this.PopupService.hidePopup()
+        this.http
+          .get(
+            `api/files/${this.StorageService.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`
+          )
+          .subscribe(
+            (response: any) => {
+              const originalName = this.selectedFile!.name; //contains the extension of the file
+              formData.append('file', this.selectedFile!, FinalFileName);
+              formData.append('rootId', this.StorageService.rootId);
+              formData.append(
+                'parentFolderId',
+                this.StorageService.currentFolder
+              );
+   
+              this.http
+                .post('api/files/upload', formData, {
+                  reportProgress: true,
+                  observe: 'events',
+                })
+                .subscribe((event:any) => {
+                  if (event.type === HttpEventType.UploadProgress) {
+                    const progress = Math.round(
+                      (100 * event.loaded) / (event.total?.valueOf() || 1)
+                    );
+                    document.getElementById(
+                      'progress-bar'
+                    )!.innerText = `Upload progress: ${progress}%`;
+                  } else if (event instanceof HttpResponse) {
+                    if(event.body?.message){
+                      //if error
+                      document.getElementById('progress-bar')!.innerText =
+                        event.body.message?.toString();
+                    }else{
+                      //returns the newFile info
+                      this.StorageService.files.push(event.body)
+                      this.PopupService.hidePopup()
+                    }
+                      
                   }
-                    
-                }
-              });
-          },
-          (error) => {
-            console.log('error.message: ', error);
-            document.getElementById('progress-bar')!.innerText =
-              error.error.message;
-          }
-        );
+                });
+            },
+            (error) => {
+              console.log('error.message: ', error);
+              document.getElementById('progress-bar')!.innerText =
+                error.error.message;
+            }
+          );
+     },
+     (error)=>{
+      document.getElementById('progress-bar')!.innerText =
+                error.error.message;
+     })
     } else {
       console.log('no file selected');
     }

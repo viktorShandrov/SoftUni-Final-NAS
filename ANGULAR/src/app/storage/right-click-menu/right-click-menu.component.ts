@@ -14,7 +14,7 @@ export class RightClickMenuComponent {
   constructor(
     public StorageService:StorageService,
     private http :HttpClient,
-    private renderer :Renderer2
+    public renderer :Renderer2
   ){}
   ngAfterViewInit(){
     this.StorageService.rightClickMenu = this.menu

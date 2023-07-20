@@ -9,7 +9,7 @@ const uuid = require("uuid")
 
 
 exports.createRoot = async (ownerId) => {
-    const root = await rootModel.create({ dirComponents: [], autorised: [ownerId], isPublic: false })
+    const root = await rootModel.create({ownerId, dirComponents: [], autorised: [ownerId], isPublic: false,storageVolume:10000000000,usedStorage:0 })
     return root._id
 }
 exports.getFileInfo = (fileId) => {
@@ -31,6 +31,7 @@ exports.checkIfFileNameAlreadyExists = async (parentFolderId,name) => {
 
 exports.getFolder = async (id) => {
     const folder = await folderModel.findById(id).populate("dirComponents").populate("fileComponents") || await rootModel.findById(id).populate("dirComponents").populate("fileComponents")
+    console.log(folder);
     return folder
 }
 
@@ -68,7 +69,24 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
 
     folder.fileComponents.push(newFile._id)
     await folder.save()
+    const root = await rootModel.findById(parentFolderId)
+    root.usedStorage+=newFile.length
+    await root.save()
     return newFile
+}
+
+exports.addBytesToStorage= async(rootId,Bytes)=>{
+    const root = await rootModel.findById(rootId)
+    root.usedStorage+=Bytes
+    await root.save()
+}
+exports.checkIfStorageHaveEnoughtSpace= async(rootId,Bytes)=>{
+    const root = await rootModel.findById(rootId)
+    
+    if(root.usedStorage+Bytes>root.storageVolume){
+        throw new Error("There is no enought space")
+    }
+    
 }
 exports.createFolder = async (name, rootId, parentFolderId) => {
 
@@ -105,6 +123,10 @@ exports.deleteFile = async (fileId, parentFolderId) => {
 
     parentFolder.fileComponents.splice(parentFolder.fileComponents.findIndex(objId => objId.toString() === fileId), 1)
     parentFolder.save()
+    const root = await rootModel.findById(parentFolderId)
+    const file = await fileModel.findById(fileId)
+    root.usedStorage-=file.length
+    await root.save()
 }
 
 
@@ -123,6 +145,11 @@ exports.getAllParentAutorisedFolders = async (folderId, userId) => {
     }
     await getParentAutorisedFolder(folderId, userId)
     return folders
+}
+
+exports.getOnlyRootInfo=async(rootId)=>{
+    const root = await rootModel.findById(rootId)
+    return root
 }
 
 

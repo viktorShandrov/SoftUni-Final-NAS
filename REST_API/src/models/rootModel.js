@@ -1,7 +1,9 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    // ownerId:mongoose.Types.ObjectId, 
+    ownerId:mongoose.Types.ObjectId, 
+    storageVolume:Number,
+    usedStorage:Number,
     dirComponents:[
         {
             type: mongoose.Schema.Types.ObjectId,

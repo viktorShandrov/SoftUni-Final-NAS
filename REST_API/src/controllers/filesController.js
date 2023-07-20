@@ -88,6 +88,16 @@ router.post("/createFolder", async (req, res) => {
     res.status(409).json({message:"Folder with same name already exists"})
   }
 })
+router.get("/:rootId/getOnlyRootInfo", async (req, res) => {
+  try {
+    const { rootId } = req.body
+    const folder = await fileManager.getOnlyRootInfo(rootId)
+    res.status(200).json({folder})
+  } catch (error) {
+    console.log(error.message);
+    res.status(409).json({message:"Problem with fetching root info"})
+  }
+})
 router.post("/deleteItem", async (req, res) => {
   try {
     const {elementId,elementType, parentFolderId } = req.body
@@ -122,6 +132,20 @@ router.get("/:id/getAllParentAutorisedFolders", isAuth, async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.send(error.message)
+  }
+})
+router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
+  try {
+    console.log('req.body: ', req.body);
+    const Bytes = req.body.Bytes
+    const rootId = req.body.rootId
+    console.log('Bytes: ', Bytes);
+    console.log('rootId: ', rootId);
+    await fileManager.checkIfStorageHaveEnoughtSpace(rootId,Bytes)
+    res.status(200).end()
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({message:error.message})
   }
 })
 module.exports = router
