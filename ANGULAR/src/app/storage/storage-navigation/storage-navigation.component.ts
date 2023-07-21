@@ -82,8 +82,9 @@ export class StorageNavigationComponent implements AfterViewInit {
 
           this.http
           .get(`api/files/${this.rootId}/getOnlyRootInfo`)
-          .subscribe(({root}:any) => {
-            this.HeaderService.updateUsedStorage(root.storageVolume,root.usedStorage)
+          .subscribe((response:any) => {
+            const {folder} = response
+            this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
           },
           (error)=>{
             console.log(error.error.message);

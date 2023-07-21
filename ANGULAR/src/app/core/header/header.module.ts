@@ -5,19 +5,9 @@ import { HeaderStatusBarComponent } from './header-status-bar/header-status-bar.
 import { RouterModule } from '@angular/router';
 
 
-
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    HeaderStatusBarComponent,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports:[
-    HeaderComponent,
-    HeaderStatusBarComponent,
-  ]
+  declarations: [HeaderComponent, HeaderStatusBarComponent],
+  imports: [CommonModule, RouterModule],
+  exports: [HeaderComponent, HeaderStatusBarComponent],
 })
-export class HeaderModule { }
+export class HeaderModule {}

@@ -90,7 +90,7 @@ router.post("/createFolder", async (req, res) => {
 })
 router.get("/:rootId/getOnlyRootInfo", async (req, res) => {
   try {
-    const { rootId } = req.body
+    const { rootId } = req.params
     const folder = await fileManager.getOnlyRootInfo(rootId)
     res.status(200).json({folder})
   } catch (error) {

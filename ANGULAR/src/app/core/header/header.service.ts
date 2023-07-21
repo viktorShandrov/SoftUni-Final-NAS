@@ -7,11 +7,21 @@ export class HeaderService {
   usedStorageBar!:ElementRef
   storageUsed!:ElementRef
   storageLeft!:ElementRef
-  constructor() { }
+  usedStorage!:number
+  totalVolume!:number
+  constructor() { 
+    this.usedStorage=0
+    this.totalVolume=0
+  }
 
   updateUsedStorage(totalVolume:number,usedStorage:number){
-    this.storageUsed.nativeElement.textContent=usedStorage
-    this.storageLeft.nativeElement.textContent=totalVolume-usedStorage
+    this.usedStorage=usedStorage
+    this.totalVolume=totalVolume-usedStorage
+    let usedPercentage = (usedStorage / totalVolume) * 100;
+    if(usedPercentage<3){
+      usedPercentage=3
+    }
+    this.usedStorageBar.nativeElement.style.width =usedPercentage+"%"
   }
   
 }

@@ -8,9 +8,16 @@ import { StorageModule } from './storage/storage.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { mainInterceptor } from './app.interceptor';
+import { toFixedPipe } from './core/header/storage-info.pipe';
+
+
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    toFixedPipe
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,9 +1,10 @@
 <div class="storage-info">
-    <div #storageUsed class="storageUsed">10 259MB</div>
+    <div #storageUsed class="storageUsed">{{transform(HeaderService.usedStorage)}}</div>
     
     <div class="storageBar">
         <div #usedStorageBar class="progressBar"></div>
     </div>
 
-    <div #storageLeft class="storageLeft">7389MB</div>
+    <div #storageLeft class="storageLeft">{{transform(HeaderService.totalVolume)}}</div>
+
 </div>

@@ -7,7 +7,7 @@
    justify-content: space-between;
 }
 
- .storage-info .storageLeft{
+ .storage-info .storageLeft,.storage-info .storageUsed{
     width:12%;
     height: 30px;
     display: flex;
@@ -35,7 +35,7 @@
     border-radius: 100px;
 }
 
- .storage-info .addToStorage{
+ .storage-info .storageUsed{
     width:12%;
     height: 30px;
     display: flex;
@@ -44,6 +44,6 @@
     background-color: #0cc0df;
     border-radius: 100px;
     text-align: center;
-    font-size: 10px;
+    /* font-size: 10px; */
     
 }
