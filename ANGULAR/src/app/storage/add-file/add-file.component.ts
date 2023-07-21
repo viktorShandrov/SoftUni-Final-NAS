@@ -3,6 +3,7 @@ import { PopupService } from 'src/app/shared/popup/popup.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { StorageService } from '../storage.service';
+import { HeaderService } from 'src/app/core/header/header.service';
 
 @Component({
   selector: 'app-add-file',
@@ -18,6 +19,7 @@ export class AddFileComponent {
   constructor(
     public PopupService: PopupService,
     private StorageService: StorageService,
+    private HeaderService: HeaderService,
     private Renderer2: Renderer2,
     private http: HttpClient,
     private FormBuilder: FormBuilder
@@ -110,6 +112,18 @@ export class AddFileComponent {
                     }else{
                       //returns the newFile info
                       this.StorageService.files.push(event.body)
+                      
+                      this.http
+                      .get(`api/files/${this.StorageService.rootId}/getOnlyRootInfo`)
+                      .subscribe((response:any) => {
+                        const {folder} = response
+                        this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
+                      },
+                      (error)=>{
+                        console.log(error.error.message);
+                        
+                      })
+
                       this.PopupService.hidePopup()
                     }
                       

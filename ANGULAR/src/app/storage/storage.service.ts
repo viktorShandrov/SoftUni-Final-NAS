@@ -3,6 +3,7 @@ import { Completions, Dirs, file, folder } from '../shared/types';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PopupService } from '../shared/popup/popup.service';
+import { HeaderService } from '../core/header/header.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,12 @@ export class StorageService {
 
   files: file[] = [];
   folders: folder[] = [];
-  constructor(private router: Router, private http: HttpClient,private PopupService:PopupService) {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private PopupService: PopupService,
+    private HeaderService: HeaderService,
+  ) {
     this.completions = [];
     this.dirs = [];
     this.currentFolder = '';
@@ -123,8 +129,8 @@ export class StorageService {
     });
   }
 
-  deleteItem(menu: HTMLDivElement,renderer:Renderer2) {
-    const elementId= menu.getAttribute('element-id')
+  deleteItem(menu: HTMLDivElement, renderer: Renderer2) {
+    const elementId = menu.getAttribute('element-id');
     const payload = {
       elementId,
       elementType: menu.getAttribute('element-type'),
@@ -132,9 +138,23 @@ export class StorageService {
     };
     this.http.post('api/files/deleteItem', payload).subscribe(
       (response) => {
-        renderer.setStyle(this.rightClickMenu.nativeElement,"display","none")
-        this.files.splice(this.files.findIndex((el)=>el._id===elementId),1)
-        console.log(response);
+        renderer.setStyle(this.rightClickMenu.nativeElement, 'display', 'none');
+        this.files.splice(
+          this.files.findIndex((el) => el._id === elementId),
+          1
+        );
+        this.http.get(`api/files/${this.rootId}/getOnlyRootInfo`).subscribe(
+          (response: any) => {
+            const { folder } = response;
+            this.HeaderService.updateUsedStorage(
+              folder.storageVolume,
+              folder.usedStorage
+            );
+          },
+          (error) => {
+            console.log(error.error.message);
+          }
+        );
       },
       (error) => {
         console.log(error);
