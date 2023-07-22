@@ -39,7 +39,9 @@ export class StorageContentComponent implements AfterViewInit {
 
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id') as String;
-      this.getData(id);
+      if(id!=="dashboard"){
+        this.getData(id);
+      }
     });
   }
 

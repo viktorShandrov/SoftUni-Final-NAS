@@ -16,6 +16,7 @@ export class StorageService {
   dirDivsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
   createFolderOrFileMenu!: ElementRef;
+  wholeStorage!: ElementRef;
 
   files: file[] = [];
   folders: folder[] = [];

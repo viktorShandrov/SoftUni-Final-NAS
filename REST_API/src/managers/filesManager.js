@@ -8,6 +8,7 @@ const uuid = require("uuid")
 
 
 
+
 exports.createRoot = async (ownerId) => {
     const root = await rootModel.create({ownerId, dirComponents: [], autorised: [ownerId], isPublic: false,storageVolume:10000000000,usedStorage:0 })
     return root._id
@@ -150,6 +151,44 @@ exports.getAllParentAutorisedFolders = async (folderId, userId) => {
 exports.getOnlyRootInfo=async(rootId)=>{
     const root = await rootModel.findById(rootId)
     return root
+}
+exports.getTopFileExts=async(rootId)=>{
+    const files = await fileModel.find({rootId})
+    const allfileExt = {}
+    for (const file of files) {
+        if(allfileExt.hasOwnProperty(file.type)){
+            allfileExt[file.type]+=1
+        }else{
+            allfileExt[file.type]=1
+        }
+    }
+
+    const sortedTopFIleExt = Object.entries(allfileExt).sort((a,b)=>{
+       return b[1]-a[1]
+    })
+    const payload=[]
+    for (let index = 0; index < 3; index++) {
+        const element = sortedTopFIleExt[index];
+        payload.push({name:element[0],count:element[1]})
+    }
+
+
+    return payload
+}
+exports.getTopFolders=async(rootId)=>{
+    const folders = await folderModel.find({rootId})
+    
+
+    const sortedTopFIleExt = folders.sort((a,b)=>b.fileComponents.length-a.fileComponents.length)
+
+    const payload =[]
+    for (const folder of sortedTopFIleExt) {
+        payload.push({name:folder.name,count:folder.fileComponents.length})
+    }
+    
+
+
+    return payload
 }
 
 

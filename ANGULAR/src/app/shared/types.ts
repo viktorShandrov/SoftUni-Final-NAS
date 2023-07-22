@@ -32,3 +32,13 @@ export interface file {
   __v:number
 
 }
+export interface topExtI{
+  name:string
+  count:number
+  domElementHeight?:number
+}
+export interface topFolders{
+  name:string
+  count:number
+  domElementHeight?:number
+}

@@ -9,6 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { mainInterceptor } from './app.interceptor';
 import { toFixedPipe } from './core/header/storage-info.pipe';
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 
@@ -16,7 +18,7 @@ import { toFixedPipe } from './core/header/storage-info.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    toFixedPipe
+    toFixedPipe,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,7 @@ import { toFixedPipe } from './core/header/storage-info.pipe';
     StorageModule,
     SharedModule,
     HttpClientModule,
+    DashboardModule
   ],
   providers: [
     {

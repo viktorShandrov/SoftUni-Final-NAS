@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RightClickMenuComponent } from './right-click-menu/right-click-menu.component';
 import { CreateFolderOrFileMenuComponent } from './create-folder-or-file-menu/create-folder-or-file-menu.component';
 import { AddFolderComponent } from './add-folder/add-folder.component';
+import { DashboardViewComponent } from '../dashboard/dashboard-view/dashboard-view.component';
+import { DashboardModule } from '../dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,13 @@ import { AddFolderComponent } from './add-folder/add-folder.component';
     CreateFolderOrFileMenuComponent,
     AddFolderComponent,
   ],
-  imports: [CommonModule, CoreModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    CoreModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    DashboardModule,
+  ],
   exports: [
     StorageViewComponent,
     StorageNavigationComponent,

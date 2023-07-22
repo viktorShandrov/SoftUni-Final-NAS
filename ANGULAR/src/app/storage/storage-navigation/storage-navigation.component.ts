@@ -42,6 +42,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     ) {}
     
     ngAfterViewInit() {
+      let urlTarget = "storage"
       this.dirs = this.StorageService.dirs;
       this.StorageService.dirDivsRefs = this.dirDivsRefs;
       this.rootId = this.StorageService.rootId;
@@ -51,6 +52,9 @@ export class StorageNavigationComponent implements AfterViewInit {
       const regex = /storage-router-outlet:(\w+)/;
       const match = fullUrl.match(regex);
       if (match && match.length > 1) {
+
+        if(match[1]!=="dashboard"){
+          urlTarget="storage"
         const folderId = match[1];
         this.StorageService.currentFolder = folderId;
         this.http
@@ -78,8 +82,6 @@ export class StorageNavigationComponent implements AfterViewInit {
             }, 0);
           });
 
-
-
           this.http
           .get(`api/files/${this.rootId}/getOnlyRootInfo`)
           .subscribe((response:any) => {
@@ -91,50 +93,73 @@ export class StorageNavigationComponent implements AfterViewInit {
             
           })
         enviroments.initialLoad = false;
+      }else if(match[1]==="dashboard"){
+        urlTarget="dashboard"
+        setTimeout(()=>{
+          console.log('this.StorageService.wholeStorage: ', this.StorageService.wholeStorage);
+          console.log('urlTarget: ', urlTarget);
+          this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+
+        },0)
       }
+    }
     }
 
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        setTimeout(() => {
-          this.StorageService.addEventListenersToCompletionElements(
-            this.completionDivsRefs,
-            this.dirs,
-            this.dirDivsRefs,
-            this.StorageService.addEventListenerToDivDir,
-            this.renderer,
-            this.router
-          );
-        }, 100);
+        const regex = /storage-router-outlet:(\w+)/;
+        const match = event.url.match(regex);
+        if (match && match.length > 1) {
+          if(match[1]!=="dashboard"){
+            urlTarget = "storage"
+            setTimeout(() => {
+              this.StorageService.addEventListenersToCompletionElements(
+                this.completionDivsRefs,
+                this.dirs,
+                this.dirDivsRefs,
+                this.StorageService.addEventListenerToDivDir,
+                this.renderer,
+                this.router
+              );
+            }, 100);
+
+          }else{
+            urlTarget = "dashboard"
+          }
+        }
       }
     });
-
-    const urlBar = this.urlBarInput.nativeElement;
-    const searchCompletion = this.searchCompletion.nativeElement;
-
-    this.StorageService.addEventListenersToCompletionSection(
-      urlBar,
-      searchCompletion,
-      this.renderer
-    );
-
-    this.completions = this.StorageService.completions;
-    setTimeout(() => {
-      this.StorageService.addEventListenerToTheMainRootBtn(
-        this.mainRootBtn,
-        this.dirs,
-        this.renderer,
-        this.router
+    if(urlTarget==="storage"){
+      const urlBar = this.urlBarInput.nativeElement;
+      const searchCompletion = this.searchCompletion.nativeElement;
+  
+      this.StorageService.addEventListenersToCompletionSection(
+        urlBar,
+        searchCompletion,
+        this.renderer
       );
-      this.StorageService.addEventListenersToCompletionElements(
-        this.completionDivsRefs,
-        this.dirs,
-        this.dirDivsRefs,
-        this.StorageService.addEventListenerToDivDir,
-        this.renderer,
-        this.router
-      );
-    }, 100);
+  
+      this.completions = this.StorageService.completions;
+      setTimeout(() => {
+        this.StorageService.addEventListenerToTheMainRootBtn(
+          this.mainRootBtn,
+          this.dirs,
+          this.renderer,
+          this.router
+        );
+        this.StorageService.addEventListenersToCompletionElements(
+          this.completionDivsRefs,
+          this.dirs,
+          this.dirDivsRefs,
+          this.StorageService.addEventListenerToDivDir,
+          this.renderer,
+          this.router
+        );
+      }, 100);
+
+    }else if(urlTarget ==="dashboard"){
+
+    }
   }
 }

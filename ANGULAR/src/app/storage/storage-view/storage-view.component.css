@@ -7,3 +7,6 @@
 .wholeStorage{
     height: 100%;
 }
+.dashboardWrapper{
+    display: block;
+}

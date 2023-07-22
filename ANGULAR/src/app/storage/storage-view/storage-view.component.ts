@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild,AfterViewInit } from '@angular/core';
 import { StorageService } from '../storage.service';
 
 @Component({
@@ -6,12 +6,13 @@ import { StorageService } from '../storage.service';
   templateUrl: './storage-view.component.html',
   styleUrls: ['./storage-view.component.css']
 })
-export class StorageViewComponent {
+export class StorageViewComponent implements AfterViewInit {
   @ViewChild("wholeStorage") wholeStorage!: ElementRef
 constructor(
   private StorageService: StorageService,
   private renderer: Renderer2,
 ){
+  
   setTimeout(() => {
     
     this.renderer.listen(this.wholeStorage.nativeElement,"contextmenu",(e)=>{
@@ -31,5 +32,12 @@ constructor(
     })
   }, 0);
   
+}
+
+
+ngAfterViewInit(){
+  this.StorageService.wholeStorage=this.wholeStorage
+  
+
 }
 }

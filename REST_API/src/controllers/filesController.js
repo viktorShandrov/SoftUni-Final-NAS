@@ -98,6 +98,26 @@ router.get("/:rootId/getOnlyRootInfo", async (req, res) => {
     res.status(409).json({message:"Problem with fetching root info"})
   }
 })
+router.get("/:rootId/topFileExts", async (req, res) => {
+  try {
+    const { rootId } = req.params
+    const topFileExts = await fileManager.getTopFileExts(rootId)
+    res.status(200).json({topFileExts})
+  } catch (error) {
+    console.log(error.message);
+    res.status(409).json({message:"Problem with fetching top file extensions info"})
+  }
+})
+router.get("/:rootId/getTopFolders", async (req, res) => {
+  try {
+    const { rootId } = req.params
+    const topFolders = await fileManager.getTopFolders(rootId)
+    res.status(200).json({topFolders})
+  } catch (error) {
+    console.log(error.message);
+    res.status(409).json({message:"Problem with fetching top file extensions info"})
+  }
+})
 router.post("/deleteItem", async (req, res) => {
   try {
     const {elementId,elementType, parentFolderId } = req.body
