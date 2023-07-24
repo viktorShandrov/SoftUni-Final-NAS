@@ -37,6 +37,7 @@ exports.getFolder = async (id) => {
 }
 
 exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) => {
+    console.log('parentFolderId: ', parentFolderId);
 
     const folder = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")
     if (folder.fileComponents.some(el => el.fileName === originalname)) {
@@ -70,7 +71,8 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
 
     folder.fileComponents.push(newFile._id)
     await folder.save()
-    const root = await rootModel.findById(parentFolderId)
+    const root = await rootModel.findById(rootId)
+    console.log('2root: ', root);
     root.usedStorage+=newFile.length
     await root.save()
     return newFile
@@ -78,12 +80,12 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
 
 exports.addBytesToStorage= async(rootId,Bytes)=>{
     const root = await rootModel.findById(rootId)
+    console.log('root1: ', root);
     root.usedStorage+=Bytes
     await root.save()
 }
 exports.checkIfStorageHaveEnoughtSpace= async(rootId,Bytes)=>{
     const root = await rootModel.findById(rootId)
-    
     if(root.usedStorage+Bytes>root.storageVolume){
         throw new Error("There is no enought space")
     }
@@ -128,6 +130,7 @@ exports.deleteFile = async (fileId, parentFolderId) => {
     const file = await fileModel.findById(fileId)
     root.usedStorage-=file.length
     await root.save()
+    await file.deleteOne()
 }
 
 
@@ -153,6 +156,7 @@ exports.getOnlyRootInfo=async(rootId)=>{
     return root
 }
 exports.getTopFileExts=async(rootId)=>{
+    console.log('rootId: ', rootId);
     const files = await fileModel.find({rootId})
     const allfileExt = {}
     for (const file of files) {
@@ -169,7 +173,9 @@ exports.getTopFileExts=async(rootId)=>{
     const payload=[]
     for (let index = 0; index < 3; index++) {
         const element = sortedTopFIleExt[index];
-        payload.push({name:element[0],count:element[1]})
+        if(element){
+            payload.push({name:element[0],count:element[1]})
+        }
     }
 
 

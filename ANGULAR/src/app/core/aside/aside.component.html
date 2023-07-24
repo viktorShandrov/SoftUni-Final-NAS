@@ -4,11 +4,13 @@
     </div>
     <div class="wrapper">
         <div class="elements">
-            <div class="asideElement">Dashboard</div>
+            <div  class="asideElement"><a
+                [routerLink]="['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]">Dashboard</a></div>
             <div class="asideElement">Shared with Users</div>
             <div class="asideElement">Shared Public</div>
             <div class="asideElement">Shared with me</div>
-            <div class="asideElement">Storage</div>
+            <div class="asideElement"><a
+                [routerLink]="['/storage', { outlets: { 'storage-router-outlet': rootId } }]">Storage</a></div>
             <div class="asideElement">Favorites</div>
         </div>
         <div class="upgardeButton">Upgarde to Plus</div>

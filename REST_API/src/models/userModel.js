@@ -14,6 +14,10 @@ const schema = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"Root"
     },
+    isPasswordHashed: {
+        type: Boolean,
+        default: false,
+      }
 
 })
 schema.virtual("repeatePassword").set(function(value){
@@ -22,8 +26,10 @@ schema.virtual("repeatePassword").set(function(value){
     }
 })
 schema.pre("save",async function(){
-    console.log('this.password: ', this.password);
-    this.password = await bcrypt.hash(this.password,3);
+    if(!this.isPasswordHashed){
+        this.password = await bcrypt.hash(this.password,3);
+        this.isPasswordHashed = true
+    }
 })
 
 

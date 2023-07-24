@@ -26,11 +26,13 @@ export class HeaderStatusBarComponent  {
     if(volume<1){
         mesure = "MB"
         volume =  volume*1000 //MB
-        if(volume<0.1){
+        if(volume<1){
           volume=0
             return `<${volume}${mesure}`
         }
     }
+    
+    
     return `${volume.toFixed(2)}${mesure}`
   }
 }

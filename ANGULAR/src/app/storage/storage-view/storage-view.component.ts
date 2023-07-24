@@ -8,6 +8,7 @@ import { StorageService } from '../storage.service';
 })
 export class StorageViewComponent implements AfterViewInit {
   @ViewChild("wholeStorage") wholeStorage!: ElementRef
+  @ViewChild("dashboard") dashboard!: ElementRef
 constructor(
   private StorageService: StorageService,
   private renderer: Renderer2,
@@ -37,6 +38,7 @@ constructor(
 
 ngAfterViewInit(){
   this.StorageService.wholeStorage=this.wholeStorage
+  this.StorageService.dashboard=this.dashboard
   
 
 }

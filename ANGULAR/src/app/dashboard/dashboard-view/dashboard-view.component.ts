@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { topExtI, topFolders } from '../../shared/types';
 import { DashboardService } from '../dashboard.service';
+import { StorageService } from 'src/app/storage/storage.service';
+import { StorageNavigationComponent } from 'src/app/storage/storage-navigation/storage-navigation.component';
+import { CommunicationService } from 'src/app/shared/communication-module/communication.service';
 
 @Component({
   selector: 'app-dashboard-view',
@@ -19,7 +22,7 @@ export class DashboardViewComponent {
   @ViewChildren('extBar') extQ!: QueryList<ElementRef>;
   @ViewChildren('folderBar') foldersQ!: QueryList<ElementRef>;
   storageVolume: number = 0;
-  usedStorage: number = 0;
+  usedStorage: string = "0 MB";
   storageLeft: number = 0;
 
   topExt: topExtI[] = [
@@ -52,21 +55,41 @@ export class DashboardViewComponent {
   ];
   constructor(
     private Renderer2: Renderer2,
-    private DashboardService: DashboardService
+    private DashboardService: DashboardService,
+    private StorageService: StorageService,
   ) {}
+  transform(value: number): string {
+    let mesure = "GB"
+    let volume = value/1000000000 //GB
+    if(volume<1){
+        mesure = "MB"
+        volume =  volume*1000 //MB
+        if(volume<1){
+            return `<${volume.toFixed(0)}${mesure}`
+        }
+    }
+    return `${volume.toFixed(2)}${mesure}`
+  }
   ngAfterViewInit() {
     setTimeout(async () => {
-      await this.DashboardService.getTopExtData(this.extQ, this.Renderer2);
-      this.topExt = this.DashboardService.topExt;
-      await this.DashboardService.getTopFoldersData(
-        this.foldersQ,
-        this.Renderer2
-      );
-      this.topFolders = this.DashboardService.topFolders;
-      await this.DashboardService.getStorageVolumeInfo();
-      this.storageVolume = this.DashboardService.storageVolume/1000000000;
-      this.usedStorage = Number((this.DashboardService.usedStorage/1000000000).toFixed(2));
-      this.storageLeft = Number((this.DashboardService.storageLeft/1000000000).toFixed(2));
+      this.StorageService.sharingCurrentSection$.subscribe(async (section)=>{
+        if(section==="dashboard"){
+          await this.DashboardService.getTopExtData(this.extQ, this.Renderer2);
+          this.topExt = this.DashboardService.topExt;
+          await this.DashboardService.getTopFoldersData(
+            this.foldersQ,
+            this.Renderer2
+          );
+          this.topFolders = this.DashboardService.topFolders;
+          await this.DashboardService.getStorageVolumeInfo();
+          this.storageVolume = this.DashboardService.storageVolume/1000000000;
+          
+          this.usedStorage = this.transform(this.DashboardService.usedStorage)
+          this.storageLeft = Number((this.DashboardService.storageLeft/1000000000).toFixed(2));
+
+        }
+
+      })
     }, 0);
   }
 }

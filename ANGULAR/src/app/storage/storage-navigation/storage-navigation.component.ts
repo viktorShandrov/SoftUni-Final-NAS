@@ -14,6 +14,7 @@ import { StorageService } from '../storage.service';
 import { enviroments } from 'src/app/shared/enviroment';
 import { Location } from '@angular/common';
 import { HeaderService } from 'src/app/core/header/header.service';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-storage-navigation',
@@ -30,7 +31,7 @@ export class StorageNavigationComponent implements AfterViewInit {
   dirs!: Dirs[];
   completions!: Completions[];
   rootId!: String;
-
+  
   constructor(
     private renderer: Renderer2,
     private http: HttpClient,
@@ -43,6 +44,13 @@ export class StorageNavigationComponent implements AfterViewInit {
     
     ngAfterViewInit() {
       let urlTarget = "storage"
+      const rootId = localStorage.getItem("rootId")
+      if(rootId){
+        this.StorageService.rootId=rootId
+      }
+      setTimeout(() => {
+        this.StorageService.observer.next("storage")
+      }, 0);
       this.dirs = this.StorageService.dirs;
       this.StorageService.dirDivsRefs = this.dirDivsRefs;
       this.rootId = this.StorageService.rootId;
@@ -54,7 +62,13 @@ export class StorageNavigationComponent implements AfterViewInit {
       if (match && match.length > 1) {
 
         if(match[1]!=="dashboard"){
-          urlTarget="storage"
+          setTimeout(() => {
+            this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
+            this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+            this.StorageService.observer.next("storage")
+            urlTarget="storage"
+          
+          }, 0);
         const folderId = match[1];
         this.StorageService.currentFolder = folderId;
         this.http
@@ -94,11 +108,12 @@ export class StorageNavigationComponent implements AfterViewInit {
           })
         enviroments.initialLoad = false;
       }else if(match[1]==="dashboard"){
-        urlTarget="dashboard"
         setTimeout(()=>{
-          console.log('this.StorageService.wholeStorage: ', this.StorageService.wholeStorage);
-          console.log('urlTarget: ', urlTarget);
+          this.StorageService.observer.next("dashboard")
+          urlTarget="dashboard"
           this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
+         
 
         },0)
       }
@@ -111,9 +126,15 @@ export class StorageNavigationComponent implements AfterViewInit {
         const regex = /storage-router-outlet:(\w+)/;
         const match = event.url.match(regex);
         if (match && match.length > 1) {
+          const rootId = localStorage.getItem("rootId")
+          if(rootId){
+            this.StorageService.rootId=rootId
+          }
           if(match[1]!=="dashboard"){
             urlTarget = "storage"
             setTimeout(() => {
+              this.StorageService.currentFolder = match[1]
+              this.StorageService.observer.next("storage")
               this.StorageService.addEventListenersToCompletionElements(
                 this.completionDivsRefs,
                 this.dirs,
@@ -125,12 +146,66 @@ export class StorageNavigationComponent implements AfterViewInit {
             }, 100);
 
           }else{
-            urlTarget = "dashboard"
+            setTimeout(() => {
+              const rootId = localStorage.getItem("rootId")
+              if(rootId){
+                this.StorageService.rootId=rootId
+              }
+            this.StorageService.observer.next("dashboard")
+            
+          }, 0);
+          urlTarget = "dashboard"
           }
+        }
+        console.log('urlTarget: ', urlTarget);
+        if(urlTarget==="storage"){
+          setTimeout(() => {
+            this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
+            this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+            
+          }, 0);
+          const urlBar = this.urlBarInput.nativeElement;
+          const searchCompletion = this.searchCompletion.nativeElement;
+      
+          this.StorageService.addEventListenersToCompletionSection(
+            urlBar,
+            searchCompletion,
+            this.renderer
+          );
+      
+          this.completions = this.StorageService.completions;
+          setTimeout(() => {
+            this.StorageService.addEventListenerToTheMainRootBtn(
+              this.mainRootBtn,
+              this.dirs,
+              this.renderer,
+              this.router
+            );
+            this.StorageService.addEventListenersToCompletionElements(
+              this.completionDivsRefs,
+              this.dirs,
+              this.dirDivsRefs,
+              this.StorageService.addEventListenerToDivDir,
+              this.renderer,
+              this.router
+            );
+          }, 100);
+    
+        }else if(urlTarget ==="dashboard"){
+          setTimeout(() => {
+            this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+              this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
+          }, 0);
         }
       }
     });
+
     if(urlTarget==="storage"){
+      setTimeout(() => {
+        this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
+        this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+        
+      }, 0);
       const urlBar = this.urlBarInput.nativeElement;
       const searchCompletion = this.searchCompletion.nativeElement;
   
@@ -159,7 +234,10 @@ export class StorageNavigationComponent implements AfterViewInit {
       }, 100);
 
     }else if(urlTarget ==="dashboard"){
-
+      setTimeout(() => {
+        this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
+      }, 0);
     }
   }
 }

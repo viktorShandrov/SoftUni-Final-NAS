@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="storage-volume-info">
         <p>Plan storage volume: {{storageVolume}}GB</p>
-        <p>Used storage: {{usedStorage}}GB</p>
+        <p>Used storage: {{usedStorage}}</p>
         <p>Storage left: {{storageLeft}}GB</p>
     </div>
     <div class="charts">
@@ -9,19 +9,19 @@
             <h4>Folders with most elements in</h4>
             <div class="barsWrapper">
                 <div class="bar">
-                    <div class="count">{{topFolders[0].count}}</div>
+                    <div class="count">{{topFolders[0]?.count}}</div>
                     <div #folderBar class="progress-bar"></div>
-                    <div class="name">{{topFolders[0].name}}</div>
+                    <div class="name">{{topFolders[0]?.name}}</div>
                 </div>
                 <div class="bar">
-                    <div class="count">{{topFolders[1].count}}</div>
+                    <div class="count">{{topFolders[1]?.count}}</div>
                     <div #folderBar class="progress-bar"></div>
-                    <div class="name">{{topFolders[1].name}}</div>
+                    <div class="name">{{topFolders[1]?.name}}</div>
                 </div>
                 <div class="bar">
-                    <div class="count">{{topFolders[2].count}}</div>
+                    <div class="count">{{topFolders[2]?.count}}</div>
                     <div #folderBar class="progress-bar"></div>
-                    <div class="name">{{topFolders[2].name}}</div>
+                    <div class="name">{{topFolders[2]?.name}}</div>
                 </div>
 
 
@@ -32,19 +32,19 @@
             <h4>Common file extensions</h4>
             <div class="barsWrapper">
                 <div class="bar">
-                    <div class="count">{{topExt[0].count}}</div>
+                    <div class="count">{{topExt[0]?.count}}</div>
                     <div #extBar class="progress-bar"></div>
-                    <div class="name">{{topExt[0].name}}</div>
+                    <div class="name">{{topExt[0]?.name}}</div>
                 </div>
                 <div class="bar">
-                    <div class="count">{{topExt[1].count}}</div>
+                    <div class="count">{{topExt[1]?.count}}</div>
                     <div #extBar class="progress-bar"></div>
-                    <div class="name">{{topExt[1].name}}</div>
+                    <div class="name">{{topExt[1]?.name}}</div>
                 </div>
                 <div class="bar">
-                    <div class="count">{{topExt[2].count}}</div>
+                    <div class="count">{{topExt[2]?.count}}</div>
                     <div #extBar class="progress-bar"></div>
-                    <div class="name">{{topExt[2].name}}</div>
+                    <div class="name">{{topExt[2]?.name}}</div>
                 </div>
 
 

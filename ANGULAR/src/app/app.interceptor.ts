@@ -14,6 +14,15 @@ export class mainInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const authToken = localStorage.getItem("token")
+    if (authToken) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: authToken
+        }
+      });
+    }
+
     const updatedRequest = request.clone({
       url: request.url.replace('api', enviroments.REST_API_DOMAIN),
     });

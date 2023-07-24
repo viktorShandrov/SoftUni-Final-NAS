@@ -14,7 +14,10 @@ export class HeaderService {
     this.totalVolume=0
   }
 
+  
+
   updateUsedStorage(totalVolume:number,usedStorage:number){
+    console.log('usedStorage: ', usedStorage);
     this.usedStorage=usedStorage
     this.totalVolume=totalVolume-usedStorage
     let usedPercentage = (usedStorage / totalVolume) * 100;

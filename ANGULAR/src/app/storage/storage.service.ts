@@ -4,22 +4,28 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PopupService } from '../shared/popup/popup.service';
 import { HeaderService } from '../core/header/header.service';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
   currentFolder: string;
-  rootId: string;
+  rootId!: string;
   completions!: Completions[];
   dirs!: Dirs[];
   dirDivsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
   createFolderOrFileMenu!: ElementRef;
   wholeStorage!: ElementRef;
+  dashboard!: ElementRef;
 
   files: file[] = [];
   folders: folder[] = [];
+  observer!:Observer<string>
+  sharingCurrentSection$:Observable<string> = new Observable((observer)=>{
+    this.observer=observer
+  })
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -29,7 +35,6 @@ export class StorageService {
     this.completions = [];
     this.dirs = [];
     this.currentFolder = '';
-    this.rootId = '64b908bce5f2cedd50b2d90c';
   }
 
   createFolder(folderName: string) {
@@ -132,18 +137,28 @@ export class StorageService {
 
   deleteItem(menu: HTMLDivElement, renderer: Renderer2) {
     const elementId = menu.getAttribute('element-id');
+    const elementType= menu.getAttribute('element-type')
     const payload = {
       elementId,
-      elementType: menu.getAttribute('element-type'),
+      elementType,
       parentFolderId: this.currentFolder,
     };
     this.http.post('api/files/deleteItem', payload).subscribe(
       (response) => {
         renderer.setStyle(this.rightClickMenu.nativeElement, 'display', 'none');
-        this.files.splice(
-          this.files.findIndex((el) => el._id === elementId),
-          1
-        );
+        console.log('elementType: ', elementType);
+        if(elementType==="directory"){
+          this.folders.splice(
+            this.folders.findIndex((el) => el._id == elementId),
+            1
+          );
+
+        }else{
+          this.files.splice(
+            this.files.findIndex((el) => el._id == elementId),
+            1
+          );
+        }
         this.http.get(`api/files/${this.rootId}/getOnlyRootInfo`).subscribe(
           (response: any) => {
             const { folder } = response;

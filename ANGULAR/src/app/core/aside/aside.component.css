@@ -14,7 +14,7 @@
 }
 
 .aside .elements .asideElement , .aside .upgardeButton{
-    
+    cursor: pointer;
     font-weight: bolder;
     padding: 15px 40px;
     justify-content: center;

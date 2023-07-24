@@ -25,29 +25,30 @@ export class DashboardService {
    getTopExtData(extQ:QueryList<ElementRef>,Renderer2:Renderer2){
 
     return new Promise((resolve,reject)=>{
-      this.HttpClient.get(`api/files/${this.StorageService.rootId}/topFileExts`).subscribe(  
-      (res:any)=>{
-         const maxHeight = 200; //px
-         this.topExt=res.topFileExts
-         console.log('res: ', res.topFileExts);
-         console.log('this.topExt: ', this.topExt);
-         const count: number = this.topExt.reduce(
-           (sum, item) => (sum += item.count),
-           0
-           );
-           console.log('count: ', count);
-         setTimeout(() => {
-           extQ.forEach((bar,index) => {
-            const domElementHeight = Number((( this.topExt[index].count / count) * maxHeight).toFixed(0));
-             Renderer2.setStyle(bar.nativeElement,"height",domElementHeight+"px")
-           });
-         }, 0);
-         resolve(1)
-       },
-       (err)=>{
-        reject(0)
-       }
-     )
+      setTimeout(() => {
+        this.HttpClient.get(`api/files/${this.StorageService.rootId}/topFileExts`).subscribe(  
+        (res:any)=>{
+           const maxHeight = 200; //px
+           this.topExt=res.topFileExts
+           const count: number = this.topExt.reduce(
+             (sum, item) => (sum += item.count),
+             0
+             );
+             console.log('count: ', count);
+           setTimeout(() => {
+             extQ.forEach((bar,index) => {
+              const domElementHeight = Number((( this.topExt[index]?.count / count) * maxHeight).toFixed(0));
+               Renderer2.setStyle(bar.nativeElement,"height",domElementHeight+"px")
+             });
+           }, 0);
+           resolve(1)
+         },
+         (err)=>{
+          reject(0)
+         }
+       )
+        
+      }, 0);
 
     })
   }
@@ -67,7 +68,7 @@ export class DashboardService {
            console.log('count: ', count);
          setTimeout(() => {
           foldersQ.forEach((bar,index) => {
-            const domElementHeight = Number((( this.topFolders[index].count / count) * maxHeight).toFixed(0));
+            const domElementHeight = Number((( this.topFolders[index]?.count / count) * maxHeight).toFixed(0));
              Renderer2.setStyle(bar.nativeElement,"height",domElementHeight+"px")
            });
          }, 0);
@@ -86,6 +87,7 @@ export class DashboardService {
       this.HttpClient.get(`api/files/${this.StorageService.rootId}/getOnlyRootInfo`).subscribe(
         (response: any) => {
           const { folder } = response;
+          console.log('folder: ', folder);
           this.HeaderService.updateUsedStorage(
             folder.storageVolume,
             folder.usedStorage

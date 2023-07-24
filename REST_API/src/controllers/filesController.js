@@ -80,6 +80,7 @@ router.get("/:id/download", isAuth, async (req, res) => {
 router.post("/createFolder", async (req, res) => {
   try {
     const { folderName, parentFolderId } = req.body
+    console.log('folderName, parentFolderId: ', folderName, parentFolderId);
     const rootId = (await userModel.findById(req.user._id)).rootId
     const newFolder = await fileManager.createFolder(folderName, rootId, parentFolderId)
     res.status(201).json({newFolder})
@@ -162,6 +163,7 @@ router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
     console.log('Bytes: ', Bytes);
     console.log('rootId: ', rootId);
     await fileManager.checkIfStorageHaveEnoughtSpace(rootId,Bytes)
+    console.log("end");
     res.status(200).end()
   } catch (error) {
     console.log(error.message);

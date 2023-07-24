@@ -11,6 +11,9 @@ import { mainInterceptor } from './app.interceptor';
 import { toFixedPipe } from './core/header/storage-info.pipe';
 import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { UserModule } from './user/user.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommunicationService } from './shared/communication-module/communication.service';
 
 
 
@@ -27,14 +30,17 @@ import { DashboardModule } from './dashboard/dashboard.module';
     StorageModule,
     SharedModule,
     HttpClientModule,
-    DashboardModule
+    DashboardModule,
+    UserModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: mainInterceptor,
       multi: true,
-    }
+    },
+    CommunicationService
   ],
   bootstrap: [AppComponent],
 })

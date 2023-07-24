@@ -10,6 +10,7 @@ export class toFixedPipe implements PipeTransform {
     if(volume<1){
         mesure = "MB"
         volume =  volume*1000 //MB
+        console.log('volume: ', volume);
         if(volume<1){
             return `<${volume}${mesure}`
         }
