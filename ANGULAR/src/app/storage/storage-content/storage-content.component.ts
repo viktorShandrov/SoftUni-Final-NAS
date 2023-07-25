@@ -37,6 +37,9 @@ export class StorageContentComponent implements AfterViewInit {
     this.folders =this.StorageService.folders;
     this.files = this.StorageService.files;
 
+    this.StorageService.foldersQL = this.foldersRef
+    this.StorageService.filesQL = this.filesRef
+    
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id') as String;
       if(id!=="dashboard"){

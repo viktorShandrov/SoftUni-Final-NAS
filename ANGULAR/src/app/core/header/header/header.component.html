@@ -3,9 +3,16 @@
         <i class="fa-solid fa-database"></i>
     </div>
     <app-header-status-bar></app-header-status-bar>
-    <div class="profile">
-        <i class="fa-solid fa-user"></i>
-    </div>
+    
+        <div class="user-settings-menu">
+        <a
+            [routerLink]="['/users', { outlets: { 'user-view': 'login' } }]">
+                <div class="option logout">
+                    <p>Logout</p>
+                </div>
+        </a>
+            
+        </div>
 
 
 

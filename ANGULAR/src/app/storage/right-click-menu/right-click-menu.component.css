@@ -1,4 +1,4 @@
-.menu{
+.menu,.shareContainer{
     display:  none;
     flex-direction: column;
     position: absolute ;
@@ -15,7 +15,7 @@
    display:flex ;
    justify-content: center;
 }
-.option p {
+p {
     margin: 0;
 }
 .delete{
@@ -25,4 +25,23 @@
    background-color: antiquewhite;
    transition: 0.2s;
    cursor: pointer;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.shareContainer{
+    display: none;
+}
+.shareContainer h5{
+    margin: 0;
+    background-color: chocolate;
+}
+.shareContainer p{
+    text-align: center;
+    font-size: 12px;
 }

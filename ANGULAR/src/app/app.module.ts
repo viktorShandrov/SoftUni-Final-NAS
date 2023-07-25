@@ -14,6 +14,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { UserModule } from './user/user.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommunicationService } from './shared/communication-module/communication.service';
+import { AuthGuard } from './authenticated.guard';
 
 
 
@@ -40,7 +41,7 @@ import { CommunicationService } from './shared/communication-module/communicatio
       useClass: mainInterceptor,
       multi: true,
     },
-    CommunicationService
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })

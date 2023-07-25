@@ -19,7 +19,9 @@ export class StorageService {
   createFolderOrFileMenu!: ElementRef;
   wholeStorage!: ElementRef;
   dashboard!: ElementRef;
-
+  shareContainer!: ElementRef;
+  foldersQL!:QueryList<ElementRef>
+  filesQL!:QueryList<ElementRef>
   files: file[] = [];
   folders: folder[] = [];
   observer!:Observer<string>
@@ -135,6 +137,9 @@ export class StorageService {
     });
   }
 
+  autoriseUserToFolder(folderId:string,email:string){
+    return this.http.post(`api/files/${folderId}/autoriseUserToFolder`,JSON.stringify({email}),{headers:{"Content-Type":"application/json"}})
+  }
   deleteItem(menu: HTMLDivElement, renderer: Renderer2) {
     const elementId = menu.getAttribute('element-id');
     const elementType= menu.getAttribute('element-type')
@@ -184,6 +189,33 @@ export class StorageService {
     };
     this.http.get('api/files/');
   }
+
+
+
+  removeBGOnFoldersAndFiles(
+    folders: QueryList<ElementRef>,
+    files: QueryList<ElementRef>,
+    renderer:Renderer2
+  ) {
+    if (folders) {
+      for (const folderElement of folders) {
+        console.log("folder");
+        
+        renderer.removeStyle(folderElement.nativeElement, 'background-color');
+      }
+    }
+    if (files) {
+      for (const fileElement of files) {
+        renderer.removeStyle(
+              fileElement?.nativeElement,
+              'background-color'
+            );
+
+        };
+      }
+    }
+  
+
 
   addEventListenersToCompletionElements(
     completionDivs: QueryList<ElementRef>,

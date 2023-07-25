@@ -108,11 +108,12 @@ export class StorageNavigationComponent implements AfterViewInit {
           })
         enviroments.initialLoad = false;
       }else if(match[1]==="dashboard"){
+        urlTarget="dashboard"
         setTimeout(()=>{
           this.StorageService.observer.next("dashboard")
-          urlTarget="dashboard"
           this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
+
          
 
         },0)
@@ -161,6 +162,8 @@ export class StorageNavigationComponent implements AfterViewInit {
         if(urlTarget==="storage"){
           setTimeout(() => {
             this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
+            console.log(1);
+            
             this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
             
           }, 0);
@@ -202,6 +205,8 @@ export class StorageNavigationComponent implements AfterViewInit {
 
     if(urlTarget==="storage"){
       setTimeout(() => {
+        console.log(2);
+        
         this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
         this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
         

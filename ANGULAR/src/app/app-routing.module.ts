@@ -7,6 +7,7 @@ import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-vie
 import { UserLoginRegisterViewComponent } from './user/user-login-register-view/user-login-register-view.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
+import { AuthGuard } from './authenticated.guard';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'storage',
+    canActivate:[AuthGuard],
     component: StorageViewComponent,
     children: [
       {

@@ -170,4 +170,15 @@ router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
     res.status(400).json({message:error.message})
   }
 })
+router.post("/:folderId/autoriseUserToFolder", async (req, res) => {
+  try {
+    const {email} = req.body
+    const folderId = req.params.folderId
+    await fileManager.autoriseUserToFolder(folderId,email)
+    res.status(200).end()
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message:error.message})
+  }
+})
 module.exports = router

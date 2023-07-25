@@ -38,6 +38,11 @@ export class DoubleClickDirective {
 
       this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
       this.renderer.setStyle(this.StorageService.createFolderOrFileMenu.nativeElement,"display","none")
+      this.renderer.setStyle(this.StorageService.shareContainer.nativeElement,"display","none")
+
+      
+
+
         parentElement.addEventListener("contextmenu",(e)=>{
           e.preventDefault()
           const x = e.clientX

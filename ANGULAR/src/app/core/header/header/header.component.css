@@ -1,34 +1,52 @@
-header{
-    width: 100%;
-    height: var(--header-height);
-    background-color: #545454;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+header {
+  width: 100%;
+  height: var(--header-height);
+  background-color: #545454;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  
 }
-header .logo{
-    width: 70px;
-    height: 60px;
+header .logo {
+  width: 70px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+}
+header .logo i {
+  font-size: 50px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+/* header .profile {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+} */
+header .user-settings-menu {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
+    background-color: brown;
     border-radius: 10px;
-    
 }
-header .logo i{
-    font-size: 50px;
+header .user-settings-menu .option {
+  padding: 5px 10px;
+  cursor: pointer;
+  
 }
+header .user-settings-menu p {
+    margin: 0;
 
-
-
-header .profile{
-    width: 60px;
-    height: 60px;
-    background-color: white;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
 }

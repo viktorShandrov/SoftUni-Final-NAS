@@ -5,7 +5,22 @@
     <div #option  class="option">
         <p>Rename</p>
     </div>
+    <div #optionShare  class="option share">
+        <p>Share</p>
+    </div>
     <div #option (click)="StorageService.deleteItem(menu,renderer)" class="option delete">
         <p>Delete</p>
     </div>
+</div>
+<div #shareContainer class=" shareContainer">
+    <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(form)">
+        <h5>Share with:</h5>
+        <input type="text" formControlName="email" name="email" placeholder="user email" >
+        <button type="submit">Send</button>
+        <div *ngIf="formGroup?.get('email')?.touched">
+            <p *ngIf="formGroup?.get('email')?.errors?.['required']">Email is required</p>
+            <p *ngIf="formGroup?.get('email')?.errors?.['email']">Invalid email format</p>
+            <p id="error-container"></p>
+        </div>
+    </form>
 </div>

@@ -16,10 +16,18 @@ constructor(
   
   setTimeout(() => {
     
+    this.renderer.listen(this.wholeStorage.nativeElement,"click",(e)=>{
+      if(e.target.classList.contains("wholeStorage")||e.target.classList.contains("storage")){
+        this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
+        this.renderer.setStyle(this.StorageService.shareContainer.nativeElement,"display","none")
+        this.StorageService.removeBGOnFoldersAndFiles(this.StorageService.foldersQL,this.StorageService.filesQL,this.renderer)
+      }
+    })
     this.renderer.listen(this.wholeStorage.nativeElement,"contextmenu",(e)=>{
       if(e.target.classList.contains("wholeStorage")||e.target.classList.contains("storage")){
         e.preventDefault()
         this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
+        this.renderer.setStyle(this.StorageService.shareContainer.nativeElement,"display","none")
         const x = e.clientX
         const y = e.clientY
         this.renderer.setAttribute(this.StorageService.createFolderOrFileMenu.nativeElement,"parent-folder-id",this.StorageService.currentFolder)

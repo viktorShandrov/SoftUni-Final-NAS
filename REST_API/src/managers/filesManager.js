@@ -197,4 +197,20 @@ exports.getTopFolders=async(rootId)=>{
     return payload
 }
 
+exports.autoriseUserToFolder = async (folderId,email)=>{
+    const user = await userModel.findOne({email})
+    if(!user){
+        throw new Error("No such user")
+    }
+    const userId = user._id
+    const folder = await folderModel.findById(folderId)
+    if(!folder.autorised.includes(userId)){
+        folder.autorised.push(userId)
+    }else{
+        throw new Error("User is already autorised")
+    }
+    await folder.save()
+
+}
+
 
