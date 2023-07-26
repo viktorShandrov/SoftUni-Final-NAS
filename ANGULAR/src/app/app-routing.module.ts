@@ -33,6 +33,16 @@ const routes: Routes = [
         component: DashboardViewComponent,
         outlet: 'storage-router-outlet',
       },
+      {
+        path: 'shared-with-me',
+        component: DashboardViewComponent,
+        outlet: 'storage-router-outlet',
+      },
+      {
+        path: 'shared-with-users',
+        component: DashboardViewComponent,
+        outlet: 'storage-router-outlet',
+      },
     ],
   },
 ];
