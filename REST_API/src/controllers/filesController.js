@@ -145,6 +145,16 @@ router.get("/:id/getDirectory", async (req, res) => {
     res.send(error.message)
   }
 })
+router.get("/:folderId/getFilesFromSharedFolder", async (req, res) => {
+  try {
+
+    const folderId = req.params.folderId
+    const files = await fileManager.getFilesFromSharedFolder(folderId)
+    res.status(200).json(files)
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
+})
 router.get("/:id/getAllParentAutorisedFolders", isAuth, async (req, res) => {
   try {
     const id = req.params.id;
@@ -153,6 +163,15 @@ router.get("/:id/getAllParentAutorisedFolders", isAuth, async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.send(error.message)
+  }
+})
+router.get("/getSharedWithMeFolders", isAuth, async (req, res) => {
+  try {
+    const folders = await fileManager.getSharedWithMeFolders(req.user._id)
+    res.status(200).json(folders)
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json(error.message)
   }
 })
 router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {

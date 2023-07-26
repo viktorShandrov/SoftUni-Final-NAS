@@ -19,6 +19,8 @@ export class StorageService {
   createFolderOrFileMenu!: ElementRef;
   wholeStorage!: ElementRef;
   dashboard!: ElementRef;
+  sharedWithMe!: ElementRef;
+  sharedWithUsers!: ElementRef;
   shareContainer!: ElementRef;
   foldersQL!:QueryList<ElementRef>
   filesQL!:QueryList<ElementRef>

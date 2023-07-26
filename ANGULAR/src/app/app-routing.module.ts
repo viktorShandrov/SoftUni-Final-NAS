@@ -8,6 +8,9 @@ import { UserLoginRegisterViewComponent } from './user/user-login-register-view/
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { AuthGuard } from './authenticated.guard';
+import { SharedWithMeComponent } from './shared-with/shared-with-me/shared-with-me.component';
+import { SharedWithUsersComponent } from './shared-with/shared-with-users/shared-with-users.component';
+
 
 const routes: Routes = [
   {
@@ -35,12 +38,12 @@ const routes: Routes = [
       },
       {
         path: 'shared-with-me',
-        component: DashboardViewComponent,
+        component: SharedWithMeComponent,
         outlet: 'storage-router-outlet',
       },
       {
         path: 'shared-with-users',
-        component: DashboardViewComponent,
+        component: SharedWithUsersComponent,
         outlet: 'storage-router-outlet',
       },
     ],

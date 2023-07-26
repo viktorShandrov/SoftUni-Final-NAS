@@ -15,6 +15,7 @@ import { enviroments } from 'src/app/shared/enviroment';
 import { Location } from '@angular/common';
 import { HeaderService } from 'src/app/core/header/header.service';
 import { Observable, Observer } from 'rxjs';
+import { SharedWithService } from 'src/app/shared-with/shared-with.service';
 
 @Component({
   selector: 'app-storage-navigation',
@@ -39,6 +40,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     private ActivatedRoute: ActivatedRoute,
     private StorageService: StorageService,
     private HeaderService: HeaderService,
+    private SharedWithService: SharedWithService,
     private location: Location
     ) {}
     
@@ -56,15 +58,19 @@ export class StorageNavigationComponent implements AfterViewInit {
       this.rootId = this.StorageService.rootId;
     if (enviroments.initialLoad) {
       console.log('initialLoad');
+       enviroments.initialLoad = false;
       const fullUrl = window.location.href;
       const regex = /storage-router-outlet:(\w+)/;
       const match = fullUrl.match(regex);
       if (match && match.length > 1) {
+        console.log('match[1: ', match[1]);
 
-        if(match[1]!=="dashboard"){
+        if(match[1]!=="dashboard"&&match[1]!=="sharedWithMe"&&match[1]!=="sharedWithUsers"){
           setTimeout(() => {
             this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
             this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
             this.StorageService.observer.next("storage")
             urlTarget="storage"
           
@@ -106,17 +112,34 @@ export class StorageNavigationComponent implements AfterViewInit {
             console.log(error.error.message);
             
           })
-        enviroments.initialLoad = false;
+        // enviroments.initialLoad = false;
       }else if(match[1]==="dashboard"){
         urlTarget="dashboard"
         setTimeout(()=>{
           this.StorageService.observer.next("dashboard")
           this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
-
-         
-
         },0)
+      }else if(match[1]==="sharedWithMe"){
+        urlTarget="shared-with-me"
+        setTimeout(()=>{
+          this.StorageService.observer.next("shared-with-me")
+          this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
+        },0)
+
+      }else if(match[1]==="sharedWithUsers"){
+        urlTarget="shared-with-users"
+        setTimeout(()=>{
+          this.StorageService.observer.next("shared-with-me")
+          this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
+        },0)
+
       }
     }
     }
@@ -131,7 +154,7 @@ export class StorageNavigationComponent implements AfterViewInit {
           if(rootId){
             this.StorageService.rootId=rootId
           }
-          if(match[1]!=="dashboard"){
+          if(match[1]!=="dashboard"&&match[1]!=="sharedWithMe"&&match[1]!=="sharedWithUsers"){
             urlTarget = "storage"
             setTimeout(() => {
               this.StorageService.currentFolder = match[1]
@@ -146,7 +169,7 @@ export class StorageNavigationComponent implements AfterViewInit {
               );
             }, 100);
 
-          }else{
+          }else if (match[1]==="dashboard"){
             setTimeout(() => {
               const rootId = localStorage.getItem("rootId")
               if(rootId){
@@ -156,15 +179,28 @@ export class StorageNavigationComponent implements AfterViewInit {
             
           }, 0);
           urlTarget = "dashboard"
+          }else if (match[1]==="sharedWithMe"){
+            setTimeout(() => {        
+            this.StorageService.observer.next("sharedWithMe")
+          }, 0);
+          urlTarget = "sharedWithMe"
+          
+          }else if (match[1]==="sharedWithUsers"){
+            setTimeout(() => {
+            this.StorageService.observer.next("sharedWithUsers")
+          }, 0);
+          urlTarget = "sharedWithUsers"
           }
         }
-        console.log('urlTarget: ', urlTarget);
+
+
         if(urlTarget==="storage"){
           setTimeout(() => {
             this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
-            console.log(1);
             
             this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
             
           }, 0);
           const urlBar = this.urlBarInput.nativeElement;
@@ -197,7 +233,23 @@ export class StorageNavigationComponent implements AfterViewInit {
         }else if(urlTarget ==="dashboard"){
           setTimeout(() => {
             this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
               this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
+          }, 0);
+        }else if(urlTarget ==="sharedWithMe"){
+          setTimeout(() => {
+            this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","block")
+            this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
+              this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+          }, 0);
+        }else if(urlTarget ==="sharedWithUsers"){
+          setTimeout(() => {
+            this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
+            this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","block")
+              this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
           }, 0);
         }
       }

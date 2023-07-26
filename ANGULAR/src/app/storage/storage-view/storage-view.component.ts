@@ -9,6 +9,8 @@ import { StorageService } from '../storage.service';
 export class StorageViewComponent implements AfterViewInit {
   @ViewChild("wholeStorage") wholeStorage!: ElementRef
   @ViewChild("dashboard") dashboard!: ElementRef
+  @ViewChild("sharedWithMe") sharedWithMe!: ElementRef
+  @ViewChild("sharedWithUsers") sharedWithUsers!: ElementRef
 constructor(
   private StorageService: StorageService,
   private renderer: Renderer2,
@@ -47,6 +49,8 @@ constructor(
 ngAfterViewInit(){
   this.StorageService.wholeStorage=this.wholeStorage
   this.StorageService.dashboard=this.dashboard
+  this.StorageService.sharedWithMe=this.sharedWithMe
+  this.StorageService.sharedWithUsers=this.sharedWithUsers
   
 
 }

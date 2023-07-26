@@ -15,6 +15,8 @@ import { CreateFolderOrFileMenuComponent } from './create-folder-or-file-menu/cr
 import { AddFolderComponent } from './add-folder/add-folder.component';
 import { DashboardViewComponent } from '../dashboard/dashboard-view/dashboard-view.component';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { SharedModule } from '../shared/shared.module';
+import { SharedWithModule } from '../shared-with/shared-with.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { DashboardModule } from '../dashboard/dashboard.module';
     AppRoutingModule,
     ReactiveFormsModule,
     DashboardModule,
+    SharedWithModule,
   ],
   exports: [
     StorageViewComponent,

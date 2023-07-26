@@ -29,6 +29,7 @@ export class LoginService {
           localStorage.setItem("token",token)
           localStorage.setItem("rootId",rootId)
 
+
           this.Router.navigate(['/storage', { outlets: { 'storage-router-outlet': rootId } }])
         }
       },

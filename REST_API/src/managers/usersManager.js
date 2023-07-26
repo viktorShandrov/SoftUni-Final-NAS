@@ -28,7 +28,7 @@ exports.login = async (email,password)=>{
             }
             const token = await jwt.sign(payload,jwt.secret)
             
-        return {token,rootId:user.rootId}
+        return {token,rootId:user.rootId,userId:user._id}
        }
        else{
         throw new Error("No such user or password is incorect");

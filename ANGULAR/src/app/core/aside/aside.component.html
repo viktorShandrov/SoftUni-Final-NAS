@@ -6,11 +6,13 @@
         <div class="elements">
             <a
                 [routerLink]="['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]"><div  class="asideElement">Dashboard</div></a>
-            <div class="asideElement">Shared with Users</div>
-            <div class="asideElement">Shared with me</div>
+            <a
+            [routerLink]="['/storage', { outlets: { 'storage-router-outlet': 'sharedWithUsers' } }]"><div class="asideElement">Shared with Users</div></a>
+            <a
+            [routerLink]="['/storage', { outlets: { 'storage-router-outlet': 'sharedWithMe' } }]"><div class="asideElement">Shared with me</div></a>
+            
             <a
                 [routerLink]="['/storage', { outlets: { 'storage-router-outlet': rootId } }]"><div class="asideElement">Storage</div></a>
-            <div class="asideElement">Favorites</div>
         </div>
         <div class="upgardeButton">Upgarde to Plus</div>
     </div>

@@ -1,12 +1,16 @@
-.mainWrapper{
-    display: flex;
+.mainWrapper {
+  display: flex;
 }
-.mainWrapper main, .mainWrapper{
-    width: 100%;
+.mainWrapper main,
+.mainWrapper {
+  width: 100%;
 }
-.wholeStorage{
-    height: 100%;
+.wholeStorage {
+  height: 100%;
 }
-.dashboardWrapper{
-    /* display: block; */
+.dashboardWrapper {
+  /* display: block; */
+}
+main {
+  position: relative;
 }

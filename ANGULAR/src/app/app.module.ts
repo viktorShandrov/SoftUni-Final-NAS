@@ -15,19 +15,10 @@ import { UserModule } from './user/user.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommunicationService } from './shared/communication-module/communication.service';
 import { AuthGuard } from './authenticated.guard';
-import { SharedWithUsersComponent } from './shared-with-users/shared-with-users.component';
-import { SharedWithMeComponent } from './shared-with-me/shared-with-me.component';
-
-
-
+import { SharedWithModule } from './shared-with/shared-with.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    toFixedPipe,
-    SharedWithUsersComponent,
-    SharedWithMeComponent,
-  ],
+  declarations: [AppComponent, toFixedPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,7 +28,8 @@ import { SharedWithMeComponent } from './shared-with-me/shared-with-me.component
     HttpClientModule,
     DashboardModule,
     UserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedWithModule,
   ],
   providers: [
     {
@@ -45,7 +37,7 @@ import { SharedWithMeComponent } from './shared-with-me/shared-with-me.component
       useClass: mainInterceptor,
       multi: true,
     },
-    AuthGuard
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })

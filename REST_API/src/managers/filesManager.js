@@ -4,7 +4,7 @@ const rootModel = require("../models/rootModel")
 const userModel = require("../models/userModel")
 const mongoose = require("mongoose")
 const uuid = require("uuid")
-
+const { ObjectId } = require('mongodb');
 
 
 
@@ -34,6 +34,10 @@ exports.getFolder = async (id) => {
     const folder = await folderModel.findById(id).populate("dirComponents").populate("fileComponents") || await rootModel.findById(id).populate("dirComponents").populate("fileComponents")
     console.log(folder);
     return folder
+}
+exports.getFilesFromSharedFolder = async (folderId) => {
+    const folder = await folderModel.findById(folderId).populate("fileComponents") 
+    return folder.fileComponents
 }
 
 exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) => {
@@ -211,6 +215,16 @@ exports.autoriseUserToFolder = async (folderId,email)=>{
     }
     await folder.save()
 
+}
+exports.getSharedWithMeFolders = async (userId)=>{
+    console.log('userId: ', userId);
+    const folders = await folderModel.find({
+        $and:[
+            {autorised:{$in:[new ObjectId(userId)]}},
+            {ownerId: { $ne: new ObjectId(userId) }}
+        ]
+    })
+    return folders
 }
 
 
