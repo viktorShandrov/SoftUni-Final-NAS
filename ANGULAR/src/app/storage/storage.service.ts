@@ -26,7 +26,7 @@ export class StorageService {
   filesQL!:QueryList<ElementRef>
   files: file[] = [];
   folders: folder[] = [];
-  observer!:Observer<string>
+  observer!:Observer<string> 
   sharingCurrentSection$:Observable<string> = new Observable((observer)=>{
     this.observer=observer
   })
@@ -201,8 +201,6 @@ export class StorageService {
   ) {
     if (folders) {
       for (const folderElement of folders) {
-        console.log("folder");
-        
         renderer.removeStyle(folderElement.nativeElement, 'background-color');
       }
     }

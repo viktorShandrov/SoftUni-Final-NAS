@@ -30,6 +30,33 @@ exports.checkIfFileNameAlreadyExists = async (parentFolderId,name) => {
 }
 
 
+exports.getAuthorisedWithUsersFolder = async (rootId,ownerId) => {
+   const folders = await folderModel.find({rootId}).populate("autorised");
+
+    const filtered =  folders.filter((folder)=>folder.autorised.some((user) => user._id.equals(ownerId)&&folder.autorised.length>1))
+    const payload=[]
+    for (const folder of filtered) {
+        for (const user of folder.autorised) {
+            if(!user._id.equals(ownerId)){
+                payload.push({folderId:folder._id,userEmail:user.email,folderName:folder.name,userId:user._id})
+            }
+        }
+    }
+    return payload
+}
+exports.unAuthoriseUserFromFolder = async (folderId,userId,ownerId) => {
+    const folder = await folderModel.findById(folderId)
+    if(!folder.ownerId.equals(ownerId)){
+        throw new Error("You are not the owner")
+    }
+    const index = folder.autorised.indexOf(userId)
+    if(index>-1){
+        folder.autorised.splice(index,1)
+        await folder.save()
+    }else{
+        throw new Error("No such shared user")
+    }
+}
 exports.getFolder = async (id) => {
     const folder = await folderModel.findById(id).populate("dirComponents").populate("fileComponents") || await rootModel.findById(id).populate("dirComponents").populate("fileComponents")
     console.log(folder);

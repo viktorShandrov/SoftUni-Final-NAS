@@ -28,7 +28,11 @@ const schema = new mongoose.Schema({
             ref: 'Folder'
         }
     ,
-    autorised:Array,
+    autorised:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+        }],
     isPublic:Boolean
 })
 

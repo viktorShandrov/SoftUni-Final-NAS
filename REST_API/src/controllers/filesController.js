@@ -155,6 +155,29 @@ router.get("/:folderId/getFilesFromSharedFolder", async (req, res) => {
     res.status(400).json({message:error.message})
   }
 })
+router.get("/getAuthorisedWithUsersFolder",isAuth, async (req, res) => {
+  try {
+
+    const {_id,rootId} = req.user
+
+    const folders = await fileManager.getAuthorisedWithUsersFolder(rootId,_id)
+    res.status(200).json(folders)
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
+})
+router.post("/unAuthoriseUserFromFolder",isAuth, async (req, res) => {
+  try {
+
+    const {_id} = req.user
+    const {folderId,userId} = req.body
+    await fileManager.unAuthoriseUserFromFolder(folderId,userId,_id)
+    res.status(200).json({status:"ok"})
+  } catch (error) {
+    console.log('error: ', error);
+    res.status(400).json({message:error.message})
+  }
+})
 router.get("/:id/getAllParentAutorisedFolders", isAuth, async (req, res) => {
   try {
     const id = req.params.id;

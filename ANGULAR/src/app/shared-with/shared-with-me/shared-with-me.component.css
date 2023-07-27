@@ -27,7 +27,7 @@
     font-size: 720%;
 }
 button{
-    position: absolute;
+    /* position: absolute; */
     all: unset;
     background-color: chocolate;
     padding: 10px 15px;

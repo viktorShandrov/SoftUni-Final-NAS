@@ -42,3 +42,9 @@ export interface topFolders{
   count:number
   domElementHeight?:number
 }
+export interface sharedWithUsersFolderIn{
+  folderId:string,
+  userId:string,
+  userEmail:string,
+  folderName:string,
+}

@@ -29,25 +29,32 @@ constructor(
     setTimeout(() => {
       this.StorageService.sharingCurrentSection$.subscribe(
         (section)=>{
+          
           if(section==="sharedWithMe"){
+            console.log(3);
+            
            this.getSharedWithMeFolders()
         }})
       
-    }, 0);
+    }, 10);
   }
 
 
   getSharedWithMeFolders(){
-    this.SharedWithService.getSharedWithMeFolders().subscribe(
-      (res:any)=>{
-        this.SharedWithService.folders = res
-        this.SharedWithService?.files.splice(0)
-        
-      },
-      (err)=>{
-
-      }
-     )
+    setTimeout(() => {
+      this.SharedWithService.getSharedWithMeFolders().subscribe(
+        (res:any)=>{
+          console.log('resfolders: ', res);
+          this.SharedWithService.folders = res
+          this.SharedWithService.files?.splice(0)
+          
+        },
+        (err)=>{
+  
+        }
+       )
+      
+    }, 0);
       
     }
 }
