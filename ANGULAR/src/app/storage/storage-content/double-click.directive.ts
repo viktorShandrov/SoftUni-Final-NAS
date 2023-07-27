@@ -47,6 +47,7 @@ export class DoubleClickDirective {
           e.preventDefault()
           const x = e.clientX
           const y = e.clientY
+
           this.renderer.setAttribute(this.StorageService.rightClickMenu.nativeElement,"element-type",parentElement.classList[0])
           this.renderer.setAttribute(this.StorageService.rightClickMenu.nativeElement,"element-id",parentElement.getAttribute("_id")!)
           this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","flex")
