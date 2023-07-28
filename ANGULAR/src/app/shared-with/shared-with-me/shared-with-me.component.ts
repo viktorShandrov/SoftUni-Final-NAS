@@ -31,6 +31,7 @@ constructor(
         (section)=>{
           console.log("section 34",section)
           if(section==="sharedWithMe"){
+            console.log(true)
            this.getSharedWithMeFolders()
         }})
 
@@ -54,11 +55,11 @@ constructor(
 
         },
         (err)=>{
-
+          console.log(err)
         }
        )
 
-    }, 0);
+    }, 100);
 
     }
 }
