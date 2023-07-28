@@ -40,8 +40,16 @@ form{
 .shareContainer h5{
     margin: 0;
     background-color: chocolate;
+  padding: 5px 0px;
+
 }
 .shareContainer p{
-    text-align: center;
     font-size: 12px;
+    text-align: center;
+
+}
+.shareContainer button{
+  all: unset;
+  background-color: #aa4705;
+text-align: center;
 }

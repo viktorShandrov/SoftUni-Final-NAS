@@ -32,7 +32,7 @@ export class StorageNavigationComponent implements AfterViewInit {
   dirs!: Dirs[];
   completions!: Completions[];
   rootId!: String;
-  
+
   constructor(
     private renderer: Renderer2,
     private http: HttpClient,
@@ -43,7 +43,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     private SharedWithService: SharedWithService,
     private location: Location
     ) {}
-    
+
     ngAfterViewInit() {
       let urlTarget = "storage"
       const rootId = localStorage.getItem("rootId")
@@ -70,9 +70,9 @@ export class StorageNavigationComponent implements AfterViewInit {
             this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
             this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
             this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
-            this.StorageService.observer.next("storage")
+            this.StorageService.sharingCurrentSection$.next("storage")
             urlTarget="storage"
-          
+
           }, 0);
         const folderId = match[1];
         this.StorageService.currentFolder = folderId;
@@ -109,7 +109,7 @@ export class StorageNavigationComponent implements AfterViewInit {
           },
           (error)=>{
             console.log(error.error.message);
-            
+
           })
         // enviroments.initialLoad = false;
       }else if(match[1]==="dashboard"){
@@ -117,29 +117,28 @@ export class StorageNavigationComponent implements AfterViewInit {
         urlTarget="dashboard"
         console.log('urlTarget1: ', urlTarget);
         setTimeout(()=>{
-          this.StorageService.observer.next("dashboard")
+          this.StorageService.sharingCurrentSection$.next("dashboard")
           this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
         },1)
-      }else if(match[1]==="sharedWithMe"){      
-        this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]);
-        // urlTarget="shared-with-me"
-        // setTimeout(()=>{
-          
-        //   console.log(' this.StorageService.observer.: ',  this.StorageService.observer);
-        //   this.StorageService.observer.next("shared-with-me")
-        //   this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
-        //   this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
-        //   this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
-        // },0)
+      }else if(match[1]==="sharedWithMe"){
+        // this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]);
+        urlTarget="shared-with-me"
+        setTimeout(()=>{
+
+          this.StorageService.sharingCurrentSection$.next("sharedWithMe")
+          this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
+          this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
+        },0)
 
       }else if(match[1]==="sharedWithUsers"){
+          // this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]);
         urlTarget="shared-with-users"
         setTimeout(()=>{
-          console.log('this.StorageService.observer: ', this.StorageService.observer);
-          this.StorageService.observer.next("sharedWithUsers")
+          this.StorageService.sharingCurrentSection$.next("sharedWithUsers")
           this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
@@ -163,7 +162,7 @@ export class StorageNavigationComponent implements AfterViewInit {
             urlTarget = "storage"
             setTimeout(() => {
               this.StorageService.currentFolder = match[1]
-              this.StorageService.observer.next("storage")
+              this.StorageService.sharingCurrentSection$.next("storage")
               this.StorageService.addEventListenersToCompletionElements(
                 this.completionDivsRefs,
                 this.dirs,
@@ -180,27 +179,27 @@ export class StorageNavigationComponent implements AfterViewInit {
               if(rootId){
                 this.StorageService.rootId=rootId
               }
-            this.StorageService.observer.next("dashboard")
+            this.StorageService.sharingCurrentSection$.next("dashboard")
           }, 0);
           urlTarget = "dashboard"
           }else if (match[1]==="sharedWithMe"){
-            setTimeout(() => {        
+            setTimeout(() => {
               const rootId = localStorage.getItem("rootId")
               if(rootId){
                 this.StorageService.rootId=rootId
               }
-              
-              this.StorageService.observer.next("sharedWithMe")
+
+              this.StorageService.sharingCurrentSection$.next("sharedWithMe")
           }, 0);
           urlTarget = "sharedWithMe"
-          
+
           }else if (match[1]==="sharedWithUsers"){
             setTimeout(() => {
               const rootId = localStorage.getItem("rootId")
               if(rootId){
                 this.StorageService.rootId=rootId
               }
-            this.StorageService.observer.next("sharedWithUsers")
+            this.StorageService.sharingCurrentSection$.next("sharedWithUsers")
           }, 0);
           urlTarget = "sharedWithUsers"
           }
@@ -210,21 +209,21 @@ export class StorageNavigationComponent implements AfterViewInit {
         if(urlTarget==="storage"){
           setTimeout(() => {
             this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
-            
+
             this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
             this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
             this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
-            
+
           }, 0);
           const urlBar = this.urlBarInput.nativeElement;
           const searchCompletion = this.searchCompletion.nativeElement;
-      
+
           this.StorageService.addEventListenersToCompletionSection(
             urlBar,
             searchCompletion,
             this.renderer
           );
-      
+
           this.completions = this.StorageService.completions;
           setTimeout(() => {
             this.StorageService.addEventListenerToTheMainRootBtn(
@@ -242,7 +241,7 @@ export class StorageNavigationComponent implements AfterViewInit {
               this.router
             );
           }, 100);
-    
+
         }else if(urlTarget ==="dashboard"){
           setTimeout(() => {
             this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
@@ -271,20 +270,20 @@ export class StorageNavigationComponent implements AfterViewInit {
     if(urlTarget==="storage"){
       setTimeout(() => {
         console.log(2);
-        
+
         this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","block")
         this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
-        
+
       }, 0);
       const urlBar = this.urlBarInput.nativeElement;
       const searchCompletion = this.searchCompletion.nativeElement;
-  
+
       this.StorageService.addEventListenersToCompletionSection(
         urlBar,
         searchCompletion,
         this.renderer
       );
-  
+
       this.completions = this.StorageService.completions;
       setTimeout(() => {
         this.StorageService.addEventListenerToTheMainRootBtn(

@@ -14,5 +14,8 @@
             <h3>{{file.fileName+"."+file.type}}</h3>
         </div>
     </div>
-        </div>
+</div>
+<div *ngIf="!haveFolder">
+  <p>There are no shared with you folders</p>
+</div>
 

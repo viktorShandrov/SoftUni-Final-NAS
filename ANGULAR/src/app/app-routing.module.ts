@@ -14,6 +14,11 @@ import { SharedWithUsersComponent } from './shared-with/shared-with-users/shared
 
 const routes: Routes = [
   {
+    path:"",
+    pathMatch: "full",
+    redirectTo:"/users/(user-view:login)"
+  },
+  {
     path: 'users',
     component: UserLoginRegisterViewComponent,
     children: [

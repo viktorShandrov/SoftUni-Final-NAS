@@ -10,7 +10,7 @@ import { SharedWithService } from '../shared-with.service';
 })
 export class SharedWithMeComponent implements AfterViewInit {
   @ViewChild("backBtn") backBtn!:ElementRef
-  haveFolder:Boolean = true
+  haveFolder:Boolean = false
 constructor(
   private StorageService:StorageService,
   public SharedWithService:SharedWithService,
@@ -26,17 +26,16 @@ constructor(
     })
 
 
-    setTimeout(() => {
       this.StorageService.sharingCurrentSection$.subscribe(
         (section)=>{
-          
+          console.log("section 34",section)
           if(section==="sharedWithMe"){
-            console.log(3);
-            
+            console.log(true)
            this.getSharedWithMeFolders()
         }})
-      
-    }, 10);
+    setTimeout(() => {
+
+    }, 100);
   }
 
 
@@ -44,17 +43,23 @@ constructor(
     setTimeout(() => {
       this.SharedWithService.getSharedWithMeFolders().subscribe(
         (res:any)=>{
-          console.log('resfolders: ', res);
-          this.SharedWithService.folders = res
-          this.SharedWithService.files?.splice(0)
-          
+          if(res.length>0){
+            this.haveFolder = true
+            this.SharedWithService.folders = res
+            this.SharedWithService.files?.splice(0)
+          }else{
+            this.haveFolder = false
+          }
+
+
+
         },
         (err)=>{
-  
+          console.log(err)
         }
        )
-      
-    }, 0);
-      
+
+    }, 100);
+
     }
 }

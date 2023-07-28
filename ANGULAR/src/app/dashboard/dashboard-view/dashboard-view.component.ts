@@ -71,13 +71,12 @@ export class DashboardViewComponent {
     return `${volume.toFixed(2)}${mesure}`
   }
   ngAfterViewInit() {
-    setTimeout( () => {
       this.StorageService.sharingCurrentSection$.subscribe(async (section)=>{
-        
+
         console.log('section: ', section);
         if(section==="dashboard"){
           console.log(10);
-          
+
           await this.DashboardService.getTopExtData(this.extQ, this.Renderer2);
           this.topExt = this.DashboardService.topExt;
           await this.DashboardService.getTopFoldersData(
@@ -87,13 +86,14 @@ export class DashboardViewComponent {
           this.topFolders = this.DashboardService.topFolders;
           await this.DashboardService.getStorageVolumeInfo();
           this.storageVolume = this.DashboardService.storageVolume/1000000000;
-          
+
           this.usedStorage = this.transform(this.DashboardService.usedStorage)
           this.storageLeft = Number((this.DashboardService.storageLeft/1000000000).toFixed(2));
 
         }
 
       })
+    setTimeout( () => {
     }, 0);
   }
 }
