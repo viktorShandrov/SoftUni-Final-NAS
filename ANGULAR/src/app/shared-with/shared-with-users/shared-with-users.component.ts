@@ -15,8 +15,6 @@ export class SharedWithUsersComponent implements AfterViewInit {
     private StorageService:StorageService,
     ){}
   ngAfterViewInit(){
-    setTimeout(() => {
-
       this.StorageService.sharingCurrentSection$.subscribe(
         (section)=>{
           console.log('section11111111: ', section);
@@ -35,6 +33,8 @@ export class SharedWithUsersComponent implements AfterViewInit {
           }
         }
       )
+    setTimeout(() => {
+
     }, 100);
   }
 }

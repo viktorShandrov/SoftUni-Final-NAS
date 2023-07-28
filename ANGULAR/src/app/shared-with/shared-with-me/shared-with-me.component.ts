@@ -26,7 +26,6 @@ constructor(
     })
 
 
-    setTimeout(() => {
       this.StorageService.sharingCurrentSection$.subscribe(
         (section)=>{
           console.log("section 34",section)
@@ -34,6 +33,7 @@ constructor(
             console.log(true)
            this.getSharedWithMeFolders()
         }})
+    setTimeout(() => {
 
     }, 100);
   }

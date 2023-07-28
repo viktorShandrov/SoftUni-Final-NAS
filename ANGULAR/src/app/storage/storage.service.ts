@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PopupService } from '../shared/popup/popup.service';
 import { HeaderService } from '../core/header/header.service';
-import { Observable, Observer } from 'rxjs';
+import {Observable, Observer, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +26,8 @@ export class StorageService {
   filesQL!:QueryList<ElementRef>
   files: file[] = [];
   folders: folder[] = [];
-  observer!:Observer<string> 
-  sharingCurrentSection$:Observable<string> = new Observable((observer)=>{
-    this.observer=observer
-  })
+  // observer!:Observer<string>
+  sharingCurrentSection$:Subject<string> = new Subject<string>()
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -214,7 +212,7 @@ export class StorageService {
         };
       }
     }
-  
+
 
 
   addEventListenersToCompletionElements(
