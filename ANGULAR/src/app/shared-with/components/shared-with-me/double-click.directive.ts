@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/storage/storage.service';
-import { SharedWithService } from '../shared-with.service';
+import { SharedWithService } from '../../services/shared-with.service';
 
 @Directive({
   selector: '[appSharedFolderDoubleClick]',
@@ -62,7 +62,7 @@ export class DoubleClickDirective {
         ).subscribe(
           (files: any) => {
             this.renderer.setStyle(this.SharedWithService.backBtn.nativeElement,"display","block")
-          
+
             this.SharedWithService.folders.splice(0);
             this.SharedWithService.files = files;
           },

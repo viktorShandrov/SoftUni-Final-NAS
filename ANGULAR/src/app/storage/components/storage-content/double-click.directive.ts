@@ -7,7 +7,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 
 @Directive({
   selector: '[appFolderDoubleClick]',
@@ -40,7 +40,7 @@ export class DoubleClickDirective {
       this.renderer.setStyle(this.StorageService.createFolderOrFileMenu.nativeElement,"display","none")
       this.renderer.setStyle(this.StorageService.shareContainer.nativeElement,"display","none")
 
-      
+
 
 
         parentElement.addEventListener("contextmenu",(e)=>{
@@ -84,7 +84,7 @@ export class DoubleClickDirective {
         }
       } else if (parentElement.classList.contains('file')) {
         console.log("file");
-        
+
         this.StorageService.getFileDownload(parentElement.getAttribute("_id") as string)
       }
     }

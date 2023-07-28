@@ -1,6 +1,6 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { ElementRef, Injectable } from '@angular/core';
-import { file, files, folder, sharedWithUsersFolderIn } from '../shared/types';
+import { file, files, folder, sharedWithUsersFolderIn } from '../../shared/types';
 import { Observable, Observer } from 'rxjs';
 
 
@@ -12,8 +12,8 @@ export class SharedWithService {
   constructor(
     private HttpClient:HttpClient
   ) { }
-  folders!:folder[] 
-  files!:file[] 
+  folders!:folder[]
+  files!:file[]
   backBtn!:ElementRef
   autorisedWihtUsers!:sharedWithUsersFolderIn[]
   getSharedWithMeFolders(){

@@ -1,6 +1,6 @@
 
 import { Component,AfterViewInit, ViewChild, ElementRef, Renderer2, ViewChildren, QueryList } from '@angular/core';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/popup/popup.service';
 
@@ -13,8 +13,8 @@ import { PopupService } from 'src/app/shared/popup/popup.service';
 export class CreateFolderOrFileMenuComponent {
   @ViewChild("menu") menu!:ElementRef
   @ViewChildren("option") options!:QueryList<ElementRef>
-  
-  
+
+
   constructor(
     public StorageService:StorageService,
     public PopupService:PopupService,

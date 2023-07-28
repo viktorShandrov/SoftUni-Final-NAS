@@ -9,7 +9,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { file, folder } from 'src/app/shared/types';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-storage-content',
@@ -32,14 +32,14 @@ export class StorageContentComponent implements AfterViewInit {
   ) {
   }
 
-  
+
   ngAfterViewInit(): void {
     this.folders =this.StorageService.folders;
     this.files = this.StorageService.files;
 
     this.StorageService.foldersQL = this.foldersRef
     this.StorageService.filesQL = this.filesRef
-    
+
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id') as String;
       if(id!=="dashboard"&&id!=="sharedWithMe"&&id!=="sharedWithUsers"){
@@ -53,7 +53,7 @@ export class StorageContentComponent implements AfterViewInit {
       .get(`api/files/${dirId}/getDirectory`)
       .subscribe((folder: any) => {
         console.log(folder);
-        
+
         if (folder) {
           this.haveFolder = true;
           this.StorageService.completions.splice(0);
@@ -69,7 +69,7 @@ export class StorageContentComponent implements AfterViewInit {
           for (const fileComponent of folder.fileComponents) {
             this.files.push(fileComponent);
           }
-          
+
           setTimeout(() => {
             this.addEventListenerOnFilesAndFoldersToBeClickable(
               this.foldersRef,

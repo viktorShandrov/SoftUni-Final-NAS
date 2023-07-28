@@ -7,10 +7,11 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { topExtI, topFolders } from '../../shared/types';
-import { DashboardService } from '../dashboard.service';
+import { topExtI, topFolders } from '../../../shared/types';
+
 import { StorageService } from 'src/app/storage/storage.service';
-import { StorageNavigationComponent } from 'src/app/storage/storage-navigation/storage-navigation.component';
+import {DashboardService} from "../../services/dashboard.service";
+import { StorageNavigationComponent } from 'src/app/storage/components/storage-navigation/storage-navigation.component';
 import { CommunicationService } from 'src/app/shared/communication-module/communication.service';
 
 @Component({

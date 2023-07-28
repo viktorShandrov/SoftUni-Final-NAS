@@ -1,9 +1,9 @@
 import { ElementRef, Injectable, QueryList, Renderer2 } from '@angular/core';
-import { topExtI, topFolders } from '../shared/types';
+import { topExtI, topFolders } from '../../shared/types';
 import { HttpClient } from '@angular/common/http';
-import { StorageService } from '../storage/storage.service';
-import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
-import { HeaderService } from '../core/header/header.service';
+import { StorageService } from '../../storage/storage.service';
+import { DashboardViewComponent } from '../components/dashboard-view/dashboard-view.component';
+import { HeaderService } from '../../core/header/header.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,12 @@ export class DashboardService {
     private HeaderService:HeaderService,
   ) { }
 
-  
+
    getTopExtData(extQ:QueryList<ElementRef>,Renderer2:Renderer2){
 
     return new Promise((resolve,reject)=>{
       setTimeout(() => {
-        this.HttpClient.get(`api/files/${this.StorageService.rootId}/topFileExts`).subscribe(  
+        this.HttpClient.get(`api/files/${this.StorageService.rootId}/topFileExts`).subscribe(
         (res:any)=>{
            const maxHeight = 200; //px
            this.topExt=res.topFileExts
@@ -47,7 +47,7 @@ export class DashboardService {
           reject(0)
          }
        )
-        
+
       }, 0);
 
     })
@@ -55,7 +55,7 @@ export class DashboardService {
    getTopFoldersData(foldersQ:QueryList<ElementRef>,Renderer2:Renderer2){
 
     return new Promise((resolve,reject)=>{
-      this.HttpClient.get(`api/files/${this.StorageService.rootId}/getTopFolders`).subscribe(  
+      this.HttpClient.get(`api/files/${this.StorageService.rootId}/getTopFolders`).subscribe(
       (res:any)=>{
          const maxHeight = 200; //px
          this.topFolders=res.topFolders

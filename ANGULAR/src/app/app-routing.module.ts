@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { StorageViewComponent } from './storage/storage-view/storage-view.component';
-import { StorageContentComponent } from './storage/storage-content/storage-content.component';
-import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
-import { UserLoginRegisterViewComponent } from './user/user-login-register-view/user-login-register-view.component';
-import { LoginComponent } from './user/login/login.component';
-import { RegisterComponent } from './user/register/register.component';
+import { StorageViewComponent } from './storage/components/storage-view/storage-view.component';
+import { StorageContentComponent } from './storage/components/storage-content/storage-content.component';
+import { UserLoginRegisterViewComponent } from './user/components/user-login-register-view/user-login-register-view.component';
+import { LoginComponent } from './user/components/login/login.component';
+import { RegisterComponent } from './user/components/register/register.component';
 import { AuthGuard } from './authenticated.guard';
-import { SharedWithMeComponent } from './shared-with/shared-with-me/shared-with-me.component';
-import { SharedWithUsersComponent } from './shared-with/shared-with-users/shared-with-users.component';
+import { SharedWithMeComponent } from './shared-with/components/shared-with-me/shared-with-me.component';
+import { SharedWithUsersComponent } from './shared-with/components/shared-with-users/shared-with-users.component';
+import {DashboardViewComponent} from "./dashboard/components/dashboard-view/dashboard-view.component";
 
 
 const routes: Routes = [

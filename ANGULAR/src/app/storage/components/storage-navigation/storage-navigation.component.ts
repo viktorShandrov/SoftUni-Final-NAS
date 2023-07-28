@@ -10,12 +10,12 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Dirs, Completions } from 'src/app/shared/types';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 import { enviroments } from 'src/app/shared/enviroment';
 import { Location } from '@angular/common';
 import { HeaderService } from 'src/app/core/header/header.service';
 import { Observable, Observer } from 'rxjs';
-import { SharedWithService } from 'src/app/shared-with/shared-with.service';
+import { SharedWithService } from 'src/app/shared-with/services/shared-with.service';
 
 @Component({
   selector: 'app-storage-navigation',

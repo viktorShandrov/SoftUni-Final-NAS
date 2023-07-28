@@ -2,7 +2,7 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { PopupService } from 'src/app/shared/popup/popup.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 import { HeaderService } from 'src/app/core/header/header.service';
 
 @Component({
@@ -90,7 +90,7 @@ export class AddFileComponent {
                 'parentFolderId',
                 this.StorageService.currentFolder
               );
-   
+
               this.http
                 .post('api/files/upload', formData, {
                   reportProgress: true,
@@ -112,7 +112,7 @@ export class AddFileComponent {
                     }else{
                       //returns the newFile info
                       this.StorageService.files.push(event.body)
-                      
+
                       this.http
                       .get(`api/files/${this.StorageService.rootId}/getOnlyRootInfo`)
                       .subscribe((response:any) => {
@@ -121,12 +121,12 @@ export class AddFileComponent {
                       },
                       (error)=>{
                         console.log(error.error.message);
-                        
+
                       })
 
                       this.PopupService.hidePopup()
                     }
-                      
+
                   }
                 });
             },

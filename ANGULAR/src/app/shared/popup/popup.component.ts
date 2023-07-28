@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { PopupService } from './popup.service';
-import { AddFileComponent } from 'src/app/storage/add-file/add-file.component';
+import { AddFileComponent } from 'src/app/storage/components/add-file/add-file.component';
 
 @Component({
   selector: 'app-popup',

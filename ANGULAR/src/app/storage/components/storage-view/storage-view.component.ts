@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild,AfterViewInit } from '@angular/core';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-storage-view',
@@ -15,9 +15,9 @@ constructor(
   private StorageService: StorageService,
   private renderer: Renderer2,
 ){
-  
+
   setTimeout(() => {
-    
+
     this.renderer.listen(this.wholeStorage.nativeElement,"click",(e)=>{
       if(e.target.classList.contains("wholeStorage")||e.target.classList.contains("storage")){
         this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
@@ -42,7 +42,7 @@ constructor(
       this.renderer.setStyle(this.StorageService.createFolderOrFileMenu.nativeElement,"display","none")
     })
   }, 0);
-  
+
 }
 
 
@@ -51,7 +51,7 @@ ngAfterViewInit(){
   this.StorageService.dashboard=this.dashboard
   this.StorageService.sharedWithMe=this.sharedWithMe
   this.StorageService.sharedWithUsers=this.sharedWithUsers
-  
+
 
 }
 }

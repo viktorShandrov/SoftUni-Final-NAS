@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PopupService } from 'src/app/shared/popup/popup.service';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-add-folder',
@@ -20,9 +20,9 @@ export class AddFolderComponent {
     });
   }
   onFormSubmit() {
-    
+
     if (this.folderForm.get('folderName')?.value.length > 0) {
-      
+
       this.StorageService.createFolder(this.folderForm.get('folderName')!.value);
     }
   }

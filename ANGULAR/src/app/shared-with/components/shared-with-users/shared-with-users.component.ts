@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { SharedWithService } from '../shared-with.service';
+import { SharedWithService } from '../../services/shared-with.service';
 import { StorageService } from 'src/app/storage/storage.service';
 import { timeout } from 'rxjs';
 
