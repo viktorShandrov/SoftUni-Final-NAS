@@ -31,12 +31,12 @@ export class RightClickMenuComponent {
         // this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
           const x = e.clientX
           const y = e.clientY
-          
+
           this.renderer.setAttribute(this.StorageService.shareContainer.nativeElement,"folder-id",this.StorageService.rightClickMenu.nativeElement.getAttribute("element-id"))
-  
+
           this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"display","flex")
-          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"top",y/2+"px")
-          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"left",x/2+"px")
+          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"top",y+"px")
+          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"left",x+"px")
         })
   }
   onSubmit(form:any){
@@ -53,6 +53,6 @@ export class RightClickMenuComponent {
         }
       )
     }
-    
+
   }
 }

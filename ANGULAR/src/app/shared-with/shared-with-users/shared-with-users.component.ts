@@ -16,25 +16,25 @@ export class SharedWithUsersComponent implements AfterViewInit {
     ){}
   ngAfterViewInit(){
     setTimeout(() => {
-      
+
       this.StorageService.sharingCurrentSection$.subscribe(
         (section)=>{
-          console.log('section: ', section);
+          console.log('section11111111: ', section);
           if(section==="sharedWithUsers"){
-            
+
             setTimeout(() => {
               this.SharedWithService.getSharedWithUsersFolders().subscribe(
                 (res:any)=>{
                   console.log('res: ', res);
                   this.SharedWithService.autorisedWihtUsers = res
-                 
+
                 }
               )
-              
+
             }, 0);
           }
         }
       )
-    }, 10);
+    }, 100);
   }
 }
