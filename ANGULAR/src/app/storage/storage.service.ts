@@ -214,6 +214,20 @@ export class StorageService {
     }
 
 
+  getRootInfoForUpdatingHeaderStorageInfo() {
+    this.http
+      .get(`api/files/${this.rootId}/getOnlyRootInfo`)
+      .subscribe((response: any) => {
+          const {folder} = response
+          this.HeaderService.updateUsedStorage(folder.storageVolume, folder.usedStorage)
+        },
+        (error) => {
+          console.log(error.error.message);
+          return error
+        })
+  }
+
+
 
   addEventListenersToCompletionElements(
     completionDivs: QueryList<ElementRef>,

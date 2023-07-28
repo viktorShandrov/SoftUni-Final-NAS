@@ -100,17 +100,7 @@ export class StorageNavigationComponent implements AfterViewInit {
               }
             }, 0);
           });
-
-          this.http
-          .get(`api/files/${this.rootId}/getOnlyRootInfo`)
-          .subscribe((response:any) => {
-            const {folder} = response
-            this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
-          },
-          (error)=>{
-            console.log(error.error.message);
-
-          })
+        this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
         // enviroments.initialLoad = false;
       }else if(match[1]==="dashboard"){
 
@@ -133,7 +123,7 @@ export class StorageNavigationComponent implements AfterViewInit {
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
         },0)
-
+          this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
       }else if(match[1]==="sharedWithUsers"){
           // this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]);
         urlTarget="shared-with-users"
@@ -143,6 +133,7 @@ export class StorageNavigationComponent implements AfterViewInit {
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.sharedWithMe.nativeElement,"display","none")
         },0)
+          this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
 
       }
     }
@@ -188,10 +179,10 @@ export class StorageNavigationComponent implements AfterViewInit {
               if(rootId){
                 this.StorageService.rootId=rootId
               }
-
               this.StorageService.sharingCurrentSection$.next("sharedWithMe")
           }, 0);
           urlTarget = "sharedWithMe"
+
 
           }else if (match[1]==="sharedWithUsers"){
             setTimeout(() => {
