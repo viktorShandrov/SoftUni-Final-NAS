@@ -6,7 +6,7 @@ header {
   justify-content: space-around;
   align-items: center;
   position: relative;
-  
+
 }
 header .logo {
   width: 70px;
@@ -23,6 +23,23 @@ header .logo i {
 a{
     text-decoration: none;
     color: black;
+}
+.lightDarkModeSlider{
+  height: 20px;
+  width: 40px;
+  background-color: white;
+  border-radius: 100px;
+  background-color: var(--BGcolor);
+  cursor: pointer;
+  transition: 1s;
+
+}
+.lightDarkModeBtn{
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 1s;
 }
 
 /* header .profile {
@@ -44,7 +61,7 @@ header .user-settings-menu {
 header .user-settings-menu .option {
   padding: 5px 10px;
   cursor: pointer;
-  
+
 }
 header .user-settings-menu p {
     margin: 0;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from '../register/register.service';
 import { LoginService } from './login.service';
@@ -9,11 +9,12 @@ import { LoginService } from './login.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  formGroup: FormGroup; 
+  formGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private LoginService:LoginService
+    private LoginService:LoginService,
+    private renderer:Renderer2
     ) {
     this.formGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -25,11 +26,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
-    
+
     if (this.formGroup.valid) {
       const email = this.formGroup.get("email")!.value
       const password = this.formGroup.get("password")!.value
-      this.LoginService.login(email,password)
-    } 
+      this.LoginService.login(email,password,this.renderer)
+    }
   }
 }

@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
-    --header-height:70px
+    --header-height:70px;
+    --BGcolor:white;
+    --textColor:black;
+}
+.darkMode{
+  --BGcolor: #272525;
+  --textColor:white;
 }
 
 

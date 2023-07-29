@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 import { HeaderService } from 'src/app/core/header/header.service';
 import { Observable, Observer } from 'rxjs';
 import { SharedWithService } from 'src/app/shared-with/shared-with.service';
+import {toggleDarkMode} from "../../shared/utils";
 
 @Component({
   selector: 'app-storage-navigation',
@@ -59,6 +60,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     if (enviroments.initialLoad) {
       console.log('initialLoad');
        enviroments.initialLoad = false;
+      toggleDarkMode(this.renderer)
       const fullUrl = window.location.href;
       const regex = /storage-router-outlet:(\w+)/;
       const match = fullUrl.match(regex);

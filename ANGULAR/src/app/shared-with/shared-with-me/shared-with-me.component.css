@@ -3,10 +3,12 @@
     display: grid;
     padding: 50px;
     grid-template-columns: repeat(auto-fit,minmax(100px,150px));
-   grid-template-rows: repeat(auto-fit,minmax(100px,150px)); 
+   grid-template-rows: repeat(auto-fit,minmax(100px,150px));
    gap: 20px;
    overflow-y: scroll;
-   
+  background-color: var(--BGcolor);
+  transition: 1s;
+
 }
 
 .storage .cell{
@@ -21,10 +23,14 @@
 .storage .cell h3{
     text-overflow: ellipsis;
     margin: 5px 0;
+  color: var(--textColor);
+  transition: 1s;
 }
 
  .storage .directory i, .storage .file i{
     font-size: 720%;
+   color: var(--textColor);
+   transition: 1s;
 }
 button{
     /* position: absolute; */

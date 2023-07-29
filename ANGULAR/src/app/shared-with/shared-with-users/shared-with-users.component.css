@@ -2,10 +2,16 @@ table{
 width: 100%;
 border-spacing: 0;
 }
+p , td{
+  color: var(--textColor);
+  transition: 1s;
+}
 .tableWrapper{
     width: 100%;
     overflow-y: scroll;
     height: 100vh;
+  background-color: var(--BGcolor);
+  transition: 1s;
 }
 .cellName p, .email p {
     margin-left: 15px;
@@ -13,6 +19,8 @@ border-spacing: 0;
 
 td{
     border: 0.01cm solid black;
+  border-color: var(--textColor);
+  transition: 1s;
 }
 tbody tr>*{
     width: 33.3%;

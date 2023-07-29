@@ -3,7 +3,10 @@
         <i class="fa-solid fa-database"></i>
     </div>
     <app-header-status-bar></app-header-status-bar>
-    
+
+  <div class="lightDarkModeSlider" (click)="toggleDarkMode(btn)">
+    <button #btn  class="lightDarkModeBtn"></button>
+  </div>
         <div class="user-settings-menu">
         <a
             [routerLink]="['/users', { outlets: { 'user-view': 'login' } }]">
@@ -11,7 +14,7 @@
                     <p>Logout</p>
                 </div>
         </a>
-            
+
         </div>
 
 
