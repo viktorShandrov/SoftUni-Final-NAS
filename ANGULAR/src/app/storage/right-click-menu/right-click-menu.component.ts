@@ -13,6 +13,9 @@ export class RightClickMenuComponent {
   @ViewChild("menu") menu!:ElementRef
   @ViewChild("optionShare") optionShare!:ElementRef
   @ViewChild("shareContainer") shareContainer!:ElementRef
+  @ViewChild("onFileShareAttemptMessageContainer") onFileShareAttemptMessageContainer!:ElementRef
+
+  elementTypeDirectory:boolean = true
   // @ViewChildren("option") options!:ElementRef[]
   formGroup:FormGroup = this.formBuilder.group({
     email:["",[Validators.required,Validators.email]]
@@ -28,15 +31,27 @@ export class RightClickMenuComponent {
     this.StorageService.shareContainer = this.shareContainer
 
     this.optionShare.nativeElement.addEventListener("click",(e:MouseEvent)=>{
-        // this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
-          const x = e.clientX
-          const y = e.clientY
+      const shareMenu = this.menu.nativeElement as HTMLElement
+      const elementType = shareMenu.getAttribute("element-type")
+              const x = e.clientX
+              const y = e.clientY
+          if(elementType==="directory"){
 
-          this.renderer.setAttribute(this.StorageService.shareContainer.nativeElement,"folder-id",this.StorageService.rightClickMenu.nativeElement.getAttribute("element-id"))
+            // this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
 
-          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"display","flex")
-          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"top",y+"px")
-          this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"left",x+"px")
+              this.renderer.setAttribute(this.StorageService.shareContainer.nativeElement,"folder-id",this.StorageService.rightClickMenu.nativeElement.getAttribute("element-id"))
+
+              this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"display","flex")
+              this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"top",y+"px")
+              this.renderer.setStyle( this.StorageService.shareContainer.nativeElement,"left",x+"px")
+          }else if(elementType==="file"){
+              this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","flex")
+              this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"top",y+"px")
+              this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"left",x+"px")
+            setTimeout(()=>{
+              this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","none")
+            },1500)
+          }
         })
   }
   onSubmit(form:any){

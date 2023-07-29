@@ -1,4 +1,4 @@
-.menu,.shareContainer{
+.menu,.shareContainer,.onFileShareAttemptMessage{
     display:  none;
     flex-direction: column;
     position: absolute ;
@@ -7,6 +7,10 @@
     border: 0.1cm solid tan;
     border-top-left-radius: 0;
     transition: 0.3s;
+}
+.onFileShareAttemptMessage{
+  padding: 10px;
+  background-color: red;
 }
 .option {
     padding: 7px 5px;
