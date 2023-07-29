@@ -237,7 +237,9 @@ export class StorageService {
     renderer: Renderer2,
     router: Router
   ) {
+
     for (const div of completionDivs) {
+
       renderer.listen(div.nativeElement, 'click', (e: any) => {
         const id = div.nativeElement.getAttribute('id');
         dirs.push({ name: div.nativeElement.textContent, _id: id });

@@ -164,7 +164,7 @@ export class StorageNavigationComponent implements AfterViewInit {
                 this.renderer,
                 this.router
               );
-            }, 100);
+            }, 0);
 
           }else if (match[1]==="dashboard"){
             setTimeout(() => {
