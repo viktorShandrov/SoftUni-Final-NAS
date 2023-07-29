@@ -1,10 +1,13 @@
 <div class="navigation">
     <div class="back-and-further-btns">
-        <div class="back">
+        <div #backBtn class="back">
              <i class="fa-solid fa-chevron-left"></i>
         </div>
-        <div class="further">
-            <i class="fa-solid fa-chevron-right"></i>
+        <div #sortBtn class="sort">
+          <i class="fa-solid fa-arrow-down-z-a"></i>
+        </div>
+      <div (click)="toggleViewStructure(toggleViewIcon)"  class="toggleView">
+      <i #toggleViewIcon class="fa-solid fa-table-list"></i>
         </div>
     </div>
     <div class="urlBar">

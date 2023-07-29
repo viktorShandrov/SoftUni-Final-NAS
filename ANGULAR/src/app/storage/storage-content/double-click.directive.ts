@@ -27,7 +27,7 @@ export class DoubleClickDirective {
     this.clicks++;
     const element = event.target as HTMLElement;
 
-    const parentElement = element.parentElement as HTMLElement;
+    let parentElement = element.parentElement as HTMLElement;
 
     const parentParentElement = (element.parentElement as HTMLElement)
       .parentElement as HTMLElement;
@@ -40,7 +40,7 @@ export class DoubleClickDirective {
       this.renderer.setStyle(this.StorageService.createFolderOrFileMenu.nativeElement,"display","none")
       this.renderer.setStyle(this.StorageService.shareContainer.nativeElement,"display","none")
 
-      
+
 
 
         parentElement.addEventListener("contextmenu",(e)=>{
@@ -56,8 +56,12 @@ export class DoubleClickDirective {
         })
 
     } else if (this.clicks === 2) {
+      if(parentElement.classList.value===""){
+        parentElement = parentParentElement
+      }
+
       if (parentElement.classList.contains('directory')) {
-        if (!parentParentElement.classList.contains('storage')) {
+        if (!parentParentElement.classList.contains('storage')&&parentParentElement.classList.value!=="") {
           this.StorageService.dirs.push({
             name: parentParentElement.textContent as string,
             _id: parentElement.getAttribute('_id') as string,
@@ -84,7 +88,7 @@ export class DoubleClickDirective {
         }
       } else if (parentElement.classList.contains('file')) {
         console.log("file");
-        
+
         this.StorageService.getFileDownload(parentElement.getAttribute("_id") as string)
       }
     }

@@ -17,6 +17,7 @@ import { HeaderService } from 'src/app/core/header/header.service';
 import { Observable, Observer } from 'rxjs';
 import { SharedWithService } from 'src/app/shared-with/shared-with.service';
 import {toggleDarkMode} from "../../shared/utils";
+import {StorageContentComponent} from "../storage-content/storage-content.component";
 
 @Component({
   selector: 'app-storage-navigation',
@@ -29,6 +30,9 @@ export class StorageNavigationComponent implements AfterViewInit {
   @ViewChildren('completionDiv') completionDivsRefs!: QueryList<ElementRef>;
   @ViewChildren('dirDiv') dirDivsRefs!: QueryList<ElementRef>;
   @ViewChild('mainRootBtn') mainRootBtn!: ElementRef;
+  @ViewChild('backBtn') backBtn!: ElementRef;
+  @ViewChild('sortBtn') sortBtn!: ElementRef;
+  @ViewChild('toggleViewBtn') toggleViewBtn!: ElementRef;
 
   dirs!: Dirs[];
   completions!: Completions[];
@@ -42,10 +46,28 @@ export class StorageNavigationComponent implements AfterViewInit {
     private StorageService: StorageService,
     private HeaderService: HeaderService,
     private SharedWithService: SharedWithService,
+
     private location: Location
     ) {}
 
+    toggleViewStructure(i:HTMLElement){
+      const currentIElementClass = i.classList.item(1)
+      if(currentIElementClass === "fa-table-cells"){
+        //it switches to cell view
+        i.classList.replace("fa-table-cells","fa-table-list")
+        this.StorageService.storageViewCellStructure = true
+      }else if(currentIElementClass === "fa-table-list"){
+        //it switches to list view
+        i.classList.replace("fa-table-list","fa-table-cells")
+        this.StorageService.storageViewCellStructure = false
+      }
+      console.log(typeof this.StorageService.storageViewCellStructure)
+      }
     ngAfterViewInit() {
+
+
+
+
       let urlTarget = "storage"
       const rootId = localStorage.getItem("rootId")
       if(rootId){

@@ -24,6 +24,7 @@ export class StorageService {
   shareContainer!: ElementRef;
   foldersQL!:QueryList<ElementRef>
   filesQL!:QueryList<ElementRef>
+  storageViewCellStructure:Boolean = true
   files: file[] = [];
   folders: folder[] = [];
   // observer!:Observer<string>
@@ -124,7 +125,7 @@ export class StorageService {
     router: Router
   ) {
     renderer.listen(rootBtn.nativeElement, 'click', () => {
-      console.log('rootBtn.nativeElement: ', rootBtn.nativeElement);
+
       dirs.splice(0);
       router.navigate([
         '/storage',

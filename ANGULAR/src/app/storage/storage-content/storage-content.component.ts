@@ -21,25 +21,28 @@ export class StorageContentComponent implements AfterViewInit {
   files!: file[];
   haveFolder: Boolean = false;
 
+
+
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
   @ViewChildren('fileElement') filesRef!: QueryList<ElementRef>;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private StorageService: StorageService,
+    public StorageService: StorageService,
     private renderer: Renderer2
   ) {
   }
 
-  
+
   ngAfterViewInit(): void {
+
     this.folders =this.StorageService.folders;
     this.files = this.StorageService.files;
 
     this.StorageService.foldersQL = this.foldersRef
     this.StorageService.filesQL = this.filesRef
-    
+
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id') as String;
       if(id!=="dashboard"&&id!=="sharedWithMe"&&id!=="sharedWithUsers"){
@@ -52,14 +55,15 @@ export class StorageContentComponent implements AfterViewInit {
     this.http
       .get(`api/files/${dirId}/getDirectory`)
       .subscribe((folder: any) => {
-        console.log(folder);
-        
+
+
         if (folder) {
           this.haveFolder = true;
           this.StorageService.completions.splice(0);
           this.folders.splice(0);
           this.files.splice(0);
           for (const dirComponent of folder.dirComponents) {
+            console.log(dirComponent)
             this.folders.push(dirComponent);
             this.StorageService.completions.push({
               name: dirComponent.name,
@@ -69,7 +73,7 @@ export class StorageContentComponent implements AfterViewInit {
           for (const fileComponent of folder.fileComponents) {
             this.files.push(fileComponent);
           }
-          
+
           setTimeout(() => {
             this.addEventListenerOnFilesAndFoldersToBeClickable(
               this.foldersRef,

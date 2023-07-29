@@ -49,3 +49,21 @@
 .addFileOrDirBtn i{
     font-size: 70px;
 }
+
+
+
+ .tableCellView table{
+   margin: 0;
+   width: 100%;
+ }
+ .tableCellView tbody tr td:first-child{
+   text-align: center;
+ }
+ .tableCellView thead tr td:first-child{
+   width: 10px;
+ }
+ .tableCellView .tableListViewH3{
+   margin: 0;
+   padding: 10px;
+ }
+

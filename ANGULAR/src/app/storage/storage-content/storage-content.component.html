@@ -2,8 +2,8 @@
     <i class="fa-solid fa-circle-plus"></i>
 </div> -->
 
-<div *ngIf="haveFolder">
-    <div class="storage">
+<div class="haveFolder" *ngIf="haveFolder">
+    <div *ngIf="StorageService.storageViewCellStructure" class="storage">
         <div #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell" >
             <div class="directory" [attr._id]="folder._id">
                 <i class="fa-solid fa-folder"></i>
@@ -17,7 +17,29 @@
             <h3>{{file.fileName+"."+file.type}}</h3>
         </div>
     </div>
-    
+  <div *ngIf="!StorageService.storageViewCellStructure" class="tableCellView" >
+    <table>
+      <thead>
+      <tr>
+        <td>Type</td>
+        <td>Name</td>
+      </tr>
+
+      </thead>
+      <tbody>
+      <tr #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell directory" [attr._id]="folder._id">
+          <td><i class="fa-solid fa-folder"></i></td>
+          <td><h3 class="tableListViewH3">{{folder.name}}</h3></td>
+      </tr><tr #fileElement appFolderDoubleClick *ngFor="let file of files" class="cell file" [attr._id]="file._id">
+          <td><i class="fa-solid fa-file"></i></td>
+          <td><h3 class="tableListViewH3">{{file.fileName+"."+file.type}}</h3></td>
+      </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+
 </div>
 <div *ngIf="!haveFolder">
     <p>That folder doesn't exist or you are not authorised</p>

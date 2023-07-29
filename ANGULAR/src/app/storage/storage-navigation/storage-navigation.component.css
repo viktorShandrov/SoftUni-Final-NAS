@@ -2,18 +2,20 @@
     display: flex;
     /* height: 26px; */
 }
-  .navigation .back,  .navigation .further {
-    padding: 5px 15px;
-    display: flex;
-    justify-content: center;color: var(--textColor);
-    transition: 1s;
 
-}
   .root-nav-btn{
     border-right: #2f3434 solid;
   }
   .root-nav-btn:hover{
     cursor: pointer;
+  }
+
+  .navigation .back,.navigation .sort, .navigation .toggleView{
+    padding: 5px 15px;
+    justify-content: center;color: var(--textColor);
+    transition: 1s;
+    cursor: pointer;
+
   }
 
   .navigation .back-and-further-btns{
