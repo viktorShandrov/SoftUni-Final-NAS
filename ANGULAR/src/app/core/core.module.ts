@@ -3,12 +3,15 @@ import { CommonModule } from '@angular/common';
 import { AsideComponent } from './aside/aside.component';
 import { HeaderModule } from './header/header.module';
 import { RouterModule } from '@angular/router';
+import {LoaderComponent} from "./loader/loader.component";
+import {SharedModule} from "../shared/shared.module";
 
 
 
 @NgModule({
   declarations: [
-    AsideComponent
+    AsideComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -17,6 +20,7 @@ import { RouterModule } from '@angular/router';
   exports:[
     HeaderModule,
     AsideComponent,
+    LoaderComponent
   ]
 })
 export class CoreModule { }

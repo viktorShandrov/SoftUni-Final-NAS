@@ -2,6 +2,9 @@
     <i class="fa-solid fa-circle-plus"></i>
 </div> -->
 
+<app-loader *ngIf="isLoading"></app-loader>
+<div *ngIf="!isLoading">
+
 <div class="haveFolder" *ngIf="haveFolder">
     <div *ngIf="StorageService.storageViewCellStructure" class="storage">
         <div #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell" >
@@ -43,4 +46,5 @@
 </div>
 <div *ngIf="!haveFolder">
     <p>That folder doesn't exist or you are not authorised</p>
+</div>
 </div>

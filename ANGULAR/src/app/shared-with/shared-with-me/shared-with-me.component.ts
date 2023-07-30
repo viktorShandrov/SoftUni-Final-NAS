@@ -11,6 +11,8 @@ import { SharedWithService } from '../shared-with.service';
 export class SharedWithMeComponent implements AfterViewInit {
   @ViewChild("backBtn") backBtn!:ElementRef
   haveFolder:Boolean = false
+
+  isLoading!:Boolean
 constructor(
   private StorageService:StorageService,
   public SharedWithService:SharedWithService,
@@ -28,9 +30,8 @@ constructor(
 
       this.StorageService.sharingCurrentSection$.subscribe(
         (section)=>{
-          console.log("section 34",section)
+
           if(section==="sharedWithMe"){
-            console.log(true)
            this.getSharedWithMeFolders()
         }})
     setTimeout(() => {
@@ -41,8 +42,10 @@ constructor(
 
   getSharedWithMeFolders(){
     setTimeout(() => {
+          this.isLoading = true
       this.SharedWithService.getSharedWithMeFolders().subscribe(
         (res:any)=>{
+          this.isLoading = false
           if(res.length>0){
             this.haveFolder = true
             this.SharedWithService.folders = res

@@ -9,7 +9,7 @@ import { timeout } from 'rxjs';
   styleUrls: ['./shared-with-users.component.css']
 })
 export class SharedWithUsersComponent implements AfterViewInit {
-
+  isLoading!:Boolean
   constructor(
     public SharedWithService:SharedWithService,
     private StorageService:StorageService,
@@ -21,11 +21,11 @@ export class SharedWithUsersComponent implements AfterViewInit {
           if(section==="sharedWithUsers"){
 
             setTimeout(() => {
+              this.isLoading = true
               this.SharedWithService.getSharedWithUsersFolders().subscribe(
                 (res:any)=>{
-                  console.log('res: ', res);
                   this.SharedWithService.autorisedWihtUsers = res
-
+                  this.isLoading = false
                 }
               )
 

@@ -1,21 +1,23 @@
 <button #backBtn class="back">Back</button>
-<div *ngIf="haveFolder">
-    <div class="storage">
-        <div appSharedFolderDoubleClick #folderElement appFolderDoubleClick *ngFor="let folder of this.SharedWithService.folders" class="cell" >
-            <div class="directory" [attr._id]="folder._id">
-                <i class="fa-solid fa-folder"></i>
+<div *ngIf="!isLoading">
+        <div  *ngIf="haveFolder">
+            <div class="storage">
+                <div appSharedFolderDoubleClick #folderElement appFolderDoubleClick *ngFor="let folder of this.SharedWithService.folders" class="cell" >
+                    <div class="directory" [attr._id]="folder._id">
+                        <i class="fa-solid fa-folder"></i>
+                    </div>
+                    <h3>{{folder.name}}</h3>
+                </div>
+                <div #fileElement appSharedFolderDoubleClick *ngFor="let file of this.SharedWithService.files" class="cell" >
+                    <div class="file" [attr._id]="file._id">
+                        <i class="fa-regular fa-file"></i>
+                    </div>
+                    <h3>{{file.fileName+"."+file.type}}</h3>
+                </div>
             </div>
-            <h3>{{folder.name}}</h3>
         </div>
-        <div #fileElement appSharedFolderDoubleClick *ngFor="let file of this.SharedWithService.files" class="cell" >
-            <div class="file" [attr._id]="file._id">
-                <i class="fa-regular fa-file"></i>
-            </div>
-            <h3>{{file.fileName+"."+file.type}}</h3>
+        <div *ngIf="!haveFolder">
+          <p>There are no shared with you folders</p>
         </div>
-    </div>
 </div>
-<div *ngIf="!haveFolder">
-  <p>There are no shared with you folders</p>
-</div>
-
+<app-loader *ngIf="isLoading"></app-loader>

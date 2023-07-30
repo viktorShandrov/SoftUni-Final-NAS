@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/storage/storage.service';
 })
 export class HeaderStatusBarComponent  {
   @ViewChild("usedStorageBar") usedStorageBar!:ElementRef
+  // isLoading!:Boolean
   // @ViewChild("storageUsed") storageUsed!:ElementRef
   // @ViewChild("storageLeft") storageLeft!:ElementRef
   constructor(
@@ -31,8 +32,8 @@ export class HeaderStatusBarComponent  {
             return `<${volume}${mesure}`
         }
     }
-    
-    
+
+
     return `${volume.toFixed(2)}${mesure}`
   }
 }

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { HeaderStatusBarComponent } from './header-status-bar/header-status-bar.component';
 import { RouterModule } from '@angular/router';
+import {CoreModule} from "../core.module";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
   declarations: [HeaderComponent, HeaderStatusBarComponent],
-  imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule],
   exports: [HeaderComponent, HeaderStatusBarComponent],
 })
 export class HeaderModule {}

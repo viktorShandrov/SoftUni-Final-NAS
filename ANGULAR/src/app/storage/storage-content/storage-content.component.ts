@@ -21,7 +21,7 @@ export class StorageContentComponent implements AfterViewInit {
   files!: file[];
   haveFolder: Boolean = false;
 
-
+  isLoading:boolean=true
 
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
   @ViewChildren('fileElement') filesRef!: QueryList<ElementRef>;
@@ -47,6 +47,7 @@ export class StorageContentComponent implements AfterViewInit {
       const id = params.get('id') as String;
       if(id!=="dashboard"&&id!=="sharedWithMe"&&id!=="sharedWithUsers"){
         this.getData(id);
+        this.isLoading = true
       }
     });
   }
@@ -55,7 +56,7 @@ export class StorageContentComponent implements AfterViewInit {
     this.http
       .get(`api/files/${dirId}/getDirectory`)
       .subscribe((folder: any) => {
-
+        this.isLoading = false
 
         if (folder) {
           this.haveFolder = true;

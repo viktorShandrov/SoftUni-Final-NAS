@@ -216,13 +216,16 @@ export class StorageService {
 
 
   getRootInfoForUpdatingHeaderStorageInfo() {
+    this.HeaderService.isLoading = true
     this.http
       .get(`api/files/${this.rootId}/getOnlyRootInfo`)
       .subscribe((response: any) => {
+          this.HeaderService.isLoading = false
           const {folder} = response
           this.HeaderService.updateUsedStorage(folder.storageVolume, folder.usedStorage)
         },
         (error) => {
+          this.HeaderService.isLoading = false
           console.log(error.error.message);
           return error
         })

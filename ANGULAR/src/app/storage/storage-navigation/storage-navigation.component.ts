@@ -38,6 +38,8 @@ export class StorageNavigationComponent implements AfterViewInit {
   completions!: Completions[];
   rootId!: String;
 
+
+
   constructor(
     private renderer: Renderer2,
     private http: HttpClient,
@@ -153,7 +155,6 @@ export class StorageNavigationComponent implements AfterViewInit {
       }else if(match[1]==="dashboard"){
 
         urlTarget="dashboard"
-        console.log('urlTarget1: ', urlTarget);
         setTimeout(()=>{
           this.StorageService.sharingCurrentSection$.next("dashboard")
           this.renderer.setStyle(this.StorageService.wholeStorage.nativeElement,"display","none")
@@ -161,6 +162,7 @@ export class StorageNavigationComponent implements AfterViewInit {
           this.renderer.setStyle(this.StorageService.sharedWithUsers.nativeElement,"display","none")
           this.renderer.setStyle(this.StorageService.dashboard.nativeElement,"display","block")
         },1)
+          this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
       }else if(match[1]==="sharedWithMe"){
         // this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': 'dashboard' } }]);
         urlTarget="shared-with-me"

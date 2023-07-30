@@ -24,6 +24,7 @@ export class DashboardViewComponent {
   storageVolume: number = 0;
   usedStorage: string = "0 MB";
   storageLeft: number = 0;
+  isLoading:Boolean=true
 
   topExt: topExtI[] = [
     {
@@ -72,12 +73,11 @@ export class DashboardViewComponent {
   }
   ngAfterViewInit() {
       this.StorageService.sharingCurrentSection$.subscribe(async (section)=>{
-
-        console.log('section: ', section);
         if(section==="dashboard"){
-          console.log(10);
+          this.isLoading = true
 
           await this.DashboardService.getTopExtData(this.extQ, this.Renderer2);
+          this.isLoading = false
           this.topExt = this.DashboardService.topExt;
           await this.DashboardService.getTopFoldersData(
             this.foldersQ,
@@ -89,7 +89,6 @@ export class DashboardViewComponent {
 
           this.usedStorage = this.transform(this.DashboardService.usedStorage)
           this.storageLeft = Number((this.DashboardService.storageLeft/1000000000).toFixed(2));
-
         }
 
       })

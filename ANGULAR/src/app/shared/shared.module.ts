@@ -4,6 +4,8 @@ import { PopupComponent } from './popup/popup.component';
 import { AddFileComponent } from '../storage/add-file/add-file.component';
 import { StorageModule } from '../storage/storage.module';
 import { CommunicationModuleModule } from './communication-module/communication-module.module';
+import {CoreModule} from "../core/core.module";
+
 
 
 
@@ -14,10 +16,11 @@ import { CommunicationModuleModule } from './communication-module/communication-
   imports: [
     CommonModule,
     StorageModule,
-    CommunicationModuleModule
+    CoreModule
   ],
   exports:[
     PopupComponent,
+
   ]
 })
 export class SharedModule { }

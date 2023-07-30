@@ -15,6 +15,6 @@
   /* display: block; */
 }
 main {
-  /* position: relative; */
+  background-color: var(--BGcolor);
 }
 

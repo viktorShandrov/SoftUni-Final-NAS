@@ -1,10 +1,13 @@
 <div class="storage-info">
-    <div #storageUsed class="storageUsed">{{transform(HeaderService.usedStorage)}}</div>
-    
-    <div class="storageBar">
+    <div *ngIf="!HeaderService.isLoading" #storageUsed class="storageUsed">{{transform(HeaderService.usedStorage)}}</div>
+    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
+
+    <div *ngIf="!HeaderService.isLoading" class="storageBar">
         <div #usedStorageBar class="progressBar"></div>
     </div>
+    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
 
-    <div #storageLeft class="storageLeft">{{transform(HeaderService.totalVolume)}}</div>
+    <div *ngIf="!HeaderService.isLoading" #storageLeft class="storageLeft">{{transform(HeaderService.totalVolume)}}</div>
+    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
 
 </div>
