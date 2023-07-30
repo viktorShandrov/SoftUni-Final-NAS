@@ -14,7 +14,7 @@ import { StorageService } from '../storage.service';
 import { enviroments } from 'src/app/shared/enviroment';
 import { Location } from '@angular/common';
 import { HeaderService } from 'src/app/core/header/header.service';
-import { Observable, Observer } from 'rxjs';
+import {last, Observable, Observer} from 'rxjs';
 import { SharedWithService } from 'src/app/shared-with/shared-with.service';
 import {toggleDarkMode} from "../../shared/utils";
 import {StorageContentComponent} from "../storage-content/storage-content.component";
@@ -49,6 +49,30 @@ export class StorageNavigationComponent implements AfterViewInit {
 
     private location: Location
     ) {}
+      backBtnOnClick(){
+        const lastDir = this.StorageService.dirs.splice(-1,1)
+        const dirIndex = this.StorageService.dirs.length-1
+        if(dirIndex==-1){
+          this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': this.StorageService.rootId } }]);
+        }else{
+        const newLastDir = this.StorageService.dirs[dirIndex]
+        this.router.navigate(['/storage', { outlets: { 'storage-router-outlet': newLastDir._id } }]);
+        }
+      }
+      sortFilesAndFolders(i:HTMLElement){
+        const currentIElementClass = i.classList.item(1)
+        if(currentIElementClass === "fa-arrow-down-z-a"){
+          //sort z-a
+          i.classList.replace("fa-arrow-down-z-a","fa-arrow-down-a-z")
+          this.StorageService.files.sort((a,b)=>b.fileName.toString().localeCompare(a.fileName.toString()))
+          this.StorageService.folders.sort((a,b)=>b.name.toString().localeCompare(a.name.toString()))
+        }else if(currentIElementClass === "fa-arrow-down-a-z"){
+          //sort a-z
+          i.classList.replace("fa-arrow-down-a-z","fa-arrow-down-z-a")
+          this.StorageService.files.sort((a,b)=>a.fileName.toString().localeCompare(b.fileName.toString()))
+          this.StorageService.folders.sort((a,b)=>a.name.toString().localeCompare(b.name.toString()))
+        }
+      }
 
     toggleViewStructure(i:HTMLElement){
       const currentIElementClass = i.classList.item(1)

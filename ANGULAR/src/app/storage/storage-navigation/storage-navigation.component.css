@@ -17,7 +17,9 @@
     cursor: pointer;
 
   }
-
+.actionBtn:hover{
+  background-color: #748183;
+}
   .navigation .back-and-further-btns{
     background-color: var(--BGcolor);
     transition: 1s;

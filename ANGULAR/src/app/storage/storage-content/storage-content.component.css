@@ -17,11 +17,11 @@
     aspect-ratio: 1/1;
     text-align: center;
 }
-.storage .cell:hover{
+ .cell:hover{
     background-color: #c2e7ff
 }
 
-.storage .cell h3{
+ .cell h3{
     text-overflow: ellipsis;
     margin: 5px 0;
   color: var(--textColor);
@@ -50,11 +50,18 @@
     font-size: 70px;
 }
 
-
+ .tableCellView{
+   overflow-y: scroll;
+   height: 100vh;
+ }
 
  .tableCellView table{
    margin: 0;
    width: 100%;
+   background-color: var(--BGcolor);
+   transition: 1s;
+
+
  }
  .tableCellView tbody tr td:first-child{
    text-align: center;
@@ -62,8 +69,16 @@
  .tableCellView thead tr td:first-child{
    width: 10px;
  }
+ .tableCellView thead tr td{
+   color: var(--textColor);
+   transition: 1s;
+ }
  .tableCellView .tableListViewH3{
    margin: 0;
    padding: 10px;
+ }
+ .tableCellView .directory i,.tableCellView .file i{
+   color: var(--textColor);
+   transition: 1s;
  }
 
