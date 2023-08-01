@@ -36,4 +36,5 @@ export class HeaderStatusBarComponent  {
 
     return `${volume.toFixed(2)}${mesure}`
   }
+
 }
