@@ -14,7 +14,7 @@ const fileModel = require("../models/fileModel");
 //TODO=> isAuth
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
-    console.log('eq.file: ', req.file);
+
     const { originalname, buffer, size } = req.file;
     const { rootId, parentFolderId } = req.body;
     
