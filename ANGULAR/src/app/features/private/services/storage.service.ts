@@ -133,6 +133,21 @@ export class StorageService {
   autoriseUserToFolder(folderId:string,email:string){
    return this.HttpService.httpPOSTRequest(`api/files/${folderId}/autoriseUserToFolder`,JSON.stringify({email}))
   }
+  log(){
+    console.log(556)
+  }
+  spliceFromList(event:any,index:number){
+
+  if (event.toState === 'out') {
+    console.log(index)
+    this.CacheService.folders.splice(
+      index,
+      1
+    );
+    }
+
+    }
+
   deleteItem(menu: HTMLDivElement, renderer: Renderer2) {
     const elementId = menu.getAttribute('element-id');
     const elementType= menu.getAttribute('element-type')
@@ -144,12 +159,11 @@ export class StorageService {
     this.HttpService.httpPOSTRequest('api/files/deleteItem',JSON.stringify(payload)).subscribe(
       (response:any) => {
         renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement, 'display', 'none');
-        console.log('elementType: ', elementType);
+
         if(elementType==="directory"){
-          this.CacheService.folders.splice(
-            this.CacheService.folders.findIndex((el) => el._id == elementId),
-            1
-          );
+          const index = this.CacheService.folders.findIndex((el) => el._id == elementId)
+          this.CacheService.folders[index].isDisappearing = true
+
 
         }else{
           this.CacheService.files.splice(

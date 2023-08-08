@@ -28,11 +28,12 @@ img{
 }
 .crossMark{
   position: absolute;
-  width: 130px;
+  width: 0;
   height: 5px;
   background-color: red;
   border-radius: 3px;
-  transform:translateY(50px) translateX(10px) rotate(40deg);
+  transform-origin: 0 50%;
+  transform: translateX(10px) rotate(45deg);
 }
 .cell h3{
   text-overflow: ellipsis;

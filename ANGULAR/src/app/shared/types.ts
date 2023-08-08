@@ -19,6 +19,8 @@ export interface folder {
   fileComponents: file[];
   autorised: String[];
   isPublic: Boolean;
+  isDisappearing:Boolean;
+  isCrossed:Boolean;
   __v:number
 }
 export interface file {

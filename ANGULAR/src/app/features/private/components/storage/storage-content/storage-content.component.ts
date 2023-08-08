@@ -14,7 +14,7 @@ import {CacheService} from "../../../../../shared/services/cache.service";
 import {HttpService} from "../../../../../shared/services/http.service";
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 import {enviroments} from "../../../../../shared/environments";
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
 
 
 @Component({
@@ -24,8 +24,22 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   animations:[
     trigger("crossMarkAnim",[
       state("out",style({width:'0px'})),
-      state("in",style({width:'130px'})),
-      transition("out => in",animate(500 ))
+      state("in",style({width:'160px'})),
+      transition("out => in",animate(400 ))
+    ]),
+    trigger("cellDisappear",[
+      state("in",style({transform:"scale(1)"})),
+      state("out",style({transform:"scale(0)"})),
+      transition("in => out", animate(500,keyframes([
+        style({
+          transform:"scale(1.2)",
+          offset:0.5
+        }),
+        style({
+          transform:"scale(0)",
+          offset:1
+        }),
+      ])))
     ])
   ]
 })
@@ -35,7 +49,7 @@ export class StorageContentComponent implements AfterViewInit {
   haveFolder: Boolean = false;
   enviroments!:any
   isLoading:boolean=true
-  crossMarkState:string = "out"
+
 
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
   @ViewChildren('fileElement') filesRef!: QueryList<ElementRef>;
@@ -50,14 +64,19 @@ export class StorageContentComponent implements AfterViewInit {
   ) {
     this.enviroments = enviroments
     setTimeout(()=>{
-      this.crossMarkState = "in"
-    },2000)
+      // this.folders[0].isDisappearing = true
+    },1000)
   }
 
 
   ngAfterViewInit(): void {
 
     this.folders =this.CacheService.folders;
+    for (const folder of this.folders) {
+      folder.isDisappearing = false
+      folder.isCrossed = false
+    }
+
     this.files = this.CacheService.files;
 
     this.HTMLElementsService.foldersQL = this.foldersRef
@@ -103,6 +122,15 @@ export class StorageContentComponent implements AfterViewInit {
           }, 0);
         }
       });
+  }
+  crossMarkAnimationDone(event: any,folder:folder) {
+    if (event.toState === 'in') {
+      this.startDisappearAnim(folder);
+    }
+  }
+
+  startDisappearAnim(folder:folder){
+    folder.isCrossed = true
   }
   addEventListenerOnFilesAndFoldersToBeClickable(
     folders: QueryList<ElementRef>,
