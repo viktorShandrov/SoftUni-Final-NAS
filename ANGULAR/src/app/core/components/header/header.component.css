@@ -1,0 +1,145 @@
+header {
+  width: 100%;
+  height: var(--header-height);
+  background-color: #545454;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+
+}
+header .logo {
+  width: 70px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+}
+header .logo i {
+  font-size: 50px;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+.lightDarkModeSlider{
+  height: 20px;
+  width: 40px;
+  background-color: white;
+  border-radius: 100px;
+  background-color: var(--BGcolor);
+  cursor: pointer;
+  transition: 1s;
+
+}
+.lightDarkModeBtn{
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+/* header .profile {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+} */
+header .user-settings-menu {
+  display: flex;
+  background-color: brown;
+  border-radius: 10px;
+}
+header .user-settings-menu .option {
+  padding: 5px 10px;
+  cursor: pointer;
+
+}
+header .user-settings-menu p {
+  margin: 0;
+
+}
+.storage-info{
+  width: 1000px;
+  height: 70px;
+  /* background-color: blueviolet; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.storage-info .storageLeft,.storage-info .storageUsed{
+  width:12%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0cc0df;
+  border-radius: 100px;
+
+}
+
+.storage-info .storageBar{
+  width: 70%;
+  height: 30px;
+  background-color: white;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.storage-info .storageBar .progressBar{
+  width: 0;
+  height: 20px;
+  background-color: #0cc0df;
+  border-radius: 100px;
+}
+
+.storage-info .storageUsed{
+  width:12%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0cc0df;
+  border-radius: 100px;
+  text-align: center;
+  /* font-size: 10px; */
+
+}
+
+
+/*loader*/
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid var(--textColor);
+  border-color: var(--textColor) transparent var(--textColor) transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

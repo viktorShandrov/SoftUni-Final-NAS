@@ -1,0 +1,53 @@
+<app-popup-bg></app-popup-bg>
+<app-right-click-menu></app-right-click-menu>
+<app-create-folder-or-file-menu></app-create-folder-or-file-menu>
+<app-storage-navigation></app-storage-navigation>
+<app-loader *ngIf="isLoading"></app-loader>
+<div *ngIf="!isLoading">
+
+  <div class="haveFolder" *ngIf="haveFolder">
+    <div *ngIf="enviroments.storageViewCellStructure" class="storage">
+      <div #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell" >
+        <div [@crossMarkAnim]="crossMarkState" class="crossMark"></div>
+        <div class="directory" [attr._id]="folder._id">
+<!--          <i class="fa-solid fa-folder"></i>-->
+          <img src="assets/folder.png" alt="ivan">
+        </div>
+        <h3>{{folder.name}}</h3>
+      </div>
+      <div #fileElement appFolderDoubleClick *ngFor="let file of files" class="cell" >
+        <div class="file" [attr._id]="file._id">
+          <i class="fa-regular fa-file"></i>
+        </div>
+        <h3>{{file.fileName+"."+file.type}}</h3>
+      </div>
+    </div>
+    <div *ngIf="!enviroments.storageViewCellStructure" class="tableCellView" >
+      <table>
+        <thead>
+        <tr>
+          <td>Type</td>
+          <td>Name</td>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell directory" [attr._id]="folder._id">
+          <td><i class="fa-solid fa-folder"></i></td>
+          <td><h3 class="tableListViewH3">{{folder.name}}</h3></td>
+        </tr><tr #fileElement appFolderDoubleClick *ngFor="let file of files" class="cell file" [attr._id]="file._id">
+          <td><i class="fa-solid fa-file"></i></td>
+          <td><h3 class="tableListViewH3">{{file.fileName+"."+file.type}}</h3></td>
+        </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+  <div *ngIf="!haveFolder">
+    <p>That folder doesn't exist or you are not authorised</p>
+  </div>
+</div>
+

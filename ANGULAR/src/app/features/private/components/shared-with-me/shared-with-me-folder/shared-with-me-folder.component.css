@@ -1,0 +1,13 @@
+button{
+  /* position: absolute; */
+  all: unset;
+  background-color: chocolate;
+  padding: 10px 15px;
+  display: flex;
+}
+button:hover{
+  cursor: pointer;
+}
+a{
+  all: unset;
+}

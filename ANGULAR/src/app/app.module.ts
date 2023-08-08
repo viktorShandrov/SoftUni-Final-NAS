@@ -1,35 +1,35 @@
-import { NgModule, Renderer2 } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
-import { StorageModule } from './storage/storage.module';
-import { SharedModule } from './shared/shared.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { mainInterceptor } from './app.interceptor';
-import { toFixedPipe } from './core/header/storage-info.pipe';
-import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
-import { DashboardModule } from './dashboard/dashboard.module';
-import { UserModule } from './user/user.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommunicationService } from './shared/communication-module/communication.service';
-import { AuthGuard } from './authenticated.guard';
-import { SharedWithModule } from './shared-with/shared-with.module';
+import {SharedModule} from "./shared/shared.module";
+import {CoreModule} from "./core/core.module";
+import {FeaturesModule} from "./features/features.module";
+
+import {MainRouterModule} from "./core/router/main-router.module";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {mainInterceptor} from "./core/router/http.interceptor";
+import {MainRouterRoutingModule} from "./core/router/main-router-routing.module";
+import {RouterService} from "./core/router/router.service";
+import {RouteReuseStrategy, RouterModule} from "@angular/router";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
-  declarations: [AppComponent, toFixedPipe],
+  declarations: [
+
+    AppComponent
+  ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    StorageModule,
-    SharedModule,
     HttpClientModule,
-    DashboardModule,
-    UserModule,
-    ReactiveFormsModule,
-    SharedWithModule,
+    BrowserModule,
+    SharedModule,
+    CoreModule,
+    FeaturesModule,
+    MainRouterRoutingModule,
+    BrowserAnimationsModule
+
+
   ],
   providers: [
     {
@@ -37,8 +37,8 @@ import { SharedWithModule } from './shared-with/shared-with.module';
       useClass: mainInterceptor,
       multi: true,
     },
-    AuthGuard,
+    RouterService
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,26 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupComponent } from './popup/popup.component';
-import { AddFileComponent } from '../storage/add-file/add-file.component';
-import { StorageModule } from '../storage/storage.module';
-import { CommunicationModuleModule } from './communication-module/communication-module.module';
-import {CoreModule} from "../core/core.module";
+import {RouterLink} from "@angular/router";
+import { PopupBGComponent } from './Components/popup-bg/popup-bg.component';
+import {AddFileComponent} from "./Components/add-file/add-file.component";
+import {AddFolderComponent} from "./Components/add-folder/add-folder.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import { LoaderComponent } from './Components/loader/loader.component';
 
 
 
 
 @NgModule({
   declarations: [
-    PopupComponent,
+    PopupBGComponent,
+    AddFileComponent,
+    AddFolderComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
-    StorageModule,
-    CoreModule
+    RouterLink,
+    ReactiveFormsModule
   ],
-  exports:[
-    PopupComponent,
-
-  ]
+    exports: [
+        LoaderComponent,
+        PopupBGComponent
+    ]
 })
 export class SharedModule { }

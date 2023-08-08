@@ -1,26 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AsideComponent } from './aside/aside.component';
-import { HeaderModule } from './header/header.module';
-import { RouterModule } from '@angular/router';
-import {LoaderComponent} from "./loader/loader.component";
-import {SharedModule} from "../shared/shared.module";
+import { HeaderComponent } from './components/header/header.component';
+import {RouterLink, RouterModule} from "@angular/router";
+import {mainInterceptor} from "./router/http.interceptor";
+import {RouterService} from "./router/router.service";
 
 
 
 @NgModule({
   declarations: [
-    AsideComponent,
-    LoaderComponent
+    HeaderComponent,
+  ],
+  exports: [
+    HeaderComponent,
+    RouterModule,
+
   ],
   imports: [
     CommonModule,
     RouterModule,
-  ],
-  exports:[
-    HeaderModule,
-    AsideComponent,
-    LoaderComponent
+    RouterLink
   ]
 })
 export class CoreModule { }

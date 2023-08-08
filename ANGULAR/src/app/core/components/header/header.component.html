@@ -1,0 +1,34 @@
+<header>
+  <div class="logo">
+    <i class="fa-solid fa-database"></i>
+  </div>
+  <div class="storage-info">
+    <div *ngIf="!HeaderService.isLoading" #storageUsed class="storageUsed">{{HeaderService.transform(HeaderService.usedStorage)}}</div>
+    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
+
+    <div  class="storageBar">
+      <div  class="progressBar" #usedStorageBar></div>
+    </div>
+<!--    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>-->
+
+    <div *ngIf="!HeaderService.isLoading" #storageLeft class="storageLeft">{{HeaderService.transform(HeaderService.totalVolume)}}</div>
+    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
+
+  </div>
+
+  <div class="lightDarkModeSlider" (click)="HeaderService.toggleDarkMode(Renderer2,btn)">
+    <button #btn  class="lightDarkModeBtn"></button>
+  </div>
+  <div class="user-settings-menu">
+    <a
+      [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">
+      <div class="option logout">
+        <p>Logout</p>
+      </div>
+    </a>
+
+  </div>
+
+
+
+</header>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {RouterService} from "./core/router/router.service";
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Final';
+  title = 'getting-things-understand';
+
+  constructor(
+    private RouterService:RouterService
+  ) {
+   this.RouterService.detectInitialNavigation()
+
+  }
+
 }
