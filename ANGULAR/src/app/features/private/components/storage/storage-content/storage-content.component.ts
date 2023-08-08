@@ -24,7 +24,7 @@ import {animate, keyframes, state, style, transition, trigger} from "@angular/an
   animations:[
     trigger("crossMarkAnim",[
       state("out",style({width:'0px'})),
-      state("in",style({width:'160px'})),
+      state("in",style({width:'180px'})),
       transition("out => in",animate(400 ))
     ]),
     trigger("cellDisappear",[

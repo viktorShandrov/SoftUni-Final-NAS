@@ -7,6 +7,7 @@
   border: 0.1cm solid tan;
   border-top-left-radius: 0;
   transition: 0.3s;
+  z-index: 999;
 }
 .option , .title {
   padding: 7px 5px;

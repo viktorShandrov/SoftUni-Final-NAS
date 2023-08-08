@@ -133,9 +133,7 @@ export class StorageService {
   autoriseUserToFolder(folderId:string,email:string){
    return this.HttpService.httpPOSTRequest(`api/files/${folderId}/autoriseUserToFolder`,JSON.stringify({email}))
   }
-  log(){
-    console.log(556)
-  }
+
   spliceFromList(event:any,index:number){
 
   if (event.toState === 'out') {
