@@ -31,6 +31,8 @@ export interface file {
   length: Number;
   uploadDate: Date;
   fileName: String;
+  isDisappearing:Boolean;
+  isCrossed:Boolean;
   __v:number
 
 }

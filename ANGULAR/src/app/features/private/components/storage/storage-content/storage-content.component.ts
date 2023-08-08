@@ -123,15 +123,13 @@ export class StorageContentComponent implements AfterViewInit {
         }
       });
   }
-  crossMarkAnimationDone(event: any,folder:folder) {
+  crossMarkAnimationDone(event: any,element:folder|file) {
     if (event.toState === 'in') {
-      this.startDisappearAnim(folder);
+      element.isCrossed = true
     }
   }
 
-  startDisappearAnim(folder:folder){
-    folder.isCrossed = true
-  }
+
   addEventListenerOnFilesAndFoldersToBeClickable(
     folders: QueryList<ElementRef>,
     files: QueryList<ElementRef>

@@ -134,14 +134,21 @@ export class StorageService {
    return this.HttpService.httpPOSTRequest(`api/files/${folderId}/autoriseUserToFolder`,JSON.stringify({email}))
   }
 
-  spliceFromList(event:any,index:number){
+  spliceFromList(event:any,index:number,elementType:string){
 
   if (event.toState === 'out') {
     console.log(index)
-    this.CacheService.folders.splice(
-      index,
-      1
-    );
+    if(elementType==="folder"){
+      this.CacheService.folders.splice(
+        index,
+        1
+      );
+    }else if(elementType==="file"){
+      this.CacheService.files.splice(
+        index,
+        1
+      );
+    }
     }
 
     }
@@ -164,10 +171,9 @@ export class StorageService {
 
 
         }else{
-          this.CacheService.files.splice(
-            this.CacheService.files.findIndex((el) => el._id == elementId),
-            1
-          );
+          const index = this.CacheService.files.findIndex((el) => el._id == elementId)
+          this.CacheService.files[index].isDisappearing = true
+
         }
         this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
           (response: any) => {
