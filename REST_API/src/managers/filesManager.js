@@ -145,11 +145,13 @@ exports.createFolder = async (name, rootId, parentFolderId) => {
 exports.deleteFolder = async (folderId, parentFolderId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
-    console.log('parentFolder: ', parentFolder);
 
+    const folder = await folderModel.findById(folderId)
+    folder.autorised.splice(0)
 
     parentFolder.dirComponents.splice(parentFolder.dirComponents.findIndex(objId => objId.toString() === folderId), 1)
     parentFolder.save()
+    folder.save()
 }
 exports.deleteFile = async (fileId, parentFolderId) => {
 
