@@ -52,9 +52,25 @@ export class DoubleClickDirective {
         e.preventDefault()
         const x = e.clientX
         const y = e.clientY
-
-        this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",parentElement.classList[0])
-        this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",parentElement.getAttribute("_id")!)
+        let elementType
+        let id
+        if(parentElement.classList.contains("directory")){
+          elementType = "directory"
+          id =parentElement.getAttribute("_id")!
+        }else if(parentElement.classList.contains("file")){
+          elementType = "file"
+          id =parentElement.getAttribute("_id")!
+        }else if(parentElement.parentElement!.classList.contains("directory")){
+          elementType = "directory"
+          id =parentElement.parentElement!.getAttribute("_id")!
+        }else if(parentElement.parentElement!.classList.contains("file")){
+          elementType = "file"
+          id =parentElement.parentElement!.getAttribute("_id")!
+        }
+        console.log(parentElement.parentElement!.classList)
+        console.log(parentElement.parentElement)
+        this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
+        this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
         this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")
         this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"top",y+"px")
         this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"left",x+"px")
@@ -65,8 +81,8 @@ export class DoubleClickDirective {
         parentElement = parentParentElement
       }
 
-      if (parentElement.classList.contains('directory')) {
-        if (!parentParentElement.classList.contains('storage')&&parentParentElement.classList.value!=="") {
+      if (parentElement.classList.contains('directory')||parentParentElement.classList.contains('directory')) {
+        if (!parentParentElement.classList.contains('storage')&&parentParentElement.classList.value!==""||parentParentElement.classList.contains("table-view-container")) {
           this.CacheService.dirs.push({
             name: parentParentElement.textContent as string,
             _id: parentElement.getAttribute('_id') as string,
@@ -82,11 +98,12 @@ export class DoubleClickDirective {
               this.router
             );
           }
+          const id = parentElement.getAttribute('_id')||parentParentElement.getAttribute('_id')
           this.router.navigate([
             'storage',
             {
               outlets: {
-                'storage-outlet': parentElement.getAttribute('_id'),
+                'storage-outlet': id,
               },
             },
           ]);

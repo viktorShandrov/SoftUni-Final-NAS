@@ -9,7 +9,9 @@
 .darkMode{
   --BGcolor: #272525;
   --textColor:white;
-  --cellOnHover: #8dd8ff
+  --cellOnHover: #8dd8ff;
+  --iconColor:white;
+
 }
 
 

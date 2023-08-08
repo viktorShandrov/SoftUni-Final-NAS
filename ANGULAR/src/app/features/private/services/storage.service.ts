@@ -155,6 +155,7 @@ export class StorageService {
 
   deleteItem(menu: HTMLDivElement, renderer: Renderer2) {
     const elementId = menu.getAttribute('element-id');
+    console.log(elementId)
     const elementType= menu.getAttribute('element-type')
     const payload = {
       elementId,

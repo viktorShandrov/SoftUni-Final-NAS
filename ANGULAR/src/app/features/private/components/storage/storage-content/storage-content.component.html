@@ -34,7 +34,7 @@
 
         </thead>
         <tbody>
-        <tr #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell directory" [attr._id]="folder._id">
+        <tr #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell directory table-view-container" [attr._id]="folder._id">
           <td><i class="fa-solid fa-folder"></i></td>
           <td><h3 class="tableListViewH3">{{folder.name}}</h3></td>
         </tr><tr #fileElement appFolderDoubleClick *ngFor="let file of files" class="cell file" [attr._id]="file._id">
