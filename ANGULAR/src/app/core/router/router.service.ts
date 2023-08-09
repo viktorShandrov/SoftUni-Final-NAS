@@ -56,6 +56,9 @@ export class RouterService {
           console.log("storage section")
           const folderId = match[1];
           enviroments.currentFolder = folderId;
+          this.StorageService.hasFiles = false
+          this.StorageService.hasFolders = false
+          console.log(this.StorageService.hasFolders);
           setTimeout(() => {
             this.StorageService.addEventListenersToCompletionSection(
               this.HTMLElementsService.urlBar,

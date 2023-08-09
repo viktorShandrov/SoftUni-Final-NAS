@@ -17,7 +17,8 @@ import {ToastrService} from "ngx-toastr";
   providedIn: 'root'
 })
 export class StorageService {
-
+  hasFolders: Boolean = false ;
+  hasFiles: Boolean =false ;
 
   constructor(
     private HttpService:HttpService,
@@ -47,6 +48,7 @@ export class StorageService {
           const newCompletion = {name:newFolder.name as string,_id:newFolder._id as string}
           this.CacheService.completions.push(newCompletion)
           folders.push(newFolder);
+          this.hasFolders = true
           this.PopupService.hidePopup();
         },
         (error) => {
@@ -150,11 +152,18 @@ export class StorageService {
         index,
         1
       );
+      if(this.CacheService.folders.length==0){
+        this.hasFolders =false
+      }
     }else if(elementType==="file"){
       this.CacheService.files.splice(
         index,
         1
       );
+
+      if(this.CacheService.files.length==0){
+        this.hasFiles =false
+      }
     }
     }
 
@@ -179,9 +188,12 @@ export class StorageService {
           this.CacheService.folders[indexInFoldersCache].isDisappearing = true
           this.CacheService.completions.splice(indexInCompletionCache,1)
 
+
         }else{
           const index = this.CacheService.files.findIndex((el) => el._id == elementId)
           this.CacheService.files[index].isDisappearing = true
+
+
 
         }
         this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(

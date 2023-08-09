@@ -60,8 +60,7 @@ export class StorageContentComponent implements AfterViewInit {
   folders!: folder[];
   files!: file[];
   haveFolder: Boolean = false;
-  hasFolders: Boolean = false;
-  hasFiles: Boolean = false;
+
   enviroments!:any
   isLoading:boolean=true
   fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
@@ -87,6 +86,7 @@ export class StorageContentComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
+
 
     this.folders =this.CacheService.folders;
     for (const folder of this.folders) {
@@ -119,7 +119,7 @@ export class StorageContentComponent implements AfterViewInit {
           this.folders.splice(0);
           this.files.splice(0);
           if(folder.dirComponents.length>0){
-            this.hasFolders = true
+            this.StorageService.hasFolders = true
             for (const dirComponent of folder.dirComponents) {
 
               this.folders.push(dirComponent);
@@ -131,7 +131,7 @@ export class StorageContentComponent implements AfterViewInit {
           }
 
           if(folder.fileComponents.length>0) {
-            this.hasFiles = true
+            this.StorageService.hasFiles = true
             for (const fileComponent of folder.fileComponents) {
               this.files.push(fileComponent);
             }

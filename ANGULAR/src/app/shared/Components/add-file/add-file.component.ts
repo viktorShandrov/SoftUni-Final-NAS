@@ -141,6 +141,7 @@ export class AddFileComponent implements AfterViewInit{
                         this.areBtnDisabled= false
                         this.CacheService.files.push(event.body)
                         this.clearForm()
+                        this.StorageService.hasFiles = true
 
                           this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
                             (response:any) => {

@@ -3,15 +3,15 @@
 <app-create-folder-or-file-menu></app-create-folder-or-file-menu>
 <app-storage-navigation></app-storage-navigation>
 <app-loader *ngIf="isLoading"></app-loader>
+
 <div *ngIf="!isLoading">
-
   <div class="haveFolder" *ngIf="haveFolder">
-    <div class="noFileAndNoFoldersContainer" *ngIf="!hasFiles&&!hasFolders">
-      <p>This folder is empty<i class="em em-hot_face"></i></p>
-      <p>Try clicking the right mouse button bellow to add new elements<i class="em em-three_button_mouse"></i></p>
-      <p class="arrowDownContainer"><i class="em em-arrow_down" aria-role="presentation" aria-label="DOWNWARDS BLACK ARROW"></i></p>
+              <div class="noFileAndNoFoldersContainer" *ngIf="!this.StorageService.hasFiles&&!this.StorageService.hasFolders">
+                <p>This folder is empty<i class="em em-hot_face"></i></p>
+                <p>Try clicking the right mouse button to add new elements<i class="em em-three_button_mouse"></i></p>
+<!--                <p class="arrowDownContainer"><i class="em em-arrow_down" aria-role="presentation" aria-label="DOWNWARDS BLACK ARROW"></i></p>-->
 
-    </div>
+              </div>
       <div *ngIf="enviroments.storageViewCellStructure" class="storage">
         <div [@cellDisappear]="folder.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'folder')"   #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell" >
           <div [@crossMarkAnim]="folder.isDisappearing?'in':'out'" (@crossMarkAnim.done)="crossMarkAnimationDone($event,folder)" class="crossMark"></div>

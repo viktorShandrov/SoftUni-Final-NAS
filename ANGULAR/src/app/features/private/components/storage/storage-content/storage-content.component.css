@@ -104,6 +104,10 @@ img{
   border: solid grey 0.1cm;
   border-radius: 10px;
   color: grey;
+
+}
+.noFileAndNoFoldersContainer:hover{
+  cursor:not-allowed;
 }
 .noFileAndNoFoldersContainer i{
   margin: 10px;
