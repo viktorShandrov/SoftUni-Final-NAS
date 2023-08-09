@@ -1,9 +1,13 @@
 <div *ngIf="!isLoading" class="wrapper">
-  <div class="storage-volume-info">
-    <p>Plan storage volume: {{storageVolume}}GB</p>
-    <p>Used storage: {{usedStorage}}</p>
-    <p>Storage left: {{storageLeft}}GB</p>
+  <div class="storage-volume-info-wrapper">
+    <div class="storage-volume-info">
+      <p>Plan storage volume: {{storageVolume}}GB</p>
+      <p>Used storage: {{usedStorage}}</p>
+      <p>Storage left: {{storageLeft}}GB</p>
+    </div>
   </div>
+
+
   <div class="charts">
     <div class="top-folders-chart">
       <h4>Folders with most elements in</h4>
@@ -29,7 +33,7 @@
       </div>
     </div>
     <div class="top-extensions-chart">
-      <h4>Common file extensions</h4>
+      <h4>Common file extensions (includes deleted)</h4>
       <div class="barsWrapper">
         <div class="bar">
           <div class="count">{{topExt[0]?.count}}</div>

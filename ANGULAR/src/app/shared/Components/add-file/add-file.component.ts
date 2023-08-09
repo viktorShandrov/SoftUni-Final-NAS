@@ -25,6 +25,8 @@ export class AddFileComponent implements AfterViewInit{
   fileForm!: FormGroup;
   selectedFile: File | undefined;
   selectedFileSizeInMB: Number | undefined;
+
+  areBtnDisabled:Boolean = false
   constructor(
     public PopupService: PopupService,
     private StorageService: StorageService,
@@ -69,7 +71,16 @@ export class AddFileComponent implements AfterViewInit{
   ngAfterViewInit() {
 
   }
+  hidePopup(){
+    this.clearForm()
+    this.PopupService.hidePopup()
+  }
 
+  clearForm(){
+    this.fileForm.reset()
+    document.getElementById('progress-bar')!.innerText ="";
+    this.selectedFile = undefined
+  }
   onFileSelected(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
@@ -85,19 +96,18 @@ export class AddFileComponent implements AfterViewInit{
       const formData = new FormData();
       let fileNameFromForm = this.fileForm.get('fileName')?.value;
       let FinalFileName = this.selectedFile.name;
-      if (fileNameFromForm.length > 0) {
+      if (fileNameFromForm&&fileNameFromForm.length > 0) {
         FinalFileName =
           fileNameFromForm +
           this.selectedFile.name.substring(
             this.selectedFile.name.lastIndexOf('.')
           );
       }
-
+        this.areBtnDisabled= true
       this.HttpService.httpPOSTRequest("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.UserService.rootId})).subscribe(
         (response)=>{
           this.HttpService.httpGETRequest(`api/files/${enviroments.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`).subscribe(
               (response: any) => {
-                console.log(9)
                 const originalName = this.selectedFile!.name; //contains the extension of the file
 
                 formData.append('file', this.selectedFile!, FinalFileName);
@@ -123,12 +133,15 @@ export class AddFileComponent implements AfterViewInit{
                     } else if (event instanceof HttpResponse) {
                       if(event.body?.message){
                         //if error
-
+                        this.areBtnDisabled= false
                         document.getElementById('progress-bar')!.innerText =
                           event.body.message?.toString();
                       }else{
                         //returns the newFile info
+                        this.areBtnDisabled= false
                         this.CacheService.files.push(event.body)
+                        this.clearForm()
+
                           this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
                             (response:any) => {
 
@@ -146,23 +159,25 @@ export class AddFileComponent implements AfterViewInit{
                     }
                   },
                   error => {
+                    this.areBtnDisabled= false
                     this.ToastrService.error(error.message,"Error",constants.toastrOptions)
                   });
               },
               (error) => {
-
+                this.areBtnDisabled= false
                 document.getElementById('progress-bar')!.innerText =
                   error.error.message;
               }
             );
         },
         (error)=>{
-
+          this.areBtnDisabled= false
           document.getElementById('progress-bar')!.innerText =
             error.error.message;
         })
     } else {
-      console.log('no file selected');
+      this.areBtnDisabled= false
+      document.getElementById('progress-bar')!.innerText = "No file selected"
     }
   }
 }

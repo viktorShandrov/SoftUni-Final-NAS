@@ -9,7 +9,13 @@
    align-items: center;
    justify-content: space-evenly;
 } */
-.upload input, #proceedBtn{
+.wrapper{
+  text-align: center;
+}
+form{
+  margin-bottom: 20px;
+}
+.upload input{
   position: absolute;
   left: -9999px;
 }
@@ -18,7 +24,7 @@
   display: flex;
   justify-content: center;
 }
-.upload label ,  .navigation label{
+.upload label {
   background-color: #0cc0df;
   padding: 15px 10px;
   border-radius:20px ;
@@ -40,9 +46,27 @@
   justify-content: space-evenly;
   gap: 10px;
 }
-.navigation .proceed label{
+#proceedBtn,#abortBtn{
+  all: unset;
+  padding: 15px 10px;
+  border-radius:20px ;
+  display: inline-block;
+  cursor: pointer;
+  width: 90px;
+  height: 20px;
+  text-align: center;
+}
+.navigation #proceedBtn {
   background-color: rgb(16, 238, 16);
 }
-.navigation .abort label{
+.navigation #abortBtn {
   background-color: rgb(232, 0, 0);
 }
+.navigation #proceedBtn:disabled,.navigation #abortBtn:disabled{
+  cursor: not-allowed;
+  background-color: grey;
+  opacity: 0.7;
+}
+/*.wrapper label#progress-bar{*/
+/*  margin: 20px 0;*/
+/*}*/

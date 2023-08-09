@@ -23,6 +23,7 @@ export class StorageService {
     private HttpService:HttpService,
     private CacheService:CacheService,
     private UserService:UserService,
+    private Router:Router,
     private HeaderService:HeaderService,
     private PopupService:PopupService,
     private ToastrService:ToastrService,
@@ -43,6 +44,8 @@ export class StorageService {
     this.HttpService.httpPOSTRequest("api/files/createFolder",JSON.stringify(payload)).subscribe(
         (response: any) => {
           const newFolder: folder = response.newFolder;
+          const newCompletion = {name:newFolder.name as string,_id:newFolder._id as string}
+          this.CacheService.completions.push(newCompletion)
           folders.push(newFolder);
           this.PopupService.hidePopup();
         },
@@ -141,7 +144,7 @@ export class StorageService {
   spliceFromList(event:any,index:number,elementType:string){
 
   if (event.toState === 'out') {
-    console.log(index)
+
     if(elementType==="folder"){
       this.CacheService.folders.splice(
         index,
@@ -171,8 +174,10 @@ export class StorageService {
         renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement, 'display', 'none');
 
         if(elementType==="directory"){
-          const index = this.CacheService.folders.findIndex((el) => el._id == elementId)
-          this.CacheService.folders[index].isDisappearing = true
+          const indexInFoldersCache = this.CacheService.folders.findIndex((el) => el._id == elementId)
+          const indexInCompletionCache = this.CacheService.completions.findIndex((el) => el._id == elementId)
+          this.CacheService.folders[indexInFoldersCache].isDisappearing = true
+          this.CacheService.completions.splice(indexInCompletionCache,1)
 
         }else{
           const index = this.CacheService.files.findIndex((el) => el._id == elementId)
@@ -254,6 +259,7 @@ export class StorageService {
     renderer: Renderer2,
     router: Router
   ) {
+
     for (const div of completionDivs.toArray()) {
       renderer.listen(div.nativeElement, 'click', (e: any) => {
         console.log(222)

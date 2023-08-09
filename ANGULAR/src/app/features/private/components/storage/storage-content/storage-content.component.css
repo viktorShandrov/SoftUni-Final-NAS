@@ -96,8 +96,22 @@ img{
   color: var(--textColor);
   transition: 1s;
 }
-
-
+.noFileAndNoFoldersContainer{
+  display: inline-block;
+  margin-left: 50px;
+  margin-top: 50px;
+  padding:20px;
+  border: solid grey 0.1cm;
+  border-radius: 10px;
+  color: grey;
+}
+.noFileAndNoFoldersContainer i{
+  margin: 10px;
+}
+.arrowDownContainer{
+  display: flex;
+  justify-content: center;
+}
 
 /*app-loader{*/
 /*  width: 100%;*/

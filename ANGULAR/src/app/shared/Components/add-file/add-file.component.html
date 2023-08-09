@@ -22,11 +22,13 @@
     </div>
     <div class="navigation">
       <div class="proceed">
-        <label for="proceedBtn">Proceed</label>
-        <button id="proceedBtn" type="submit"></button>
+
+        <button [disabled]="this.areBtnDisabled" class="btn" id="proceedBtn" type="submit">Upload</button>
       </div>
       <div class="abort">
-        <label (click)="PopupService.hidePopup()">Abort</label>
+
+        <button [disabled]="this.areBtnDisabled" (click)="hidePopup()" class="btn" id="abortBtn">Abort</button>
+
       </div>
     </div>
   </form>

@@ -60,8 +60,11 @@ export class StorageContentComponent implements AfterViewInit {
   folders!: folder[];
   files!: file[];
   haveFolder: Boolean = false;
+  hasFolders: Boolean = false;
+  hasFiles: Boolean = false;
   enviroments!:any
   isLoading:boolean=true
+  fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
 
 
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
@@ -115,17 +118,23 @@ export class StorageContentComponent implements AfterViewInit {
           this.CacheService.completions.splice(0);
           this.folders.splice(0);
           this.files.splice(0);
-          for (const dirComponent of folder.dirComponents) {
+          if(folder.dirComponents.length>0){
+            this.hasFolders = true
+            for (const dirComponent of folder.dirComponents) {
 
-            this.folders.push(dirComponent);
-            this.CacheService.completions.push({
-              name: dirComponent.name,
-              _id: dirComponent._id,
-            });
+              this.folders.push(dirComponent);
+              this.CacheService.completions.push({
+                name: dirComponent.name,
+                _id: dirComponent._id,
+              });
+            }
           }
 
-          for (const fileComponent of folder.fileComponents) {
-            this.files.push(fileComponent);
+          if(folder.fileComponents.length>0) {
+            this.hasFiles = true
+            for (const fileComponent of folder.fileComponents) {
+              this.files.push(fileComponent);
+            }
           }
 
           setTimeout(() => {
