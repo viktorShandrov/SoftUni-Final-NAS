@@ -81,6 +81,8 @@
   width: 100%;
   display: none;
   background-color: pink;
+  max-height: 300px;
+  overflow-y: scroll;
   z-index: 9999; /* Set a high z-index value */
 }
 .navigation .urlBar .searchCompletion .completion p{
