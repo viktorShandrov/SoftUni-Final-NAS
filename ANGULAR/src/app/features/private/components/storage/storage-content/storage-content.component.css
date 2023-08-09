@@ -2,8 +2,9 @@
   height: 100vh;
   display: grid;
   padding: 50px;
-  grid-template-columns: repeat(auto-fit,minmax(100px,150px));
-  grid-template-rows: repeat(auto-fit,minmax(100px,150px));
+  grid-template-columns: repeat(auto-fit,clamp(100px,8vw,150px));
+  grid-template-rows: repeat(auto-fit,clamp(100px,8vw,150px));
+
   gap: 20px;
   overflow-y: scroll;
   background-color: var(--BGcolor);
@@ -76,8 +77,8 @@ img{
   background-color: var(--BGcolor);
   transition: 1s;
 
-
 }
+
 .tableCellView tbody tr td:first-child{
   text-align: center;
 }
