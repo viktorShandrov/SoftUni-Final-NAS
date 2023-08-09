@@ -114,7 +114,8 @@ router.get("/:rootId/topFileExts", async (req, res) => {
 router.get("/:rootId/getTopFolders", async (req, res) => {
   try {
     const { rootId } = req.params
-    const topFolders = await fileManager.getTopFolders(rootId)
+    const userId = req.user._id
+    const topFolders = await fileManager.getTopFolders(rootId,userId)
     res.status(200).json({topFolders})
   } catch (error) {
     console.log(error.message);

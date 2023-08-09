@@ -189,8 +189,7 @@ exports.getOnlyRootInfo=async(rootId)=>{
     return root
 }
 exports.getTopFileExts=async(rootId)=>{
-    console.log('rootId: ', rootId);
-    const files = await fileModel.find({rootId})
+    let files = await fileModel.find({rootId})
     const allfileExt = {}
     for (const file of files) {
         if(allfileExt.hasOwnProperty(file.type)){
@@ -214,11 +213,11 @@ exports.getTopFileExts=async(rootId)=>{
 
     return payload
 }
-exports.getTopFolders=async(rootId)=>{
+exports.getTopFolders=async(rootId,userId)=>{
     const folders = await folderModel.find({rootId})
-    
+    const filtered = folders.filter((folder)=>folder.autorised.includes(userId))
 
-    const sortedTopFIleExt = folders.sort((a,b)=>b.fileComponents.length-a.fileComponents.length)
+    const sortedTopFIleExt = filtered.sort((a,b)=>b.fileComponents.length-a.fileComponents.length)
 
     const payload =[]
     for (const folder of sortedTopFIleExt) {
