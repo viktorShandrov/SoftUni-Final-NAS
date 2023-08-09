@@ -5,6 +5,7 @@ import {FormGroup} from "@angular/forms";
 import {UserService} from "../../../core/services/user.service";
 import {DarkModeService} from "../../../core/services/dark-mode.service";
 import {constants} from "../../../shared/constants";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class LoginService {
     private SharedService:HttpService,
     private UserService:UserService,
     private DarkModeService:DarkModeService,
+    private ToastrService:ToastrService,
     private Router:Router,
 
   ) { }
@@ -35,12 +37,11 @@ export class LoginService {
           localStorage.setItem("rootId",rootId)
 
           this.DarkModeService.toggleDarkMode(renderer)
-
+          this.ToastrService.success("logged in","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }
       },
       (err)=>{
-        console.log(err.message);
         document.querySelector(".errorContainer")!.textContent = err.error.message
       }
     )

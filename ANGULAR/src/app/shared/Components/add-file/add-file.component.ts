@@ -10,6 +10,7 @@ import {enviroments} from "../../environments";
 import {CacheService} from "../../services/cache.service";
 import {HTMLElementsService} from "../../services/htmlelements.service";
 import {constants} from "../../constants";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -31,6 +32,7 @@ export class AddFileComponent implements AfterViewInit{
     private UserService: UserService,
     private Renderer2: Renderer2,
     private http: HttpClient,
+    private ToastrService: ToastrService,
     private HttpService: HttpService,
     private HTMLElementsService: HTMLElementsService,
     private CacheService: CacheService,
@@ -110,7 +112,7 @@ export class AddFileComponent implements AfterViewInit{
                   headers : null
 
                 }).subscribe((event:any) => {
-                  console.log(8)
+
                     if (event.type === HttpEventType.UploadProgress) {
                       const progress = Math.round(
                         (100 * event.loaded) / (event.total?.valueOf() || 1)
@@ -121,7 +123,7 @@ export class AddFileComponent implements AfterViewInit{
                     } else if (event instanceof HttpResponse) {
                       if(event.body?.message){
                         //if error
-                        console.log(111)
+
                         document.getElementById('progress-bar')!.innerText =
                           event.body.message?.toString();
                       }else{
@@ -129,13 +131,12 @@ export class AddFileComponent implements AfterViewInit{
                         this.CacheService.files.push(event.body)
                           this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
                             (response:any) => {
-                              console.log(90)
+
                               const {folder} = response
                               this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
                             },
                             (error)=>{
-                              console.log(7)
-                              console.log(error.error.message);
+                              this.ToastrService.error(error.message,"Error",constants.toastrOptions)
 
                             })
 
@@ -145,19 +146,18 @@ export class AddFileComponent implements AfterViewInit{
                     }
                   },
                   error => {
-                    console.log(error)
+                    this.ToastrService.error(error.message,"Error",constants.toastrOptions)
                   });
               },
               (error) => {
 
-                console.log('error.message: ', error);
                 document.getElementById('progress-bar')!.innerText =
                   error.error.message;
               }
             );
         },
         (error)=>{
-          console.log(7)
+
           document.getElementById('progress-bar')!.innerText =
             error.error.message;
         })

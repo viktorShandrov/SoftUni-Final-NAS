@@ -34,10 +34,11 @@
 
         </thead>
         <tbody>
-        <tr #folderElement appFolderDoubleClick *ngFor="let folder of folders" class="cell directory table-view-container" [attr._id]="folder._id">
+        <tr [@tableViewDelete]="folder.isDisappearing?'out':'in'" (@tableViewDelete.done)="StorageService.spliceFromList($event,index,'folder')" #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell directory table-view-container" [attr._id]="folder._id">
           <td><i class="fa-solid fa-folder"></i></td>
           <td><h3 class="tableListViewH3">{{folder.name}}</h3></td>
-        </tr><tr #fileElement appFolderDoubleClick *ngFor="let file of files" class="cell file" [attr._id]="file._id">
+        </tr>
+        <tr [@tableViewDelete]="file.isDisappearing?'out':'in'" (@tableViewDelete.done)="StorageService.spliceFromList($event,index,'file')" #fileElement appFolderDoubleClick *ngFor="let file of files;let index = index" class="cell file" [attr._id]="file._id">
           <td><i class="fa-solid fa-file"></i></td>
           <td><h3 class="tableListViewH3">{{file.fileName+"."+file.type}}</h3></td>
         </tr>

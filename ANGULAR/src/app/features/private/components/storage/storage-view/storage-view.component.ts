@@ -4,6 +4,7 @@ import {StorageService} from "../../../services/storage.service";
 import {UserService} from "../../../../../core/services/user.service";
 import {enviroments} from "../../../../../shared/environments";
 import {PopupService} from "../../../../../shared/services/popup.service";
+import {CacheService} from "../../../../../shared/services/cache.service";
 
 @Component({
   selector: 'app-storage-view',
@@ -17,19 +18,32 @@ export class StorageViewComponent implements AfterViewInit{
     private HTMLElementsService: HTMLElementsService,
     private StorageService: StorageService,
     private PopupService: PopupService,
+    private CacheService: CacheService,
     private UserService: UserService
   ) {}
 
+  removeBGOnFilesAndFolders(){
+    for (const folder of this.HTMLElementsService.foldersQL) {
+      this.HTMLElementsService.Renderer2.removeStyle(folder.nativeElement,"background-color")
+    }
+    for (const folder of this.HTMLElementsService.filesQL) {
+      this.HTMLElementsService.Renderer2.removeStyle(folder.nativeElement,"background-color")
+    }
+  }
+
   ngAfterViewInit(){
     this.HTMLElementsService.Renderer2.listen(this.contentWrapper.nativeElement, "click", (e) => {
-      if(e.target.classList.contains("storage")){
+      console.log(e.target.classList)
+      if(e.target.classList.contains("storage")||e.target.classList.contains("tableCellView")){
         this.PopupService.hideAllOtherMenus()
+        this.removeBGOnFilesAndFolders()
       }
     })
     this.HTMLElementsService.Renderer2.listen(this.contentWrapper.nativeElement, "contextmenu", (e) => {
       if(e.target.classList.contains("storage")){
         e.preventDefault()
         this.PopupService.hideAllOtherMenus()
+        this.removeBGOnFilesAndFolders()
         const x = e.clientX
         const y = e.clientY
             this.HTMLElementsService.Renderer2.setAttribute(this.HTMLElementsService.createFolderOrFileMenu.nativeElement, "parent-folder-id", enviroments.currentFolder)

@@ -28,6 +28,7 @@ import {constants} from "../../../../../shared/constants";
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 import {RouterService} from "../../../../../core/router/router.service";
 import {HttpService} from "../../../../../shared/services/http.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -60,6 +61,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     private SharedWithService: SharedWithService,
     private CacheService: CacheService,
     private DarkModeService: DarkModeService,
+    private ToastrService: ToastrService,
     private UserService: UserService,
     private HttpService: HttpService,
     private HTMLElementsService: HTMLElementsService,
@@ -158,6 +160,9 @@ export class StorageNavigationComponent implements AfterViewInit {
         // this.dirs = this.StorageService.dirs;
         //
 
+      },
+      error => {
+        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
       });
 
     this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()

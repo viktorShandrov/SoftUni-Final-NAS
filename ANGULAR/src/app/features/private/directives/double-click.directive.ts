@@ -67,8 +67,7 @@ export class DoubleClickDirective {
           elementType = "file"
           id =parentElement.parentElement!.getAttribute("_id")!
         }
-        console.log(parentElement.parentElement!.classList)
-        console.log(parentElement.parentElement)
+
         this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
         this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
         this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")

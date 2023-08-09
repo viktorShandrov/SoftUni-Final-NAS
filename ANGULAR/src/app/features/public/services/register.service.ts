@@ -7,6 +7,7 @@ import {HttpService} from "../../../shared/services/http.service";
 import {UserService} from "../../../core/services/user.service";
 import {DarkModeService} from "../../../core/services/dark-mode.service";
 import {constants} from "../../../shared/constants";
+import {ToastrService} from "ngx-toastr";
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +18,7 @@ export class RegisterService {
     private Router:Router,
     private SharedService:HttpService,
     private DarkModeService:DarkModeService,
+    private ToastrService:ToastrService,
     private UserService:UserService,
 
   ) { }
@@ -39,12 +41,12 @@ export class RegisterService {
           localStorage.setItem("rootId",rootId)
 
           this.DarkModeService.toggleDarkMode(renderer)
-
+          this.ToastrService.success("registered","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }
       },
       (err)=>{
-        console.log(err);
+
         document.querySelector(".errorContainer")!.textContent = err.error.message
       }
     )

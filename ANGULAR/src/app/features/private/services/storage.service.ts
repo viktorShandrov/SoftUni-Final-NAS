@@ -10,6 +10,8 @@ import {HTMLElementsService} from "../../../shared/services/htmlelements.service
 import {HeaderService} from "../../../core/services/header.service";
 import {PopupService} from "../../../shared/services/popup.service";
 import {logMessages} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
+import {constants} from "../../../shared/constants";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export class StorageService {
     private UserService:UserService,
     private HeaderService:HeaderService,
     private PopupService:PopupService,
+    private ToastrService:ToastrService,
     private HTMLElementsService:HTMLElementsService
   ) { }
 
@@ -44,7 +47,6 @@ export class StorageService {
           this.PopupService.hidePopup();
         },
         (error) => {
-          console.log(error);
           document.querySelector('.errorMessage')!.textContent =
             error.error.message;
         }
@@ -69,11 +71,13 @@ export class StorageService {
           link.download = `${file.fileName}.${file.type}`;
           link.click();
           window.URL.revokeObjectURL(url);
+        },
+        error => {
+          this.ToastrService.error(error.message,"Error",constants.toastrOptions)
         });
     },
       (error)=>{
-        console.log(222)
-        console.log(error)
+        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
       });
   }
 
@@ -170,7 +174,6 @@ export class StorageService {
           const index = this.CacheService.folders.findIndex((el) => el._id == elementId)
           this.CacheService.folders[index].isDisappearing = true
 
-
         }else{
           const index = this.CacheService.files.findIndex((el) => el._id == elementId)
           this.CacheService.files[index].isDisappearing = true
@@ -185,12 +188,12 @@ export class StorageService {
             );
           },
           (error) => {
-            console.log(error.error.message);
+            this.ToastrService.error(error.message,"Error",constants.toastrOptions)
           }
         );
       },
       (error) => {
-        console.log(error);
+        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
       }
     );
   }
@@ -236,7 +239,7 @@ export class StorageService {
         },
         (error) => {
           this.HeaderService.isLoading = false
-          console.log(error.error.message);
+          this.ToastrService.error(error.message,"Error",constants.toastrOptions)
           return error
         })
   }

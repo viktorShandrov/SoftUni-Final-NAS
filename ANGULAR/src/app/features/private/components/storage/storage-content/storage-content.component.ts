@@ -15,6 +15,8 @@ import {HttpService} from "../../../../../shared/services/http.service";
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 import {enviroments} from "../../../../../shared/environments";
 import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
+import {ToastrService} from "ngx-toastr";
+import {constants} from "../../../../../shared/constants";
 
 
 @Component({
@@ -40,6 +42,17 @@ import {animate, keyframes, state, style, transition, trigger} from "@angular/an
           offset:1
         }),
       ])))
+    ]),
+    trigger("tableViewDelete",[
+      state("in",style({
+        transform:"translateX(0)",
+        opacity:1
+      })),
+      state("out",style({
+        transform:"translateX(100px)",
+        opacity:0
+      })),
+      transition("in =>out",animate(800))
     ])
   ]
 })
@@ -60,6 +73,7 @@ export class StorageContentComponent implements AfterViewInit {
     public StorageService: StorageService,
     public CacheService: CacheService,
     public HTMLElementsService: HTMLElementsService,
+    public ToastrService: ToastrService,
     private renderer: Renderer2
   ) {
     this.enviroments = enviroments
@@ -121,6 +135,9 @@ export class StorageContentComponent implements AfterViewInit {
             );
           }, 0);
         }
+      },
+      (error) => {
+        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
       });
   }
   crossMarkAnimationDone(event: any,element:folder|file) {

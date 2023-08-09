@@ -1,3 +1,7 @@
+@import 'ngx-toastr/toastr';
+
+
+
 :root{
   --header-height:70px;
   --BGcolor:white;

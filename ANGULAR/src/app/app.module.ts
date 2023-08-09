@@ -14,6 +14,7 @@ import {MainRouterRoutingModule} from "./core/router/main-router-routing.module"
 import {RouterService} from "./core/router/router.service";
 import {RouteReuseStrategy, RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     CoreModule,
     FeaturesModule,
     MainRouterRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true,
+    })
 
 
   ],

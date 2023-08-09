@@ -40,6 +40,7 @@ img{
   margin: 5px 0;
   color: var(--textColor);
   transition: 1s;
+  cursor: default;
 }
 
 .storage .directory i{
@@ -95,6 +96,7 @@ img{
   color: var(--textColor);
   transition: 1s;
 }
+
 
 
 /*app-loader{*/
