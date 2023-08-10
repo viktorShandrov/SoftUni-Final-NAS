@@ -19,7 +19,6 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./add-file.component.css'],
 })
 export class AddFileComponent implements AfterViewInit{
-  @ViewChild('sameAsOriginalCheckBox') sameAsOriginalCheckBox!: ElementRef;
   @ViewChild('fileNameInput') fileNameInput!: ElementRef;
   @ViewChild('popupAddFile') popupAddFile!: ElementRef;
   fileForm!: FormGroup;
@@ -46,27 +45,27 @@ export class AddFileComponent implements AfterViewInit{
       file: [''],
     });
 
-    setTimeout(() => {
-      this.Renderer2.listen(
-        this.sameAsOriginalCheckBox.nativeElement,
-        'click',
-        (e) => {
-          if (e.target.checked) {
-            this.fileNameInput.nativeElement.value = '';
-            this.Renderer2.setAttribute(
-              this.fileNameInput.nativeElement,
-              'disabled',
-              'true'
-            );
-          } else {
-            this.Renderer2.removeAttribute(
-              this.fileNameInput.nativeElement,
-              'disabled'
-            );
-          }
-        }
-      );
-    }, 0);
+    // setTimeout(() => {
+    //   this.Renderer2.listen(
+    //     this.sameAsOriginalCheckBox.nativeElement,
+    //     'click',
+    //     (e) => {
+    //       if (e.target.checked) {
+    //         this.fileNameInput.nativeElement.value = '';
+    //         this.Renderer2.setAttribute(
+    //           this.fileNameInput.nativeElement,
+    //           'disabled',
+    //           'true'
+    //         );
+    //       } else {
+    //         this.Renderer2.removeAttribute(
+    //           this.fileNameInput.nativeElement,
+    //           'disabled'
+    //         );
+    //       }
+    //     }
+    //   );
+    // }, 0);
   }
   ngAfterViewInit() {
 

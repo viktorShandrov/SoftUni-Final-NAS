@@ -1,10 +1,10 @@
 <div #popupAddFile class="wrapper">
   <form [formGroup]="fileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="titleContainer">
-      <label for="">Title:</label>
-      <input #fileNameInput type="text" formControlName="fileName" placeholder="File name">
-      <input #sameAsOriginalCheckBox type="checkbox" name="isSameTitle" id="isSameTitle">
-      <label for="isSameTitle">Same as original</label>
+<!--      <label for="">Title:</label>-->
+      <input #fileNameInput class="fileName" type="text" formControlName="fileName" placeholder="File name">
+<!--      <input #sameAsOriginalCheckBox type="checkbox" name="isSameTitle" id="isSameTitle">-->
+<!--      <label for="isSameTitle">Same as original</label>-->
     </div>
     <div class="upload">
       <label for="fileUpload">Select file</label>
@@ -12,11 +12,13 @@
     </div>
     <div class="fileInfo">
       <div class="fileLength">
-        <h5>Total length</h5>
-        <p>{{selectedFileSizeInMB||0}} MB</p>
+        <h5>File size</h5>
+        <div class="horizontalLine"></div>
+        <p>{{selectedFileSizeInMB?.toFixed(2)||0}} MB</p>
       </div>
       <div class="fileType">
-        <h5>FileType</h5>
+        <h5>File type</h5>
+        <div class="horizontalLine"></div>
         <p>{{selectedFile?.type||"unknown"}}</p>
       </div>
     </div>

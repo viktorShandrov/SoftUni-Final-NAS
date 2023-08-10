@@ -2,8 +2,14 @@
   position: absolute;
   left: -9999px;
 }
+.wrapper{
+  background-color: #D9D9D9;
+  font-family: Inter;
+  display: flex;
+}
 .titleContainer{
   display: flex;
+  align-items: center;
   flex-direction: column;
 }
 .titleContainer label{
@@ -11,8 +17,16 @@
   padding: 10px 0;
 }
 .titleContainer input{
-  text-align: center;
-  margin-bottom: 20px;
+  all: unset;
+  background-color: white;
+  border-radius: 30px;
+  border: solid 0.03cm #6197E8;
+  font-size: 13px;
+  padding: 5px 10px;
+  transition: 0.3s;
+  width: 120px;
+  text-align: start;
+  color: #6197E8;
 }
 
 
@@ -23,19 +37,27 @@
 }
 
 .navigation .proceed, .navigation .abort{
+  all: unset;
   padding: 15px 10px;
-  border-radius: 20px;
+  border-radius:60px ;
+  display: inline-block;
   cursor: pointer;
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  margin-top: 40px;
 }
 .navigation label{
   cursor: pointer;
 }
 .navigation .proceed {
-  background-color: rgb(16, 238, 16);
+  background-color: #90EAB9;
 }
 .navigation .abort {
 
-  background-color: rgb(232, 0, 0);
+  background-color: #EA9090;
 
 
 }
