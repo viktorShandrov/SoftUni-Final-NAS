@@ -39,9 +39,18 @@
   aspect-ratio: 1/1;
   text-align: center;
   position: relative;
+  padding-top: 10px;
 
 }
 
+/*.storage .cell {*/
+/*  overflow: visible;*/
+/*  height: max-content;*/
+/*}*/
+/*.storage .cell h3{*/
+/*  overflow: visible;*/
+/*  overflow-x: clip;*/
+/*}*/
 
 .cell:hover{
   background-color: var(--cellOnHover)

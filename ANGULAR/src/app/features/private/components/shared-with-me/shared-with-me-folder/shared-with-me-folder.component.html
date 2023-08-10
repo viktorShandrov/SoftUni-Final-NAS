@@ -3,11 +3,13 @@
   <a
     [routerLink]="['/storage', { outlets: { 'storage-outlet': 'shared-with-me' } }]"><button #backBtn class="back">Back</button></a>
 
-  <div #fileElement appSharedFolderDoubleClick *ngFor="let file of this.SharedWithService.files" class="cell" >
-    <div class="file" [attr._id]="file._id">
-      <i class="fa-regular fa-file"></i>
+  <div class="wrapper">
+    <div #fileElement appSharedFolderDoubleClick *ngFor="let file of this.SharedWithService.files" class="cell" >
+      <div class="file" [attr._id]="file._id">
+        <i class="fa-regular fa-file"></i>
+      </div>
+      <h3>{{file.fileName+"."+file.type}}</h3>
     </div>
-    <h3>{{file.fileName+"."+file.type}}</h3>
   </div>
 </div>
 

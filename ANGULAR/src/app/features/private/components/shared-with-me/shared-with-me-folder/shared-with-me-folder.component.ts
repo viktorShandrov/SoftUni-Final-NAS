@@ -1,5 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {SharedWithService} from "../../../services/shared-with.service";
+import {StorageService} from "../../../services/storage.service";
 
 @Component({
   selector: 'app-shared-with-me-folder',
@@ -10,6 +11,7 @@ export class SharedWithMeFolderComponent implements AfterViewInit {
   isLoading : boolean = true
 constructor(
   public  SharedWithService:SharedWithService,
+  public  StorageService:StorageService,
 
 ) {
 }
@@ -26,6 +28,7 @@ ngAfterViewInit() {
       // this.renderer.setStyle(this.SharedWithService.backBtn.nativeElement,"display","block")
       this.isLoading = false
       this.SharedWithService.files = files;
+
     },
     (err) => {
       this.isLoading = false
