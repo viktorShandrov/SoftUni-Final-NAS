@@ -25,8 +25,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     res.status(201).json(newFile)
   } catch (error) {
-    console.log('error: ', error);
-    console.log(1, error.message);
+
     res.status(400).json({message:error.message})
   }
 });
@@ -37,8 +36,7 @@ router.get('/:id/getFileInfo', async (req, res) => {
     res.send(JSON.stringify(fileInfo))
   } catch (error) {
 
-    console.log(1, error.message);
-    res.send("No such file!", error.message)
+    res.status(400).json({message:"No such file"})
   }
 });
 router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, res) => {
@@ -53,28 +51,32 @@ router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, re
     }
   } catch (error) {
 
-    console.log(1, error.message);
-    res.send(JSON.stringify(error.message))
+    res.status(400).json({message:error.message})
   }
 });
 
 
 
 router.get("/:id/download", isAuth, async (req, res) => {
-  const id = req.params.id;
-  const fileFromDB = await fileModel.findById(id)
-  const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-    bucketName: 'files'
-  });
-
-  const downloadStream = gridFile.openDownloadStream(fileFromDB.fileChunks);
-
-  res.set({
-    'Content-Type': 'application/octet-stream',
-    'Content-Disposition': `attachment; filename="${fileFromDB.fileName}.${fileFromDB.type}"`
-  });
-
-  downloadStream.pipe(res);
+  try {
+    const id = req.params.id;
+    const fileFromDB = await fileModel.findById(id)
+    const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+      bucketName: 'files'
+    });
+    
+    const downloadStream = gridFile.openDownloadStream(fileFromDB.fileChunks);
+    
+    res.set({
+      'Content-Type': 'application/octet-stream',
+      'Content-Disposition': `attachment; filename="${fileFromDB.fileName}.${fileFromDB.type}"`
+    });
+    
+    downloadStream.pipe(res);
+    
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
 })
 
 
@@ -134,18 +136,18 @@ router.post("/deleteItem", async (req, res) => {
     }
     res.end()
   } catch (error) {
-    console.log(error.message);
-    res.send(JSON.stringify(error.message))
+    res.status(400).json({message:error.message})
   }
 })
 router.get("/:id/getDirectory", async (req, res) => {
   try {
 
     const id = req.params.id
-    const folder = await fileManager.getFolder(id)
-    res.send(JSON.stringify(folder))
+    const userId = req.user._id
+    const folder = await fileManager.getFolder(id,userId)
+    res.status(200).json(folder)
   } catch (error) {
-    res.send(error.message)
+    res.status(400).json({message:error.message})
   }
 })
 router.get("/:folderId/getFilesFromSharedFolder", async (req, res) => {
@@ -187,8 +189,7 @@ router.get("/:id/getAllParentAutorisedFolders", isAuth, async (req, res) => {
     const folders = await fileManager.getAllParentAutorisedFolders(id, req.user._id)
     res.send(folders)
   } catch (error) {
-    console.log(error.message);
-    res.send(error.message)
+    res.status(400).json({message:error.message})
   }
 })
 router.get("/getSharedWithMeFolders", isAuth, async (req, res) => {
@@ -196,8 +197,7 @@ router.get("/getSharedWithMeFolders", isAuth, async (req, res) => {
     const folders = await fileManager.getSharedWithMeFolders(req.user._id)
     res.status(200).json(folders)
   } catch (error) {
-    console.log(error.message);
-    res.status(400).json(error.message)
+    res.status(400).json({message:error.message})
   }
 })
 router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
@@ -211,7 +211,6 @@ router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
     console.log("end");
     res.status(200).end()
   } catch (error) {
-    console.log(error.message);
     res.status(400).json({message:error.message})
   }
 })
@@ -222,7 +221,6 @@ router.post("/:folderId/autoriseUserToFolder", async (req, res) => {
     await fileManager.autoriseUserToFolder(folderId,email)
     res.status(200).end()
   } catch (error) {
-    console.log(error);
     res.status(400).json({message:error.message})
   }
 })

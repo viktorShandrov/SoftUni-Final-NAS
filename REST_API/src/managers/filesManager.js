@@ -57,10 +57,19 @@ exports.unAuthoriseUserFromFolder = async (folderId,userId,ownerId) => {
         throw new Error("No such shared user")
     }
 }
-exports.getFolder = async (id) => {
+exports.getFolder = async (id,userId) => {
     const folder = await folderModel.findById(id).populate("dirComponents").populate("fileComponents") || await rootModel.findById(id).populate("dirComponents").populate("fileComponents")
-    console.log(folder);
-    return folder
+    if(!folder.isPublic){
+        if(!folder.autorised.includes(userId)){
+         throw new Error("You are not autorised")
+        }else{
+            return folder
+        }
+    }else{
+        return folder
+    }
+
+
 }
 exports.getFilesFromSharedFolder = async (folderId) => {
     const folder = await folderModel.findById(folderId).populate("fileComponents") 
@@ -181,6 +190,7 @@ exports.getAllParentAutorisedFolders = async (folderId, userId) => {
         }
     }
     await getParentAutorisedFolder(folderId, userId)
+    
     return folders
 }
 

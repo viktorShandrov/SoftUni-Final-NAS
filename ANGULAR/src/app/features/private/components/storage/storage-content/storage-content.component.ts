@@ -146,7 +146,7 @@ export class StorageContentComponent implements AfterViewInit {
         }
       },
       (error) => {
-        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       });
   }
   crossMarkAnimationDone(event: any,element:folder|file) {
