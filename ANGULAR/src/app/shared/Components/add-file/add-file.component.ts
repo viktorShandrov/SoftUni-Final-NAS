@@ -163,7 +163,7 @@ export class AddFileComponent implements AfterViewInit{
                                 this.HeaderService.transformTheHeaderStorageInfoByDefault()
                             },
                             (error)=>{
-                              this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+                              this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
                               this.HeaderService.transformTheHeaderStorageInfoByDefault()
                             })
 
@@ -175,7 +175,7 @@ export class AddFileComponent implements AfterViewInit{
                   error => {
                     this.areBtnDisabled= false
                     this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                    this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+                    this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
                   });
               },
               (error) => {

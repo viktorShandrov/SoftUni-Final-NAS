@@ -86,11 +86,11 @@ export class StorageService {
           window.URL.revokeObjectURL(url);
         },
         error => {
-          this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+          this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
         });
     },
       (error)=>{
-        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       });
   }
 
@@ -213,12 +213,12 @@ export class StorageService {
             );
           },
           (error) => {
-            this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+            this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
           }
         );
       },
       (error) => {
-        this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       }
     );
   }
@@ -264,7 +264,7 @@ export class StorageService {
         },
         (error) => {
           this.HeaderService.isLoading = false
-          this.ToastrService.error(error.message,"Error",constants.toastrOptions)
+          this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
           return error
         })
   }
