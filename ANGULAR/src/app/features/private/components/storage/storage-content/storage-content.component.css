@@ -1,24 +1,48 @@
-.storage{
-  height: 100vh;
-  display: grid;
-  padding: 50px;
-  grid-template-columns: repeat(auto-fit,clamp(100px,8vw,150px));
-  grid-template-rows: repeat(auto-fit,clamp(100px,8vw,150px));
+/*.storage{*/
+/*  height: 90vh;*/
+/*  display: grid;*/
+/*  padding: 50px;*/
+/*  grid-template-columns: repeat(auto-fit,clamp(100px,8vw,150px));*/
+/*  grid-template-rows: repeat(auto-fit,clamp(100px,8vw,150px));*/
+/*  gap: 20px;*/
+/*  overflow-y: auto;*/
+/*  background-color: var(--BGcolor);*/
+/*  transition: 1s;*/
 
+/*}*/
+/*.storage .cell{*/
+/*  width: 100%;*/
+/*  aspect-ratio: 1/1;*/
+/*  text-align: center;*/
+/*  position: relative;*/
+/*}*/
+/*flex alternitive*/
+
+.storage{
+  height: 90vh;
+  display: flex;
+  padding: 50px;
   gap: 20px;
   overflow-y: scroll;
   background-color: var(--BGcolor);
   transition: 1s;
+  flex-wrap: wrap;
+
 }
+
 
 
 
 .storage .cell{
-  width: 100%;
+  width: clamp(100px,8vw,150px);
+  height: clamp(100px,8vw,150px);
   aspect-ratio: 1/1;
   text-align: center;
   position: relative;
+
 }
+
+
 .cell:hover{
   background-color: var(--cellOnHover)
 }
