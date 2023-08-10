@@ -1,6 +1,8 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {SharedWithService} from "../../../services/shared-with.service";
 import {StorageService} from "../../../services/storage.service";
+import {ToastrService} from "ngx-toastr";
+import {constants} from "../../../../../shared/constants";
 
 @Component({
   selector: 'app-shared-with-me-folder',
@@ -12,6 +14,7 @@ export class SharedWithMeFolderComponent implements AfterViewInit {
 constructor(
   public  SharedWithService:SharedWithService,
   public  StorageService:StorageService,
+  public  ToastrService:ToastrService,
 
 ) {
 }
@@ -32,6 +35,7 @@ ngAfterViewInit() {
     },
     (err) => {
       this.isLoading = false
+      this.ToastrService.error(err.error.message,"Error",constants.toastrOptions)
     }
   );
 }

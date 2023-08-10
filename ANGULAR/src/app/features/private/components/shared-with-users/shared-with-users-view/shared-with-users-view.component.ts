@@ -3,6 +3,8 @@ import {SharedWithService} from "../../../services/shared-with.service";
 import {StorageService} from "../../../services/storage.service";
 import {DarkModeService} from "../../../../../core/services/dark-mode.service";
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
+import {constants} from "../../../../../shared/constants";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-shared-with-users-view',
@@ -16,6 +18,7 @@ export class SharedWithUsersViewComponent implements AfterViewInit{
     public DarkModeService:DarkModeService,
     public HTMLElementsService:HTMLElementsService,
     private StorageService:StorageService,
+    private ToastrService:ToastrService,
   ){}
   ngAfterViewInit(){
 
@@ -23,6 +26,10 @@ export class SharedWithUsersViewComponent implements AfterViewInit{
               (res:any)=>{
                 this.SharedWithService.autorisedWihtUsers = res
                 this.isLoading = false
+              },
+              (error)=>{
+                this.isLoading = false
+                this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
               }
             )
 

@@ -146,6 +146,8 @@ export class StorageContentComponent implements AfterViewInit {
         }
       },
       (error) => {
+        this.isLoading = false;
+        this.haveFolder = false;
         this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       });
   }

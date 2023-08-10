@@ -5,6 +5,8 @@ import {StorageService} from "../../../services/storage.service";
 import {SharedWithService} from "../../../services/shared-with.service";
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 import {CacheService} from "../../../../../shared/services/cache.service";
+import {ToastrService} from "ngx-toastr";
+import {constants} from "../../../../../shared/constants";
 
 @Component({
   selector: 'app-shared-with-me',
@@ -21,6 +23,7 @@ export class SharedWithMeComponent implements AfterViewInit {
     public SharedWithService:SharedWithService,
     public HTMLElementsService:HTMLElementsService,
     public CacheService:CacheService,
+    public ToastrService:ToastrService,
     public renderer:Renderer2,
 
   ){}
@@ -44,7 +47,6 @@ export class SharedWithMeComponent implements AfterViewInit {
       this.isLoading = true
       this.SharedWithService.getSharedWithMeFolders().subscribe(
         (res:any)=>{
-          console.log(111111)
           this.isLoading = false
           if(res.length>0){
             this.haveFolder = true
@@ -56,8 +58,9 @@ export class SharedWithMeComponent implements AfterViewInit {
 
 
         },
-        (err)=>{
-          console.log(err)
+        (error)=>{
+          this.isLoading = false
+            this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
         }
       )
 
