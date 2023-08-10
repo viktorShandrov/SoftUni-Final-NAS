@@ -69,10 +69,6 @@ export class RouterService {
               (completionDivsRefs) => {
                 this.StorageService.addEventListenersToCompletionElements(
                   this.HTMLElementsService.completionDivsRefs,
-                  this.CacheService.dirs,
-                  this.HTMLElementsService.dirDivsRefs,
-                  this.StorageService.addEventListenerToDivDir,
-                  this.HTMLElementsService.Renderer2,
                   this.router
                 )
 

@@ -1,4 +1,4 @@
-import { Injectable,ElementRef,Renderer2,ViewChild } from '@angular/core';
+import {Injectable, ElementRef, Renderer2, ViewChild, QueryList} from '@angular/core';
 import {HTMLElementsService} from "./htmlelements.service";
 
 

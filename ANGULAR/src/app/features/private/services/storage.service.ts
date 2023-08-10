@@ -47,9 +47,17 @@ export class StorageService {
           const newFolder: folder = response.newFolder;
           const newCompletion = {name:newFolder.name as string,_id:newFolder._id as string}
           this.CacheService.completions.push(newCompletion)
+          setTimeout(()=>{
+            const lastCompletion = this.HTMLElementsService.completionDivsRefs.toArray()[this.HTMLElementsService.completionDivsRefs.length-1]
+            this.addEventListenersToSingleCompletionElement(lastCompletion,this.Router)
+          },0)
           folders.push(newFolder);
           this.hasFolders = true
           this.PopupService.hidePopup();
+          setTimeout(()=>{
+            const lastFolder = this.HTMLElementsService.foldersQL.toArray()[this.HTMLElementsService.foldersQL.length-1]
+            this.makeFolderOrFileClickableEffect(lastFolder)
+          },0)
         },
         (error) => {
           document.querySelector('.errorMessage')!.textContent =
@@ -261,31 +269,62 @@ export class StorageService {
         })
   }
 
+  makeFolderOrFileClickableEffect(element:ElementRef){
+    this.HTMLElementsService.Renderer2.listen(element.nativeElement, 'click', () => {
+      console.log(1121212)
+      if(this.HTMLElementsService.foldersQL.length>0){
+        for (const folder of this.HTMLElementsService.foldersQL) {
+          this.HTMLElementsService.Renderer2.removeStyle(folder.nativeElement, 'background-color');
+        }
+      }
+      if(this.HTMLElementsService.filesQL.length>0) {
+        for (const file of this.HTMLElementsService.filesQL) {
+          this.HTMLElementsService.Renderer2.removeStyle(file.nativeElement, 'background-color');
+        }
+      }
+      this.HTMLElementsService.Renderer2.setStyle(
+        element.nativeElement,
+        'background-color',
+        '#55beff'
+      );
+    });
+  }
 
+  hideAllOverflowingCellText(folders:QueryList<ElementRef>,files:QueryList<ElementRef>){
+    for (const folder of folders.toArray()) {
+      this.HTMLElementsService.Renderer2.removeClass(folder.nativeElement,"allowedTextOverflow")
+    }
+    for (const file of files.toArray()) {
+      this.HTMLElementsService.Renderer2.removeClass(file.nativeElement,"allowedTextOverflow")
+    }
+  }
+  showOverflowingCellText(element:HTMLElement){
+    this.HTMLElementsService.Renderer2.addClass(element,"allowedTextOverflow")
+  }
 
   addEventListenersToCompletionElements(
     completionDivs: QueryList<ElementRef>,
-    dirs: Dirs[],
-    dirDivsRefs: QueryList<ElementRef>,
-    addEventListenerToDivDir: Function,
-    renderer: Renderer2,
     router: Router
   ) {
 
     for (const div of completionDivs.toArray()) {
-      renderer.listen(div.nativeElement, 'click', (e: any) => {
-        console.log(222)
-        const id = div.nativeElement.getAttribute('id');
-        dirs.push({ name: div.nativeElement.textContent, _id: id });
-        router.navigate([
-          '/storage',
-          { outlets: { 'storage-outlet': id } },
-        ]);
-        const divDir = dirDivsRefs.last;
-        if (divDir) {
-          addEventListenerToDivDir(divDir, dirs, renderer, router);
-        }
-      });
+      this.addEventListenersToSingleCompletionElement(div,router)
     }
   }
+
+addEventListenersToSingleCompletionElement(element:ElementRef,router:Router){
+
+  this.HTMLElementsService.Renderer2.listen(element.nativeElement, 'click', (e: any) => {
+    const id = element.nativeElement.getAttribute('id');
+    this.CacheService.dirs.push({ name: element.nativeElement.textContent, _id: id });
+    this.Router.navigate([
+      '/storage',
+      { outlets: { 'storage-outlet': id } },
+    ]);
+    const divDir = this.HTMLElementsService.dirDivsRefs.last;
+    if (divDir) {
+      this.addEventListenerToDivDir(divDir, this.CacheService.dirs, this.HTMLElementsService.Renderer2, router);
+    }
+  });
+}
 }

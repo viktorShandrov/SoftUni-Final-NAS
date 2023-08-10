@@ -12,9 +12,6 @@ import {HTMLElementsService} from "../../../shared/services/htmlelements.service
 import {CacheService} from "../../../shared/services/cache.service";
 import {StorageService} from "../services/storage.service";
 import {PopupService} from "../../../shared/services/popup.service";
-import {
-  logBuilderStatusWarnings
-} from "@angular-devkit/build-angular/src/builders/browser-esbuild/builder-status-warnings";
 
 
 @Directive({
@@ -50,10 +47,13 @@ export class DoubleClickDirective {
       }, this.DOUBLE_CLICK_THRESHOLD);
 
       this.PopupService.hideAllOtherMenus()
-      console.log(element)
-      console.log(parentElement)
-      console.log(parentParentElement)
+      this.StorageService.hideAllOverflowingCellText(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
 
+      if(parentParentElement.classList.contains("cell")) {
+        this.StorageService.showOverflowingCellText(parentParentElement)
+      }else if(parentElement.classList.contains("cell")){
+        this.StorageService.showOverflowingCellText(parentElement)
+      }
       parentElement.addEventListener("contextmenu",(e)=>{
         e.preventDefault()
         const x = e.clientX

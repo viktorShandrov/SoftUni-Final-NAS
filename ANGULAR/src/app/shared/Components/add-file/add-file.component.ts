@@ -146,6 +146,10 @@ export class AddFileComponent implements AfterViewInit{
 
                         this.areBtnDisabled= false
                         this.CacheService.files.push(event.body)
+                        setTimeout(()=>{
+                          const lastFile = this.HTMLElementsService.filesQL.toArray()[this.HTMLElementsService.filesQL.length-1]
+                          this.StorageService.makeFolderOrFileClickableEffect(lastFile)
+                        },0)
                         this.clearForm()
                         this.StorageService.hasFiles = true
 

@@ -162,39 +162,12 @@ export class StorageContentComponent implements AfterViewInit {
   ) {
     if (folders) {
       for (const folderElement of folders) {
-        this.renderer.listen(folderElement.nativeElement, 'click', () => {
-          for (const folder of folders) {
-            this.renderer.removeStyle(folder.nativeElement, 'background-color');
-          }
-          for (const file of files) {
-            this.renderer.removeStyle(file?.nativeElement, 'background-color');
-          }
-          this.renderer.setStyle(
-            folderElement.nativeElement,
-            'background-color',
-            '#55beff'
-          );
-        });
+        this.StorageService.makeFolderOrFileClickableEffect(folderElement)
       }
     }
     if (files) {
       for (const fileElement of files) {
-        this.renderer.listen(fileElement.nativeElement, 'click', () => {
-          for (const folder of folders) {
-            this.renderer.removeStyle(
-              folder?.nativeElement,
-              'background-color'
-            );
-          }
-          for (const file of files) {
-            this.renderer.removeStyle(file.nativeElement, 'background-color');
-          }
-          this.renderer.setStyle(
-            fileElement.nativeElement,
-            'background-color',
-            '#55beff'
-          );
-        });
+        this.StorageService.makeFolderOrFileClickableEffect(fileElement)
       }
     }
   }

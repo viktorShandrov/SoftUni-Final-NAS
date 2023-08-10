@@ -43,14 +43,14 @@
 
 }
 
-/*.storage .cell {*/
-/*  overflow: visible;*/
-/*  height: max-content;*/
-/*}*/
-/*.storage .cell h3{*/
-/*  overflow: visible;*/
-/*  overflow-x: clip;*/
-/*}*/
+.storage .allowedTextOverflow {
+  overflow: visible;
+  height: max-content;
+}
+.storage .allowedTextOverflow h3{
+  overflow: visible;
+  overflow-x: clip;
+}
 
 .cell:hover{
   background-color: var(--cellOnHover)
