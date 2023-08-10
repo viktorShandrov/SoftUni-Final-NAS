@@ -10,6 +10,8 @@ import {
 import {StorageService} from "../../../services/storage.service";
 import {DashboardService} from "../../../services/dashboard.service";
 import {topExtI,topFolders} from "../../../../../shared/types";
+import {DarkModeService} from "../../../../../core/services/dark-mode.service";
+import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 
 
 
@@ -59,6 +61,8 @@ export class DashboardViewComponent implements AfterViewInit{
   constructor(
     private Renderer2: Renderer2,
     private DashboardService: DashboardService,
+    private HTMLElementsService: HTMLElementsService,
+    private DarkModeService: DarkModeService,
     private StorageService: StorageService,
   ) {}
   transform(value: number): string {
@@ -78,7 +82,7 @@ export class DashboardViewComponent implements AfterViewInit{
         setTimeout(async ()=>{
 
         this.isLoading = true
-
+        this.DarkModeService.toggleDarkMode(this.HTMLElementsService.Renderer2)
         await this.DashboardService.getTopExtData(this.extQ, this.Renderer2);
         this.isLoading = false
         this.topExt = this.DashboardService.topExt;

@@ -3,15 +3,19 @@
     <i class="fa-solid fa-database"></i>
   </div>
   <div class="storage-info">
-    <div *ngIf="!HeaderService.isLoading" #storageUsed class="storageUsed">{{HeaderService.transform(HeaderService.usedStorage)}}</div>
+    <div #storageUsed class="storageUsed">
+      <div *ngIf="!HeaderService.isLoading"  >{{HeaderService.transform(HeaderService.usedStorage)}}</div>
+    </div>
     <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
 
     <div  class="storageBar">
-      <div  class="progressBar" #usedStorageBar></div>
+      <div class="progressBar" #usedStorageBar></div>
     </div>
 <!--    <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>-->
+    <div #storageLeft class="storageLeft">
+      <div *ngIf="!HeaderService.isLoading"  >{{HeaderService.transform(HeaderService.totalVolume)}}</div>
+    </div>
 
-    <div *ngIf="!HeaderService.isLoading" #storageLeft class="storageLeft">{{HeaderService.transform(HeaderService.totalVolume)}}</div>
     <div *ngIf="HeaderService.isLoading" class="lds-dual-ring"></div>
 
   </div>

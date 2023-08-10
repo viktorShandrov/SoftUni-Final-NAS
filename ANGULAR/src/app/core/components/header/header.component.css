@@ -84,6 +84,7 @@ header .user-settings-menu p {
   align-items: center;
   background-color: #0cc0df;
   border-radius: 100px;
+  transition: 1s;
 
 }
 
@@ -102,6 +103,7 @@ header .user-settings-menu p {
   height: 20px;
   background-color: #0cc0df;
   border-radius: 100px;
+  transition: 1.5s;
 }
 
 .storage-info .storageUsed{

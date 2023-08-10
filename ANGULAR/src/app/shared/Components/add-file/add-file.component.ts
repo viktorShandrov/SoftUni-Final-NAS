@@ -116,6 +116,7 @@ export class AddFileComponent implements AfterViewInit{
                   'parentFolderId',
                   enviroments.currentFolder
                 );
+                this.HeaderService.transformTheHeaderStorageInfoForUpload(this.selectedFileSizeInMB as number)
                 this.HttpService.httpPOSTRequest('api/files/upload',formData,{
                   reportProgress: true,
                   observe: 'events',
@@ -127,6 +128,8 @@ export class AddFileComponent implements AfterViewInit{
                       const progress = Math.round(
                         (100 * event.loaded) / (event.total?.valueOf() || 1)
                       );
+                      this.HeaderService.updateUploadProgressBar(progress)
+
                       document.getElementById(
                         'progress-bar'
                       )!.innerText = `Upload progress: ${progress}%`;
@@ -136,8 +139,11 @@ export class AddFileComponent implements AfterViewInit{
                         this.areBtnDisabled= false
                         document.getElementById('progress-bar')!.innerText =
                           event.body.message?.toString();
+                        this.HeaderService.transformTheHeaderStorageInfoByDefault()
                       }else{
                         //returns the newFile info
+
+
                         this.areBtnDisabled= false
                         this.CacheService.files.push(event.body)
                         this.clearForm()
@@ -147,11 +153,14 @@ export class AddFileComponent implements AfterViewInit{
                             (response:any) => {
 
                               const {folder} = response
-                              this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
+                              setTimeout(()=>{
+                                this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
+                              },300)
+                                this.HeaderService.transformTheHeaderStorageInfoByDefault()
                             },
                             (error)=>{
                               this.ToastrService.error(error.message,"Error",constants.toastrOptions)
-
+                              this.HeaderService.transformTheHeaderStorageInfoByDefault()
                             })
 
                         this.PopupService.hidePopup()
@@ -161,11 +170,13 @@ export class AddFileComponent implements AfterViewInit{
                   },
                   error => {
                     this.areBtnDisabled= false
+                    this.HeaderService.transformTheHeaderStorageInfoByDefault()
                     this.ToastrService.error(error.message,"Error",constants.toastrOptions)
                   });
               },
               (error) => {
                 this.areBtnDisabled= false
+                this.HeaderService.transformTheHeaderStorageInfoByDefault()
                 document.getElementById('progress-bar')!.innerText =
                   error.error.message;
               }
@@ -173,11 +184,13 @@ export class AddFileComponent implements AfterViewInit{
         },
         (error)=>{
           this.areBtnDisabled= false
+          this.HeaderService.transformTheHeaderStorageInfoByDefault()
           document.getElementById('progress-bar')!.innerText =
             error.error.message;
         })
     } else {
       this.areBtnDisabled= false
+      this.HeaderService.transformTheHeaderStorageInfoByDefault()
       document.getElementById('progress-bar')!.innerText = "No file selected"
     }
   }

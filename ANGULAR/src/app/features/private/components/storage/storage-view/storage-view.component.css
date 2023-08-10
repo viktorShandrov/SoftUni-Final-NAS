@@ -4,6 +4,7 @@
 
 .contentWrapper{
   flex: 1;
+  /*position: relative;*/
 }
 app-storage-navigation{
   /*flex: 0;*/

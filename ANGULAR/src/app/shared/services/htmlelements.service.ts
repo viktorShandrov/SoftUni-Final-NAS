@@ -9,8 +9,11 @@ export class HTMLElementsService {
   dirDivsRefs!: QueryList<ElementRef>;
   completionDivsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
+  usedStorageBar!: ElementRef;
   popupAddFile!: ElementRef;
+  storageUsed!: ElementRef;
   backBtn!: ElementRef;
+  storageLeft!: ElementRef;
   popupAddFolder!: ElementRef;
   createFolderOrFileMenu!: ElementRef;
   wholeStorage!: ElementRef;

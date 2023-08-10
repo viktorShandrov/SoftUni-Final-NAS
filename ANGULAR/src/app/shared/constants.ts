@@ -8,10 +8,15 @@ const api = {
   register:  "api/users/register",
 }
 const toastrOptions = {progressBar:true,timeOut:3000}
+
+const HeaderStorageInfoMainColor  = "#0cc0df"
+const HeaderStorageInfoColorWhenUpload  = "#29d60b"
 export const constants = {
   REST_API_DOMAIN,
   jsonHeaders,
   fileHeaders,
   api,
-  toastrOptions
+  toastrOptions,
+  HeaderStorageInfoMainColor,
+  HeaderStorageInfoColorWhenUpload
 }

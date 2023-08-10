@@ -10,6 +10,8 @@ import {HTMLElementsService} from "../../../shared/services/htmlelements.service
 export class HeaderComponent implements AfterViewInit{
 
   @ViewChild("usedStorageBar",{static:true}) usedStorageBar!:ElementRef
+  @ViewChild("storageUsed") storageUsed!:ElementRef
+  @ViewChild("storageLeft") storageLeft!:ElementRef
   constructor(
     public HeaderService:HeaderService,
     public Renderer2:Renderer2,
@@ -20,7 +22,10 @@ export class HeaderComponent implements AfterViewInit{
 
   ngAfterViewInit(){
     this.changeDetectorRef.detectChanges();
-    this.HeaderService.usedStorageBar= this.usedStorageBar
     this.HTMLElementsService.Renderer2 = this.Renderer2
+    this.HTMLElementsService.usedStorageBar = this.usedStorageBar
+    this.HTMLElementsService.storageUsed = this.storageUsed
+    this.HTMLElementsService.storageLeft = this.storageLeft
+    console.log(this.HTMLElementsService.storageUsed)
   }
 }
