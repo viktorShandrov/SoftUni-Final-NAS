@@ -27,6 +27,7 @@ import { SharedWithMeFolderComponent } from './private/components/shared-with-me
 import {
   SharedWithUsersViewComponent
 } from "./private/components/shared-with-users/shared-with-users-view/shared-with-users-view.component";
+import { PlansViewComponent } from './public/components/plans-view/plans-view.component';
 
 
 
@@ -51,7 +52,8 @@ import {
     SharedFolderDoubleClickDirective,
     SharedWithMeViewComponent,
     SharedWithMeFolderComponent,
-    SharedWithUsersViewComponent
+    SharedWithUsersViewComponent,
+    PlansViewComponent
 
   ],
   imports: [

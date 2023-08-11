@@ -23,12 +23,18 @@ import {
 import {
   SharedWithUsersViewComponent
 } from "../../features/private/components/shared-with-users/shared-with-users-view/shared-with-users-view.component";
+import {PlansViewComponent} from "../../features/public/components/plans-view/plans-view.component";
 
 const routes: Routes = [
   {
     path:"",
     pathMatch: "full",
     redirectTo:"/users/(users-view:login)"
+  },
+  {
+    path:"plans",
+    pathMatch: "full",
+    component:PlansViewComponent
   },
   {path:"users",component:UsersViewComponent,
     children:
