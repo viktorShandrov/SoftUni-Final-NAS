@@ -3,7 +3,7 @@
   border-radius: 60px;
   width: 40%;
   height: 80%;
-  border: black 0.5mm solid;
+  border: solid 0.2cm #3e3c3c;
   display: flex;
   justify-content: center;
   margin: 20px auto;

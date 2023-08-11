@@ -1,9 +1,10 @@
 .register-wrapper {
   background-color: white;
   border-radius: 60px;
+
+  border: solid 0.2cm #3e3c3c;
   width: 40%;
   height: 80%;
-  border-color: azure;
   display: flex;
   justify-content: center;
   margin: 20px auto;
