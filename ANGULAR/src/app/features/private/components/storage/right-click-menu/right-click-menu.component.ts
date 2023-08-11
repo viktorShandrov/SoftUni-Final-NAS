@@ -109,6 +109,7 @@ export class RightClickMenuComponent implements AfterViewInit{
     this.HttpService.httpPOSTRequest("api/files/makeFolderPublic",JSON.stringify({folderId})).subscribe(
       (res:any)=>{
         this.ToastrService.success(res.message,"Yaaay",constants.toastrOptions)
+        this.changePublicityOfFolder(folderId,true)
       },
       (error)=>{
         this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
@@ -120,11 +121,23 @@ export class RightClickMenuComponent implements AfterViewInit{
     this.HttpService.httpPOSTRequest("api/files/unPublicFolder",JSON.stringify({folderId})).subscribe(
       (res:any)=>{
         this.ToastrService.success(res.message,"Yaaay",constants.toastrOptions)
+        this.changePublicityOfFolder(folderId,false)
       },
       (error)=>{
         this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       }
     )
+  }
+  changePublicityOfFolder(folderId:string,isPublic:boolean){
+    const index = this.CacheService.folders.findIndex((el)=>el._id==folderId)
+    if(index>-1){
+      const folder = this.CacheService.folders[index]
+      if(isPublic){
+        folder.isPublic = true;
+      }else{
+        folder.isPublic = false;
+      }
+    }
   }
   onSubmit(form:any){
     if(this.formGroup.valid){
