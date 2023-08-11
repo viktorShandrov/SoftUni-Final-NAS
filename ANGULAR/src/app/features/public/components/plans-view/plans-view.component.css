@@ -18,6 +18,7 @@ nav li{
   padding: 10px 15px;
   border-radius: 30px;
   margin:10px 0;
+  background-color: #c1c1c1;
 }
 nav li p{
   margin: 0;
@@ -44,12 +45,13 @@ nav li:hover{
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 273px;
+  height: 273px;
   transition: 1s;
 }
 .plan:hover{
-  transform: translateY(-40px);
+  transform: translateY(-20px);
 }
+
 .titleAndBadge{
   display: flex;
   width: 100%;
@@ -125,4 +127,12 @@ nav li:hover{
   cursor: pointer;
   background-color: white;
   color: black;
+}
+.owned{
+  background-color: grey;
+}
+.owned:hover{
+  cursor: not-allowed;
+  background-color: grey;
+  color: white;
 }

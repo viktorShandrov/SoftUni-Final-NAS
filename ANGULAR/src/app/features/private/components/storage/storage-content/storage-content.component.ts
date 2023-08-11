@@ -26,7 +26,7 @@ import {constants} from "../../../../../shared/constants";
   animations:[
     trigger("crossMarkAnim",[
       state("out",style({width:'0px'})),
-      state("in",style({width:'180px'})),
+      state("in",style({width:'160px'})),
       transition("out => in",animate(400 ))
     ]),
     trigger("cellDisappear",[
