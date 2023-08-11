@@ -15,10 +15,11 @@
 }
 .option {
   padding: 7px 5px;
-  margin: 0px;
+  margin: 0;
   background-color: chocolate;
   display:flex ;
   justify-content: center;
+  text-align: center;
 }
 p {
   margin: 0;

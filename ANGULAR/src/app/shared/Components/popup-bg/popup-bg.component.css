@@ -6,7 +6,8 @@
   display: none;
   z-index: 999;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+
 }
 
 /*needs to be on other place*/
@@ -14,12 +15,13 @@ app-add-file,app-add-folder{
   background-color: white;
   width: 40%;
   height: 60%;
+  max-height:420px ;
   border-radius: 50px;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-
+  margin-top: 60px;
 
 }
 
@@ -28,6 +30,7 @@ app-add-folder{
   width: 20%;
   justify-content: center;
   background-color: #D9D9D9;
+
 }
 app-add-file{
   width: 20%;

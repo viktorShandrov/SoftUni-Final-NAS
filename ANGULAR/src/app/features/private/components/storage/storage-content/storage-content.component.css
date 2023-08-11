@@ -84,7 +84,7 @@ img{
 }
 
 .storage .file i{
-  font-size: 720%;
+  font-size: 500%;
   color: var(--textColor);
   transition: 1s;
 }

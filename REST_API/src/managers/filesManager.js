@@ -254,6 +254,22 @@ exports.autoriseUserToFolder = async (folderId,email)=>{
     await folder.save()
 
 }
+exports.makeFolderPublic= async (folderId,userId)=>{
+    const folder = await folderModel.findById(folderId)
+    if(!folder.autorised.includes(userId)){
+        throw new Error("You are not autorised to make the folder public")
+    }
+    folder.isPublic = true
+    return folder.save()
+}
+exports.unPublicFolder= async (folderId,userId)=>{
+    const folder = await folderModel.findById(folderId)
+    if(!folder.autorised.includes(userId)){
+        throw new Error("You are not autorised to make the folder un-public")
+    }
+    folder.isPublic = false
+    return folder.save()
+}
 exports.getSharedWithMeFolders = async (userId)=>{
     console.log('userId: ', userId);
     const folders = await folderModel.find({

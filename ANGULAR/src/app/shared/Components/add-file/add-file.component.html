@@ -19,7 +19,7 @@
       <div class="fileType">
         <h5>File type</h5>
         <div class="horizontalLine"></div>
-        <p>{{selectedFile?.type||"unknown"}}</p>
+        <p>{{selectedFile?.type?.slice(0,15)||"unknown"}}</p>
       </div>
     </div>
     <div class="navigation">

@@ -224,4 +224,24 @@ router.post("/:folderId/autoriseUserToFolder", async (req, res) => {
     res.status(400).json({message:error.message})
   }
 })
+router.post("/makeFolderPublic", async (req, res) => {
+  try {
+    const {folderId} = req.body
+    const userId = req.user._id
+      await fileManager.makeFolderPublic(folderId,userId)
+    res.status(200).json({message:"Successfully made public"})
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
+})
+router.post("/unPublicFolder", async (req, res) => {
+  try {
+    const {folderId} = req.body
+    const userId = req.user._id
+      await fileManager.unPublicFolder(folderId,userId)
+    res.status(200).json({message:"Successfully made un-public"})
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
+})
 module.exports = router

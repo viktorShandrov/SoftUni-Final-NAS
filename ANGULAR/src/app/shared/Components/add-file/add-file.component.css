@@ -61,6 +61,8 @@ form{
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  text-overflow: clip;
+  gap: 10px;
 }
 .fileInfo h5{
   margin: 0;
