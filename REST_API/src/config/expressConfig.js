@@ -11,7 +11,7 @@ exports.expressConfig = (app) => {
   // app.use(bodyParser.json())
 
   const corsMiddleware = (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://theconfederacy.site');
+    res.setHeader('Access-Control-Allow-Origin', 'https://viktorshandrov.github.io');
 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
