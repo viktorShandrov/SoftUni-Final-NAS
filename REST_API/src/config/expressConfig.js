@@ -11,14 +11,18 @@ exports.expressConfig = (app) => {
   // app.use(bodyParser.json())
 
   const corsMiddleware = (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://viktorshandrov.github.io,http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', 'https://viktorshandrov.github.io','http://localhost:4200');
 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     next();
   };
-  app.use(corsMiddleware)
+  // app.use(corsMiddleware)
+  const allowedOrigins = ['http://localhost:4200', 'https://viktorshandrov.github.io'];
+app.use(cors({
+  origin: allowedOrigins
+}));
   app.use(auth);
   app.use(router);
 }

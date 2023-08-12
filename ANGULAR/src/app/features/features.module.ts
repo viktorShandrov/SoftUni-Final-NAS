@@ -28,6 +28,7 @@ import {
   SharedWithUsersViewComponent
 } from "./private/components/shared-with-users/shared-with-users-view/shared-with-users-view.component";
 import { PlansViewComponent } from './public/components/plans-view/plans-view.component';
+import { UnauthoriseDirective } from './private/directives/unauthorise.directive';
 
 
 
@@ -53,7 +54,8 @@ import { PlansViewComponent } from './public/components/plans-view/plans-view.co
     SharedWithMeViewComponent,
     SharedWithMeFolderComponent,
     SharedWithUsersViewComponent,
-    PlansViewComponent
+    PlansViewComponent,
+    UnauthoriseDirective
 
   ],
   imports: [
