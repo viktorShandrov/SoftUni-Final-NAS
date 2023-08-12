@@ -230,7 +230,21 @@ export class StorageService {
     // this.http.get('api/files/');
   }
 
-
+  addEventListenerOnFilesAndFoldersToBeClickable(
+    folders: QueryList<ElementRef>,
+    files: QueryList<ElementRef>
+  ) {
+    if (folders) {
+      for (const folderElement of folders) {
+        this.makeFolderOrFileClickableEffect(folderElement)
+      }
+    }
+    if (files) {
+      for (const fileElement of files) {
+        this.makeFolderOrFileClickableEffect(fileElement)
+      }
+    }
+  }
 
   removeBGOnFoldersAndFiles(
     folders: QueryList<ElementRef>,

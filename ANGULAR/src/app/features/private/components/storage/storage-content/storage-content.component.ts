@@ -138,7 +138,7 @@ export class StorageContentComponent implements AfterViewInit {
           }
 
           setTimeout(() => {
-            this.addEventListenerOnFilesAndFoldersToBeClickable(
+            this.StorageService.addEventListenerOnFilesAndFoldersToBeClickable(
               this.foldersRef,
               this.filesRef
             );
@@ -158,19 +158,5 @@ export class StorageContentComponent implements AfterViewInit {
   }
 
 
-  addEventListenerOnFilesAndFoldersToBeClickable(
-    folders: QueryList<ElementRef>,
-    files: QueryList<ElementRef>
-  ) {
-    if (folders) {
-      for (const folderElement of folders) {
-        this.StorageService.makeFolderOrFileClickableEffect(folderElement)
-      }
-    }
-    if (files) {
-      for (const fileElement of files) {
-        this.StorageService.makeFolderOrFileClickableEffect(fileElement)
-      }
-    }
-  }
+
 }

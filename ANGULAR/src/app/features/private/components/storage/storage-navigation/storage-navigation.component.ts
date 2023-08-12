@@ -102,10 +102,16 @@ export class StorageNavigationComponent implements AfterViewInit {
       //it switches to cell view
       i.classList.replace("fa-table-cells", "fa-table-list")
       enviroments.storageViewCellStructure = true
+      setTimeout(()=>{
+      this.StorageService.addEventListenerOnFilesAndFoldersToBeClickable(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
+      },0)
     } else if (currentIElementClass === "fa-table-list") {
       //it switches to list view
       i.classList.replace("fa-table-list", "fa-table-cells")
       enviroments.storageViewCellStructure = false
+      setTimeout(()=>{
+        this.StorageService.addEventListenerOnFilesAndFoldersToBeClickable(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
+      },0)
     }
 
   }
