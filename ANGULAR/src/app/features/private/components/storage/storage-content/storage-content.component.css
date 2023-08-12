@@ -27,7 +27,7 @@
   background-color: var(--BGcolor);
   transition: 1s;
   flex-wrap: wrap;
-
+  align-content: baseline;
 }
 
 
