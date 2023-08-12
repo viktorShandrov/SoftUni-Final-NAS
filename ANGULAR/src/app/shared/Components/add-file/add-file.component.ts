@@ -78,6 +78,7 @@ export class AddFileComponent implements AfterViewInit{
   clearForm(){
     this.fileForm.reset()
     document.getElementById('progress-bar')!.innerText ="";
+    document.querySelector('.fileLengthParagraph')!.textContent ="0 MB";
     this.selectedFile = undefined
   }
   onFileSelected(event: Event): void {

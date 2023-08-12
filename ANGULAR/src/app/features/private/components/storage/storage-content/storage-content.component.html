@@ -12,6 +12,7 @@
 <!--                <p class="arrowDownContainer"><i class="em em-arrow_down" aria-role="presentation" aria-label="DOWNWARDS BLACK ARROW"></i></p>-->
 
               </div>
+    
       <div *ngIf="enviroments.storageViewCellStructure" class="storage">
         <div [@cellDisappear]="folder.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'folder')"   #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell" >
           <div [@crossMarkAnim]="folder.isDisappearing?'in':'out'" (@crossMarkAnim.done)="crossMarkAnimationDone($event,folder)" class="crossMark"></div>
