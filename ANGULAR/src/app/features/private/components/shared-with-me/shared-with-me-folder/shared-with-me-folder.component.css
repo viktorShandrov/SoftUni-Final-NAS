@@ -9,7 +9,7 @@ button:hover{
   cursor: pointer;
 }
  .file i{
-  font-size: 720%;
+  font-size: 620%;
   color: var(--textColor);
   transition: 1s;
 }

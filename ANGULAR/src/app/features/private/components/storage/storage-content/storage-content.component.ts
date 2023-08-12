@@ -7,7 +7,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { file, folder } from 'src/app/shared/types';
 import {StorageService} from "../../../services/storage.service";
 import {CacheService} from "../../../../../shared/services/cache.service";
@@ -17,6 +17,7 @@ import {enviroments} from "../../../../../shared/environments";
 import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
 import {ToastrService} from "ngx-toastr";
 import {constants} from "../../../../../shared/constants";
+import {UserService} from "../../../../../core/services/user.service";
 
 
 @Component({
@@ -75,7 +76,9 @@ export class StorageContentComponent implements AfterViewInit {
     public StorageService: StorageService,
     public CacheService: CacheService,
     public HTMLElementsService: HTMLElementsService,
+    public UserService: UserService,
     public ToastrService: ToastrService,
+    public Router: Router,
     private renderer: Renderer2
   ) {
     this.enviroments = enviroments
@@ -111,9 +114,14 @@ export class StorageContentComponent implements AfterViewInit {
   getData(dirId: String) {
     this.HttpService.httpGETRequest(`api/files/${dirId}/getDirectory`).subscribe(
       (folder: any) => {
+        if(folder&&folder.isPublic&&folder.rootId!==this.UserService.rootId){
+          this.Router.navigate(['/storage', { outlets: { 'storage-outlet': `shared-with-me/${folder._id}` } }])
+          return
+        }
         this.isLoading = false
 
         if (folder) {
+          console.log(folder)
           this.haveFolder = true;
           this.CacheService.completions.splice(0);
           this.folders.splice(0);
