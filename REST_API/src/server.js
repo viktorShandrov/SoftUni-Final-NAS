@@ -17,6 +17,7 @@ mongodbConfig()
 
 
 app.get("/",(req,res)=>{
+  console.log("home");
     res.sendFile(path.join(__dirname, 'index.html'))
 })
 
