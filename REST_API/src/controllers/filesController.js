@@ -127,15 +127,17 @@ router.get("/:rootId/getTopFolders", async (req, res) => {
 router.post("/deleteItem", async (req, res) => {
   try {
     const {elementId,elementType, parentFolderId } = req.body
+    const {rootId}=req.user
     if(elementType === "file"){
       console.log("deleting file");
-      await fileManager.deleteFile(elementId,parentFolderId)
+      await fileManager.deleteFile(elementId,parentFolderId,rootId)
     }else if(elementType === "directory"){
       console.log("deleting dolder");
       await fileManager.deleteFolder(elementId, parentFolderId)
     }
     res.end()
   } catch (error) {
+
     res.status(400).json({message:error.message})
   }
 })

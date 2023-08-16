@@ -162,13 +162,13 @@ exports.deleteFolder = async (folderId, parentFolderId) => {
     parentFolder.save()
     folder.save()
 }
-exports.deleteFile = async (fileId, parentFolderId) => {
+exports.deleteFile = async (fileId, parentFolderId,rootId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
 
     parentFolder.fileComponents.splice(parentFolder.fileComponents.findIndex(objId => objId.toString() === fileId), 1)
     parentFolder.save()
-    const root = await rootModel.findById(parentFolderId)
+    const root = await rootModel.findById(rootId)
     const file = await fileModel.findById(fileId)
     root.usedStorage-=file.length
     await root.save()
