@@ -1,5 +1,5 @@
 .aside{
-  width: 250px;
+  width: clamp(100px,20vw,250px);
   height: calc(100vh - var(--header-height));
   background-color: #a6a6a6;
   transition: 1s;
@@ -23,12 +23,12 @@
 .aside .elements .asideElement , .aside .upgardeButton{
   cursor: pointer;
   font-weight: bolder;
-  padding: 15px 40px;
+  padding: 15px clamp(5px,1vw,40px);
   justify-content: center;
   align-items: center;
   text-align: center;
   white-space: nowrap;
-
+  font-size: clamp(10px,1.4vw,16px);
 
 }
 .aside .upgardeButton{
@@ -55,7 +55,7 @@ a{
   justify-content: center;
   /*flex-direction: column;*/
   gap: 10px;
-  padding: 40px 0;
+  padding: clamp(15px,2vh,40px) 0;
 }
 
 

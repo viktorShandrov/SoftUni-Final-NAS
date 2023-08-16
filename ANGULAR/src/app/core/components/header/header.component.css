@@ -3,9 +3,12 @@ header {
   height: var(--header-height);
   background-color: #545454;
   display: flex;
-  justify-content: space-around;
+  /*justify-content: space-around;*/
+  justify-content: center;
   align-items: center;
   position: relative;
+  gap: clamp(10px,5vw,50px);
+
 
 }
 header .logo {
@@ -25,9 +28,8 @@ a{
   color: black;
 }
 .lightDarkModeSlider{
-  height: 20px;
-  width: 40px;
-  background-color: white;
+  width: clamp(20px,7vw,40px);
+  height: clamp(10px,3vw,20px);
   border-radius: 100px;
   background-color: var(--BGcolor);
   cursor: pointer;
@@ -35,8 +37,8 @@ a{
 
 }
 .lightDarkModeBtn{
-  width: 20px;
-  height: 20px;
+  height: 100%;
+  width: 50%;
   border-radius: 100px;
   cursor: pointer;
   transition: 1s;
@@ -68,12 +70,13 @@ header .user-settings-menu p {
 
 }
 .storage-info{
-  width: 1000px;
+  width: clamp(100px,30vw,1000px);
   height: 70px;
   /* background-color: blueviolet; */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: clamp(6px,0.8vw,14px);
 }
 
 .storage-info .storageLeft,.storage-info .storageUsed{
@@ -118,6 +121,12 @@ header .user-settings-menu p {
   /* font-size: 10px; */
 
 }
+.logout{
+  font-size: clamp(10px,1.2vw,16px);
+}
+
+
+
 
 
 /*loader*/
@@ -143,5 +152,14 @@ header .user-settings-menu p {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 800px){
+  .storage-info .storageLeft,.storage-info .storageUsed{
+    display: none;
+  }
+   .storage-info{
+    justify-content: center;
+
   }
 }

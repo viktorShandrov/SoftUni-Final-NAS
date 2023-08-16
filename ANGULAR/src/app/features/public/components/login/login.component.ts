@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
     public renderer:Renderer2
   ) {
     this.formGroup = this.formBuilder.group({
-        email: ['4444@abv.bg', [Validators.required, Validators.email]],
-        password: ['44444', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required]],
       }
     );
   }

@@ -35,8 +35,8 @@
 
 .storage .cell{
   width: clamp(100px,8vw,150px);
-  height: clamp(100px,8vw,150px);
-  aspect-ratio: 1/1;
+  height: clamp(100px,50vw,130px);
+  /*aspect-ratio: 1/1;*/
   text-align: center;
   position: relative;
   padding-top: 10px;
@@ -57,8 +57,8 @@
 }
 img{
 
-  width: 70%;
-  height: 70%;
+  width: 60%;
+  height: 60%;
 }
 .crossMark{
   position: absolute;
