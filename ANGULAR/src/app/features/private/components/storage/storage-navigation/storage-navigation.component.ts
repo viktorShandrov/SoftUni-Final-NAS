@@ -68,6 +68,7 @@ export class StorageNavigationComponent implements AfterViewInit {
 
     private location: Location
   ) {
+
   }
 
   backBtnOnClick() {
@@ -129,6 +130,25 @@ export class StorageNavigationComponent implements AfterViewInit {
       )
 
     },0)
+    setTimeout(()=>{
+      const allCompletions = this.completions
+      const urlBarInput = this.urlBarInput.nativeElement
+      this.renderer.listen(urlBarInput,"input",()=>{
+        if(urlBarInput.value!==""){
+          this.completions = allCompletions.filter(completion=>completion.name.includes(urlBarInput.value))
+        }else{
+          this.completions = allCompletions
+        }
+        ////////from last day
+        console.log(this.HTMLElementsService.completionDivsRefs)
+        for (const completion of this.HTMLElementsService.completionDivsRefs) {
+          console.log(completion)
+          this.StorageService.addEventListenersToSingleCompletionElement(completion.nativeElement,this.router)
+        }
+      })
+
+
+    },200)
 //
 //     let urlTarget = "storage"
 //     const rootId = localStorage.getItem("rootId")
