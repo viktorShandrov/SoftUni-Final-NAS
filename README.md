@@ -20,6 +20,8 @@ The heart of MyDrive, the storage section, empowers users to manage their files 
 - **Dynamic Creation:** Right-click to create either a folder or file, triggering a context-sensitive form for efficient content creation.
 - **Visual Effects:** Immerse yourself in the environment through carefully crafted visual effects, creating a seamless user experience.
 - **File/Folder Actions:** Conveniently delete folders and files as needed.
+  ![storage](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/49635243-5349-4955-bf38-d9e898289de7)
+
 
 ### Shared with Me
 
