@@ -23,8 +23,9 @@ The heart of MyDrive, the storage section, empowers users to manage their files 
   ![storage](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/49635243-5349-4955-bf38-d9e898289de7)
 ![storage1](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/5c2c9e80-4c55-4e3e-a1c3-a408ba8959e5)
 ![storage 2](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/c4e09e2f-6a20-42c8-9656-83bafbcbb775)
+## Folder options
 ![storage3png](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/bec71d75-fbf9-44e2-8d0d-fbd5a52d817b)
-## Create folder
+## Create a folder
 ![create folder](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/7105b791-58c2-4f7c-91ad-29964a6a015e)
 ## Upload file
 ![upload](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/222df2f1-eb27-47c0-a309-6ff0578d8f44)
