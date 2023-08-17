@@ -335,6 +335,7 @@ addEventListenersToSingleCompletionElement(element:ElementRef,router:Router){
       '/storage',
       { outlets: { 'storage-outlet': id } },
     ]);
+    this.HTMLElementsService.searchCompletion.nativeElement.value = ""
     const divDir = this.HTMLElementsService.dirDivsRefs.last;
     if (divDir) {
       this.addEventListenerToDivDir(divDir, this.CacheService.dirs, this.HTMLElementsService.Renderer2, router);

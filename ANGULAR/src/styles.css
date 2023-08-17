@@ -23,12 +23,20 @@ body{
 
 app-root{
   width: 100%;
+
   position: relative;
+}
+html{
+  display: flex;
+  justify-content: center;
+  background-color: #afc8cd;
+
 }
 body{
   width: 100vw;
-  padding: 0px;
-  margin: 0px;
+  max-width: 1500px;
+  padding: 0;
+  margin: 0;
   font-family: "Josefin Sans";
 }
 *{
