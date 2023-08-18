@@ -117,10 +117,10 @@ export class StorageService {
     renderer: Renderer2
   ) {
 
-    renderer.listen(urlBar, 'focus', (event: any) => {
+    renderer.listen(urlBar.nativeElement, 'focus', (event: any) => {
       renderer.setStyle(searchCompletion.nativeElement, 'display', 'block');
     });
-    renderer.listen(urlBar, 'blur', (event: any) => {
+    renderer.listen(urlBar.nativeElement, 'blur', (event: any) => {
       setTimeout(() => {
         renderer.setStyle(searchCompletion.nativeElement, 'display', 'none');
       }, 100);
@@ -335,7 +335,10 @@ addEventListenersToSingleCompletionElement(element:ElementRef,router:Router){
       '/storage',
       { outlets: { 'storage-outlet': id } },
     ]);
-    this.HTMLElementsService.searchCompletion.nativeElement.value = ""
+
+  this.HTMLElementsService.urlBar.nativeElement.value = ""
+
+
     const divDir = this.HTMLElementsService.dirDivsRefs.last;
     if (divDir) {
       this.addEventListenerToDivDir(divDir, this.CacheService.dirs, this.HTMLElementsService.Renderer2, router);

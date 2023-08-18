@@ -8,7 +8,6 @@ const schema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:[true,"Password is required"],
     },
     rootId:{
         type:mongoose.Types.ObjectId,
@@ -26,7 +25,7 @@ schema.virtual("repeatePassword").set(function(value){
     }
 })
 schema.pre("save",async function(){
-    if(!this.isPasswordHashed){
+    if(this.password&&!this.isPasswordHashed){
         this.password = await bcrypt.hash(this.password,3);
         this.isPasswordHashed = true
     }

@@ -118,10 +118,10 @@ export class StorageNavigationComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.HTMLElementsService.urlBar = this.urlBarInput.nativeElement
-    this.HTMLElementsService.searchCompletion = this.searchCompletion
-    this.HTMLElementsService.completionDivsRefs =this.completionDivsRefs
     setTimeout(()=>{
+    this.HTMLElementsService.urlBar = this.urlBarInput
+      this.HTMLElementsService.searchCompletion = this.searchCompletion
+    this.HTMLElementsService.completionDivsRefs =this.completionDivsRefs
     this.StorageService.addEventListenerToTheMainRootBtn(
         this.mainRootBtn,
         this.CacheService.dirs,
@@ -133,18 +133,39 @@ export class StorageNavigationComponent implements AfterViewInit {
     setTimeout(()=>{
       const allCompletions = this.completions
       const urlBarInput = this.urlBarInput.nativeElement
+      const completionDivsRefs = this.HTMLElementsService.completionDivsRefs
+      let filteredCompletions:any
+      let filteredCompletionsAR:ElementRef[]
+      let setELtoAllCompletions = false
       this.renderer.listen(urlBarInput,"input",()=>{
         if(urlBarInput.value!==""){
-          this.completions = allCompletions.filter(completion=>completion.name.includes(urlBarInput.value))
+          filteredCompletions = allCompletions.filter(completion=>completion.name.includes(urlBarInput.value))
+          this.completions = filteredCompletions
+          setTimeout(()=>{
+            if(setELtoAllCompletions){
+              for (const completion of completionDivsRefs.toArray()) {
+                this.StorageService.addEventListenersToSingleCompletionElement(completion,this.router)
+              }
+              setELtoAllCompletions = false
+            }
+            if(this.completions.length==0&&urlBarInput.value!==""){
+              setELtoAllCompletions=true
+            }
+              filteredCompletionsAR = [...completionDivsRefs.toArray()]
+          },0)
         }else{
           this.completions = allCompletions
+
+        setTimeout(()=>{
+          for (let i = 0;i < completionDivsRefs.length  ; i++) {
+            if(!filteredCompletionsAR.includes(completionDivsRefs.toArray()[i])){
+             this.StorageService.addEventListenersToSingleCompletionElement(completionDivsRefs.toArray()[i],this.router)
+            }
+          }
+
+        },0)
         }
-        ////////from last day
-        console.log(this.HTMLElementsService.completionDivsRefs)
-        for (const completion of this.HTMLElementsService.completionDivsRefs) {
-          console.log(completion)
-          this.StorageService.addEventListenersToSingleCompletionElement(completion.nativeElement,this.router)
-        }
+
       })
 
 

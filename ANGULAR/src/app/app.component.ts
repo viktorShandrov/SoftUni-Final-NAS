@@ -14,7 +14,9 @@ export class AppComponent {
     private RouterService:RouterService
   ) {
    this.RouterService.detectInitialNavigation()
-
   }
+    handleGoogleSignIn(user:any) {
+      console.log('User signed in:');
+    }
 
 }

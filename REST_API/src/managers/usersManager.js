@@ -5,22 +5,25 @@ const uuid = require("uuid")
 const { createRoot } = require("./filesManager")
 
 
-exports.register =async (email,password,repeatePassword,rootId)=>{
+exports.register =async (email,password,repeatePassword,rootId,userId)=>{
     const user =await userModel.findOne({email})
     if(user){
         throw new Error("Email already exists!")
     }
-    console.log('password from register: ', password);
-    return userModel.create({email,password,repeatePassword,rootId})
+
+    return userModel.create({_id:userId,email,password,repeatePassword,rootId})
     
 }
 
-exports.login = async (email,password)=>{
+exports.login = async (email,password,isLoggingFromGoogle)=>{
     const user = await userModel.findOne({email});
     if(user){
-       const isPasswordMatching = await bcrypt.compare(password,user.password);
+        let isPasswordMatching 
+        if(!isLoggingFromGoogle){
+             isPasswordMatching = await bcrypt.compare(password,user.password);
+        }
 
-       if(isPasswordMatching){
+       if(isPasswordMatching||isLoggingFromGoogle){
             const payload = {
                 email,
                 _id:user._id,

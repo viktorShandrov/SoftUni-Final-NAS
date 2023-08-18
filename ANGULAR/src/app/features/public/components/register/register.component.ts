@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
+
   onSubmit(): void {
 
     if (this.formGroup.valid) {
