@@ -27,11 +27,17 @@ The heart of MyDrive, the storage section, empowers users to manage their files 
 ## Create a file or folder menu
 ![storage3png](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/bec71d75-fbf9-44e2-8d0d-fbd5a52d817b)
 ## Create a folder
-![create folder](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/7105b791-58c2-4f7c-91ad-29964a6a015e)
+![3](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/2af711e5-f25a-4103-b44c-43d3cf7a54e5)
+
 ## Upload file
-![upload](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/222df2f1-eb27-47c0-a309-6ff0578d8f44)
+![4](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/1d0ccddb-910b-4970-a163-5b1320104639)
+
+## Delete item
+![1](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/fb51eefb-5a42-4eef-a422-e467342c3979)
+
 ## Completions
-![completion](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/fe04174a-a1bd-4f8b-87d4-2e4e1da210b9)
+
+![2](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/7147f859-a93e-48c5-85b8-4c12da7c8527)
 
 ## Dark Mode
 ![darkmode](https://github.com/viktorShandrov/SoftUni-Final-NAS/assets/114256191/44cae7dd-1392-4aa3-a709-13e37c5477c2)
