@@ -50,7 +50,7 @@
       <div class="input">
         <!--        <label for="password">Password:-->
         <!--        </label>-->
-        <input formControlName="password" type="text" id="password" placeholder="Password">
+        <input formControlName="password" type="password" id="password" placeholder="Password">
       </div>
       <div *ngIf="formGroup?.get('password')?.touched" class="invalidInputSection">
         <p *ngIf="formGroup?.get('password')?.errors?.['required']">Password is required</p>

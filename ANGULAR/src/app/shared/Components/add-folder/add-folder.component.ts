@@ -34,6 +34,9 @@ export class AddFolderComponent implements AfterViewInit{
     if (this.folderForm.get('folderName')?.value.length > 0) {
 
       this.StorageService.createFolder(this.folderForm.get('folderName')!.value,this.CacheService.folders);
+      this.folderForm.reset()
+
+
     }
   }
 }
