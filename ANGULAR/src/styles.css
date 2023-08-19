@@ -34,7 +34,9 @@ html{
 }
 body{
   width: 100vw;
-  max-width: 1500px;
+
+  /*causes problem with right click menus*/
+  /*max-width: 1000px;*/
   padding: 0;
   margin: 0;
   font-family: "Josefin Sans";

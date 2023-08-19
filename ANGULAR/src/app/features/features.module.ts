@@ -29,6 +29,7 @@ import {
 } from "./private/components/shared-with-users/shared-with-users-view/shared-with-users-view.component";
 import { PlansViewComponent } from './public/components/plans-view/plans-view.component';
 import { UnauthoriseDirective } from './private/directives/unauthorise.directive';
+import {HttpService} from "../shared/services/http.service";
 
 
 
@@ -71,6 +72,7 @@ import { UnauthoriseDirective } from './private/directives/unauthorise.directive
     RegisterComponent,
     UsersViewComponent,
     StorageNavigationComponent
-  ]
+  ],
+  providers:[HttpService]
 })
 export class FeaturesModule { }

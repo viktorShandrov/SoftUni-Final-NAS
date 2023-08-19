@@ -40,13 +40,20 @@ input:focus{
 form > * label {
   margin-right: 10px;
 }
-button {
+button.register {
   padding: 10px 10px;
   border-radius: 10px;
   background-color: blue;
   color: white;
   justify-content: center!important;
   cursor: pointer;
+}
+button.register p{
+  margin: 0;
+}
+
+.googleBtn img{
+  width: 30px;
 }
 form .login a{
   margin-left: 5px;

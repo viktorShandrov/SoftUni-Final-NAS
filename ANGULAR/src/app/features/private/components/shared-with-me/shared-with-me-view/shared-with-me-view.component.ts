@@ -15,7 +15,7 @@ constructor(
 }
 ngAfterViewInit(){
  setTimeout(()=>{
-  this.DarkModeService.toggleDarkMode(this.HTMLElementsService.Renderer2)
+  this.DarkModeService.toggleDarkMode()
  },0)
 }
 }

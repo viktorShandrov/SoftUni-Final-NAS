@@ -15,6 +15,7 @@ import {RouterService} from "./core/router/router.service";
 import {RouteReuseStrategy, RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {HttpService} from "./shared/services/http.service";
 
 @NgModule({
   declarations: [
@@ -36,12 +37,13 @@ import {ToastrModule} from "ngx-toastr";
 
   ],
   providers: [
+    HttpService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: mainInterceptor,
       multi: true,
     },
-    RouterService
+    RouterService,
   ],
   bootstrap: [AppComponent]
 })

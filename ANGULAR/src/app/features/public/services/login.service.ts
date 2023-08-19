@@ -17,10 +17,32 @@ export class LoginService {
     private UserService:UserService,
     private DarkModeService:DarkModeService,
     private ToastrService:ToastrService,
+    private HttpService:HttpService,
     private Router:Router,
 
   ) { }
+  loginViaGoogle=(user:any)=>{
+    this.HttpService.httpPOSTRequest("api/users/loginViaGoogle",JSON.stringify(user)).subscribe(
+      (res:any)=>{
+        const {token,rootId} = res
+        if(token&&rootId){
+          this.saveToLocalStorage(token,rootId)
+          this.DarkModeService.toggleDarkMode()
+          this.ToastrService.success("logged in","Successfully",constants.toastrOptions)
+          this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
+        }
+      },
+      (error)=>{
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+      }
+    )
+  }
 
+  saveToLocalStorage(token:string,rootId:string){
+    this.UserService.rootId=rootId
+    localStorage.setItem("token",token)
+    localStorage.setItem("rootId",rootId)
+  }
 
 
   login(email:string,password:string,renderer:Renderer2){
@@ -36,13 +58,13 @@ export class LoginService {
           localStorage.setItem("token",token)
           localStorage.setItem("rootId",rootId)
 
-          this.DarkModeService.toggleDarkMode(renderer)
+          this.DarkModeService.toggleDarkMode()
           this.ToastrService.success("logged in","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }
       },
-      (err)=>{
-        document.querySelector(".errorContainer")!.textContent = err.error.message
+      (error)=>{
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       }
     )
   }

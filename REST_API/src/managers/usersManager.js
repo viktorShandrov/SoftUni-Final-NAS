@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt")
 const jwt = require("../utils/utils")
 const uuid = require("uuid")
 const { createRoot } = require("./filesManager")
-
+const {OAuth2Client} = require('google-auth-library');
+const {googleClientId} = require('../utils/utils');
 
 exports.register =async (email,password,repeatePassword,rootId,userId)=>{
     const user =await userModel.findOne({email})
@@ -14,12 +15,27 @@ exports.register =async (email,password,repeatePassword,rootId,userId)=>{
     return userModel.create({_id:userId,email,password,repeatePassword,rootId})
     
 }
+exports.verify =async (credential)=>{
+    const client = new OAuth2Client();
+    const ticket = await client.verifyIdToken({
+        idToken: credential,
+        audience: googleClientId
+    
+    });
+    const payload = ticket.getPayload();
+    userId = payload['sub'];
+    email = payload['email']
+    return {email,userId}
+}
 
 exports.login = async (email,password,isLoggingFromGoogle)=>{
     const user = await userModel.findOne({email});
     if(user){
         let isPasswordMatching 
         if(!isLoggingFromGoogle){
+            if(user.password===undefined){
+                throw new Error("User is registered via third party service")
+            }
              isPasswordMatching = await bcrypt.compare(password,user.password);
         }
 

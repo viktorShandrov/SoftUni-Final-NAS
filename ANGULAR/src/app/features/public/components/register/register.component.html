@@ -36,22 +36,10 @@
         <p *ngIf="formGroup.hasError('passwordMismatch')">Passwords do not match</p>
       </div>
     </div>
-    <button type="submit">Register</button>
-    <div id="g_id_onload"
-         data-client_id="341272107557-fp6lu6llorj0912vt59nj8j4mrstekst.apps.googleusercontent.com"
-         data-context="signup"
-         data-ux_mode="popup"
-         data-callback="handleGoogleSignIn"
-         data-auto_prompt="false">
-    </div>
+    <button class="register" type="submit"><p>Register</p></button>
+    <button (click)="toggleGoogleSignMenu()" class="googleBtn" ><img src="assets/google.png" alt="google"></button>
+<!--    <button (click)="handleGoogleBtn()">Register</button>-->
 
-    <div class="g_id_signin"
-         data-type="icon"
-         data-shape="circle"
-         data-theme="outline"
-         data-text="signin_with"
-         data-size="large">
-    </div>
 <!--    <p class="errorContainer"></p>-->
     <div class="login">
       <p>Already have an account?</p> <a
@@ -59,3 +47,4 @@
     </div>
   </form>
 </div>
+

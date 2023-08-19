@@ -82,7 +82,7 @@ export class DashboardViewComponent implements AfterViewInit{
         setTimeout(async ()=>{
 
         this.isLoading = true
-        this.DarkModeService.toggleDarkMode(this.HTMLElementsService.Renderer2)
+        this.DarkModeService.toggleDarkMode()
         await this.DashboardService.getTopExtData(this.extQ, this.Renderer2);
         this.isLoading = false
         this.topExt = this.DashboardService.topExt;

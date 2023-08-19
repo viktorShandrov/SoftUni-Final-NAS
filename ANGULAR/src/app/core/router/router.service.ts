@@ -37,7 +37,7 @@ export class RouterService {
       const regex = /storage-outlet:([\w-]+)/;
       const match = fullUrl.match(regex);
 
-      if(event.id==1){
+      if(event.id==1&&match){
         console.log("Initial load:")
         const rootId = localStorage.getItem("rootId")
         if(rootId){
@@ -75,7 +75,7 @@ export class RouterService {
               }
             )
 
-          }, 1)
+          }, 20)
         }
       }
 

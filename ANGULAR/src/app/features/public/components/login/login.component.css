@@ -109,6 +109,15 @@ button {
   justify-content: center!important;
   cursor: pointer;
 }
+.googleBtn{
+  background-color: white;
+  border-radius: 0;
+  border: none;
+  padding: 0;
+}
+.googleBtn img{
+  width: 30px;
+}
 form .login a{
   margin-left: 5px;
   display: flex;
