@@ -30,7 +30,7 @@
       <div class="input">
 <!--        <label for="rePass">rePass:-->
 <!--        </label>-->
-        <input formControlName="rePass" type="text" id="rePass" placeholder="Repeat Password">
+        <input formControlName="rePass" type="text" id="rePass" placeholder="Repeat Password" >
       </div>
       <div *ngIf="formGroup?.get('rePass')?.touched" class="invalidInputSection">
         <p *ngIf="formGroup.hasError('passwordMismatch')">Passwords do not match</p>

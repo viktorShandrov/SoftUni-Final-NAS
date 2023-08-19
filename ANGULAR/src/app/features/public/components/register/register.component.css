@@ -66,3 +66,6 @@ form .login a{
 .errorContainer{
   margin: 0;
 }
+input.invalid{
+  border: solid red 1cm;
+}

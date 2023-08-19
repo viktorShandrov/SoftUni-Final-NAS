@@ -70,6 +70,7 @@
   margin: 20px auto;
 
 }
+
 form {
   padding:clamp(10px,10vh,50px) 0;
   display: flex;
@@ -129,4 +130,5 @@ form .login a{
 .errorContainer{
   margin: 0;
 }
+
 
