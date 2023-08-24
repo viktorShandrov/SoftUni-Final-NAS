@@ -65,7 +65,7 @@
   background-color: #D9D9D9;
   display: flex;
   align-items: center;
-  padding: 0 20px 0 30px;
+  padding: 0 15px 0 15px;
   flex: 1 0 1fr;
   min-width: 60px;
   border-radius: 50px;
@@ -81,13 +81,24 @@
   border-top-left-radius: unset;
   border-bottom-left-radius: unset;
   z-index: 999;
+  margin-bottom: 5px;
 }
 .navigation .urlBar  .dirDivBorder {
   background-color: #D9D9D9;
   border-top: #777777 solid 0.01cm;
   border-bottom: #777777 solid 0.01cm;
+  height: 26px;
+  margin-bottom: 5px;
+  transition: 0.3s;
 }
-.navigation .urlBar .dirDivBorder .dirBtn {
+.navigation .urlBar .dirDivBorder.firstColumn{
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}.navigation .urlBar .dirDivBorder.lastColumn{
+   border-top-right-radius: 50px;
+   border-bottom-right-radius: 50px;
+}
+.navigation .urlBar .dirBtn{
   height: 100%;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -98,6 +109,15 @@
 }
 
 
+.navigation .urlBar .dirDivBorder:last-child{
+  background-color: #6197E8;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.navigation .urlBar > :nth-last-child(2) {
+  background-color: #6197E8;
+}
 
 
 .navigation .urlBar .dirDivBorder:last-child .dirBtn{

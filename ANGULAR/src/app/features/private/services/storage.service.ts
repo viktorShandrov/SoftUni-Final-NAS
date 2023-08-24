@@ -103,6 +103,7 @@ export class StorageService {
     router: Router
   ) {
     this.translateXOnDivDirElement(divDir,index)
+    this.checkIfDirElementIsOnTheEndOFTheRow()
     renderer.listen(divDir.nativeElement, 'click', (e: any) => {
       const id = divDir.nativeElement.getAttribute('id');
       const startIndex = dirs.findIndex((el) => el._id === id);
@@ -338,40 +339,56 @@ export class StorageService {
 
 
     checkIfDirElementIsOnNextRow() {
-      const container = document.querySelector('.urlBar');
-      const elements = this.HTMLElementsService.dirDivsRefs.toArray()
 
-      const containerRect = container!.getBoundingClientRect();
-      const containerTop = containerRect.top;
-      const containerBottom = containerRect.bottom;
-
-      let currentRowTop = containerTop;
-      let lastElementOnRow = null;
-
-      elements.forEach(element => {
-        const elementRect = element.nativeElement.getBoundingClientRect();
-
-        if (elementRect.top > currentRowTop && elementRect.bottom <= containerBottom) {
-          currentRowTop = elementRect.top;
-          lastElementOnRow = element;
+        let flexChildren = this.HTMLElementsService.dirDivsRefs
+        let previousOffset = 0;
+        for (let flexChild of flexChildren ) {
+          if (flexChild.nativeElement.offsetTop > previousOffset) {
+            previousOffset = flexChild.nativeElement.offsetTop;
+            flexChild.nativeElement.parentElement.classList.add('firstColumn');
+          } else {
+            flexChild.nativeElement.parentElement.classList.remove('firstColumn');
+          }
         }
-      });
-
-      if (lastElementOnRow) {
-        console.log('Last element on each row:', lastElementOnRow);
       }
-    }
+  checkIfDirElementIsOnTheEndOFTheRow() {
+    let flexChildren = this.HTMLElementsService.dirDivsRefs.toArray();
+    const flexContainer = this.HTMLElementsService.divDirContainer
+    let previousOffset = 0
+
+
+     flexChildren.forEach((flexChild,index)=> {
+
+      if (flexChild.nativeElement.getBoundingClientRect().right > previousOffset) {
+
+        if(flexChildren[index-1]){
+          flexChildren[index-1].nativeElement.parentElement.classList.remove('lastColumn');
+        }
+        previousOffset = flexChild.nativeElement.getBoundingClientRect().right
+        flexChildren[index].nativeElement.parentElement.classList.add('lastColumn');
+      } else {
+        previousOffset = 0
+        // flexChild.nativeElement.classList.add('lastColumn');
+      }
+    })
+  }
 
 
 
 
 
-    addDirDiv(name:string,_id:string){
+
+
+
+
+  addDirDiv(name:string,_id:string){
       this.CacheService.dirs.push({ name, _id });
       setTimeout(()=>{
         this.checkIfDirElementIsOnNextRow()
+        this.checkIfDirElementIsOnTheEndOFTheRow()
       },0)
     }
+
 addEventListenersToSingleCompletionElement(element:ElementRef,router:Router){
 
   this.HTMLElementsService.Renderer2.listen(element.nativeElement, 'click', (e: any) => {

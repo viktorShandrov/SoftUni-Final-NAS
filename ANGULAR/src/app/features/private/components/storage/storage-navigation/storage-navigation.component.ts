@@ -38,6 +38,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class StorageNavigationComponent implements AfterViewInit {
   @ViewChild('urlBarInput') urlBarInput!: ElementRef;
+  @ViewChild('divDirContainer') divDirContainer!: ElementRef;
   @ViewChild('searchCompletion') searchCompletion!: ElementRef;
   @ViewChildren('completionDiv') completionDivsRefs!: QueryList<ElementRef>;
   @ViewChildren('dirDiv') dirDivsRefs!: QueryList<ElementRef>;
@@ -120,6 +121,7 @@ export class StorageNavigationComponent implements AfterViewInit {
   ngAfterViewInit() {
     setTimeout(()=>{
     this.HTMLElementsService.urlBar = this.urlBarInput
+    this.HTMLElementsService.divDirContainer = this.divDirContainer
       this.HTMLElementsService.searchCompletion = this.searchCompletion
     this.HTMLElementsService.completionDivsRefs =this.completionDivsRefs
     this.StorageService.addEventListenerToTheMainRootBtn(

@@ -21,7 +21,7 @@
       <i #toggleViewIcon class="fa-solid fa-table-list"></i>
     </div>
   </div>
-  <div class="urlBar">
+  <div #divDirContainer class="urlBar" >
     <div class="mainRootBtn root-nav-btn" #mainRootBtn [attr.id]="rootId">:root</div>
     <div *ngFor="let dir of dirs" class="dirDivBorder">
       <div  #dirDiv class="dirBtn root-nav-btn" [attr.rootId]="dir._id" [attr.id]="dir._id">{{dir.name}}</div>
