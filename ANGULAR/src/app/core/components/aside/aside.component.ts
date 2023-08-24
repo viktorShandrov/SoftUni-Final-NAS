@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Renderer2, ViewChildren} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HTMLElementsService} from "../../../shared/services/htmlelements.service";
@@ -8,7 +8,7 @@ import {HTMLElementsService} from "../../../shared/services/htmlelements.service
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.css']
 })
-export class AsideComponent {
+export class AsideComponent implements AfterViewInit{
   folderId!: string
   @ViewChildren("asideElement") asideElements!:ElementRef[]
   @ViewChildren("asideElementIcon") asideElementIcons!:ElementRef[]
@@ -17,12 +17,16 @@ export class AsideComponent {
     public UserService: UserService,
     public HTMLElementsService: HTMLElementsService,
     public router: Router,
+    public Renderer2: Renderer2,
     private route: ActivatedRoute
   ) {
 
 
   }
+  ngAfterViewInit(){
+    this.HTMLElementsService.Renderer2 = this.Renderer2
 
+  }
   toggleSideBar(btn:HTMLElement,container:HTMLElement) {
     const icon = btn.children[0]
     if(icon.classList.contains("fa-chevron-left")){

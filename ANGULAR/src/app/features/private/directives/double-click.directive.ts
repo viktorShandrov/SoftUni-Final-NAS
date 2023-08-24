@@ -88,21 +88,23 @@ export class DoubleClickDirective {
 
       if (parentElement.classList.contains('directory')||parentParentElement.classList.contains('directory')) {
         if (!parentParentElement.classList.contains('storage')&&parentParentElement.classList.value!==""||parentParentElement.classList.contains("table-view-container")) {
-          this.CacheService.dirs.push({
-            name: parentParentElement.textContent as string,
-            _id: parentElement.getAttribute('_id') as string,
-          });
-          const divDir =
-            this.HTMLElementsService.dirDivsRefs.last ||
-            this.HTMLElementsService.dirDivsRefs.first;
-          if (divDir) {
-            this.StorageService.addEventListenerToDivDir(
-              divDir,
-              this.CacheService.dirs,
-              this.renderer,
-              this.router
-            );
-          }
+          this.StorageService.addDirDiv(parentParentElement.textContent as string,parentElement.getAttribute('_id') as string)
+          setTimeout(()=>{
+            const divDir =
+              this.HTMLElementsService.dirDivsRefs.last ||
+              this.HTMLElementsService.dirDivsRefs.first;
+            if (divDir) {
+              const index = this.HTMLElementsService.dirDivsRefs.toArray().indexOf(divDir)
+              this.StorageService.addEventListenerToDivDir(
+                divDir,
+                index,
+                this.CacheService.dirs,
+                this.renderer,
+                this.router
+              );
+            }
+
+          },0)
           const id = parentElement.getAttribute('_id')||parentParentElement.getAttribute('_id')
           this.router.navigate([
             'storage',
@@ -114,7 +116,6 @@ export class DoubleClickDirective {
           ]);
         }
       } else if (parentElement.classList.contains('file')) {
-        console.log("file");
 
         this.StorageService.getFileDownload(parentElement.getAttribute("_id") as string)
       }

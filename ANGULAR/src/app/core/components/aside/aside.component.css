@@ -1,11 +1,22 @@
 .aside{
   width: clamp(100px,20vw,250px);
   height: calc(100vh - var(--header-height));
-  background-color: #a6a6a6;
+  background-color: white;
   transition: 1s;
+  border-right: solid #5D5D5D 0.01cm;
+}
+.aside .companyName{
+  text-align: center;
+  border-bottom: solid #5D5D5D 0.01cm;
+}
+.aside .companyName h1{
+  color: #6197E8;
+  padding: 15px;
+  font-size: 27px;
+  font-weight: bolder;
 }
 .aside .toggleAsideBar{
-  display: flex;
+  display: none;
   justify-content: start;
   background-color: #3e3c3c;
 }
@@ -23,7 +34,10 @@
 .aside .elements .asideElement , .aside .upgardeButton{
   cursor: pointer;
   font-weight: bolder;
-  padding: 15px clamp(5px,1vw,40px);
+  /*padding: 15px clamp(5px,1vw,40px);*/
+  padding: 15px 0;
+
+  width: 100%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -36,7 +50,7 @@
 }
 
 .aside .elements .asideElement:hover , .aside .upgardeButton:hover{
-  background-color: white;
+  /*background-color: #6197E8;*/
   transition: 0.3s;
 }
 .aside .wrapper{
@@ -49,6 +63,9 @@
 a{
   text-decoration: none;
   color: black  ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .icon{
   display: none;
@@ -66,5 +83,21 @@ a{
 .lastIcon{
 
   margin-bottom: 35px;
+}
+.borderBottom{
+  background-color:  #5D5D5D ;
+  height: 0.1cm;
+  width: 5px;
+  transition: 0.3s ease-in-out;
+  border-radius: 100px;
+}
+#aside1:hover ~ #borderBottom1 {
+  width: 80%;
+}#aside2:hover ~ #borderBottom2 {
+  width: 80%;
+}#aside3:hover ~ #borderBottom3 {
+  width: 80%;
+}#aside4:hover ~ #borderBottom4 {
+  width: 80%;
 }
 

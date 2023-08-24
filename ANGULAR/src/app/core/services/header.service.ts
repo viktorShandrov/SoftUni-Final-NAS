@@ -77,28 +77,28 @@ export class HeaderService {
 
   updateUsedStorage(totalVolume:number,usedStorage:number){
 
-    this.usedStorage=usedStorage
-    this.totalVolume=totalVolume-usedStorage
-    let usedPercentage = (usedStorage / totalVolume) * 100;
-    if(usedPercentage<3){
-      usedPercentage=3
-    }
-    this.HTMLElementsService.usedStorageBar.nativeElement.style.width =usedPercentage+"%"
-    this.HTMLElementsService.storageUsed.nativeElement.textContent =this.transform(this.usedStorage)
-    this.HTMLElementsService.storageLeft.nativeElement.textContent = this.transform(this.totalVolume)
+    // this.usedStorage=usedStorage
+    // this.totalVolume=totalVolume-usedStorage
+    // let usedPercentage = (usedStorage / totalVolume) * 100;
+    // if(usedPercentage<3){
+    //   usedPercentage=3
+    // }
+    // this.HTMLElementsService.usedStorageBar.nativeElement.style.width =usedPercentage+"%"
+    // this.HTMLElementsService.storageUsed.nativeElement.textContent =this.transform(this.usedStorage)
+    // this.HTMLElementsService.storageLeft.nativeElement.textContent = this.transform(this.totalVolume)
 
   }
 
   toggleStorageInfoHeaderOpacity(isDisappearing:Boolean){
-    if(isDisappearing){
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",0)
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",0)
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",0)
-    }else{
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",1)
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",1)
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",1)
-    }
+    // if(isDisappearing){
+    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",0)
+    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",0)
+    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",0)
+    // }else{
+    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",1)
+    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",1)
+    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",1)
+    // }
   }
 
 }

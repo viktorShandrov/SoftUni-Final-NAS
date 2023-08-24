@@ -121,7 +121,7 @@ export class StorageContentComponent implements AfterViewInit {
         this.isLoading = false
 
         if (folder) {
-          console.log(folder)
+
           this.haveFolder = true;
           this.CacheService.completions.splice(0);
           this.folders.splice(0);
@@ -136,6 +136,7 @@ export class StorageContentComponent implements AfterViewInit {
                 _id: dirComponent._id,
               });
             }
+            this.CacheService.allCompletions = [...this.CacheService.completions]
           }
 
           if(folder.fileComponents.length>0) {

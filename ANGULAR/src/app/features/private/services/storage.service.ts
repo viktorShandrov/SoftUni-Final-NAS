@@ -12,6 +12,7 @@ import {PopupService} from "../../../shared/services/popup.service";
 import {logMessages} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 import {constants} from "../../../shared/constants";
 import {ToastrService} from "ngx-toastr";
+import {timeout} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -96,10 +97,12 @@ export class StorageService {
 
   addEventListenerToDivDir(
     divDir: ElementRef,
+    index:number,
     dirs: Dirs[],
     renderer: Renderer2,
     router: Router
   ) {
+    this.translateXOnDivDirElement(divDir,index)
     renderer.listen(divDir.nativeElement, 'click', (e: any) => {
       const id = divDir.nativeElement.getAttribute('id');
       const startIndex = dirs.findIndex((el) => el._id === id);
@@ -109,6 +112,12 @@ export class StorageService {
         { outlets: { 'storage-outlet': id } },
       ]);
     });
+  }
+  translateXOnDivDirElement(elementRef:ElementRef,index:number){
+    const baseTranslation = 20
+    this.HTMLElementsService.Renderer2.setStyle(elementRef.nativeElement,"transform",`translateX(0)`)
+    // this.HTMLElementsService.Renderer2.setStyle(elementRef.nativeElement,"z-index",`${998-index}`)
+
   }
 
   addEventListenersToCompletionSection(
@@ -326,11 +335,48 @@ export class StorageService {
     }
   }
 
+
+
+    checkIfDirElementIsOnNextRow() {
+      const container = document.querySelector('.urlBar');
+      const elements = this.HTMLElementsService.dirDivsRefs.toArray()
+
+      const containerRect = container!.getBoundingClientRect();
+      const containerTop = containerRect.top;
+      const containerBottom = containerRect.bottom;
+
+      let currentRowTop = containerTop;
+      let lastElementOnRow = null;
+
+      elements.forEach(element => {
+        const elementRect = element.nativeElement.getBoundingClientRect();
+
+        if (elementRect.top > currentRowTop && elementRect.bottom <= containerBottom) {
+          currentRowTop = elementRect.top;
+          lastElementOnRow = element;
+        }
+      });
+
+      if (lastElementOnRow) {
+        console.log('Last element on each row:', lastElementOnRow);
+      }
+    }
+
+
+
+
+
+    addDirDiv(name:string,_id:string){
+      this.CacheService.dirs.push({ name, _id });
+      setTimeout(()=>{
+        this.checkIfDirElementIsOnNextRow()
+      },0)
+    }
 addEventListenersToSingleCompletionElement(element:ElementRef,router:Router){
 
   this.HTMLElementsService.Renderer2.listen(element.nativeElement, 'click', (e: any) => {
     const id = element.nativeElement.getAttribute('id');
-    this.CacheService.dirs.push({ name: element.nativeElement.textContent, _id: id });
+    this.addDirDiv(element.nativeElement.textContent,id)
     this.Router.navigate([
       '/storage',
       { outlets: { 'storage-outlet': id } },
@@ -338,11 +384,13 @@ addEventListenersToSingleCompletionElement(element:ElementRef,router:Router){
 
   this.HTMLElementsService.urlBar.nativeElement.value = ""
 
-
+setTimeout(()=>{
     const divDir = this.HTMLElementsService.dirDivsRefs.last;
     if (divDir) {
-      this.addEventListenerToDivDir(divDir, this.CacheService.dirs, this.HTMLElementsService.Renderer2, router);
+      this.addEventListenerToDivDir(divDir,this.HTMLElementsService.dirDivsRefs.length-1, this.CacheService.dirs, this.HTMLElementsService.Renderer2, router);
     }
+
+},0)
   });
 }
 }

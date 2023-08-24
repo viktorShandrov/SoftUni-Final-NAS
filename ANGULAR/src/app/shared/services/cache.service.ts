@@ -9,6 +9,7 @@ export class CacheService {
   constructor() { }
 
   completions: Completions[] =[];
+  allCompletions: Completions[] =[];
   dirs: Dirs[] = [];
 
 

@@ -5,7 +5,7 @@
 
 .root-nav-btn{
   border-right: var(--BGcolor) solid;
-  transition: 1s;
+  transition: 0.3s;
 }
 .root-nav-btn:hover{
   cursor: pointer;
@@ -30,7 +30,7 @@
   max-height: 26px;
 }
 .navigation .urlBar {
-  background-color: #9da5a6;
+  /*background-color: #9da5a6;*/
   width: 100%;
   display: flex;
   flex-grow: 1;
@@ -61,20 +61,48 @@
   outline: none;
   border: none;
 }
+.navigation .urlBar .dirBtn,.navigation .urlBar .mainRootBtn {
+  background-color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 30px;
+  flex: 1 0 1fr;
+  min-width: 60px;
+  border-radius: 50px;
+  border: #777777 solid 0.02cm;
+  position: relative;
+}
 .navigation .urlBar .mainRootBtn {
   background-color: #748183;
   display: flex;
   align-items: center;
   padding: 0 20px;
   min-width: 60px;
+  border-top-left-radius: unset;
+  border-bottom-left-radius: unset;
+  z-index: 999;
 }
-.navigation .urlBar .rootBtn {
-  background-color: #9da5a6;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  flex: 1 0 1fr;
-  min-width: 60px;
+.navigation .urlBar  .dirDivBorder {
+  background-color: #D9D9D9;
+  border-top: #777777 solid 0.01cm;
+  border-bottom: #777777 solid 0.01cm;
+}
+.navigation .urlBar .dirDivBorder .dirBtn {
+  height: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  transform: translateX(20px);
+}
+
+
+
+
+.navigation .urlBar .dirDivBorder:last-child .dirBtn{
+  color: white;
+  background-color: #6197E8;
 }
 .navigation .urlBar .searchCompletion {
   position: fixed;

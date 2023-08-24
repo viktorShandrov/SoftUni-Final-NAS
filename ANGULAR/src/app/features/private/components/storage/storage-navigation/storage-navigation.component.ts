@@ -5,7 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   ViewChildren,
-  QueryList,
+  QueryList, OnChanges,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Dirs, Completions } from 'src/app/shared/types';
@@ -131,7 +131,7 @@ export class StorageNavigationComponent implements AfterViewInit {
 
     },0)
     setTimeout(()=>{
-      const allCompletions = this.completions
+      const allCompletions = this.CacheService.allCompletions
       const urlBarInput = this.urlBarInput.nativeElement
       const completionDivsRefs = this.HTMLElementsService.completionDivsRefs
       let filteredCompletions:any
@@ -139,8 +139,22 @@ export class StorageNavigationComponent implements AfterViewInit {
       let setELtoAllCompletions = false
       this.renderer.listen(urlBarInput,"input",()=>{
         if(urlBarInput.value!==""){
+          console.log("all",allCompletions)
           filteredCompletions = allCompletions.filter(completion=>completion.name.includes(urlBarInput.value))
-          this.completions = filteredCompletions
+
+
+
+
+          this.completions.splice(0)
+          for (const completion of filteredCompletions) {
+            this.completions.push(completion)
+          }
+          // this.completions = filteredCompletions
+
+
+
+
+
           setTimeout(()=>{
             if(setELtoAllCompletions){
               for (const completion of completionDivsRefs.toArray()) {
@@ -154,11 +168,30 @@ export class StorageNavigationComponent implements AfterViewInit {
               filteredCompletionsAR = [...completionDivsRefs.toArray()]
           },0)
         }else{
-          this.completions = allCompletions
+          setELtoAllCompletions = false
+
+
+
+          this.completions.splice(0)
+          for (const completion of allCompletions) {
+            this.completions.push(completion)
+          }
+
+
+          // this.completions = allCompletions
+
+
+
+
+
+
+
+
 
         setTimeout(()=>{
           for (let i = 0;i < completionDivsRefs.length  ; i++) {
             if(!filteredCompletionsAR.includes(completionDivsRefs.toArray()[i])){
+              console.log(completionDivsRefs.toArray()[i])
              this.StorageService.addEventListenersToSingleCompletionElement(completionDivsRefs.toArray()[i],this.router)
             }
           }
@@ -170,15 +203,7 @@ export class StorageNavigationComponent implements AfterViewInit {
 
 
     },200)
-//
-//     let urlTarget = "storage"
-//     const rootId = localStorage.getItem("rootId")
-//     if(rootId){
-//       this.UserService.rootId=rootId
-//     }
-//     // setTimeout(() => {
-//     //   this.StorageService.observer.next("storage")
-//     // }, 0);
+
     this.dirs = this.CacheService.dirs;
     this.completions = this.CacheService.completions;
     this.HTMLElementsService.dirDivsRefs = this.dirDivsRefs;
@@ -189,18 +214,20 @@ export class StorageNavigationComponent implements AfterViewInit {
       (folders) => {
         this.CacheService.dirs.splice(0);
         for (const folder of Object.values(folders)) {
-          this.CacheService.dirs.push(folder);
+          this.StorageService.addDirDiv(folder.name,folder._id)
         }
 
         setTimeout(() => {
-          for (const dirDivRef of this.dirDivsRefs.toArray()) {
+          this.dirDivsRefs.toArray().forEach((dirDivRef,index)=>{
             this.StorageService.addEventListenerToDivDir(
               dirDivRef,
+              index,
               this.dirs,
               this.renderer,
               this.router
             );
-          }
+          })
+
         }, 0);
         // this.StorageService.dirs = Object.values(folders).slice(0) as Dirs[];
         //TODO=> I dont know why this should be here:

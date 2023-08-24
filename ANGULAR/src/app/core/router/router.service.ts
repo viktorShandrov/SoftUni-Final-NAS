@@ -58,7 +58,6 @@ export class RouterService {
           enviroments.currentFolder = folderId;
           this.StorageService.hasFiles = false
           this.StorageService.hasFolders = false
-          console.log(this.StorageService.hasFolders);
           setTimeout(() => {
             this.StorageService.addEventListenersToCompletionSection(
               this.HTMLElementsService.urlBar,
@@ -67,6 +66,7 @@ export class RouterService {
             );
             this.HTMLElementsService.completionDivsRefs.changes.pipe(take(1)).subscribe(
               (completionDivsRefs) => {
+                console.log("completionDivsRefs ", completionDivsRefs)
                 this.StorageService.addEventListenersToCompletionElements(
                   this.HTMLElementsService.completionDivsRefs,
                   this.router
