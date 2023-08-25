@@ -2,6 +2,7 @@
   display: flex ;
   flex-direction: column;
   /*justify-content: center;*/
+  margin: 30px 0;
 
 }
 .urlWrapper .url{
@@ -33,11 +34,9 @@
 
 .urlWrapper .url input:focus {
   outline: none;
-  max-width: 700px;
-}
-.urlWrapper .url input:focus  {
   width: 600px;
 }
+
 .searchCompletionsWrapper{
   position: relative;
 }
@@ -50,8 +49,16 @@
   max-height: 300px;
   max-width: 700px;
   overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
   z-index: 9999; /* Set a high z-index value */
 }
+
+.urlWrapper .searchCompletion::-webkit-scrollbar{
+  display: none;
+}
+
+
 .urlWrapper  .searchCompletion .completion p{
   margin: 0 ;
   padding: 15px 15px;
