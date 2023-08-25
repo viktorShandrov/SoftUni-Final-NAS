@@ -1,0 +1,31 @@
+<div class="wrapper">
+{{this.CacheService.elementInfo?.elementType}}
+  <div class="header">
+    <i *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fa-regular fa-file"></i>
+    <i *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="fa-regular fa-folder"></i>
+    <div class="elementName">
+      <h4>{{this.CacheService.elementInfo?.name|trimDetailsElementName}}</h4>
+    </div>
+    <div class="closeBtn">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+
+  </div>
+  <div class="main">
+    <div class="whoHasAccess">
+
+    </div>
+    <div class="elementDetails">
+      <div class="type">
+        {{this.CacheService.elementInfo?.elementType}}
+      </div>
+      <div *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="size">
+        {{this.CacheService.elementInfo?.length}}
+      </div>
+      <div class="createdAt">
+<!--        {{this.CacheService.elementInfo.createdAt}}-->
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -29,7 +29,7 @@
             <i *ngIf="!fileExtensions.includes(file.type)" class="fa-regular fa-file"></i>
             <img *ngIf="fileExtensions.includes(file.type)"  src="assets/{{file.type}}.png" alt="image">
           </div>
-          <h3>{{file.fileName+"."+file.type}}</h3>
+          <h3>{{file.name+"."+file.type}}</h3>
         </div>
       </div>
       <div *ngIf="!enviroments.storageViewCellStructure" class="tableCellView" >
@@ -51,7 +51,7 @@
               <i *ngIf="!fileExtensions.includes(file.type)" class="fa-solid fa-file"></i>
               <img *ngIf="fileExtensions.includes(file.type)"  src="assets/{{file.type}}.png" alt="image">
             </td>
-            <td><h3 class="tableListViewH3">{{file.fileName+"."+file.type}}</h3></td>
+            <td><h3 class="tableListViewH3">{{file.name+"."+file.type}}</h3></td>
           </tr>
 
           </tbody>

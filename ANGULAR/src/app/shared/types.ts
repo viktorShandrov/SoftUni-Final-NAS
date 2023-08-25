@@ -11,6 +11,7 @@ export interface Completions {
   _id: string;
 }
 export interface folder {
+  elementType?:String
   _id:String
   rootId: String;
   ownerId: string;
@@ -24,13 +25,14 @@ export interface folder {
   __v:number
 }
 export interface file {
+  elementType?:String
   _id:String
   rootId: String;
   fileChunks: String;
   type: String;
   length: Number;
   uploadDate: Date;
-  fileName: String;
+  name: String;
   isDisappearing:Boolean;
   isCrossed:Boolean;
   __v:number

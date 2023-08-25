@@ -31,6 +31,8 @@ import { PlansViewComponent } from './public/components/plans-view/plans-view.co
 import { UnauthoriseDirective } from './private/directives/unauthorise.directive';
 import {HttpService} from "../shared/services/http.service";
 import { NavigationTrimPipe } from './private/pipes/navigation-trim.pipe';
+import { FileOrFolderDetailsAsideComponent } from './private/components/storage/file-or-folder-details-aside/file-or-folder-details-aside.component';
+import { TrimDetailsElementNamePipe } from './private/pipes/trim-details-element-name.pipe';
 
 
 
@@ -58,7 +60,9 @@ import { NavigationTrimPipe } from './private/pipes/navigation-trim.pipe';
     SharedWithUsersViewComponent,
     PlansViewComponent,
     UnauthoriseDirective,
-    NavigationTrimPipe
+    NavigationTrimPipe,
+    FileOrFolderDetailsAsideComponent,
+    TrimDetailsElementNamePipe
 
   ],
   imports: [

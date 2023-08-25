@@ -5,10 +5,13 @@
 <!--  <div #option  class="option">-->
 <!--    <p>Rename</p>-->
 <!--  </div>-->
-  <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&!selectedFolder?.isPublic" (click)="StorageService.getDetails(menu)" class="option">
+  <div #option  (click)="StorageService.getDetails(menu)" class="option">
+    <p>Details</p>
+  </div>
+  <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&!selectedFolder?.isPublic"  class="option">
     <p  (click)="makeFolderPublic()">Make public</p>
   </div>
-  <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&selectedFolder?.isPublic" (click)="StorageService.getDetails(menu)" class="option">
+  <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&selectedFolder?.isPublic"  class="option">
     <p  (click)="unPublicFolder()">un-public</p>
   </div>
   <div #optionShare  class="option share">

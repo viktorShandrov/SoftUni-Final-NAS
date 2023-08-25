@@ -233,10 +233,27 @@ export class StorageService {
     );
   }
   getDetails(menu: HTMLDivElement) {
-    const payload = {
-      id: menu.getAttribute('element-id'),
-      elementType: menu.getAttribute('element-type'),
-    };
+   const section =  this.HTMLElementsService.FileOrFolderDetailsAsideComponent
+    this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","block")
+    const elementId = menu.getAttribute('element-id')
+    const elementType = menu.getAttribute('element-type')
+    switch (elementType){
+      case  "directory":
+          const folder = this.CacheService.folders.find((el)=>el._id==elementId)
+          folder!.elementType = "directory"
+          this.CacheService.elementInfo = folder
+        break
+      case  "file":
+          const file = this.CacheService.files.find((el)=>el._id==elementId)
+          file!.elementType = "file"
+          this.CacheService.elementInfo = file
+        break
+    }
+
+    // const payload = {
+    //   id: menu.getAttribute('element-id'),
+    //   elementType: menu.getAttribute('element-type'),
+    // };
     // this.http.get('api/files/');
   }
 

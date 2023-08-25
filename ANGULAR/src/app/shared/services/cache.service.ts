@@ -14,5 +14,6 @@ export class CacheService {
 
 
   files: file[] = [];
+  elementInfo!: any
   folders: folder[] = [];
 }

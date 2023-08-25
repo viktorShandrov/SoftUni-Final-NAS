@@ -1,4 +1,7 @@
 import {ElementRef, Injectable, QueryList,Renderer2} from '@angular/core';
+import {
+  FileOrFolderDetailsAsideComponent
+} from "../../features/private/components/storage/file-or-folder-details-aside/file-or-folder-details-aside.component";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +12,7 @@ export class HTMLElementsService {
   dirDivsRefs!: QueryList<ElementRef>;
   completionDivsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
+  FileOrFolderDetailsAsideComponent!: ElementRef;
   divDirContainer!: ElementRef;
   usedStorageBar!: ElementRef;
   popupAddFile!: ElementRef;
