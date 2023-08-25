@@ -30,6 +30,7 @@ import {
 import { PlansViewComponent } from './public/components/plans-view/plans-view.component';
 import { UnauthoriseDirective } from './private/directives/unauthorise.directive';
 import {HttpService} from "../shared/services/http.service";
+import { NavigationTrimPipe } from './private/pipes/navigation-trim.pipe';
 
 
 
@@ -56,7 +57,8 @@ import {HttpService} from "../shared/services/http.service";
     SharedWithMeFolderComponent,
     SharedWithUsersViewComponent,
     PlansViewComponent,
-    UnauthoriseDirective
+    UnauthoriseDirective,
+    NavigationTrimPipe
 
   ],
   imports: [

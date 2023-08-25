@@ -1,6 +1,13 @@
+  <div class="urlWrapper">
     <div class="url">
-      <input #urlBarInput type="url" placeholder="  Enter location...">
+      <label for="searchBar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </label>
+      <input #urlBarInput id="searchBar" type="url" placeholder="  Search...">
 
+
+    </div>
+    <div class="searchCompletionsWrapper">
       <div #searchCompletion class="searchCompletion" >
 
           <div *ngFor="let completion of completions" class="completion" [attr.id]="completion._id" #completionDiv>
@@ -9,6 +16,7 @@
 
       </div>
     </div>
+  </div>
 <div class="navigation">
   <div class="back-and-further-btns">
     <div (click)="backBtnOnClick()" #backBtn class="back actionBtn">
@@ -24,7 +32,7 @@
   <div #divDirContainer class="urlBar" >
     <div class="mainRootBtn root-nav-btn" #mainRootBtn [attr.id]="rootId">:root</div>
     <div *ngFor="let dir of dirs" class="dirDivBorder">
-      <div  #dirDiv class="dirBtn root-nav-btn" [attr.rootId]="dir._id" [attr.id]="dir._id">{{dir.name}}</div>
+      <div  #dirDiv class="dirBtn root-nav-btn" [attr.rootId]="dir._id" [attr.id]="dir._id">{{dir.name |lowercase| navigationTrim  }}</div>
     </div>
   </div>
 </div>
