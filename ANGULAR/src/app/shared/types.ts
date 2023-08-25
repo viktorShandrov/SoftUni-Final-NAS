@@ -32,7 +32,7 @@ export interface file {
   type: String;
   length: Number;
   uploadDate: Date;
-  name: String;
+  fileName: String;
   isDisappearing:Boolean;
   isCrossed:Boolean;
   __v:number

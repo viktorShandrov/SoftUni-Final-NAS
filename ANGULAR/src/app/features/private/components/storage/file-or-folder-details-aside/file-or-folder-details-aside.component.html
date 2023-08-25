@@ -1,10 +1,10 @@
 <div class="wrapper">
-{{this.CacheService.elementInfo?.elementType}}
   <div class="header">
     <i *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fa-regular fa-file"></i>
     <i *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="fa-regular fa-folder"></i>
     <div class="elementName">
-      <h4>{{this.CacheService.elementInfo?.name|trimDetailsElementName}}</h4>
+      <h4 *ngIf="this.CacheService.elementInfo?.elementType=='file'">{{this.CacheService.elementInfo?.fileName|trimDetailsElementName}}</h4>
+      <h4 *ngIf="this.CacheService.elementInfo?.elementType=='directory'">{{this.CacheService.elementInfo?.name|trimDetailsElementName}}</h4>
     </div>
     <div class="closeBtn">
       <i class="fa-solid fa-xmark"></i>

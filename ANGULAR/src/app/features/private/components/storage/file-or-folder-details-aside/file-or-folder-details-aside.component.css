@@ -10,4 +10,15 @@
 .header{
   display: flex;
   justify-content: center;
+  margin: 0 20px;
+}
+.header i, .header .closeBtn{
+  display: flex;
+  align-items: center;
+}
+.header .elementName{
+  margin-left: 5px;
+}
+.header .closeBtn{
+  margin-left: auto;
 }

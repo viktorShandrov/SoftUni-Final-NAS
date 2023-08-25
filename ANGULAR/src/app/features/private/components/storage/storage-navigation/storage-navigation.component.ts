@@ -88,12 +88,12 @@ export class StorageNavigationComponent implements AfterViewInit {
     if (currentIElementClass === "fa-arrow-down-z-a") {
       //sort z-a
       i.classList.replace("fa-arrow-down-z-a", "fa-arrow-down-a-z")
-      this.CacheService.files.sort((a, b) => b.name.toString().localeCompare(a.name.toString()))
+      this.CacheService.files.sort((a, b) => b.fileName.toString().localeCompare(a.fileName.toString()))
       this.CacheService.folders.sort((a, b) => b.name.toString().localeCompare(a.name.toString()))
     } else if (currentIElementClass === "fa-arrow-down-a-z") {
       //sort a-z
       i.classList.replace("fa-arrow-down-a-z", "fa-arrow-down-z-a")
-      this.CacheService.files.sort((a, b) => a.name.toString().localeCompare(b.name.toString()))
+      this.CacheService.files.sort((a, b) => a.fileName.toString().localeCompare(b.fileName.toString()))
       this.CacheService.folders.sort((a, b) => a.name.toString().localeCompare(b.name.toString()))
     }
   }
