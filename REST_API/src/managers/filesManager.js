@@ -111,7 +111,7 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
         fileChunks: uploadStream.id,
         type: fileExtension,
         length: size,
-        createdAt:new Date.now(),
+        createdAt:Date.now(),
         fileName: onlyName,
         rootId: rootId,
     })
@@ -149,7 +149,7 @@ exports.createFolder = async (name, rootId, parentFolderId) => {
         }
     }
 
-    const newFolder = await folderModel.create({ ownerId, name, rootId, dirComponents: [], autorised: [ownerId], isPublic: false, parentFolder: parentFolderId,createdAt:new Date.now() })
+    const newFolder = await folderModel.create({ ownerId, name, rootId, dirComponents: [], autorised: [ownerId], isPublic: false, parentFolder: parentFolderId,createdAt:Date.now() })
     folder.dirComponents.push(newFolder._id)
     folder.save();
 

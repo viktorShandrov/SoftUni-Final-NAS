@@ -90,7 +90,7 @@ router.post("/createFolder", async (req, res) => {
     res.status(201).json({newFolder})
   } catch (error) {
     console.log(error.message);
-    res.status(409).json({message:"Folder with same name already exists"})
+    res.status(409).json({message:error.message})
   }
 })
 router.get("/:rootId/getOnlyRootInfo", async (req, res) => {
