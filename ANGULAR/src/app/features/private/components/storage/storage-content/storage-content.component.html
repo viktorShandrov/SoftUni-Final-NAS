@@ -14,18 +14,18 @@
               </div>
 
       <div *ngIf="enviroments.storageViewCellStructure" class="storage">
-        <div [@cellDisappear]="folder.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'folder')"   #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell" >
+        <div [@cellDisappear]="folder.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'folder')"   #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell directory"  [attr._id]="folder._id">
           <div [@crossMarkAnim]="folder.isDisappearing?'in':'out'" (@crossMarkAnim.done)="crossMarkAnimationDone($event,folder)" class="crossMark"></div>
-          <div class="directory" [attr._id]="folder._id">
+          <div>
   <!--          <i class="fa-solid fa-folder"></i>-->
             <img src="assets/folder.png" alt="image">
           </div>
           <h3>{{folder.name}}</h3>
         </div>
-        <div [@cellDisappear]="file.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'file')" #fileElement appFolderDoubleClick *ngFor="let file of files;let index = index" class="cell" >
+        <div [@cellDisappear]="file.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'file')" #fileElement appFolderDoubleClick *ngFor="let file of files;let index = index" class="cell file"  [attr._id]="file._id">
           <div [@crossMarkAnim]="file.isDisappearing?'in':'out'" (@crossMarkAnim.done)="crossMarkAnimationDone($event,file)" class="crossMark"></div>
 
-          <div class="file" [attr._id]="file._id">
+          <div >
             <i *ngIf="!fileExtensions.includes(file.type)" class="fa-regular fa-file"></i>
             <img *ngIf="fileExtensions.includes(file.type)"  src="assets/{{file.type}}.png" alt="image">
           </div>

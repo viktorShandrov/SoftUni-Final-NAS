@@ -61,7 +61,6 @@ export class RightClickMenuComponent implements AfterViewInit{
         ) {
           // the menu's id have changed
           const index = this.CacheService.folders.findIndex((el)=>el._id==menuElement.getAttribute("element-id"))
-          console.log(index)
           if(index> -1){
             this.selectedFolder = this.CacheService.folders[index]
           }

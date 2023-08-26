@@ -9,7 +9,7 @@ import {file, folder} from "../../../../../shared/types";
   styleUrls: ['./file-or-folder-details-aside.component.css']
 })
 export class FileOrFolderDetailsAsideComponent implements AfterViewInit{
-  elementInfo:file|folder|undefined
+
   constructor(
     private renderer: Renderer2,
     private HTMLElementsService: HTMLElementsService,

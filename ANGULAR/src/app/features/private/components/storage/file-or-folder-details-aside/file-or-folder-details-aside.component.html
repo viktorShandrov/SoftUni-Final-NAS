@@ -13,7 +13,10 @@
   </div>
   <div class="main">
     <div class="whoHasAccess">
-
+      <h3>Who has access</h3>
+      <div class="usersContainer">
+        <i  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon"></i>
+      </div>
     </div>
     <div class="elementDetails">
       <div class="type">
