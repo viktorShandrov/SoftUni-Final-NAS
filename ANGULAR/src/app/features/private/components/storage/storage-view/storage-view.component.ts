@@ -33,7 +33,6 @@ export class StorageViewComponent implements AfterViewInit{
 
   ngAfterViewInit(){
     this.HTMLElementsService.Renderer2.listen(this.contentWrapper.nativeElement, "click", (e) => {
-      console.log(e.target.classList)
       if(e.target.classList.contains("storage")||e.target.classList.contains("tableCellView")||e.target.classList.contains("haveFolder")){
         this.PopupService.hideAllOtherMenus()
         this.removeBGOnFilesAndFolders()

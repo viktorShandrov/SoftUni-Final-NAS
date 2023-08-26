@@ -6,6 +6,7 @@
   height: 100%;
   border: solid black 0.04cm;
   border-radius: 40px;
+  /*position: relative;*/
 
 }
 .header{
@@ -30,7 +31,7 @@
   flex-direction: column;
   margin: 0 10px;
 }
-.main .whoHasAccess.usersContainer{
+.main .whoHasAccess .usersContainer{
   display:  flex;
   gap: 10px;
 
@@ -41,4 +42,13 @@
   padding: 10px;
   border-radius: 100px;
   background-color: grey;
+  position: relative;
+}
+.main .whoHasAccess .usersContainer .userIcon .userInfoFromIcon{
+
+  position: absolute;
+  background-color: red;
+  width: 100px;
+  height: 100px;
+  z-index: 999;
 }

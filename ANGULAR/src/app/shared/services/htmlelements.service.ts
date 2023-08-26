@@ -11,6 +11,7 @@ export class HTMLElementsService {
 
   dirDivsRefs!: QueryList<ElementRef>;
   completionDivsRefs!: QueryList<ElementRef>;
+  userIconsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
   FileOrFolderDetailsAsideComponent!: ElementRef;
   divDirContainer!: ElementRef;

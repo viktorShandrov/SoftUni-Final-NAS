@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 import {CacheService} from "../../../../../shared/services/cache.service";
 import {file, folder} from "../../../../../shared/types";
@@ -10,6 +10,7 @@ import {file, folder} from "../../../../../shared/types";
 })
 export class FileOrFolderDetailsAsideComponent implements AfterViewInit{
 
+  @ViewChildren("userIcon") userIconsRefs!:QueryList<ElementRef>
   constructor(
     private renderer: Renderer2,
     private HTMLElementsService: HTMLElementsService,
@@ -22,7 +23,6 @@ export class FileOrFolderDetailsAsideComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(){
-
-
+    this.HTMLElementsService.userIconsRefs = this.userIconsRefs
   }
 }

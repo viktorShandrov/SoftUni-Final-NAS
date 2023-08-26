@@ -1,34 +1,41 @@
 <div class="wrapper">
-  <div class="header">
-    <i *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fa-regular fa-file"></i>
-    <i *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="fa-regular fa-folder"></i>
-    <div class="elementName">
-      <h4 *ngIf="this.CacheService.elementInfo?.elementType=='file'">{{this.CacheService.elementInfo?.fileName|trimDetailsElementName}}</h4>
-      <h4 *ngIf="this.CacheService.elementInfo?.elementType=='directory'">{{this.CacheService.elementInfo?.name|trimDetailsElementName}}</h4>
-    </div>
-    <div class="closeBtn">
-      <i class="fa-solid fa-xmark"></i>
-    </div>
+  <app-loader *ngIf="!this.CacheService.elementInfo"></app-loader>
+  <div *ngIf="this.CacheService.elementInfo">
+      <div class="header">
+        <i *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fa-regular fa-file"></i>
+        <i *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="fa-regular fa-folder"></i>
+        <div class="elementName">
+          <h4 *ngIf="this.CacheService.elementInfo?.elementType=='file'">{{this.CacheService.elementInfo?.fileName|trimDetailsElementName}}</h4>
+          <h4 *ngIf="this.CacheService.elementInfo?.elementType=='directory'">{{this.CacheService.elementInfo?.name|trimDetailsElementName}}</h4>
+        </div>
+        <div class="closeBtn">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
 
-  </div>
-  <div class="main">
-    <div class="whoHasAccess">
-      <h3>Who has access</h3>
-      <div class="usersContainer">
-        <i  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon"></i>
       </div>
-    </div>
-    <div class="elementDetails">
-      <div class="type">
-        {{this.CacheService.elementInfo?.elementType}}
+      <div class="main">
+        <div *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="whoHasAccess">
+          <h3>Who has access</h3>
+          <div class="usersContainer">
+            <i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
+              <div *ngIf="userIcon.attributes.getNamedItem('isSelected')" class="userInfoFromIcon">
+
+              </div>
+            </i>
+          </div>
+        </div>
+        <div class="elementDetails">
+          <div class="type">
+            {{this.CacheService.elementInfo?.elementType}}
+          </div>
+          <div *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="size">
+            {{this.CacheService.elementInfo?.length}}
+          </div>
+          <div class="createdAt">
+<!--            {{this.CacheService.elementInfo?.createdAt}}-->
+          </div>
+        </div>
       </div>
-      <div *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="size">
-        {{this.CacheService.elementInfo?.length}}
-      </div>
-      <div class="createdAt">
-<!--        {{this.CacheService.elementInfo.createdAt}}-->
-      </div>
-    </div>
   </div>
 
 </div>

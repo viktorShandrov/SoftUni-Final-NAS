@@ -59,7 +59,7 @@ exports.unAuthoriseUserFromFolder = async (folderId,userId,ownerId) => {
 }
 exports.getDetails =async (id,elementType)=>{
     if(elementType==="file"){
-        return fileModel.findById(id).populate("autorised")
+        return fileModel.findById(id)
     }else if(elementType==="directory"){
         return folderModel.findById(id).populate("autorised")
     }

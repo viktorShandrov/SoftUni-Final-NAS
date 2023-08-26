@@ -148,7 +148,7 @@ router.post("/:id/getDetails",async (req,res)=>{
     const {id} = req.params
 
   const  element = await fileManager.getDetails(id,elementType)
-   
+  res.status(200).json({element})
 } catch (error) {
     res.status(400).json({message:error.message})
   }

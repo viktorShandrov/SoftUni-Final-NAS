@@ -232,29 +232,40 @@ export class StorageService {
       }
     );
   }
+  showUserDetailsFromIcon(event:MouseEvent){
+    this.HTMLElementsService.Renderer2.setAttribute(event.target,"isSelected","true")
+  }
+  hideUserDetailsFromIcon(event:MouseEvent){
+    this.HTMLElementsService.Renderer2.setStyle(event.target,"background-color","blue")
+  }
+  addELToUserIcons(userIconsRefs:QueryList<ElementRef>){
+    for (const userIconsRef of userIconsRefs.toArray()) {
+      this.HTMLElementsService.Renderer2.listen(userIconsRef.nativeElement,"mouseenter",this.showUserDetailsFromIcon.bind(this))
+      this.HTMLElementsService.Renderer2.listen(userIconsRef.nativeElement,"mouseleave",this.hideUserDetailsFromIcon.bind(this))
+    }
+  }
+  fetchDetails(id: String,elementType:String){
+    return this.HttpService.httpPOSTRequest(`api/files/${id}/getDetails`,JSON.stringify({elementType}))
+  }
   getDetails(menu: HTMLDivElement) {
+    this.CacheService.elementInfo = undefined
    const section =  this.HTMLElementsService.FileOrFolderDetailsAsideComponent
     this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","block")
     const elementId = menu.getAttribute('element-id')
     const elementType = menu.getAttribute('element-type')
-    switch (elementType){
-      case  "directory":
-          const folder = this.CacheService.folders.find((el)=>el._id==elementId)
-          folder!.elementType = "directory"
-          this.CacheService.elementInfo = folder
-        break
-      case  "file":
-          const file = this.CacheService.files.find((el)=>el._id==elementId)
-          file!.elementType = "file"
-          this.CacheService.elementInfo = file
-        break
-    }
-
-    // const payload = {
-    //   id: menu.getAttribute('element-id'),
-    //   elementType: menu.getAttribute('element-type'),
-    // };
-    // this.http.get('api/files/');
+    this.fetchDetails(elementId!,elementType!).subscribe(
+      (res:any)=>{
+        this.CacheService.elementInfo = res.element
+        this.CacheService.elementInfo.elementType = elementType
+        setTimeout(()=>{
+          this.addELToUserIcons(this.HTMLElementsService.userIconsRefs)
+        },0)
+      },
+      (error)=>{
+        console.log(error)
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+      }
+    )
   }
 
   addEventListenerOnFilesAndFoldersToBeClickable(
