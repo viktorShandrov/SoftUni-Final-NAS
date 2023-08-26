@@ -51,9 +51,11 @@ export class RouterService {
 
 
       if(match&&match.length>1) {
+        setTimeout(()=>{
+          this.StorageService.hideFileOrFolderDetailsSection()
+        },0)
         if (match[1] !== "dashboard" && match[1] !== "shared-with-me" && match[1] !== "shared-with-users") {
           //its storage
-          console.log("storage section")
           const folderId = match[1];
           enviroments.currentFolder = folderId;
           this.StorageService.hasFiles = false
@@ -66,7 +68,6 @@ export class RouterService {
             );
             this.HTMLElementsService.completionDivsRefs.changes.pipe(take(1)).subscribe(
               (completionDivsRefs) => {
-                console.log("completionDivsRefs ", completionDivsRefs)
                 this.StorageService.addEventListenersToCompletionElements(
                   this.HTMLElementsService.completionDivsRefs,
                   this.router

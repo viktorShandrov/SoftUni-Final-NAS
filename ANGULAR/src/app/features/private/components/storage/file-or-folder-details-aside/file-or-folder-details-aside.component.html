@@ -8,7 +8,7 @@
           <h4 *ngIf="this.CacheService.elementInfo?.elementType=='file'">{{this.CacheService.elementInfo?.fileName|trimDetailsElementName}}</h4>
           <h4 *ngIf="this.CacheService.elementInfo?.elementType=='directory'">{{this.CacheService.elementInfo?.name|trimDetailsElementName}}</h4>
         </div>
-        <div class="closeBtn">
+        <div class="closeBtn" (click)="StorageService.hideFileOrFolderDetailsSection()">
           <i class="fa-solid fa-xmark"></i>
         </div>
 
@@ -18,8 +18,22 @@
           <h3>Who has access</h3>
           <div class="usersContainer">
             <i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
-              <div *ngIf="userIcon.attributes.getNamedItem('isSelected')" class="userInfoFromIcon">
-
+              <div *ngIf="userIcon.getAttribute('isSelected')=='true'" class="userInfoFromIcon">
+                <div class="email">
+                  <p>{{user.email}}</p>
+                </div>
+              </div>
+            </i><i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
+              <div *ngIf="userIcon.getAttribute('isSelected')=='true'" class="userInfoFromIcon">
+                <div class="email">
+                  <p>{{user.email}}</p>
+                </div>
+              </div>
+            </i><i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
+              <div *ngIf="userIcon.getAttribute('isSelected')=='true'" class="userInfoFromIcon">
+                <div class="email">
+                  <p>{{user.email}}</p>
+                </div>
               </div>
             </i>
           </div>

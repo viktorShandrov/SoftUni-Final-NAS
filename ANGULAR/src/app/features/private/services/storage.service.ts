@@ -233,10 +233,27 @@ export class StorageService {
     );
   }
   showUserDetailsFromIcon(event:MouseEvent){
-    this.HTMLElementsService.Renderer2.setAttribute(event.target,"isSelected","true")
+      const element = event.target as HTMLElement
+      this.HTMLElementsService.Renderer2.setAttribute(element,"isSelected","true")
+    setTimeout(()=>{
+      const userInfoFromIcon = element.querySelector(".userInfoFromIcon") as HTMLElement
+      // Calculate the desired position
+      const iconRect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      const userInfoHeight = 100; // Adjust this based on your element's height
+      const userInfoWidth = 100;  // Adjust this based on your element's width
+
+      const desiredTop = iconRect.top + iconRect.height + 10; // Add some spacing
+      const desiredLeft = iconRect.left - (userInfoWidth / 2) + (iconRect.width / 2);
+
+      userInfoFromIcon!.style.top = Math.min(desiredTop, viewportHeight - userInfoHeight) + 'px';
+      userInfoFromIcon!.style.left = desiredLeft + 'px';
+
+    },0)
   }
   hideUserDetailsFromIcon(event:MouseEvent){
-    this.HTMLElementsService.Renderer2.setStyle(event.target,"background-color","blue")
+    this.HTMLElementsService.Renderer2.setAttribute(event.target,"isSelected","false")
   }
   addELToUserIcons(userIconsRefs:QueryList<ElementRef>){
     for (const userIconsRef of userIconsRefs.toArray()) {
@@ -244,13 +261,22 @@ export class StorageService {
       this.HTMLElementsService.Renderer2.listen(userIconsRef.nativeElement,"mouseleave",this.hideUserDetailsFromIcon.bind(this))
     }
   }
+  showFileOrFolderDetailsSection(){
+    const section =  this.HTMLElementsService.FileOrFolderDetailsAsideComponent
+    this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","block")
+  }
+  hideFileOrFolderDetailsSection(){
+    const section =  this.HTMLElementsService.FileOrFolderDetailsAsideComponent
+    this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","none")
+  }
   fetchDetails(id: String,elementType:String){
     return this.HttpService.httpPOSTRequest(`api/files/${id}/getDetails`,JSON.stringify({elementType}))
   }
   getDetails(menu: HTMLDivElement) {
+    this.PopupService.hideAllOtherMenus()
     this.CacheService.elementInfo = undefined
-   const section =  this.HTMLElementsService.FileOrFolderDetailsAsideComponent
-    this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","block")
+    this.showFileOrFolderDetailsSection()
+
     const elementId = menu.getAttribute('element-id')
     const elementType = menu.getAttribute('element-type')
     this.fetchDetails(elementId!,elementType!).subscribe(

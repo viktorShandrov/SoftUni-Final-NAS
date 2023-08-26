@@ -6,12 +6,13 @@
   height: 100%;
   border: solid black 0.04cm;
   border-radius: 40px;
-  /*position: relative;*/
+  position: relative;
 
 }
 .header{
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 0 20px;
 }
 .header i, .header .closeBtn{
@@ -23,6 +24,14 @@
 }
 .header .closeBtn{
   margin-left: auto;
+  height: fit-content;
+  padding: 5px;
+  border-radius: 100px;
+  transition: background-color 0.2s;
+}
+.header .closeBtn:hover{
+  background-color: grey;
+  cursor: pointer;
 }
 
 
@@ -43,12 +52,21 @@
   border-radius: 100px;
   background-color: grey;
   position: relative;
+  /*z-index: 1;*/
 }
 .main .whoHasAccess .usersContainer .userIcon .userInfoFromIcon{
 
-  position: absolute;
-  background-color: red;
+  position: fixed;
+  background-color: white;
   width: 100px;
   height: 100px;
-  z-index: 999;
+  border: solid grey 0.01cm;
+  border-radius: 10px;
+
+  z-index: 9999;
+}
+.main .whoHasAccess .usersContainer .userIcon .userInfoFromIcon .email p{
+  font-size: 8px;
+  margin: 10px 5px;
+  text-overflow: ellipsis;
 }

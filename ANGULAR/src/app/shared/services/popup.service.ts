@@ -1,5 +1,6 @@
 import {Injectable, ElementRef, Renderer2, ViewChild, QueryList} from '@angular/core';
 import {HTMLElementsService} from "./htmlelements.service";
+import {StorageService} from "../../features/private/services/storage.service";
 
 
 @Injectable({
@@ -7,12 +8,14 @@ import {HTMLElementsService} from "./htmlelements.service";
 })
 export class PopupService {
   popupBG!:ElementRef
+
   popupAddFile!:ElementRef
   popupAddFolder!:ElementRef
 
 
   constructor(
     private HTMLElementsService:HTMLElementsService,
+
 
 
   ) {

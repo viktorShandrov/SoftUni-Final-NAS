@@ -5,6 +5,7 @@ import {UserService} from "../../../../../core/services/user.service";
 import {enviroments} from "../../../../../shared/environments";
 import {PopupService} from "../../../../../shared/services/popup.service";
 import {CacheService} from "../../../../../shared/services/cache.service";
+import {SharedService} from "../../../services/shared.service";
 
 @Component({
   selector: 'app-storage-view',
@@ -17,6 +18,7 @@ export class StorageViewComponent implements AfterViewInit{
   constructor(
     private HTMLElementsService: HTMLElementsService,
     private StorageService: StorageService,
+    public SharedService: SharedService,
     private PopupService: PopupService,
     private CacheService: CacheService,
     private UserService: UserService

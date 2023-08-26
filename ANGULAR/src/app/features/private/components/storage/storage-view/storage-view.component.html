@@ -2,6 +2,7 @@
 <div class="wrapper">
 <app-aside></app-aside>
   <div #contentWrapper class="contentWrapper">
+<!--    <app-loader *ngIf="SharedService.storageViewIsLoading"></app-loader>-->
       <router-outlet name="storage-outlet" class="router-outlet"></router-outlet>
   </div>
   <app-file-or-folder-details-aside></app-file-or-folder-details-aside>
