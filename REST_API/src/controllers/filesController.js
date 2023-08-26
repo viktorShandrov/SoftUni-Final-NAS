@@ -141,6 +141,18 @@ router.post("/deleteItem", async (req, res) => {
     res.status(400).json({message:error.message})
   }
 })
+
+router.post("/:id/getDetails",async (req,res)=>{
+  try {
+    const {elementType} = req.body
+    const {id} = req.params
+
+  const  element = await fileManager.getDetails(id,elementType)
+   
+} catch (error) {
+    res.status(400).json({message:error.message})
+  }
+})
 router.get("/:id/getDirectory", async (req, res) => {
   try {
 

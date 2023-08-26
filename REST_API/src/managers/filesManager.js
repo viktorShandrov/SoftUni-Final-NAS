@@ -57,6 +57,13 @@ exports.unAuthoriseUserFromFolder = async (folderId,userId,ownerId) => {
         throw new Error("No such shared user")
     }
 }
+exports.getDetails =async (id,elementType)=>{
+    if(elementType==="file"){
+        return fileModel.findById(id).populate("autorised")
+    }else if(elementType==="directory"){
+        return folderModel.findById(id).populate("autorised")
+    }
+}
 exports.getFolder = async (id,userId) => {
     const folder = await folderModel.findById(id).populate("dirComponents").populate("fileComponents") || await rootModel.findById(id).populate("dirComponents").populate("fileComponents")
     if(!folder.isPublic){
@@ -77,7 +84,7 @@ exports.getFilesFromSharedFolder = async (folderId) => {
 }
 
 exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) => {
-    console.log('parentFolderId: ', parentFolderId);
+
 
     const folder = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")
     if (folder.fileComponents.some(el => el.fileName === originalname)) {
@@ -104,7 +111,7 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
         fileChunks: uploadStream.id,
         type: fileExtension,
         length: size,
-        uploadDate: uploadStream.uploadDate,
+        createdAt:new Date.now(),
         fileName: onlyName,
         rootId: rootId,
     })
@@ -112,7 +119,6 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
     folder.fileComponents.push(newFile._id)
     await folder.save()
     const root = await rootModel.findById(rootId)
-    console.log('2root: ', root);
     root.usedStorage+=newFile.length
     await root.save()
     return newFile
@@ -143,7 +149,7 @@ exports.createFolder = async (name, rootId, parentFolderId) => {
         }
     }
 
-    const newFolder = await folderModel.create({ ownerId, name, rootId, dirComponents: [], autorised: [ownerId], isPublic: false, parentFolder: parentFolderId })
+    const newFolder = await folderModel.create({ ownerId, name, rootId, dirComponents: [], autorised: [ownerId], isPublic: false, parentFolder: parentFolderId,createdAt:new Date.now() })
     folder.dirComponents.push(newFolder._id)
     folder.save();
 

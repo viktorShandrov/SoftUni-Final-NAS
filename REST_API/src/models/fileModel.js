@@ -11,7 +11,7 @@ const schema = new mongoose.Schema({
     },
     type:String,
     length:Number,
-    uploadDate:Date,
+    createdAt:Date,
     fileName:String
 })
 
