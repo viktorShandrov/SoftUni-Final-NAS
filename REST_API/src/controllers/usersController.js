@@ -59,7 +59,7 @@ router.post("/login",async (req,res)=>{
     try {
         //TODO: req.body=> JSON.parse(req.body)
         const {email,password} = req.body
-       const payload = await userManager.login(email,password);
+         const payload = await userManager.login(email,password);
         res.status(200).json(payload)
     } catch (error) {
         console.log(error);

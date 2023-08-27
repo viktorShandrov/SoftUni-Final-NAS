@@ -16,6 +16,7 @@ import {RouteReuseStrategy, RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {HttpService} from "./shared/services/http.service";
+import {ClipboardModule} from "ngx-clipboard";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {HttpService} from "./shared/services/http.service";
     AppComponent
   ],
   imports: [
+    ClipboardModule,
     HttpClientModule,
     BrowserModule,
     SharedModule,

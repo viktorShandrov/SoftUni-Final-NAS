@@ -1,4 +1,8 @@
-
+.block{
+  height: 60px;
+  width: 100%;
+  background-color: red;
+}
 .wrapper{
   background-color: white;
     width: 300px;
@@ -7,10 +11,12 @@
   overflow-y: scroll;
   border: solid black 0.04cm;
   border-radius: 40px;
+  /*border-top: none;*/
   position: relative;
 
 
 }
+
 .wrapper::-webkit-scrollbar{
   display: none;
 }
@@ -18,11 +24,21 @@
   margin-bottom: 20px;
 }
 
+
 .header{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 20px;
+  position: absolute;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  background-color: #b5b5b5;
+  border: solid black 0.04cm;
+  border-bottom: none;
+  width: 100%;
+  padding: 0 20px;
+  z-index: 9990;
+
 
 }
 .header i, .header .closeBtn{
@@ -46,7 +62,7 @@
 
 
 .main{
-  margin:0 20px;
+  margin:70px 20px 0 20px;
 }
 .main .whoHasAccess{
   display:  flex;
@@ -138,5 +154,27 @@
 }
 .main .inCaseOfEmergency h5{
   margin: 10px;
+}
+
+.main .inCaseOfEmergency .idContainer{
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+
+}
+.main .inCaseOfEmergency .idContainer p{
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  background-color: deepskyblue;
+  padding: 10px;
+}
+.main .inCaseOfEmergency .idContainer label{
+  padding: 5px;
+  background-color: #00d9ff;
+
+}
+.main .inCaseOfEmergency .idContainer label:hover{
+  cursor: pointer;
+
 }
 

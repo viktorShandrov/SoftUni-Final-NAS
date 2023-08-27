@@ -1,6 +1,7 @@
 .wrapper{
   display: flex;
   height: 100%;
+  background-color: white;
 }
 
 

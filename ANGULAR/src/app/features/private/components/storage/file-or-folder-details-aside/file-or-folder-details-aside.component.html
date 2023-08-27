@@ -1,6 +1,3 @@
-<div class="wrapper">
-  <app-loader *ngIf="!this.CacheService.elementInfo"></app-loader>
-  <div class="section" *ngIf="this.CacheService.elementInfo">
       <div class="header">
         <i *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fa-regular fa-file"></i>
         <i *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="fa-regular fa-folder"></i>
@@ -11,8 +8,11 @@
         <div class="closeBtn" (click)="StorageService.hideFileOrFolderDetailsSection()">
           <i class="fa-solid fa-xmark"></i>
         </div>
-
       </div>
+
+<div class="wrapper">
+  <app-loader *ngIf="!this.CacheService.elementInfo"></app-loader>
+  <div class="section" *ngIf="this.CacheService.elementInfo">
       <div class="main">
         <div *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="whoHasAccess">
           <h3>Who has access</h3>
@@ -53,9 +53,12 @@
           <div class="inCaseOfEmergency">
             <h5 id="inCaseOfEmergencyTitle">In case of emergency:</h5>
             <button id="openATicket">Open a ticket</button>
-            <div class="id">
+            <div class="elementId">
               <h5>Element ID</h5>
-              <p>{{this.CacheService.elementInfo?._id}}}</p>
+              <div class="idContainer">
+                <p>{{this.CacheService.elementInfo?._id}}</p>
+                <label (click)="copy(this.CacheService.elementInfo?._id)">Copy</label>
+              </div>
             </div>
 
           </div>
