@@ -118,6 +118,7 @@ export class StorageContentComponent implements AfterViewInit {
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': `shared-with-me/${folder._id}` } }])
           return
         }
+
         this.isLoading = false
 
         if (folder) {

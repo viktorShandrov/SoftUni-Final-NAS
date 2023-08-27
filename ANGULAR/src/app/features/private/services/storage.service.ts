@@ -288,7 +288,6 @@ export class StorageService {
         },0)
       },
       (error)=>{
-        console.log(error)
         this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       }
     )

@@ -74,6 +74,9 @@
 
 .navigation {
   display: flex;
+  padding: 10px;
+  background-color: #cacaca;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
    /*height: 26px;*/
 }
 
@@ -87,16 +90,25 @@
 
 .navigation .back,.navigation .sort, .navigation .toggleView{
   padding: 5px 15px;
-  justify-content: center;color: var(--iconColor);
+  justify-content: center;
+  color: var(--iconColor);
   transition: 0.3s;
   cursor: pointer;
+  background-color: #cacaca;
 
 }
-.actionBtn:hover{
+.navigation .actionBtn:hover{
   background-color: #748183;
 }
+
+.navigation .actionBtn:first-child{
+
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
 .navigation .back-and-further-btns{
-  background-color: var(--BGcolor);
+  /*background-color: var(--BGcolor);*/
+  background-color: #cacaca;
   transition: 1s;
 }
 .navigation .back,  .navigation .back-and-further-btns {

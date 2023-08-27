@@ -1,6 +1,6 @@
 <div class="wrapper">
   <app-loader *ngIf="!this.CacheService.elementInfo"></app-loader>
-  <div *ngIf="this.CacheService.elementInfo">
+  <div class="section" *ngIf="this.CacheService.elementInfo">
       <div class="header">
         <i *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fa-regular fa-file"></i>
         <i *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="fa-regular fa-folder"></i>
@@ -49,6 +49,15 @@
           <div class="createdAt">
             <h5>Created at</h5>
             <p>{{this.CacheService.elementInfo?.createdAt|date:"medium"}}</p>
+          </div>
+          <div class="inCaseOfEmergency">
+            <h5 id="inCaseOfEmergencyTitle">In case of emergency:</h5>
+            <button id="openATicket">Open a ticket</button>
+            <div class="id">
+              <h5>Element ID</h5>
+              <p>{{this.CacheService.elementInfo?._id}}}</p>
+            </div>
+
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
 import {StorageService} from "../../../services/storage.service";
 import {UserService} from "../../../../../core/services/user.service";
@@ -21,8 +21,13 @@ export class StorageViewComponent implements AfterViewInit{
     public SharedService: SharedService,
     private PopupService: PopupService,
     private CacheService: CacheService,
+    private element: ElementRef,
+    private Renderer2: Renderer2,
     private UserService: UserService
-  ) {}
+  ) {
+    this.Renderer2.setStyle(this.element.nativeElement, 'display', 'block');
+    this.Renderer2.setStyle(this.element.nativeElement, 'height', '100%');
+  }
 
   removeBGOnFilesAndFolders(){
     for (const folder of this.HTMLElementsService.foldersQL) {

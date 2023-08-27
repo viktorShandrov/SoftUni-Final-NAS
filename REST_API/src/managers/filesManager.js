@@ -68,10 +68,11 @@ exports.getFolder = async (id,userId) => {
     const folder = await folderModel.findById(id).populate("dirComponents").populate("fileComponents") || await rootModel.findById(id).populate("dirComponents").populate("fileComponents")
     if(!folder.isPublic){
         if(!folder.autorised.includes(userId)){
-         throw new Error("You are not autorised")
-        }else{
-            return folder
+             throw new Error("You are not autorised")
         }
+    
+        return folder
+    
     }else{
         return folder
     }

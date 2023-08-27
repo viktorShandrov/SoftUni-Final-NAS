@@ -1,6 +1,6 @@
 .aside{
   width: clamp(100px,20vw,250px);
-  height: calc(100vh - var(--header-height));
+  height: 100%;
   background-color: white;
   transition: 1s;
   border-right: solid #5D5D5D 0.01cm;
@@ -50,7 +50,7 @@
 }
 
 .aside .elements .asideElement:hover , .aside .upgardeButton:hover{
-  /*background-color: #6197E8;*/
+  background-color: #6197E8;
   transition: 0.3s;
 }
 .aside .wrapper{

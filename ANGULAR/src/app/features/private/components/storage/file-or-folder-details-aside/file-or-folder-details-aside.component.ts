@@ -25,6 +25,9 @@ export class FileOrFolderDetailsAsideComponent implements AfterViewInit{
     this.HTMLElementsService.FileOrFolderDetailsAsideComponent = this.element
     this.renderer.setStyle(this.element.nativeElement, 'display', 'none');
     this.renderer.setStyle(this.element.nativeElement, 'background-color', '#ffffff');
+    this.renderer.setStyle(this.element.nativeElement, 'height', '100%');
+    this.renderer.setStyle(this.element.nativeElement, 'padding', '20px');
+
   }
 
   ngAfterViewInit(){

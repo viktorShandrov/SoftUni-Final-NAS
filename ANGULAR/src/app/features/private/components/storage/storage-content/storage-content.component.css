@@ -19,8 +19,9 @@
 /*flex alternitive*/
 
 .storage{
-  height: 90vh;
+  height: 75vh;
   display: flex;
+  /*margin-top: 20px;*/
   padding: 50px;
   gap: 20px;
   overflow-y: scroll;
@@ -123,9 +124,11 @@ img{
   color: var(--textColor);
   transition: 1s;
 }
+
 .tableCellView .tableListViewH3{
   margin: 0;
   padding: 10px;
+
 }
 .tableCellView .directory i,.tableCellView .file i{
   color: var(--textColor);
