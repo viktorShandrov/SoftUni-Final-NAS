@@ -64,6 +64,8 @@ export class StorageContentComponent implements AfterViewInit {
 
   enviroments!:any
   isLoading:boolean=true
+  loadingDelayPassed = false;
+
   fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
 
 
@@ -87,7 +89,19 @@ export class StorageContentComponent implements AfterViewInit {
     },1000)
   }
 
-
+  isLoadingSet(isLoading:Boolean){
+      if(isLoading){
+        this.loadingDelayPassed = false;
+        setTimeout(() => {
+          if (!this.loadingDelayPassed) {
+            this.isLoading = true;
+          }
+        }, 1000);
+      }else{
+        this.isLoading = false
+        this.loadingDelayPassed = true;
+      }
+  }
   ngAfterViewInit(): void {
 
 
@@ -106,7 +120,7 @@ export class StorageContentComponent implements AfterViewInit {
       const id = params.get('id') as String;
       if(id!=="dashboard"&&id!=="sharedWithMe"&&id!=="sharedWithUsers"){
         this.getData(id);
-        this.isLoading = true
+        this.isLoadingSet(true)
       }
     });
   }
@@ -114,19 +128,20 @@ export class StorageContentComponent implements AfterViewInit {
   getData(dirId: String) {
     this.HttpService.httpGETRequest(`api/files/${dirId}/getDirectory`).subscribe(
       (folder: any) => {
+        this.isLoadingSet(false)
         if(folder&&folder.isPublic&&folder.rootId!==this.UserService.rootId){
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': `shared-with-me/${folder._id}` } }])
           return
         }
 
-        this.isLoading = false
 
         if (folder) {
-
           this.haveFolder = true;
           this.CacheService.completions.splice(0);
           this.folders.splice(0);
           this.files.splice(0);
+          this.StorageService.hasFiles = false
+          this.StorageService.hasFolders = false
           if(folder.dirComponents.length>0){
             this.StorageService.hasFolders = true
             for (const dirComponent of folder.dirComponents) {
@@ -156,7 +171,7 @@ export class StorageContentComponent implements AfterViewInit {
         }
       },
       (error) => {
-        this.isLoading = false;
+        this.isLoadingSet(false)
         this.haveFolder = false;
         this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
       });

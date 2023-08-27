@@ -58,8 +58,8 @@ export class RouterService {
           //its storage
           const folderId = match[1];
           enviroments.currentFolder = folderId;
-          this.StorageService.hasFiles = false
-          this.StorageService.hasFolders = false
+          // this.StorageService.hasFiles = false
+          // this.StorageService.hasFolders = false
           setTimeout(() => {
             this.StorageService.addEventListenersToCompletionSection(
               this.HTMLElementsService.urlBar,
