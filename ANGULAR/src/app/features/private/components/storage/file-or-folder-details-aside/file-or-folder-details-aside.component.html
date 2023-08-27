@@ -23,30 +23,32 @@
                   <p>{{user.email}}</p>
                 </div>
               </div>
-            </i><i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
-              <div *ngIf="userIcon.getAttribute('isSelected')=='true'" class="userInfoFromIcon">
-                <div class="email">
-                  <p>{{user.email}}</p>
-                </div>
-              </div>
-            </i><i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
-              <div *ngIf="userIcon.getAttribute('isSelected')=='true'" class="userInfoFromIcon">
-                <div class="email">
-                  <p>{{user.email}}</p>
-                </div>
-              </div>
             </i>
           </div>
         </div>
         <div class="elementDetails">
+          <h3 id="elementDetailsHeading">Element details</h3>
+          <div class="straightLine"></div>
           <div class="type">
-            {{this.CacheService.elementInfo?.elementType}}
+            <h5>Type</h5>
+            <p>{{this.CacheService.elementInfo?.elementType}}</p>
           </div>
           <div *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="size">
-            {{this.CacheService.elementInfo?.length}}
+            <h5>File size</h5>
+            <p>{{HeaderService.transform(this.CacheService.elementInfo?.length)}}</p>
+
           </div>
+          <div *ngIf="this.CacheService.elementInfo?.elementType=='file'" class="fileExtension">
+            <h5>File extension</h5>
+            <p>{{this.CacheService.elementInfo?.type}}</p>
+          </div>
+          <div *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="isPublic">
+            <h5>Public <span *ngIf="CacheService.elementInfo?.isPublic">&#9989;</span><span *ngIf="!CacheService.elementInfo?.isPublic">&#10060;</span></h5>
+          </div>
+
           <div class="createdAt">
-<!--            {{this.CacheService.elementInfo?.createdAt}}-->
+            <h5>Created at</h5>
+            <p>{{this.CacheService.elementInfo?.createdAt|date:"medium"}}</p>
           </div>
         </div>
       </div>

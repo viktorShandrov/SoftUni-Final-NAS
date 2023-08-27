@@ -3,6 +3,7 @@ import {HTMLElementsService} from "../../../../../shared/services/htmlelements.s
 import {CacheService} from "../../../../../shared/services/cache.service";
 import {file, folder} from "../../../../../shared/types";
 import {StorageService} from "../../../services/storage.service";
+import {HeaderService} from "../../../../../core/services/header.service";
 
 @Component({
   selector: 'app-file-or-folder-details-aside',
@@ -15,6 +16,8 @@ export class FileOrFolderDetailsAsideComponent implements AfterViewInit{
   constructor(
     private renderer: Renderer2,
     private HTMLElementsService: HTMLElementsService,
+
+    public HeaderService: HeaderService,
     public CacheService: CacheService,
     public StorageService: StorageService,
     private element: ElementRef
