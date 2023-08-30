@@ -1,3 +1,10 @@
+.headerWrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
 .urlWrapper{
   display: flex ;
   flex-direction: column;
@@ -21,6 +28,11 @@
   align-items: center;
   padding: 5px;
   background-color: #6197E8;
+}
+.urlWrapper .url  label i{
+
+  padding: 1px;
+
 }
 .urlWrapper .url input {
   height: 30px;

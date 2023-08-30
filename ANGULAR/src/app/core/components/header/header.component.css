@@ -1,165 +1,67 @@
-header {
-  width: 100%;
-  height: var(--header-height);
-  background-color: #545454;
+header{
   display: flex;
-  /*justify-content: space-around;*/
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  margin-right: 50px  ;
   position: relative;
-  gap: clamp(10px,5vw,150px);
-
-
+  z-index: 1;
 }
-header .logo {
-  width: 70px;
-  height: 60px;
+
+header .user-section{
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  border-radius: 10px;
-}
-header .logo i {
-  font-size: 50px;
-}
-a{
-  text-decoration: none;
-  color: black;
-}
-.lightDarkModeSlider{
-  width: clamp(20px,7vw,40px);
-  height: clamp(10px,3vw,20px);
-  border-radius: 100px;
-  background-color: var(--BGcolor);
-  cursor: pointer;
-  transition: 1s;
-
-}
-.lightDarkModeBtn{
-  height: 100%;
-  width: 50%;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: 1s;
-}
-
-/* header .profile {
+  gap: 20px;
   position: relative;
-  width: 60px;
-  height: 60px;
-  background-color: white;
-  border-radius: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
-} */
-header .user-settings-menu {
-  display: flex;
-  background-color: brown;
-  border-radius: 10px;
+  z-index: 1;
 }
-header .user-settings-menu .option {
-  padding: 5px 10px;
+header .user-section i{
+  padding: 1px;
+  color: grey;
+  font-size: 23px;
+}
+.user-profile-picture,.notifications{
+  padding: 8px 13px 7px 13px;
+  border: solid grey 0.01cm;
+  border-radius: 100px  ;
+}
+.user-profile-picture:hover,.notifications:hover{
   cursor: pointer;
 
 }
-header .user-settings-menu p {
-  margin: 0;
 
+
+
+.user-profile-picture{
+  position: relative;
+  z-index: 1;
 }
-.storage-info{
-  width: clamp(100px,30vw,1000px);
-  height: 70px;
-  /* background-color: blueviolet; */
+
+.user-profile-picture .user-menu{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: clamp(6px,0.8vw,14px);
-}
-
-.storage-info .storageLeft,.storage-info .storageUsed{
-  width:12%;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0cc0df;
-  border-radius: 100px;
-  transition: 1s;
-
-}
-
-.storage-info .storageBar{
-  width: 70%;
-  height: 30px;
+  flex-direction: column;
+  /*gap: 10px;*/
+  position: fixed;
   background-color: white;
-  border-radius: 100px;
-  display: flex;
-  align-items: center;
-  padding: 0 5px;
-}
-
-.storage-info .storageBar .progressBar{
-  width: 0;
-  height: 20px;
-  background-color: #0cc0df;
-  border-radius: 100px;
-  transition: 1.5s;
-}
-
-.storage-info .storageUsed{
-  width:12%;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0cc0df;
-  border-radius: 100px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
+  transform: translateX(-30%);
+  border-radius: 10px;
   text-align: center;
-  /* font-size: 10px; */
+
+  z-index: 9999;
+}
+.user-profile-picture .user-menu .option{
+  padding: 7px 10px;
 
 }
-.logout{
-  font-size: clamp(10px,1.2vw,16px);
+.user-profile-picture .user-menu .option.logout{
+  background-color: #f37777;
+
+
 }
-
-
-
-
-
-/*loader*/
-.lds-dual-ring {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
+.user-profile-picture .user-menu .option:hover{
+  background-color: #c1f6ff;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
 }
-.lds-dual-ring:after {
-  content: " ";
-  display: block;
-  width: 34px;
-  height: 34px;
-  margin: 8px;
-  border-radius: 50%;
-  border: 6px solid var(--textColor);
-  border-color: var(--textColor) transparent var(--textColor) transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@media (max-width: 800px){
-  .storage-info .storageLeft,.storage-info .storageUsed{
-    display: none;
-  }
-   .storage-info{
-    justify-content: center;
-
-  }
+.user-profile-picture .user-menu .option.logout:hover{
+  background-color: #ff4444;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
 }

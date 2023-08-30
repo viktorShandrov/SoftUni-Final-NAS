@@ -5,6 +5,7 @@ import {RouterLink, RouterModule} from "@angular/router";
 import {mainInterceptor} from "./router/http.interceptor";
 import {RouterService} from "./router/router.service";
 import { UploadProgressPopupComponent } from './components/upload-progress-popup/upload-progress-popup.component';
+import { UsedStorageComponent } from './components/used-storage/used-storage.component';
 
 
 
@@ -12,12 +13,14 @@ import { UploadProgressPopupComponent } from './components/upload-progress-popup
   declarations: [
     HeaderComponent,
     UploadProgressPopupComponent,
+    UsedStorageComponent,
   ],
-  exports: [
-    HeaderComponent,
-    RouterModule,
+    exports: [
+        HeaderComponent,
+        RouterModule,
+        UsedStorageComponent,
 
-  ],
+    ],
   imports: [
     CommonModule,
     RouterModule,

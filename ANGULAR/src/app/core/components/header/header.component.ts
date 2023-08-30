@@ -9,23 +9,16 @@ import {HTMLElementsService} from "../../../shared/services/htmlelements.service
 })
 export class HeaderComponent implements AfterViewInit{
 
-  @ViewChild("usedStorageBar",{static:true}) usedStorageBar!:ElementRef
-  @ViewChild("storageUsed") storageUsed!:ElementRef
-  @ViewChild("storageLeft") storageLeft!:ElementRef
-  constructor(
-    public HeaderService:HeaderService,
-    public Renderer2:Renderer2,
-    private changeDetectorRef: ChangeDetectorRef,
-    private HTMLElementsService: HTMLElementsService
-  ) {
-  }
+constructor(
+  private element:ElementRef,
+  private renderer2:Renderer2
+) {}
 
-  ngAfterViewInit(){
-    this.changeDetectorRef.detectChanges();
-    this.HTMLElementsService.Renderer2 = this.Renderer2
-    this.HTMLElementsService.usedStorageBar = this.usedStorageBar
-    this.HTMLElementsService.storageUsed = this.storageUsed
-    this.HTMLElementsService.storageLeft = this.storageLeft
-    console.log(this.HTMLElementsService.storageUsed)
-  }
+ngAfterViewInit(){
+  this.renderer2.setStyle(this.element.nativeElement,"display","flex")
+  this.renderer2.setStyle(this.element.nativeElement,"align-items","center")
+  this.renderer2.setStyle(this.element.nativeElement,"position","relative")
+  this.renderer2.setStyle(this.element.nativeElement," z-index","1")
+
+}
 }

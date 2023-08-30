@@ -21,19 +21,19 @@ export class HeaderService {
   transformTheHeaderStorageInfoForUpload(selectedFileSizeInMB:number){
     this.toggleStorageInfoHeaderOpacity(true)
     setTimeout(()=>{
-    this.HTMLElementsService.storageLeft.nativeElement.textContent = selectedFileSizeInMB.toFixed(2) + "MB"
-    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"background-color",constants.HeaderStorageInfoColorWhenUpload)
+    // this.HTMLElementsService.storageLeft.nativeElement.textContent = selectedFileSizeInMB.toFixed(2) + "MB"
+    // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"background-color",constants.HeaderStorageInfoColorWhenUpload)
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"background-color",constants.HeaderStorageInfoColorWhenUpload)
-    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"background-color",constants.HeaderStorageInfoColorWhenUpload)
+    // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"background-color",constants.HeaderStorageInfoColorWhenUpload)
     this.toggleStorageInfoHeaderOpacity(false)
     },300)
   }
   transformTheHeaderStorageInfoByDefault(){
     this.toggleStorageInfoHeaderOpacity(true)
     setTimeout(()=>{
-    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"background-color",constants.HeaderStorageInfoMainColor)
+    // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"background-color",constants.HeaderStorageInfoMainColor)
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"background-color",constants.HeaderStorageInfoMainColor)
-    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"background-color",constants.HeaderStorageInfoMainColor)
+    // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"background-color",constants.HeaderStorageInfoMainColor)
     this.toggleStorageInfoHeaderOpacity(false)
     },300)
 
@@ -41,7 +41,7 @@ export class HeaderService {
 
   updateUploadProgressBar(percent:number){
     this.HTMLElementsService.usedStorageBar.nativeElement.style.width = percent + "%"
-    this.HTMLElementsService.storageUsed.nativeElement.textContent = percent + "%"
+    // this.HTMLElementsService.storageUsed.nativeElement.textContent = percent + "%"
   }
 
   toggleDarkMode(renderer:Renderer2,el:HTMLButtonElement){
@@ -77,28 +77,28 @@ export class HeaderService {
 
   updateUsedStorage(totalVolume:number,usedStorage:number){
 
-    // this.usedStorage=usedStorage
-    // this.totalVolume=totalVolume-usedStorage
-    // let usedPercentage = (usedStorage / totalVolume) * 100;
-    // if(usedPercentage<3){
-    //   usedPercentage=3
-    // }
-    // this.HTMLElementsService.usedStorageBar.nativeElement.style.width =usedPercentage+"%"
+    this.usedStorage=usedStorage
+    this.totalVolume=totalVolume-usedStorage
+    let usedPercentage = (usedStorage / totalVolume) * 100;
+    if(usedPercentage<3){
+      usedPercentage=3
+    }
+    this.HTMLElementsService.usedStorageBar.nativeElement.style.width =usedPercentage+"%"
     // this.HTMLElementsService.storageUsed.nativeElement.textContent =this.transform(this.usedStorage)
     // this.HTMLElementsService.storageLeft.nativeElement.textContent = this.transform(this.totalVolume)
 
   }
 
   toggleStorageInfoHeaderOpacity(isDisappearing:Boolean){
-    // if(isDisappearing){
-    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",0)
-    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",0)
-    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",0)
-    // }else{
-    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",1)
-    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",1)
-    //   this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",1)
-    // }
+    if(isDisappearing){
+      // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",0)
+      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",0)
+      // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",0)
+    }else{
+      // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageUsed.nativeElement,"opacity",1)
+      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.usedStorageBar.nativeElement,"opacity",1)
+      // this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.storageLeft.nativeElement,"opacity",1)
+    }
   }
 
 }

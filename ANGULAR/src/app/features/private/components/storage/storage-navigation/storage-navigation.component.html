@@ -1,38 +1,42 @@
-  <div class="urlWrapper">
-    <div class="url">
-      <label for="searchBar">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </label>
-      <input #urlBarInput id="searchBar" type="url" placeholder="  Search...">
+ <div class="headerWrapper">
+      <div class="urlWrapper">
+        <div class="url">
+          <label for="searchBar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+          <input #urlBarInput id="searchBar" type="url" placeholder="  Search...">
 
 
-    </div>
-    <div class="searchCompletionsWrapper">
-      <div #searchCompletion class="searchCompletion" >
+        </div>
+        <div class="searchCompletionsWrapper">
+          <div #searchCompletion class="searchCompletion" >
 
-          <div *ngFor="let completion of completions" class="completion" [attr.id]="completion._id" #completionDiv>
-            <p>{{completion.name}}</p>
+              <div *ngFor="let completion of completions" class="completion" [attr.id]="completion._id" #completionDiv>
+                <p>{{completion.name}}</p>
+              </div>
+
           </div>
+        </div>
+      </div>
 
+  <app-header></app-header>
+ </div>
+    <div class="navigation">
+      <div class="back-and-further-btns">
+        <div (click)="backBtnOnClick()" #backBtn class="back actionBtn">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div (click)="sortFilesAndFolders(sortIcon)" #sortBtn class="sort actionBtn">
+          <i #sortIcon class="fa-solid fa-arrow-down-z-a"></i>
+        </div>
+        <div (click)="toggleViewStructure(toggleViewIcon)"  class="toggleView actionBtn">
+          <i #toggleViewIcon class="fa-solid fa-table-list"></i>
+        </div>
+      </div>
+      <div #divDirContainer class="urlBar" >
+        <div class="mainRootBtn root-nav-btn" #mainRootBtn [attr.id]="rootId">:root</div>
+        <div *ngFor="let dir of dirs" class="dirDivBorder">
+          <div  #dirDiv class="dirBtn root-nav-btn" [attr.rootId]="dir._id" [attr.id]="dir._id">{{dir.name |lowercase| navigationTrim  }}</div>
+        </div>
       </div>
     </div>
-  </div>
-<div class="navigation">
-  <div class="back-and-further-btns">
-    <div (click)="backBtnOnClick()" #backBtn class="back actionBtn">
-      <i class="fa-solid fa-chevron-left"></i>
-    </div>
-    <div (click)="sortFilesAndFolders(sortIcon)" #sortBtn class="sort actionBtn">
-      <i #sortIcon class="fa-solid fa-arrow-down-z-a"></i>
-    </div>
-    <div (click)="toggleViewStructure(toggleViewIcon)"  class="toggleView actionBtn">
-      <i #toggleViewIcon class="fa-solid fa-table-list"></i>
-    </div>
-  </div>
-  <div #divDirContainer class="urlBar" >
-    <div class="mainRootBtn root-nav-btn" #mainRootBtn [attr.id]="rootId">:root</div>
-    <div *ngFor="let dir of dirs" class="dirDivBorder">
-      <div  #dirDiv class="dirBtn root-nav-btn" [attr.rootId]="dir._id" [attr.id]="dir._id">{{dir.name |lowercase| navigationTrim  }}</div>
-    </div>
-  </div>
-</div>
