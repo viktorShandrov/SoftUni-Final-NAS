@@ -28,7 +28,10 @@ header .user-section i{
 
 }
 
-
+a{
+  text-decoration: none;
+  color: black;
+}
 
 .user-profile-picture{
   position: relative;

@@ -7,7 +7,9 @@
       <i class="fa-solid fa-user"></i>
       <div  #userMenu class="user-menu" >
         <div (click)="UserSettingsPopupService.showPopup()" class="option settings">Settings</div>
-        <div class="option logout">Logout</div>
+        <div class="option logout">
+          <a [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">Logout</a>
+        </div>
       </div>
     </div>
   </div>

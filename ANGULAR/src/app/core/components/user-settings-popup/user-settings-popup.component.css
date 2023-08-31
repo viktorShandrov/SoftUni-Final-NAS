@@ -15,9 +15,12 @@
   width: fit-content;
   height:fit-content;
   padding: 30px;
-  background-color: red;
+  background-color: #2C2C2C;
   opacity: 1;
   gap: 20px;
+}
+.settings-wrapper i {
+ color: white;
 }
 .section{
   display: flex;
@@ -25,9 +28,16 @@
   gap: 10px;
 }
 select{
-  border-radius: 10px;
+  /*border-radius: 10px;*/
+  background-color: #808080;
+  color: white;
+}
+
+select option{
+  border-radius: 0;
 }
 .section.label-section{
+  color: white;
   text-align: right;
 }
 .closeBtn{

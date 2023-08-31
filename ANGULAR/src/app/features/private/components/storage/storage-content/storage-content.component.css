@@ -140,9 +140,9 @@ img{
   margin-left: 50px;
   margin-top: 50px;
   padding:20px;
-  border: solid grey 0.1cm;
+  border: solid var(--textColor) 0.1cm;
   border-radius: 10px;
-  color: grey;
+  color: var(--textColor);
 
 }
 .noFileAndNoFoldersContainer:hover{
