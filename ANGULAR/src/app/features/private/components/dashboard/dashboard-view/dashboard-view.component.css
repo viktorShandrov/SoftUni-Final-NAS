@@ -16,12 +16,9 @@
   overflow-y: scroll;
   transition: 1s;
   z-index: 1;
+  color: var(--textColor);
   /*position: relative;*/
 
-}
-div{
-  color: var(--textColor);
-  transition: 1s;
 }
 
 .charts{

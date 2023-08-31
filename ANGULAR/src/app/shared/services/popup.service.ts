@@ -27,6 +27,7 @@ export class PopupService {
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.rightClickMenu?.nativeElement, "display", "none")
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.createFolderOrFileMenu?.nativeElement, "display", "none")
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.shareContainer?.nativeElement, "display", "none")
+      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu?.nativeElement, "display", "none")
     }
   }
 
