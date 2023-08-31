@@ -18,6 +18,21 @@ export class HeaderService {
     this.totalVolume=0
   }
 
+  toggleUserMenu(){
+    if(this.HTMLElementsService.userMenu.nativeElement.style.display==="flex"){
+      this.hideUserMenu()
+    }else{
+      this.showUserMenu()
+    }
+  }
+
+  showUserMenu(){
+    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu.nativeElement,"display","flex")
+  }
+  hideUserMenu(){
+    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu.nativeElement,"display","none")
+  }
+
   transformTheHeaderStorageInfoForUpload(selectedFileSizeInMB:number){
     this.toggleStorageInfoHeaderOpacity(true)
     setTimeout(()=>{

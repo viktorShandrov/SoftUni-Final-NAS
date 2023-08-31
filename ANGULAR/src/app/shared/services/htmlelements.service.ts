@@ -13,6 +13,7 @@ export class HTMLElementsService {
   completionDivsRefs!: QueryList<ElementRef>;
   userIconsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
+  userMenu!: ElementRef;
   FileOrFolderDetailsAsideComponent!: ElementRef;
   divDirContainer!: ElementRef;
   usedStorageBar!: ElementRef;

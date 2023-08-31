@@ -21,6 +21,7 @@ import { UserSettingsPopupComponent } from './components/user-settings-popup/use
         HeaderComponent,
         RouterModule,
         UsedStorageComponent,
+        UserSettingsPopupComponent,
 
     ],
   imports: [

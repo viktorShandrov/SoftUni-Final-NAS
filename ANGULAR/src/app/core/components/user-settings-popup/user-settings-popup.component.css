@@ -1,0 +1,47 @@
+.BG{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(99, 99, 99, 0.7);
+
+}
+.settings-wrapper{
+  position: relative;
+  display: flex;
+  border-radius: 20px;
+  justify-content: center;
+  width: fit-content;
+  height:fit-content;
+  padding: 30px;
+  background-color: red;
+  opacity: 1;
+  gap: 20px;
+}
+.section{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+select{
+  border-radius: 10px;
+}
+.section.label-section{
+  text-align: right;
+}
+.closeBtn{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  padding: 5px;
+}
+.closeBtn:hover{
+  cursor: pointer;
+}
+
+.setting{
+  display: flex;
+  gap: 10px;
+  text-align: right;
+}

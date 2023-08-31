@@ -36,7 +36,7 @@ header .user-section i{
 }
 
 .user-profile-picture .user-menu{
-  display: flex;
+  display: none;
   flex-direction: column;
   /*gap: 10px;*/
   position: fixed;
@@ -50,6 +50,7 @@ header .user-section i{
 }
 .user-profile-picture .user-menu .option{
   padding: 7px 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
 
 }
 .user-profile-picture .user-menu .option.logout{
