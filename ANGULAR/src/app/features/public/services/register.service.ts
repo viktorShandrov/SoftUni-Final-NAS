@@ -28,7 +28,7 @@ export class RegisterService {
         const {token,rootId} = res
         if(token&&rootId){
           this.saveToLocalStorage(token,rootId)
-          this.DarkModeService.toggleDarkMode()
+          this.DarkModeService.setTheTheme()
           this.ToastrService.success("registered","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }
@@ -59,7 +59,7 @@ export class RegisterService {
           this.saveToLocalStorage(token,rootId)
 
 
-          this.DarkModeService.toggleDarkMode()
+          this.DarkModeService.setTheTheme()
           this.ToastrService.success("registered","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }

@@ -27,7 +27,7 @@ export class LoginService {
         const {token,rootId} = res
         if(token&&rootId){
           this.saveToLocalStorage(token,rootId)
-          this.DarkModeService.toggleDarkMode()
+          this.DarkModeService.setTheTheme()
           this.ToastrService.success("logged in","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }
@@ -58,7 +58,7 @@ export class LoginService {
           localStorage.setItem("token",token)
           localStorage.setItem("rootId",rootId)
 
-          this.DarkModeService.toggleDarkMode()
+          this.DarkModeService.setTheTheme()
           this.ToastrService.success("logged in","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
         }

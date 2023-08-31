@@ -1,6 +1,6 @@
 export const enviroments = {
   initialLoad: true,
-  darkMode : false,
+  theme : "light",
   currentFolder : "",
   storageViewCellStructure:true
 };

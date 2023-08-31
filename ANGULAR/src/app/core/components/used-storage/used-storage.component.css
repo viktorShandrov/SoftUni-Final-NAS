@@ -26,11 +26,12 @@ a{
 .storage-info{
   width: clamp(100px,30vw,1000px);
   height: fit-content;
-  background-color: white;
+  background-color: var(--BGcolor);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: clamp(6px,0.8vw,14px);
+  transition: 1s;
 }
 
 .storage-info .storageLeft,.storage-info .storageUsed{

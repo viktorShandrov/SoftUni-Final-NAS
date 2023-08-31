@@ -210,7 +210,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     this.completions = this.CacheService.completions;
     this.HTMLElementsService.dirDivsRefs = this.dirDivsRefs;
     this.rootId = this.UserService.rootId;
-    this.DarkModeService.toggleDarkMode()
+    this.DarkModeService.setTheTheme()
 
     this.HttpService.httpGETRequest(`api/files/${enviroments.currentFolder}/getAllParentAutorisedFolders`).subscribe(
       (folders) => {

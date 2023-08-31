@@ -10,17 +10,29 @@ export class DarkModeService {
   constructor(
     private HTMLElementsService:HTMLElementsService
   ) { }
-  toggleDarkMode(){
-    const darkMode = localStorage.getItem("darkMode")
-    if(darkMode==undefined){
-      localStorage.setItem("darkMode","false")
-    }else if(darkMode==="true"){
-      const button = document.querySelector(".lightDarkModeBtn")
-
-      this.HTMLElementsService.Renderer2.setStyle(button,"transform","translateX(100%)")
-      enviroments.darkMode = true
-      document.documentElement.classList.add("darkMode")
+  setTheTheme(){
+    const theme = localStorage.getItem("theme")
+    if(theme==undefined){
+      localStorage.setItem("theme","light")
+    }else{
+      this.changeTheme(theme!)
     }
+  }
+  changeTheme(theme:string){
+    if(theme==="light"){
+      enviroments.theme = "light"
+      this.clearDocumentThemeClasses()
+      document.documentElement.classList.add("lightTheme")
+    }else {
+      enviroments.theme = "dark"
+      this.clearDocumentThemeClasses()
+      document.documentElement.classList.add("darkTheme")
+    }
+    (document.querySelector("#theme") as HTMLSelectElement).value = theme
+    localStorage.setItem("theme",theme)
 
+  }
+  clearDocumentThemeClasses(){
+    document.documentElement.classList.forEach(el=>document.documentElement.classList.remove(el))
   }
 }

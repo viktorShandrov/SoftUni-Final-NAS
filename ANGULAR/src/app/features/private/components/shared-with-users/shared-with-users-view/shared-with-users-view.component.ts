@@ -34,7 +34,7 @@ export class SharedWithUsersViewComponent implements AfterViewInit{
             )
 
       setTimeout(()=>{
-        this.DarkModeService.toggleDarkMode()
+        this.DarkModeService.setTheTheme()
       },0)
 
 

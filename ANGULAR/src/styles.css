@@ -3,14 +3,18 @@
 
 
 :root{
-  --header-height:70px;
+
+}
+.lightTheme{
+  --searchBarBGColor: #eaeaea;
   --BGcolor:white;
   --textColor: #6d6a6a;
   --cellOnHover:#c2e7ff;
   --cellOnClick:#55beff;
   --iconColor:black;
 }
-.darkMode{
+.darkTheme{
+  --searchBarBGColor: #c8c8c8;
   --BGcolor: #272525;
   --textColor:white;
   --cellOnHover: #8dd8ff;

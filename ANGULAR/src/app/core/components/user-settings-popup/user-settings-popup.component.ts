@@ -1,5 +1,6 @@
 import {Component, ElementRef, Renderer2} from '@angular/core';
 import {UserSettingsPopupService} from "../../services/user-settings-popup.service";
+import {DarkModeService} from "../../services/dark-mode.service";
 
 @Component({
   selector: 'app-user-settings-popup',
@@ -11,6 +12,7 @@ constructor(
   private element:ElementRef,
   private Renderer2:Renderer2,
   public UserSettingsPopupService:UserSettingsPopupService,
+  public DarkModeService:DarkModeService,
 ) {
   this.UserSettingsPopupService.usersSettingsPopup = element
   this.Renderer2.setStyle(element.nativeElement,"position","absolute")

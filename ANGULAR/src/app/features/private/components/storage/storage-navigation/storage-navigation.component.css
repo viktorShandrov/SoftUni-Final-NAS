@@ -38,7 +38,7 @@
   height: 30px;
   border:none;
   /*width: 100%;*/
-  background-color: var(--BGcolor);
+  background-color: var(--searchBarBGColor);
   width: 300px;
   transition: 0.7s;
 
@@ -103,7 +103,7 @@
 .navigation .back,.navigation .sort, .navigation .toggleView{
   padding: 5px 15px;
   justify-content: center;
-  color: var(--iconColor);
+  color: black;
   transition: 0.3s;
   cursor: pointer;
   background-color: #cacaca;

@@ -7,6 +7,7 @@
     <div class="section label-section">
       <label for="font">Font</label>
       <label for="language">language</label>
+      <label for="theme">Theme</label>
 
     </div>
     <div class="section select-section">
@@ -16,6 +17,10 @@
       <select name="language" id="language">
         <option value="Bulgarian">Bulgarian</option>
         <option value="English">English</option>
+      </select>
+      <select #themeSelect (change)="DarkModeService.changeTheme(themeSelect.value)" name="theme" id="theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
       </select>
 
     </div>

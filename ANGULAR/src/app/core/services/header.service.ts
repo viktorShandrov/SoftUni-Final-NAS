@@ -59,20 +59,7 @@ export class HeaderService {
     // this.HTMLElementsService.storageUsed.nativeElement.textContent = percent + "%"
   }
 
-  toggleDarkMode(renderer:Renderer2,el:HTMLButtonElement){
-    if(enviroments.darkMode){
-      renderer.removeStyle(el,"transform")
-      enviroments.darkMode = false
-      document.documentElement.classList.remove("darkMode")
-      localStorage.setItem("darkMode","false")
-    }else{
-      renderer.setStyle(el,"transform","translateX(100%)")
-      enviroments.darkMode = true
-      document.documentElement.classList.add("darkMode")
-      localStorage.setItem("darkMode","true")
-    }
 
-  }
   transform(value: number): string {
     let measure = "GB"
     let volume = value/1000000000 //GB
