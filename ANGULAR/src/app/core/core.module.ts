@@ -6,6 +6,7 @@ import {mainInterceptor} from "./router/http.interceptor";
 import {RouterService} from "./router/router.service";
 import { UploadProgressPopupComponent } from './components/upload-progress-popup/upload-progress-popup.component';
 import { UsedStorageComponent } from './components/used-storage/used-storage.component';
+import { UserSettingsPopupComponent } from './components/user-settings-popup/user-settings-popup.component';
 
 
 
@@ -14,6 +15,7 @@ import { UsedStorageComponent } from './components/used-storage/used-storage.com
     HeaderComponent,
     UploadProgressPopupComponent,
     UsedStorageComponent,
+    UserSettingsPopupComponent,
   ],
     exports: [
         HeaderComponent,
