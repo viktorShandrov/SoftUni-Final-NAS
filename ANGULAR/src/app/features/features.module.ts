@@ -33,6 +33,7 @@ import {HttpService} from "../shared/services/http.service";
 import { NavigationTrimPipe } from './private/pipes/navigation-trim.pipe';
 import { FileOrFolderDetailsAsideComponent } from './private/components/storage/file-or-folder-details-aside/file-or-folder-details-aside.component';
 import { TrimDetailsElementNamePipe } from './private/pipes/trim-details-element-name.pipe';
+import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-name.pipe';
 
 
 
@@ -62,7 +63,8 @@ import { TrimDetailsElementNamePipe } from './private/pipes/trim-details-element
     UnauthoriseDirective,
     NavigationTrimPipe,
     FileOrFolderDetailsAsideComponent,
-    TrimDetailsElementNamePipe
+    TrimDetailsElementNamePipe,
+    TrimChartElementNamePipe
 
   ],
   imports: [
