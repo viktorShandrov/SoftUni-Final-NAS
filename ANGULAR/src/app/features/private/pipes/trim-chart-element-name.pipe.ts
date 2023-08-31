@@ -5,8 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TrimChartElementNamePipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(value:string|undefined ): string|undefined {
+    if(value){
+      if(value.length>10){
+       value = value.substring(0,10) + "..."
+      }
+    }
+      return value;
   }
 
 }
