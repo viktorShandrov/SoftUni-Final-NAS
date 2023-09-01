@@ -16,52 +16,57 @@
 
 
   <div class="charts">
-    <div class="chart top-folders-chart">
-      <h4>Folders with most elements in</h4>
-      <div class="barsWrapper">
-        <div class="bar">
-          <div class="count">{{topFolders[0]?.count}}</div>
-          <div #folderBar class="progress-bar"></div>
-          <div class="name">{{topFolders[0]?.name|trimChartElementName}}</div>
-        </div>
-        <div class="bar">
-          <div class="count">{{topFolders[1]?.count}}</div>
-          <div #folderBar class="progress-bar"></div>
-          <div class="name">{{topFolders[1]?.name|trimChartElementName}}</div>
-        </div>
-        <div class="bar">
-          <div class="count">{{topFolders[2]?.count}}</div>
-          <div #folderBar class="progress-bar"></div>
-          <div class="name">{{topFolders[2]?.name|trimChartElementName}}</div>
-        </div>
+    <div class="chart-wrapper">
+
+      <div class="chart top-folders-chart">
+        <h4>Folders with most elements in</h4>
+        <div class="barsWrapper">
+          <div class="bar">
+            <div class="count">{{topFolders[0]?.count}}</div>
+            <div #folderBar class="progress-bar"></div>
+            <div class="name">{{topFolders[0]?.name|trimChartElementName}}</div>
+          </div>
+          <div class="bar">
+            <div class="count">{{topFolders[1]?.count}}</div>
+            <div #folderBar class="progress-bar"></div>
+            <div class="name">{{topFolders[1]?.name|trimChartElementName}}</div>
+          </div>
+          <div class="bar">
+            <div class="count">{{topFolders[2]?.count}}</div>
+            <div #folderBar class="progress-bar"></div>
+            <div class="name">{{topFolders[2]?.name|trimChartElementName}}</div>
+          </div>
 
 
 
+        </div>
       </div>
     </div>
-    <div class="chart top-extensions-chart">
-      <h4>Common file extensions (includes deleted)</h4>
-      <div class="barsWrapper">
-        <div class="bar">
-          <div class="count">{{topExt[0]?.count}}</div>
-          <div #extBar class="progress-bar"></div>
-          <div class="name">{{topExt[0]?.name|trimChartElementName}}</div>
-        </div>
-        <div class="bar">
-          <div class="count">{{topExt[1]?.count}}</div>
-          <div #extBar class="progress-bar"></div>
-          <div class="name">{{topExt[1]?.name|trimChartElementName}}</div>
-        </div>
-        <div class="bar">
-          <div class="count">{{topExt[2]?.count}}</div>
-          <div #extBar class="progress-bar"></div>
-          <div class="name">{{topExt[2]?.name|trimChartElementName}}</div>
-        </div>
+    <div class="chart-wrapper">
+      <div class="chart top-extensions-chart">
+        <h4>Common file extensions (includes deleted)</h4>
+        <div class="barsWrapper">
+          <div class="bar">
+            <div class="count">{{topExt[0]?.count}}</div>
+            <div #extBar class="progress-bar"></div>
+            <div class="name">{{topExt[0]?.name|trimChartElementName}}</div>
+          </div>
+          <div class="bar">
+            <div class="count">{{topExt[1]?.count}}</div>
+            <div #extBar class="progress-bar"></div>
+            <div class="name">{{topExt[1]?.name|trimChartElementName}}</div>
+          </div>
+          <div class="bar">
+            <div class="count">{{topExt[2]?.count}}</div>
+            <div #extBar class="progress-bar"></div>
+            <div class="name">{{topExt[2]?.name|trimChartElementName}}</div>
+          </div>
 
 
 
+        </div>
       </div>
-    </div>
+      </div>
   </div>
 </div>
 

@@ -6,6 +6,11 @@
   margin-top: 20px;
   justify-content: flex-end;
 }
+.chart-wrapper{
+  padding:20px;
+  background-color: lawngreen;
+  border-radius: 40px ;
+}
 .wrapper{
   background-color: var(--BGcolor);
   display: flex;
