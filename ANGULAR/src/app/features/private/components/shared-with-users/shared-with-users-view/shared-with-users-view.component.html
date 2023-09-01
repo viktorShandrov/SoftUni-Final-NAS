@@ -1,32 +1,164 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="wrapper">
+  <app-header></app-header>
+  <div  class="tableWrapper">
+    <table>
+      <thead>
+      <tr>
+        <td class="headerName">Folder name</td>
+        <td class="headerName">User</td>
+        <td class="headerName">Actions</td>
 
-<div *ngIf="!isLoading" class="tableWrapper">
-  <table>
-    <thead>
-    <tr>
-      <td class="headerName">Folder name</td>
-      <td>User</td>
-      <td>Actions</td>
+      </tr>
+      </thead>
+      <tbody *ngIf="SharedWithService.autorisedWihtUsers">
+      <tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr><tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
+        <td class="cellName">
+          <p>{{folder.folderName}}</p>
+        </td>
+        <td class="email">
+          <p>{{folder.userEmail}}</p>
+        </td>
+        <td class="actionContainer">
+          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+        </td>
+      </tr>
 
-    </tr>
-    </thead>
-    <tbody *ngIf="SharedWithService.autorisedWihtUsers">
-    <tr *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
-      <td class="cellName">
-        <p>{{folder.folderName}}</p>
-      </td>
-      <td class="email">
-        <p>{{folder.userEmail}}</p>
-      </td>
-      <td class="actionContainer">
-        <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
-      </td>
-    </tr>
 
-
-    </tbody>
-    <p *ngIf="!SharedWithService.autorisedWihtUsers">No folders</p>
-  </table>
+      </tbody>
+      <p *ngIf="!SharedWithService.autorisedWihtUsers">No folders</p>
+    </table>
+  </div>
 </div>
 
-<app-loader *ngIf="isLoading"></app-loader>
 

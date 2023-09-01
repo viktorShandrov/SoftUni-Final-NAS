@@ -12,6 +12,7 @@
   --cellOnHover:#c2e7ff;
   --cellOnClick:#55beff;
   --iconColor:black;
+  --tableOnHoverBG:#fbfbc9;
 }
 .darkTheme{
   --searchBarBGColor: #c8c8c8;
@@ -19,7 +20,7 @@
   --textColor:white;
   --cellOnHover: #8dd8ff;
   --iconColor:white;
-
+  --tableOnHoverBG: #8b8b6d;
 }
 body{
   /*height: 100vh;*/

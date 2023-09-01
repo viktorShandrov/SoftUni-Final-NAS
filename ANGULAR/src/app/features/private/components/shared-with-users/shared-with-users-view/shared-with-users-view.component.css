@@ -1,41 +1,78 @@
-table{
-  width: 100%;
-  border-spacing: 0;
+
+.wrapper{
+  /*width: fit-content;*/
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /*overflow-y: scroll;*/
+  height: 100%;
+  background-color: var(--BGcolor);
+  transition: 1s;
+  padding: 20px 0;
+
+
 }
+
+.tableWrapper{
+  align-self: center;
+  border: 0.05cm solid var(--textColor);
+  border-radius: 30px;
+  overflow-y: scroll;
+  max-height: 500px;
+  margin-top: 20px;
+  cursor: default;
+}
+.tableWrapper::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+
 p , td{
   color: var(--textColor);
   transition: 1s;
 }
-.tableWrapper{
-  width: 100%;
-  overflow-y: auto;
-  height: 100vh;
-  background-color: var(--BGcolor);
-  transition: 1s;
+
+table{
+  margin: 0;
+  height: fit-content;
+  /*width: 100%;*/
+  border-spacing: 0;
+  border: none;
+  text-align: center;
 }
 .cellName p, .email p {
   margin-left: 15px;
 }
+.headerName{
+  padding: 15px;
+  background-color: #f8d8d8;
 
-td{
-  border: 0.01cm solid black;
-  border-color: var(--textColor);
+}
+ td{
+  /*border: 0.01cm solid black;*/
+  /*border-color: var(--textColor);*/
   transition: 1s;
 }
 tbody tr>*{
-  width: 33.3%;
+  /*width: 33.3%;*/
 }
 .actionContainer{
   /* margin: 10px   ; */
   /* display: flex; */
 }
+.row:hover{
+  background-color:var(--tableOnHoverBG);
+  transition: 0.2s;
+}
 
 .unauthoriseBtn{
   cursor: pointer;
-  margin: 10px;
-  padding: 10px 15px;
+  margin:0 10px;
+  padding: 10px 13px;
   background-color: red;
   border-radius: 10px;
-  width: 33%;
+  /*width: 33%;*/
   text-align: center;
 }
