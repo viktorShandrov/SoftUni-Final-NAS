@@ -1,7 +1,10 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    ownerId:mongoose.Types.ObjectId, 
+    ownerId:{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:"User"
+    }, 
     storageVolume:Number,
     usedStorage:Number,
     dirComponents:[
@@ -17,6 +20,16 @@ const schema = new mongoose.Schema({
         }
     ],
     autorised:Array,
+    allSharedFolders:[{
+        userId:{
+            type: mongoose.Schema.Types.ObjectId ,
+            ref:"User"
+        },
+        sharedFolderId:{
+            type: mongoose.Schema.Types.ObjectId ,
+            ref:"Folder"
+        } 
+    }],
     isPublic:Boolean
 })
 

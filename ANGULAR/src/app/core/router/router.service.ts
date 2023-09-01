@@ -27,6 +27,17 @@ export class RouterService {
 
   }
 
+  navigate(section:string,outlet:string,idOrSection:string){
+    this.router.navigate([
+      section,
+      {
+        outlets: {
+          [outlet]: idOrSection,
+        },
+      },
+    ]);
+  }
+
    detectInitialNavigation() {
 
     this.router.events.pipe(

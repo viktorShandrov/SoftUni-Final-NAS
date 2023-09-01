@@ -44,6 +44,32 @@ exports.getAuthorisedWithUsersFolder = async (rootId,ownerId) => {
     }
     return payload
 }
+exports.autorizeUserToEveryNestedFolder=async(userId,folderId,rootId)=>{
+    const root = await rootModel.findById(rootId)
+    if(root.allSharedFolders.some(sharedFolder=>sharedFolder.sharedFolderId==folderId)){
+        throw new Error("User is already autorized to this folder")
+    }else{
+        root.allSharedFolders.push({userId,sharedFolderId:folderId})
+    }
+    async function autorizeUserToFolder(userId,folderId){
+        const folder = await folderModel.findById(folderId).populate("dirComponents")
+
+        if(!folder.autorised.includes(userId)){
+            folder.autorised.push(userId)
+            await folder.save()
+        }else{
+            // delete the data for shared folder in root autorized array because we autorize from top level folder
+            const index = root.allSharedFolders.indexOf(userId)
+            root.allSharedFolders.splice(index,1)
+        }
+        for (const dir of folder.dirComponents) {
+            autorizeUserToFolder(userId,dir._id)
+        }
+    }
+    autorizeUserToFolder(userId,folderId)
+
+    await root.save()
+}
 exports.unAuthoriseUserFromFolder = async (folderId,userId,ownerId) => {
     const folder = await folderModel.findById(folderId)
     if(!folder.ownerId.equals(ownerId)){
@@ -84,7 +110,7 @@ exports.getFilesFromSharedFolder = async (folderId) => {
     return folder.fileComponents
 }
 
-exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) => {
+exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
 
 
     const folder = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")
@@ -114,7 +140,8 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId) 
         length: size,
         createdAt:Date.now(),
         fileName: onlyName,
-        rootId: rootId,
+        rootId,
+        userId
     })
 
     folder.fileComponents.push(newFile._id)
@@ -158,10 +185,12 @@ exports.createFolder = async (name, rootId, parentFolderId) => {
 }
 
 
-exports.deleteFolder = async (folderId, parentFolderId) => {
+exports.deleteFolder = async (folderId, parentFolderId,userId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
-
+    if(parentFolder.ownerId!==userId){
+        throw new Error("You are not able to delete that due to ownership issues")
+    }
     const folder = await folderModel.findById(folderId)
     folder.autorised.splice(0)
 
@@ -169,10 +198,12 @@ exports.deleteFolder = async (folderId, parentFolderId) => {
     parentFolder.save()
     folder.save()
 }
-exports.deleteFile = async (fileId, parentFolderId,rootId) => {
+exports.deleteFile = async (fileId, parentFolderId,rootId,userId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
-
+    if(!parentFolder.autorised.includes(userId)){
+        throw new Error("You are not able to delete that due to ownership issues")
+    }
     parentFolder.fileComponents.splice(parentFolder.fileComponents.findIndex(objId => objId.toString() === fileId), 1)
     parentFolder.save()
     const root = await rootModel.findById(rootId)
@@ -278,13 +309,17 @@ exports.unPublicFolder= async (folderId,userId)=>{
     return folder.save()
 }
 exports.getSharedWithMeFolders = async (userId)=>{
-    console.log('userId: ', userId);
     const folders = await folderModel.find({
         $and:[
             {autorised:{$in:[new ObjectId(userId)]}},
             {ownerId: { $ne: new ObjectId(userId) }}
         ]
     })
+    const rootsWhereUserIsAuthorized = await rootModel.find(
+        {
+            
+        }
+    )
     return folders
 }
 

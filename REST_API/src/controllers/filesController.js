@@ -8,6 +8,7 @@ const upload = multer({ storage });
 const mongoose = require('mongoose');
 const userModel = require("../models/userModel");
 const fileModel = require("../models/fileModel");
+const folderModel = require("../models/folderModel");
 
 
 
@@ -17,10 +18,11 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     const { originalname, buffer, size } = req.file;
     const { rootId, parentFolderId } = req.body;
+    const userId =req.user._id
     
     
     
-    const newFile = await fileManager.createFile(originalname, buffer, size, rootId, parentFolderId)
+    const newFile = await fileManager.createFile(originalname, buffer, size, rootId, parentFolderId,userId)
     
 
     res.status(201).json(newFile)
@@ -127,15 +129,14 @@ router.get("/:rootId/getTopFolders", async (req, res) => {
 router.post("/deleteItem", async (req, res) => {
   try {
     const {elementId,elementType, parentFolderId } = req.body
-    const {rootId}=req.user
-    if(elementType === "file"){
-      console.log("deleting file");
-      await fileManager.deleteFile(elementId,parentFolderId,rootId)
-    }else if(elementType === "directory"){
-      console.log("deleting dolder");
-      await fileManager.deleteFolder(elementId, parentFolderId)
-    }
-    res.end()
+    const {rootId,_id}=req.user
+
+      if(elementType === "file"){
+        await fileManager.deleteFile(elementId,parentFolderId,rootId,_id)
+      }else if(elementType === "directory"){
+        await fileManager.deleteFolder(elementId, parentFolderId,_id)
+      }
+    res.status(200).end()
   } catch (error) {
 
     res.status(400).json({message:error.message})
@@ -185,6 +186,7 @@ router.get("/getAuthorisedWithUsersFolder",isAuth, async (req, res) => {
     res.status(400).json({message:error.message})
   }
 })
+
 router.post("/unAuthoriseUserFromFolder",isAuth, async (req, res) => {
   try {
 
@@ -230,11 +232,19 @@ router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
 })
 router.post("/:folderId/autoriseUserToFolder", async (req, res) => {
   try {
-    const {email} = req.body
-    const folderId = req.params.folderId
-    await fileManager.autoriseUserToFolder(folderId,email)
+    const {_id,rootId} = req.user
+    const {folderId} = req.params
+    const user = await userModel.findById(_id)
+    const folder = await folderModel.findById(folderId)
+
+    if(user._id.toString()==folder.ownerId.toString()){
+      await fileManager.autorizeUserToEveryNestedFolder(_id,folderId,rootId)
+    }else{
+      throw new Error("You are not able to share this folder due to ownership issues")
+    }
     res.status(200).end()
   } catch (error) {
+    console.log(error);
     res.status(400).json({message:error.message})
   }
 })

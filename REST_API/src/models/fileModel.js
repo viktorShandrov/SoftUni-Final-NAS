@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
+    ownderId:{
+        type:mongoose.Types.ObjectId,
+        ref: "User"
+    },
     rootId:{
         type:mongoose.Types.ObjectId,
         ref: "Root"

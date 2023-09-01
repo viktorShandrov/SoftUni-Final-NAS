@@ -12,6 +12,8 @@ import {HTMLElementsService} from "../../../shared/services/htmlelements.service
 import {CacheService} from "../../../shared/services/cache.service";
 import {StorageService} from "../services/storage.service";
 import {PopupService} from "../../../shared/services/popup.service";
+import {readableStreamLikeToAsyncGenerator} from "rxjs/internal/util/isReadableStreamLike";
+import {RouterService} from "../../../core/router/router.service";
 
 
 @Directive({
@@ -26,6 +28,7 @@ export class DoubleClickDirective {
     private CacheService: CacheService,
     private StorageService: StorageService,
     private PopupService: PopupService,
+    private RouterService: RouterService,
 
     private HTMLElementsService: HTMLElementsService,
     private renderer: Renderer2
@@ -37,88 +40,79 @@ export class DoubleClickDirective {
     this.clicks++;
     const element = event.target as HTMLElement;
 
-    let parentElement = element.parentElement as HTMLElement;
+    const mainParentElement = element.closest(".cell") as HTMLElement;
 
-    const parentParentElement = (element.parentElement as HTMLElement)
-      .parentElement as HTMLElement;
+
     if (this.clicks === 1) {
       setTimeout(() => {
         this.clicks = 0;
       }, this.DOUBLE_CLICK_THRESHOLD);
 
-      this.PopupService.hideAllOtherMenus()
-      this.StorageService.hideAllOverflowingCellText(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
 
-      if(parentParentElement.classList.contains("cell")) {
-        this.StorageService.showOverflowingCellText(parentParentElement)
-      }else if(parentElement.classList.contains("cell")){
-        this.StorageService.showOverflowingCellText(parentElement)
-      }
-      parentElement.addEventListener("contextmenu",(e)=>{
-        e.preventDefault()
-        const x = e.clientX
-        const y = e.clientY
-        let elementType
-        let id
-        if(parentElement.classList.contains("directory")){
-          elementType = "directory"
-          id =parentElement.getAttribute("_id")!
-        }else if(parentElement.classList.contains("file")){
-          elementType = "file"
-          id =parentElement.getAttribute("_id")!
-        }else if(parentElement.parentElement!.classList.contains("directory")){
-          elementType = "directory"
-          id =parentElement.parentElement!.getAttribute("_id")!
-        }else if(parentElement.parentElement!.classList.contains("file")){
-          elementType = "file"
-          id =parentElement.parentElement!.getAttribute("_id")!
+
+
+      if(mainParentElement){
+        this.StorageService.showOverflowingCellText(mainParentElement)
+        if(!mainParentElement.classList.contains("sharedWithMe")){
+          this.PopupService.hideAllOtherMenus()
+          this.StorageService.hideAllOverflowingCellText(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
+          mainParentElement.addEventListener("contextmenu",(e)=>{
+              e.preventDefault()
+              const x = e.clientX
+              const y = e.clientY
+              let elementType
+              let id
+              if(mainParentElement.classList.contains("directory")){
+                elementType = "directory"
+                id = mainParentElement.getAttribute("_id")!
+              }else if(mainParentElement.classList.contains("file")) {
+                elementType = "file"
+                id = mainParentElement.getAttribute("_id")!
+              }
+
+              this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
+              this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
+              this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")
+              this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"top",y+"px")
+              this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"left",x+"px")
+            })
         }
-
-        this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
-        this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
-        this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")
-        this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"top",y+"px")
-        this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"left",x+"px")
-      })
+      }
 
     } else if (this.clicks === 2) {
-      if(parentElement.classList.value===""){
-        parentElement = parentParentElement
-      }
+      if(mainParentElement){
 
-      if (parentElement.classList.contains('directory')||parentParentElement.classList.contains('directory')) {
-        if (!parentParentElement.classList.contains('storage')&&parentParentElement.classList.value!==""||parentParentElement.classList.contains("table-view-container")) {
-          this.StorageService.addDirDiv(parentParentElement.textContent as string,parentElement.getAttribute('_id') as string)
-          setTimeout(()=>{
-            const divDir =
-              this.HTMLElementsService.dirDivsRefs.last ||
-              this.HTMLElementsService.dirDivsRefs.first;
-            if (divDir) {
-              const index = this.HTMLElementsService.dirDivsRefs.toArray().indexOf(divDir)
-              this.StorageService.addEventListenerToDivDir(
-                divDir,
-                index,
-                this.CacheService.dirs,
-                this.renderer,
-                this.router
-              );
-            }
+        if (mainParentElement.classList.contains('directory')) {
+          if(!mainParentElement.classList.contains("sharedWithMe")){
+            this.StorageService.addDirDiv(mainParentElement.textContent as string,mainParentElement.getAttribute('_id') as string)
 
-          },0)
-          const id = parentElement.getAttribute('_id')||parentParentElement.getAttribute('_id')
-          this.router.navigate([
-            'storage',
-            {
-              outlets: {
-                'storage-outlet': id,
-              },
-            },
-          ]);
+
+            setTimeout(()=>{
+              const divDir =
+                this.HTMLElementsService.dirDivsRefs.last ||
+                this.HTMLElementsService.dirDivsRefs.first;
+              if (divDir) {
+                const index = this.HTMLElementsService.dirDivsRefs.toArray().indexOf(divDir)
+                this.StorageService.addEventListenerToDivDir(
+                  divDir,
+                  index,
+                  this.CacheService.dirs,
+                  this.renderer,
+                  this.router
+                );
+              }
+
+            },0)
+          }
+
+            const id = mainParentElement.getAttribute('_id')
+            this.RouterService.navigate("storage","storage-outlet",id!)
+
+        } else if (mainParentElement.classList.contains('file')) {
+          this.StorageService.getFileDownload(mainParentElement.getAttribute("_id") as string)
         }
-      } else if (parentElement.classList.contains('file')) {
-
-        this.StorageService.getFileDownload(parentElement.getAttribute("_id") as string)
       }
+
     }
   }
 }

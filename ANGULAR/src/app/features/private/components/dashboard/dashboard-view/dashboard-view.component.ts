@@ -12,6 +12,7 @@ import {DashboardService} from "../../../services/dashboard.service";
 import {topExtI,topFolders} from "../../../../../shared/types";
 import {DarkModeService} from "../../../../../core/services/dark-mode.service";
 import {HTMLElementsService} from "../../../../../shared/services/htmlelements.service";
+import {HeaderService} from "../../../../../core/services/header.service";
 
 
 
@@ -25,6 +26,7 @@ import {HTMLElementsService} from "../../../../../shared/services/htmlelements.s
 export class DashboardViewComponent implements AfterViewInit{
   @ViewChildren('extBar') extQ!: QueryList<ElementRef>;
   @ViewChildren('folderBar') foldersQ!: QueryList<ElementRef>;
+  @ViewChild('dashboardStorageProgressBar') dashboardStorageProgressBar!: ElementRef;
   storageVolume: number = 0;
   usedStorage: string = "0 MB";
   storageLeft: number = 0;
@@ -61,6 +63,7 @@ export class DashboardViewComponent implements AfterViewInit{
   constructor(
     private Renderer2: Renderer2,
     private DashboardService: DashboardService,
+    public HeaderService: HeaderService,
     private HTMLElementsService: HTMLElementsService,
     private DarkModeService: DarkModeService,
     private StorageService: StorageService,
@@ -78,7 +81,7 @@ export class DashboardViewComponent implements AfterViewInit{
     return `${volume.toFixed(2)}${mesure}`
   }
   ngAfterViewInit() {
-
+    this.HTMLElementsService.dashboardStorageProgressBar = this.dashboardStorageProgressBar
         setTimeout(async ()=>{
 
         this.isLoading = true

@@ -14,6 +14,7 @@ export class HTMLElementsService {
   userIconsRefs!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
   userMenu!: ElementRef;
+  dashboardStorageProgressBar!: ElementRef;
   FileOrFolderDetailsAsideComponent!: ElementRef;
   divDirContainer!: ElementRef;
   usedStorageBar!: ElementRef;

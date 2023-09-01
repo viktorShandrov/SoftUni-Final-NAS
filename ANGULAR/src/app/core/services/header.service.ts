@@ -10,6 +10,7 @@ export class HeaderService {
 
   usedStorage!:number
   totalVolume!:number
+  usedStoragePercentage!:number
   isLoading!:Boolean
   constructor(
     private HTMLElementsService:HTMLElementsService
@@ -82,6 +83,7 @@ export class HeaderService {
     this.usedStorage=usedStorage
     this.totalVolume=totalVolume-usedStorage
     let usedPercentage = (usedStorage / totalVolume) * 100;
+    this.usedStoragePercentage = usedPercentage
     if(usedPercentage<3){
       usedPercentage=3
     }
