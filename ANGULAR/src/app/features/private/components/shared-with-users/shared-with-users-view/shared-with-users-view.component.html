@@ -11,7 +11,7 @@
 
       </tr>
       </thead>
-      <tbody *ngIf="SharedWithService.autorisedWihtUsers">
+      <tbody *ngIf="SharedWithService.autorisedWihtUsers&&SharedWithService.autorisedWihtUsers.length > 0">
       <tr class="row" *ngFor="let folder of SharedWithService.autorisedWihtUsers" [attr.folderId]="folder.folderId" [attr.userId]="folder.userId">
         <td class="cellName">
           <p>{{folder.folderName}}</p>
@@ -20,13 +20,13 @@
           <p>{{folder.userEmail}}</p>
         </td>
         <td class="actionContainer">
-          <p appUnauthorise class="unauthoriseBtn">Unauthorise</p>
+          <p appUnauthorise class="unauthoriseBtn">Unauthorize</p>
         </td>
       </tr>
 
 
       </tbody>
-      <p *ngIf="!SharedWithService.autorisedWihtUsers">No folders</p>
+      <p id="noFoldersP" *ngIf="!SharedWithService.autorisedWihtUsers || SharedWithService.autorisedWihtUsers.length === 0">No folders</p>
     </table>
   </div>
 </div>

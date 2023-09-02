@@ -53,6 +53,7 @@
 
 .aside .elements .asideElement:hover , .aside .upgardeButton:hover{
   background-color: #6197E8;
+  color: white;
   transition: 0.3s;
 }
 .aside .wrapper{
