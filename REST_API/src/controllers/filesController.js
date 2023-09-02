@@ -190,10 +190,17 @@ router.get("/getAuthorisedWithUsersFolder",isAuth, async (req, res) => {
 router.post("/unAuthoriseUserFromFolder",isAuth, async (req, res) => {
   try {
 
-    const {_id} = req.user
+    const {_id,rootId} = req.user
     const {folderId,userId} = req.body
-    await fileManager.unAuthoriseUserFromFolder(folderId,userId,_id)
-    res.status(200).json({status:"ok"})
+    const folder = await folderModel.findById(folderId)
+    if(!folder) throw new Error("No such folder")
+    
+    if(_id.toString()==folder.ownerId.toString()){
+      await fileManager.unAuthoriseUserFromFolder(rootId,userId,folderId)
+    }else{
+      throw new Error("You are not able to unshare this folder due to ownership issues")
+    }
+    res.status(200).end()
   } catch (error) {
     console.log('error: ', error);
     res.status(400).json({message:error.message})
@@ -234,14 +241,19 @@ router.post("/:folderId/autoriseUserToFolder", async (req, res) => {
   try {
     const {_id,rootId} = req.user
     const {folderId} = req.params
-    const user = await userModel.findById(_id)
+    const {email} = req.body
+    const user = await userModel.findOne({email})
+    if(!user){
+      throw new Error("No such user")
+    }
     const folder = await folderModel.findById(folderId)
 
-    if(user._id.toString()==folder.ownerId.toString()){
-      await fileManager.autorizeUserToEveryNestedFolder(_id,folderId,rootId)
+    if(_id.toString()==folder.ownerId.toString()){
+      await fileManager.autorizeUserToEveryNestedFolder(user._id,folderId,rootId)
     }else{
       throw new Error("You are not able to share this folder due to ownership issues")
     }
+
     res.status(200).end()
   } catch (error) {
     console.log(error);

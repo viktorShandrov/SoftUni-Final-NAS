@@ -46,7 +46,7 @@ exports.getAuthorisedWithUsersFolder = async (rootId,ownerId) => {
 }
 exports.autorizeUserToEveryNestedFolder=async(userId,folderId,rootId)=>{
     const root = await rootModel.findById(rootId)
-    if(root.allSharedFolders.some(sharedFolder=>sharedFolder.sharedFolderId==folderId)){
+    if(root.allSharedFolders.some(sharedFolder=>sharedFolder.userId==userId)){
         throw new Error("User is already autorized to this folder")
     }else{
         root.allSharedFolders.push({userId,sharedFolderId:folderId})
@@ -70,19 +70,34 @@ exports.autorizeUserToEveryNestedFolder=async(userId,folderId,rootId)=>{
 
     await root.save()
 }
-exports.unAuthoriseUserFromFolder = async (folderId,userId,ownerId) => {
-    const folder = await folderModel.findById(folderId)
-    if(!folder.ownerId.equals(ownerId)){
-        throw new Error("You are not the owner")
+exports.unAuthoriseUserFromFolder = async (rootId,userId,folderId) => {
+    const root = await rootModel.findById(rootId)
+    if(!root) throw new Error("No such root")
+    const folder = root.allSharedFolders.find((folder)=>folder.userId==userId&&folder.sharedFolderId==folderId)
+    const index =  root.allSharedFolders.indexOf(folder)
+    if(index<0) throw new Error("No such folder") 
+    
+    root.allSharedFolders.splice(index,1)
+    async function unAutorizeUserToFolder(userId,folderId){
+        const folder = await folderModel.findById(folderId).populate("dirComponents")
+
+        if(folder.autorised.includes(userId)){
+            const index= folder.autorised.findIndex((user_id)=>user_id==userId)
+            folder.autorised.splice(index,1)
+            await folder.save()
+        }
+        for (const dir of folder.dirComponents) {
+            unAutorizeUserToFolder(userId,dir._id)
+        }
     }
-    const index = folder.autorised.indexOf(userId)
-    if(index>-1){
-        folder.autorised.splice(index,1)
-        await folder.save()
-    }else{
-        throw new Error("No such shared user")
-    }
+    unAutorizeUserToFolder(userId,folderId)
+
+    await root.save()
+
 }
+
+
+
 exports.getDetails =async (id,elementType)=>{
     if(elementType==="file"){
         return fileModel.findById(id)
@@ -105,10 +120,10 @@ exports.getFolder = async (id,userId) => {
 
 
 }
-exports.getFilesFromSharedFolder = async (folderId) => {
-    const folder = await folderModel.findById(folderId).populate("fileComponents") 
-    return folder.fileComponents
-}
+// exports.getFilesFromSharedFolder = async (folderId) => {
+//     const folder = await folderModel.findById(folderId).populate("fileComponents") 
+//     return folder.fileComponents
+// }
 
 exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
 
@@ -277,21 +292,21 @@ exports.getTopFolders=async(rootId,userId)=>{
     return payload
 }
 
-exports.autoriseUserToFolder = async (folderId,email)=>{
-    const user = await userModel.findOne({email})
-    if(!user){
-        throw new Error("No such user")
-    }
-    const userId = user._id
-    const folder = await folderModel.findById(folderId)
-    if(!folder.autorised.includes(userId)){
-        folder.autorised.push(userId)
-    }else{
-        throw new Error("User is already autorised")
-    }
-    await folder.save()
+// exports.autoriseUserToFolder = async (folderId,email)=>{
+//     const user = await userModel.findOne({email})
+//     if(!user){
+//         throw new Error("No such user")
+//     }
+//     const userId = user._id
+//     const folder = await folderModel.findById(folderId)
+//     if(!folder.autorised.includes(userId)){
+//         folder.autorised.push(userId)
+//     }else{
+//         throw new Error("User is already autorised")
+//     }
+//     await folder.save()
 
-}
+// }
 exports.makeFolderPublic= async (folderId,userId)=>{
     const folder = await folderModel.findById(folderId)
     if(!folder.autorised.includes(userId)){
@@ -309,18 +324,32 @@ exports.unPublicFolder= async (folderId,userId)=>{
     return folder.save()
 }
 exports.getSharedWithMeFolders = async (userId)=>{
-    const folders = await folderModel.find({
-        $and:[
-            {autorised:{$in:[new ObjectId(userId)]}},
-            {ownerId: { $ne: new ObjectId(userId) }}
-        ]
-    })
-    const rootsWhereUserIsAuthorized = await rootModel.find(
+
+    const user = await userModel.findById(userId)
+    if(!user) throw new Error("No such user")
+    const rootsWhereUserHaveAuthorizedFolders = await rootModel.find(
         {
-            
+            allSharedFolders: {
+                $elemMatch: { userId: user._id }
+            }
         }
     )
-    return folders
+    const allSharedWithMeFoldersIDs = []    
+    for (const root of rootsWhereUserHaveAuthorizedFolders) {
+        const {allSharedFolders} = root
+        allSharedFolders.filter(folder=>folder.userId==userId)
+        for (const folder of allSharedFolders) {
+            allSharedWithMeFoldersIDs.push(folder.sharedFolderId)
+        }
+    }
+
+    const allSharedFoldersArr = await folderModel.find({
+        _id: { $in: allSharedWithMeFoldersIDs }
+    });
+    
+
+    const trimedData = allSharedFoldersArr.map((folder)=>{return {_id:folder._id,name:folder.name}})
+    return allSharedFoldersArr
 }
 
 
