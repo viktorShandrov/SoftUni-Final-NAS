@@ -31,17 +31,20 @@ exports.checkIfFileNameAlreadyExists = async (parentFolderId,name) => {
 
 
 exports.getAuthorisedWithUsersFolder = async (rootId,ownerId) => {
-   const folders = await folderModel.find({rootId}).populate("autorised");
+   const root = await rootModel.findById(rootId).populate("allSharedFolders.userId").populate("allSharedFolders.sharedFolderId");
+const payload = []
+    for (const {userId,sharedFolderId} of root.allSharedFolders) {
+        console.log('sharedFolderId: ', sharedFolderId);
+        console.log('userId: ', userId);
 
-    const filtered =  folders.filter((folder)=>folder.autorised.some((user) => user._id.equals(ownerId)&&folder.autorised.length>1))
-    const payload=[]
-    for (const folder of filtered) {
-        for (const user of folder.autorised) {
-            if(!user._id.equals(ownerId)){
-                payload.push({folderId:folder._id,userEmail:user.email,folderName:folder.name,userId:user._id})
-            }
-        }
+        payload.push({
+            folderId:sharedFolderId._id,
+            userEmail:userId.email,
+            folderName:sharedFolderId.name,
+            userId:userId._id
+        })
     }
+
     return payload
 }
 exports.autorizeUserToEveryNestedFolder=async(userId,folderId,rootId)=>{
