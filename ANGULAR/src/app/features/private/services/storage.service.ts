@@ -67,22 +67,23 @@ export class StorageService {
       );
   }
 
-  getFileDownload(fileId: string) {
+  getElementDownload(elementId: string, isFile:boolean) {
     const options = {
       headers: new HttpHeaders(),
       responseType: 'blob' as 'json',
     };
-    this.HttpService.httpGETRequest(`api/files/${fileId}/getFileInfo`).subscribe(
-      (file: any) => {
-      this.HttpService.httpGETRequest(`api/files/${fileId}/download`,options).subscribe(
+    this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/getElementInfo`).subscribe(
+      (element: any) => {
+        console.log(element)
+      this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/download`,options).subscribe(
         (response: any) => {
           const blob = new Blob([response], {
-            type: 'application/octet-stream',
+            type: `application/${isFile?"octet-stream":"zip"}`,
           });
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          link.download = `${file.fileName}.${file.type}`;
+          link.download = `${isFile?element.fileName:element.name}.${isFile?element.type:"zip"}`;
           link.click();
           window.URL.revokeObjectURL(url);
         },

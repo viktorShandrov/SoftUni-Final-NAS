@@ -30,30 +30,30 @@ export class SharedFolderDoubleClickDirective {
   }
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
-    console.log(3);
-
-    this.clicks++;
-    const element = event.target as HTMLElement;
-
-    const parentElement = element.parentElement as HTMLElement;
-
-    const parentParentElement = (element.parentElement as HTMLElement)
-      .parentElement as HTMLElement;
-    if (this.clicks === 1) {
-      setTimeout(() => {
-        this.clicks = 0;
-      }, this.DOUBLE_CLICK_THRESHOLD);
-
-      // this.PopupService.hideAllOtherMenus()
-
-    } else if (this.clicks === 2) {
-      if (parentElement.classList.contains('directory')) {
-        this.router.navigate(['/storage', { outlets: { 'storage-outlet': `shared-with-me/${parentElement.getAttribute('_id')!}` } }])
-
-      }else if (parentElement.classList.contains('file')) {
-
-        this.StorageService.getFileDownload(parentElement.getAttribute("_id") as string)
-      }
-    }
+    // console.log(3);
+    //
+    // this.clicks++;
+    // const element = event.target as HTMLElement;
+    //
+    // const parentElement = element.parentElement as HTMLElement;
+    //
+    // const parentParentElement = (element.parentElement as HTMLElement)
+    //   .parentElement as HTMLElement;
+    // if (this.clicks === 1) {
+    //   setTimeout(() => {
+    //     this.clicks = 0;
+    //   }, this.DOUBLE_CLICK_THRESHOLD);
+    //
+    //   // this.PopupService.hideAllOtherMenus()
+    //
+    // } else if (this.clicks === 2) {
+    //   if (parentElement.classList.contains('directory')) {
+    //     this.router.navigate(['/storage', { outlets: { 'storage-outlet': `shared-with-me/${parentElement.getAttribute('_id')!}` } }])
+    //
+    //   }else if (parentElement.classList.contains('file')) {
+    //
+    //     this.StorageService.getElementDownload(parentElement.getAttribute("_id") as string)
+    //   }
+    // }
   }
 }

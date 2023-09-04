@@ -16,6 +16,9 @@ exports.createRoot = async (ownerId) => {
 exports.getFileInfo = (fileId) => {
     return fileModel.findById(fileId)
 }
+exports.getFolderInfo = (folderId) => {
+    return folderModel.findById(folderId)
+}
 exports.checkIfFileNameAlreadyExists = async (parentFolderId,name) => {
     console.log('name1: ', name);
     const file = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")

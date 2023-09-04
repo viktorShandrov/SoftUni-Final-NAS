@@ -109,7 +109,7 @@ export class DoubleClickDirective {
             this.RouterService.navigate("storage","storage-outlet",id!)
 
         } else if (mainParentElement.classList.contains('file')) {
-          this.StorageService.getFileDownload(mainParentElement.getAttribute("_id") as string)
+          this.StorageService.getElementDownload(mainParentElement.getAttribute("_id") as string,true)
         }
       }
 

@@ -8,6 +8,9 @@
   <div #option  (click)="StorageService.getDetails(menu)" class="option">
     <p>Details</p>
   </div>
+  <div #option *ngIf="menu.getAttribute('element-type')=='directory'" (click)="StorageService.getElementDownload(menu.getAttribute('element-id')!,false)" class="option">
+    <p>Download</p>
+  </div>
   <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&!selectedFolder?.isPublic"  class="option">
     <p  (click)="makeFolderPublic()">Make public</p>
   </div>

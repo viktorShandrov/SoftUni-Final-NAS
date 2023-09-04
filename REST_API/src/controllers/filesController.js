@@ -32,12 +32,18 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     res.status(400).json({message:error.message})
   }
 });
-router.get('/:id/getFileInfo', async (req, res) => {
+router.get('/:id/:elementType/getElementInfo', async (req, res) => {
   try {
-    const id = req.params.id
-    const fileInfo = await fileManager.getFileInfo(id)
-    res.send(JSON.stringify(fileInfo))
+    const {id,elementType} = req.params
+    let info
+    if(elementType=="file"){
+       info = await fileManager.getFileInfo(id)
+    }else{
+       info = await fileManager.getFolderInfo(id)
+    }
+    res.status(200).json(info)
   } catch (error) {
+    console.log('error: ', error);
 
     res.status(400).json({message:"No such file"})
   }
@@ -60,12 +66,11 @@ router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, re
 
 
 
-router.get("/:id/download", isAuth, async (req, res) => {
+router.get("/:id/:elementType/download", isAuth, async (req, res) => {
   try {
-    let {id,type} = req.params;
-     type = "folder"
-     console.log('type: ', type);
-    if(type==="file"){
+    let {id,elementType} = req.params;
+
+    if(elementType==="file"){
 
       
       const fileFromDB = await fileModel.findById(id)
@@ -82,9 +87,8 @@ router.get("/:id/download", isAuth, async (req, res) => {
       
       downloadStream.pipe(res);
   }else{
-    const folder = await folderModel.findById("64d37d84a335d8ecc7c7f0a4")
+    const folder = await folderModel.findById(id)
     const folderName = folder.name
-    console.log('folderName: ', folderName);
     const zip = archiver('zip', {
       zlib: { level: 9 }, 
     });
@@ -105,7 +109,7 @@ router.get("/:id/download", isAuth, async (req, res) => {
       });
       const downloadStream = gridFile.openDownloadStream(file.fileChunks);
       
-      zip.append(downloadStream, { name: file.fileName }); 
+      zip.append(downloadStream, { name: `${file.fileName}.${file.type}` }); 
   
 
     }
