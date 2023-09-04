@@ -1,14 +1,15 @@
 const router = require("express").Router()
 const { isAuth, auth } = require("../utils/authentication");
 const fileManager = require("../managers/filesManager");
+const userModel = require("../models/userModel");
+const fileModel = require("../models/fileModel");
+const folderModel = require("../models/folderModel");
 
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
+const archiver = require('archiver');
 const mongoose = require('mongoose');
-const userModel = require("../models/userModel");
-const fileModel = require("../models/fileModel");
-const folderModel = require("../models/folderModel");
 
 
 
@@ -61,22 +62,59 @@ router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, re
 
 router.get("/:id/download", isAuth, async (req, res) => {
   try {
-    const id = req.params.id;
-    const fileFromDB = await fileModel.findById(id)
-    const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-      bucketName: 'files'
+    let {id,type} = req.params;
+     type = "folder"
+     console.log('type: ', type);
+    if(type==="file"){
+
+      
+      const fileFromDB = await fileModel.findById(id)
+      const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+        bucketName: 'files'
+      });
+      
+      const downloadStream = gridFile.openDownloadStream(fileFromDB.fileChunks);
+      
+      res.set({
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${fileFromDB.fileName}.${fileFromDB.type}"`
+      });
+      
+      downloadStream.pipe(res);
+  }else{
+    const folder = await folderModel.findById("64d37d84a335d8ecc7c7f0a4")
+    const folderName = folder.name
+    console.log('folderName: ', folderName);
+    const zip = archiver('zip', {
+      zlib: { level: 9 }, 
     });
-    
-    const downloadStream = gridFile.openDownloadStream(fileFromDB.fileChunks);
-    
+
+
     res.set({
-      'Content-Type': 'application/octet-stream',
-      'Content-Disposition': `attachment; filename="${fileFromDB.fileName}.${fileFromDB.type}"`
+      'Content-Type': 'application/x-rar-compressed',
+      'Content-Disposition': `attachment; filename="${folderName}.zip"`
     });
-    
-    downloadStream.pipe(res);
+
+    zip.pipe(res)
+
+    for (const fileId of folder.fileComponents) {
+      const file = await fileModel.findById(fileId)
+
+      const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+        bucketName: 'files'
+      });
+      const downloadStream = gridFile.openDownloadStream(file.fileChunks);
+      
+      zip.append(downloadStream, { name: file.fileName }); 
+  
+
+    }
+    zip.finalize();
+
+  }
     
   } catch (error) {
+    console.log('error: ', error);
     res.status(400).json({message:error.message})
   }
 })
