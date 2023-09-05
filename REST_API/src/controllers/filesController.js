@@ -87,32 +87,40 @@ router.get("/:id/:elementType/download", isAuth, async (req, res) => {
       
       downloadStream.pipe(res);
   }else{
-    const folder = await folderModel.findById(id)
-    const folderName = folder.name
+    // const folderName = folder.name
     const zip = archiver('zip', {
       zlib: { level: 9 }, 
     });
-
-
+    
+    
     res.set({
-      'Content-Type': 'application/x-rar-compressed',
-      'Content-Disposition': `attachment; filename="${folderName}.zip"`
+      'Content-Type': 'application/zip',
+      'Content-Disposition': `attachment; filename="zip.zip"`
     });
 
     zip.pipe(res)
 
-    for (const fileId of folder.fileComponents) {
-      const file = await fileModel.findById(fileId)
-
-      const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-        bucketName: 'files'
-      });
-      const downloadStream = gridFile.openDownloadStream(file.fileChunks);
+   async function populateFolder(folderTreeNames,folderId){
+     const folder = await folderModel.findById(folderId)
+    const updatedFolderTreeNames=[...folderTreeNames,folder.name]
+     const filePath = updatedFolderTreeNames.join("/")
+      zip.append(Buffer.alloc(0), { name:`${filePath}/` });
+     for (const fileId of folder.fileComponents) {
+       const file = await fileModel.findById(fileId)
+       
+       const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+         bucketName: 'files'
+        });
+        const downloadStream = gridFile.openDownloadStream(file.fileChunks);
+        
+        zip.append(downloadStream, { name: `${filePath}/${file.fileName}.${file.type}` }); 
+      }
+      for (const nestedFolder of folder.dirComponents) {
+        await populateFolder(updatedFolderTreeNames,nestedFolder._id)
+      }
       
-      zip.append(downloadStream, { name: `${file.fileName}.${file.type}` }); 
-  
-
     }
+    await populateFolder([],id)
     zip.finalize();
 
   }
