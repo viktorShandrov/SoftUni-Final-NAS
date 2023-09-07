@@ -181,6 +181,7 @@ router.post("/deleteItem", async (req, res) => {
     const {elementId,elementType, parentFolderId } = req.body
     const {rootId,_id}=req.user
 
+
       if(elementType === "file"){
         await fileManager.deleteFile(elementId,parentFolderId,rootId,_id)
       }else if(elementType === "directory"){

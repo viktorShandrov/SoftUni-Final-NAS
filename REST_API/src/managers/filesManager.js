@@ -209,7 +209,8 @@ exports.createFolder = async (name, rootId, parentFolderId) => {
 exports.deleteFolder = async (folderId, parentFolderId,userId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
-    if(parentFolder.ownerId!==userId){
+
+    if(!parentFolder.ownerId.equals(userId)){
         throw new Error("You are not able to delete that due to ownership issues")
     }
     const folder = await folderModel.findById(folderId)
