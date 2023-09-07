@@ -190,7 +190,6 @@ export class StorageService {
 
   deleteItem(menu: HTMLDivElement, renderer: Renderer2) {
     const elementId = menu.getAttribute('element-id');
-    console.log(elementId)
     const elementType= menu.getAttribute('element-type')
     const payload = {
       elementId,
@@ -204,6 +203,10 @@ export class StorageService {
         if(elementType==="directory"){
           const indexInFoldersCache = this.CacheService.folders.findIndex((el) => el._id == elementId)
           const indexInCompletionCache = this.CacheService.completions.findIndex((el) => el._id == elementId)
+          console.log(this.HTMLElementsService.foldersQL.toArray()[indexInFoldersCache].nativeElement)
+          console.log(this.CacheService.cellCrossMarkLength);
+          const crossMark = this.HTMLElementsService.foldersQL.toArray()[indexInFoldersCache].nativeElement.querySelector(".crossMark")
+          this.HTMLElementsService.Renderer2.setStyle(crossMark,"width",this.CacheService.cellCrossMarkLength+"px")
           this.CacheService.folders[indexInFoldersCache].isDisappearing = true
           this.CacheService.completions.splice(indexInCompletionCache,1)
 

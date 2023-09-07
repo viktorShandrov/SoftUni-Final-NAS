@@ -5,6 +5,8 @@ import {
   QueryList,
   ElementRef,
   Renderer2,
+  ViewChild,
+  HostBinding,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,8 +28,8 @@ import {UserService} from "../../../../../core/services/user.service";
   styleUrls: ['./storage-content.component.css'],
   animations:[
     trigger("crossMarkAnim",[
-      state("out",style({width:'0px'})),
-      state("in",style({width:'160px'})),
+      // state("out",style({width:'0px'})),
+      // state("in",style({width: '{{cellCrossMarkLength}}px'}),{params: {cellCrossMarkLength: '0'}}),
       transition("out => in",animate(400 ))
     ]),
     trigger("cellDisappear",[
@@ -61,6 +63,7 @@ export class StorageContentComponent implements AfterViewInit {
   folders!: folder[];
   files!: file[];
   haveFolder: Boolean = false;
+  cellCrossMarkLength:Number = 0
 
   enviroments!:any
   isLoading:boolean=true
@@ -68,7 +71,7 @@ export class StorageContentComponent implements AfterViewInit {
 
   fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
 
-
+  @ViewChildren("imageContainer") imageContainers!:QueryList<ElementRef>
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
   @ViewChildren('fileElement') filesRef!: QueryList<ElementRef>;
 
@@ -123,6 +126,25 @@ export class StorageContentComponent implements AfterViewInit {
         this.isLoadingSet(true)
       }
     });
+
+    setTimeout(()=>{
+      for (let imageContainer of this.imageContainers) {
+        const crossMark = imageContainer.nativeElement.querySelector(".crossMark")
+        const rect = imageContainer.nativeElement.getBoundingClientRect();
+
+        // Calculate the diagonal length using the Pythagorean theorem
+        this.CacheService.cellCrossMarkLength = Math.sqrt(Math.pow(rect.width, 2) + Math.pow(rect.height, 2));
+        console.log(this.CacheService.cellCrossMarkLength);
+
+
+        // Calculate the diagonal angle in degrees using trigonometry
+        const diagonalAngleRad = Math.atan2(rect.height, rect.width);
+        const diagonalAngleDeg = diagonalAngleRad * (180 / Math.PI);
+
+        this.HTMLElementsService.Renderer2.setStyle(crossMark,"transform",`rotate(${diagonalAngleDeg}deg)`)
+      }
+
+    },200)
   }
 
   getData(dirId: String) {

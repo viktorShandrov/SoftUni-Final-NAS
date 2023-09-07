@@ -35,14 +35,18 @@
 
 
 .storage .cell{
-  width: clamp(100px,8vw,150px);
-  height: clamp(100px,50vw,130px);
+  display: flex;
+  width: clamp(100px,14vw,250px);
+  /*height: clamp(100px,50vw,130px);*/
+  height: 100px;
   /*aspect-ratio: 1/1;*/
   text-align: center;
   position: relative;
   padding-top: 10px;
+  /*border:solid #e8e8e8 0.1px;*/
   border-radius: 10px;
   white-space: nowrap;
+  background-color: #f2f1f1;
 
 }
 
@@ -55,29 +59,52 @@
   overflow-x: clip;
 }
 
-.cell:hover{
+.storage .cell:hover{
   background-color: var(--cellOnHover)
 }
-img{
+.imageContainer{
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex: 1;
 
-  width: 60%;
-  height: 60%;
+}
+.image{
+  position: relative;
+  padding: 10px;
+  width: 90%;
+  height: 90%;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+
+}
+img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .crossMark{
   position: absolute;
+  top: 0;
+  left: 0;
   width: 0;
   height: 5px;
   background-color: red;
   border-radius: 3px;
   transform-origin: 0 50%;
-  transform: translateX(10px) rotate(45deg);
+  transform:  rotate(45deg);
+  transition: 400ms;
+  z-index: 999;
 }
 .cell h3{
+  flex: 1;
   text-overflow: ellipsis;
   margin: 5px 0;
   color: var(--textColor);
   transition: 1s;
   cursor: default;
+  max-width: 50%;
+  height: fit-content;
   overflow-wrap: break-word;
 }
 
