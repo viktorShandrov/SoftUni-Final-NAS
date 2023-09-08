@@ -39,9 +39,6 @@ export class StorageService {
       folderName,
       parentFolderId: enviroments.currentFolder,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
 
     this.HttpService.httpPOSTRequest("api/files/createFolder",JSON.stringify(payload)).subscribe(
         (response: any) => {
@@ -57,6 +54,9 @@ export class StorageService {
           this.PopupService.hidePopup();
           setTimeout(()=>{
             const lastFolder = this.HTMLElementsService.foldersQL.toArray()[this.HTMLElementsService.foldersQL.length-1]
+            console.log(lastFolder)
+            const imageContainer = lastFolder.nativeElement.querySelector(".image")
+            this.setCrossMarkProperly(imageContainer)
             this.makeFolderOrFileClickableEffect(lastFolder)
           },0)
         },
@@ -257,28 +257,28 @@ export class StorageService {
     },0)
   }
 
-  setCrossMarkProperly(imageContainer:ElementRef){
-    const crossMark = imageContainer.nativeElement.querySelector(".crossMark")
-    const rect = imageContainer.nativeElement.getBoundingClientRect();
+  setCrossMarkProperly(imageContainer:HTMLElement){
+    const crossMark = imageContainer.querySelector(".crossMark")
+    const rect = imageContainer.getBoundingClientRect();
 
     this.setCrossMarkLengthWithoutParentPAdding(imageContainer)
     // Calculate the diagonal angle in degrees using trigonometry
-    this.setDiagonalAngleOnCrossMark(crossMark,rect)
+    this.setDiagonalAngleOnCrossMark(crossMark!,rect)
   }
-  setCrossMarkLengthWithoutParentPAdding(imageContainer:ElementRef){
-    const computedStyle = window.getComputedStyle(imageContainer.nativeElement);
+  setCrossMarkLengthWithoutParentPAdding(imageContainer:HTMLElement){
+    const computedStyle = window.getComputedStyle(imageContainer);
 
     // Extract the padding value (assuming it's the same for all sides)
     const padding = parseFloat(computedStyle.getPropertyValue("padding"));
 
     // Calculate the width and height excluding padding
-    const widthWithoutPadding = imageContainer.nativeElement.offsetWidth - 2 * padding;
-    const heightWithoutPadding = imageContainer.nativeElement.offsetHeight - 2 * padding;
+    const widthWithoutPadding = imageContainer.offsetWidth - 2 * padding;
+    const heightWithoutPadding = imageContainer.offsetHeight - 2 * padding;
 
     // Calculate the diagonal length using the Pythagorean theorem
     this.CacheService.cellCrossMarkLength = Math.sqrt(Math.pow(widthWithoutPadding, 2) + Math.pow(heightWithoutPadding, 2));
   }
-  setDiagonalAngleOnCrossMark(crossMark:HTMLElement,rect:any){
+  setDiagonalAngleOnCrossMark(crossMark:Element,rect:any){
     const diagonalAngleRad = Math.atan2(rect.height, rect.width);
     const diagonalAngleDeg = diagonalAngleRad * (180 / Math.PI);
     this.HTMLElementsService.Renderer2.setStyle(crossMark,"transform",`rotate(${diagonalAngleDeg}deg)`)

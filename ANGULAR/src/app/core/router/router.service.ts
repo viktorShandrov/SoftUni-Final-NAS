@@ -55,7 +55,7 @@ export class RouterService {
           this.UserService.rootId=rootId
         }
         this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
-      }else{
+      }else {
 
       }
 
@@ -86,8 +86,12 @@ export class RouterService {
 
               }
             )
-
           }, 20)
+          setTimeout(()=>{
+            for (const imageContainer of this.HTMLElementsService.imageContainers) {
+              this.StorageService.setCrossMarkProperly(imageContainer.nativeElement)
+            }
+          },200)
         }
       }
 

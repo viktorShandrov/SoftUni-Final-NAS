@@ -127,11 +127,11 @@ export class StorageContentComponent implements AfterViewInit {
       }
     });
 
+    this.HTMLElementsService.imageContainers = this.imageContainers
+
     setTimeout(()=>{
-      for (let imageContainer of this.imageContainers) {
-
-        this.StorageService.setCrossMarkProperly(imageContainer)
-
+      for (let imageContainer of this.HTMLElementsService.imageContainers) {
+        this.StorageService.setCrossMarkProperly(imageContainer.nativeElement)
       }
 
     },200)
