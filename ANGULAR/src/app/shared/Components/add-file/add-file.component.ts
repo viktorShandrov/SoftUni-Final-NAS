@@ -149,6 +149,7 @@ export class AddFileComponent implements AfterViewInit{
                         setTimeout(()=>{
                           const lastFile = this.HTMLElementsService.filesQL.toArray()[this.HTMLElementsService.filesQL.length-1]
                           this.StorageService.makeFolderOrFileClickableEffect(lastFile)
+                          this.StorageService.setCrossMarkProperly(lastFile.nativeElement)
                         },0)
                         this.clearForm()
                         this.StorageService.hasFiles = true
