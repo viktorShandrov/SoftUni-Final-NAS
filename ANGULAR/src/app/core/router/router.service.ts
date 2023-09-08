@@ -88,9 +88,7 @@ export class RouterService {
             )
           }, 20)
           setTimeout(()=>{
-            for (const imageContainer of this.HTMLElementsService.imageContainers) {
-              this.StorageService.setCrossMarkProperly(imageContainer.nativeElement)
-            }
+              this.StorageService.setCrossMarkProperlyOnFoldersAndFiles()
           },200)
         }
       }

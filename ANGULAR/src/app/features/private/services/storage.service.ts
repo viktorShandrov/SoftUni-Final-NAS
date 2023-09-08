@@ -203,16 +203,15 @@ export class StorageService {
         if(elementType==="directory"){
           const indexInFoldersCache = this.CacheService.folders.findIndex((el) => el._id == elementId)
           const indexInCompletionCache = this.CacheService.completions.findIndex((el) => el._id == elementId)
-          console.log(this.HTMLElementsService.foldersQL.toArray()[indexInFoldersCache].nativeElement)
-          console.log(this.CacheService.cellCrossMarkLength);
-          const crossMark = this.HTMLElementsService.foldersQL.toArray()[indexInFoldersCache].nativeElement.querySelector(".crossMark")
-          this.HTMLElementsService.Renderer2.setStyle(crossMark,"width",this.CacheService.cellCrossMarkLength+"px")
+
+          this.setCrossMarkLength(indexInFoldersCache,"directory")
           this.CacheService.folders[indexInFoldersCache].isDisappearing = true
           this.CacheService.completions.splice(indexInCompletionCache,1)
 
 
         }else{
           const index = this.CacheService.files.findIndex((el) => el._id == elementId)
+          this.setCrossMarkLength(index,"file")
           this.CacheService.files[index].isDisappearing = true
 
 
@@ -236,6 +235,16 @@ export class StorageService {
       }
     );
   }
+
+  setCrossMarkLength(indexInQL:number,type:String){
+    if(type==="directory"){
+      const crossMark = this.HTMLElementsService.foldersQL.toArray()[indexInQL].nativeElement.querySelector(".crossMark")
+      this.HTMLElementsService.Renderer2.setStyle(crossMark,"width",this.CacheService.cellCrossMarkLength+"px")
+    }else {
+      const crossMark = this.HTMLElementsService.filesQL.toArray()[indexInQL].nativeElement.querySelector(".crossMark")
+      this.HTMLElementsService.Renderer2.setStyle(crossMark,"width",this.CacheService.cellCrossMarkLength+"px")
+    }
+  }
   showUserDetailsFromIcon(event:MouseEvent){
       const element = event.target as HTMLElement
       this.HTMLElementsService.Renderer2.setAttribute(element,"isSelected","true")
@@ -256,24 +265,32 @@ export class StorageService {
 
     },0)
   }
+  setCrossMarkProperlyOnFoldersAndFiles(){
+    for (const folderCell of this.HTMLElementsService.folderCells) {
+      this.setCrossMarkProperly(folderCell.nativeElement)
+    }
+    for (const fileCell of this.HTMLElementsService.fileCells) {
+      this.setCrossMarkProperly(fileCell.nativeElement)
+    }
+  }
+  setCrossMarkProperly(cell:HTMLElement){
+    const crossMarkContainer = cell.querySelector(".crossMarkContainer")
+    const crossMark = crossMarkContainer!.querySelector(".crossMark")
+    const rect = crossMarkContainer!.getBoundingClientRect();
 
-  setCrossMarkProperly(imageContainer:HTMLElement){
-    const crossMark = imageContainer.querySelector(".crossMark")
-    const rect = imageContainer.getBoundingClientRect();
-
-    this.setCrossMarkLengthWithoutParentPAdding(imageContainer)
+    this.setCrossMarkLengthWithoutParentPadding(crossMarkContainer!)
     // Calculate the diagonal angle in degrees using trigonometry
     this.setDiagonalAngleOnCrossMark(crossMark!,rect)
   }
-  setCrossMarkLengthWithoutParentPAdding(imageContainer:HTMLElement){
-    const computedStyle = window.getComputedStyle(imageContainer);
-
+  setCrossMarkLengthWithoutParentPadding(crossMarkContainer:Element){
+    const computedStyle = window.getComputedStyle(crossMarkContainer);
     // Extract the padding value (assuming it's the same for all sides)
     const padding = parseFloat(computedStyle.getPropertyValue("padding"));
 
     // Calculate the width and height excluding padding
-    const widthWithoutPadding = imageContainer.offsetWidth - 2 * padding;
-    const heightWithoutPadding = imageContainer.offsetHeight - 2 * padding;
+    const crossMarkContainerHTMLEl = crossMarkContainer as HTMLElement
+    const widthWithoutPadding = crossMarkContainerHTMLEl.offsetWidth - 2 * padding;
+    const heightWithoutPadding = crossMarkContainerHTMLEl.offsetHeight - 2 * padding;
 
     // Calculate the diagonal length using the Pythagorean theorem
     this.CacheService.cellCrossMarkLength = Math.sqrt(Math.pow(widthWithoutPadding, 2) + Math.pow(heightWithoutPadding, 2));

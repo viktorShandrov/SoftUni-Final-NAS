@@ -71,7 +71,8 @@ export class StorageContentComponent implements AfterViewInit {
 
   fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
 
-  @ViewChildren("imageContainer") imageContainers!:QueryList<ElementRef>
+  @ViewChildren("folderCell") folderCells!:QueryList<ElementRef>
+  @ViewChildren("fileCell") fileCells!:QueryList<ElementRef>
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
   @ViewChildren('fileElement') filesRef!: QueryList<ElementRef>;
 
@@ -127,13 +128,11 @@ export class StorageContentComponent implements AfterViewInit {
       }
     });
 
-    this.HTMLElementsService.imageContainers = this.imageContainers
+    this.HTMLElementsService.folderCells = this.folderCells
+    this.HTMLElementsService.fileCells = this.fileCells
 
     setTimeout(()=>{
-      for (let imageContainer of this.HTMLElementsService.imageContainers) {
-        this.StorageService.setCrossMarkProperly(imageContainer.nativeElement)
-      }
-
+      this.StorageService.setCrossMarkProperlyOnFoldersAndFiles()
     },200)
   }
 
