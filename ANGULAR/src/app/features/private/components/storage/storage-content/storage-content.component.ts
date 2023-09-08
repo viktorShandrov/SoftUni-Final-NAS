@@ -129,23 +129,14 @@ export class StorageContentComponent implements AfterViewInit {
 
     setTimeout(()=>{
       for (let imageContainer of this.imageContainers) {
-        const crossMark = imageContainer.nativeElement.querySelector(".crossMark")
-        const rect = imageContainer.nativeElement.getBoundingClientRect();
 
-        // Calculate the diagonal length using the Pythagorean theorem
-        this.CacheService.cellCrossMarkLength = Math.sqrt(Math.pow(rect.width, 2) + Math.pow(rect.height, 2));
-        console.log(this.CacheService.cellCrossMarkLength);
+        this.StorageService.setCrossMarkProperly(imageContainer)
 
-
-        // Calculate the diagonal angle in degrees using trigonometry
-        const diagonalAngleRad = Math.atan2(rect.height, rect.width);
-        const diagonalAngleDeg = diagonalAngleRad * (180 / Math.PI);
-
-        this.HTMLElementsService.Renderer2.setStyle(crossMark,"transform",`rotate(${diagonalAngleDeg}deg)`)
       }
 
     },200)
   }
+
 
   getData(dirId: String) {
     this.HttpService.httpGETRequest(`api/files/${dirId}/getDirectory`).subscribe(
