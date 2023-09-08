@@ -422,16 +422,17 @@ export class StorageService {
   hideAllOverflowingCellText(folders:QueryList<ElementRef>,files:QueryList<ElementRef>){
     for (const folder of folders.toArray()) {
       this.HTMLElementsService.Renderer2.removeClass(folder.nativeElement,"allowedTextOverflow")
-      this.HTMLElementsService.Renderer2.setStyle(folder.nativeElement,"white-space","nowrap")
+      // this.HTMLElementsService.Renderer2.setStyle(folder.nativeElement,"white-space","nowrap")
     }
     for (const file of files.toArray()) {
       this.HTMLElementsService.Renderer2.removeClass(file.nativeElement,"allowedTextOverflow")
-      this.HTMLElementsService.Renderer2.setStyle(file.nativeElement,"white-space","nowrap")
+      // this.HTMLElementsService.Renderer2.setStyle(file.nativeElement,"white-space","nowrap")
     }
   }
   showOverflowingCellText(element:HTMLElement){
-    this.HTMLElementsService.Renderer2.addClass(element,"allowedTextOverflow")
-    this.HTMLElementsService.Renderer2.setStyle(element,"white-space","wrap")
+
+    this.HTMLElementsService.Renderer2.addClass(element,"allowedTextOverflowing")
+    // this.HTMLElementsService.Renderer2.setStyle(element,"white-space","wrap")
   }
 
   addEventListenersToCompletionElements(

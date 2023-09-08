@@ -25,7 +25,7 @@
               </div>
     <!--          <i class="fa-solid fa-folder"></i>-->
             </div>
-            <h3>{{folder.name}}</h3>
+            <h3 class="elementName">{{folder.name}}</h3>
           </div>
           <div #fileCell [@cellDisappear]="file.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'file')" #fileElement appFolderDoubleClick *ngFor="let file of files;let index = index" class="cell file"  [attr._id]="file._id">
                <div  class="imageContainer">
@@ -37,7 +37,7 @@
                     <img *ngIf="fileExtensions.includes(file.type)"  src="assets/{{file.type}}.png" alt="image">
                 </div>
               </div>
-            <h3>{{file.fileName+"."+file.type}}</h3>
+            <h3 class="elementName">{{file.fileName+"."+file.type}}</h3>
           </div>
         </div>
         <div *ngIf="!enviroments.storageViewCellStructure" class="tableCellView" >
