@@ -37,7 +37,7 @@
 
 .storage .cell{
   display: flex;
-  width: clamp(100px,14vw,250px);
+  width: clamp(130px,14vw,250px);
   flex-direction: column;
   /*height: clamp(100px,50vw,130px);*/
   /*height: 100px;*/
@@ -100,11 +100,19 @@ img{
   display: flex;
   /*justify-content: flex-end;*/
   height: 20px;
+  align-items: center;
   margin-left: auto;
-  padding: 5px 20px;
+  padding: 5px;
+  margin-right: 15px;
   width: min-content;
   font-size: 2.5px;
-  gap: 1px;
+  border-radius: 10px;
+  gap: 3px;
+}
+.cell .threeDots:hover{
+  background-color: white;
+  transition: 0.5s;
+  cursor: pointer;
 }
 .cell .threeDots .dot{
   width: 5px;

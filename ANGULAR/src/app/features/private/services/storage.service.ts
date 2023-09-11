@@ -419,6 +419,7 @@ export class StorageService {
     });
   }
 
+
   hideAllOverflowingCellText(folders:QueryList<ElementRef>,files:QueryList<ElementRef>){
     for (const folder of folders.toArray()) {
       this.HTMLElementsService.Renderer2.removeClass(folder.nativeElement,"allowedTextOverflowing")
@@ -482,6 +483,35 @@ export class StorageService {
     })
   }
 
+
+
+  showElementContextMenu(HTMLElementsService:HTMLElementsService,event:MouseEvent){
+    event.preventDefault()
+    const element = event!.target! as HTMLElement
+    const mainParentElement = element.closest(".cell") as HTMLElement;
+
+    const renderer = this.HTMLElementsService.Renderer2
+    const x = event.clientX
+    const y = event.clientY
+    let elementType
+    let id
+    if(mainParentElement.classList.contains("directory")){
+      elementType = "directory"
+      id = mainParentElement.getAttribute("_id")!
+    }else if(mainParentElement.classList.contains("file")) {
+      elementType = "file"
+      id = mainParentElement.getAttribute("_id")!
+    }
+    setTimeout(()=>{
+
+    renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
+    renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
+    renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")
+    renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"top",y+"px")
+    renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"left",x+"px")
+    },0)
+
+  }
 
 
 

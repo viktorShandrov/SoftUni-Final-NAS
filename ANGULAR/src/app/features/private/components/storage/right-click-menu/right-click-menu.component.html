@@ -6,21 +6,27 @@
 <!--    <p>Rename</p>-->
 <!--  </div>-->
   <div #option  (click)="StorageService.getDetails(menu)" class="option">
+    <i class="fa-solid fa-info"></i>
     <p>Details</p>
   </div>
   <div #option *ngIf="menu.getAttribute('element-type')=='directory'" (click)="StorageService.getElementDownload(menu.getAttribute('element-id')!,false)" class="option">
+    <i class="fa-solid fa-download"></i>
     <p>Download</p>
   </div>
   <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&!selectedFolder?.isPublic"  class="option">
+    <i class="fa-solid fa-users"></i>
     <p  (click)="makeFolderPublic()">Make public</p>
   </div>
   <div #option *ngIf="menu.getAttribute('element-type')=='directory'&&selectedFolder?.isPublic"  class="option">
-    <p  (click)="unPublicFolder()">un-public</p>
+    <i class="fa-solid fa-users-slash"></i>
+    <p  (click)="unPublicFolder()">Un-public</p>
   </div>
   <div #optionShare  class="option share">
+    <i class="fa-solid fa-share"></i>
     <p>Share</p>
   </div>
   <div #option (click)="StorageService.deleteItem(menu,renderer)" class="option delete">
+    <i class="fa-solid fa-trash-can"></i>
     <p>Delete</p>
   </div>
 </div>
@@ -36,7 +42,7 @@
     </div>
   </form>
 </div>
-<div #onFileShareAttemptMessageContainer class="onFileShareAttemptMessage">
-  <p>Try sharing folder</p>
-</div>
+<!--<div #onFileShareAttemptMessageContainer class="onFileShareAttemptMessage">-->
+<!--  <p>Try sharing folder</p>-->
+<!--</div>-->
 

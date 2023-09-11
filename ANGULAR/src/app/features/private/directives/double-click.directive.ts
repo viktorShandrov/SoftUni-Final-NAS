@@ -38,9 +38,9 @@ export class DoubleClickDirective {
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent) {
     this.clicks++;
-    const element = event.target as HTMLElement;
+    const clickedElement = event.target as HTMLElement;
 
-    const mainParentElement = element.closest(".cell") as HTMLElement;
+    const mainParentElement = clickedElement.closest(".cell") as HTMLElement;
 
 
     if (this.clicks === 1) {
@@ -55,27 +55,16 @@ export class DoubleClickDirective {
         if(!mainParentElement.classList.contains("sharedWithMe")){
           this.PopupService.hideAllOtherMenus()
           this.StorageService.hideAllOverflowingCellText(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
-          this.StorageService.showOverflowingCellText(mainParentElement)
-          mainParentElement.addEventListener("contextmenu",(e)=>{
-              e.preventDefault()
-              const x = e.clientX
-              const y = e.clientY
-              let elementType
-              let id
-              if(mainParentElement.classList.contains("directory")){
-                elementType = "directory"
-                id = mainParentElement.getAttribute("_id")!
-              }else if(mainParentElement.classList.contains("file")) {
-                elementType = "file"
-                id = mainParentElement.getAttribute("_id")!
-              }
 
-              this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
-              this.renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
-              this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")
-              this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"top",y+"px")
-              this.renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"left",x+"px")
-            })
+          //if we click on the tree dots, overflowing text should not be visible
+          const threeDots = clickedElement.closest(".threeDots")
+          if(!threeDots){
+            this.StorageService.showOverflowingCellText(mainParentElement)
+          }
+          mainParentElement.addEventListener("contextmenu", (event: MouseEvent) => {
+            this.StorageService.showElementContextMenu(this.HTMLElementsService, event);
+          });
+
         }
       }
 
