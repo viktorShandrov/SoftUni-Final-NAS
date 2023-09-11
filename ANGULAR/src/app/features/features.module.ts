@@ -75,12 +75,13 @@ import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-nam
     ReactiveFormsModule,
     RouterModule
   ],
-  exports:[
-    LoginComponent,
-    RegisterComponent,
-    UsersViewComponent,
-    StorageNavigationComponent
-  ],
+    exports: [
+        LoginComponent,
+        RegisterComponent,
+        UsersViewComponent,
+        StorageNavigationComponent,
+        RightClickMenuComponent
+    ],
   providers:[HttpService]
 })
 export class FeaturesModule { }

@@ -482,7 +482,22 @@ export class StorageService {
       }
     })
   }
-
+recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement){
+  const menuWidth =Number(getComputedStyle(contextMenu).width.slice(0,-2))
+  const menuHeight =Number(getComputedStyle(contextMenu).width.slice(0,-2))
+  const mainWrapper = document.querySelector(".mainWrapper")
+  const mainWrapperRightSidePosition = mainWrapper!.getBoundingClientRect().right
+  const mainWrapperBottomSidePosition = mainWrapper!.getBoundingClientRect().bottom
+  const menuRightSidePosition = x+menuWidth
+  const menuBottomSidePosition = y+menuHeight
+  if(menuRightSidePosition>mainWrapperRightSidePosition){
+    x -=  menuRightSidePosition - mainWrapperRightSidePosition;
+  }
+  if(menuBottomSidePosition>mainWrapperBottomSidePosition){
+    y -=  menuBottomSidePosition - mainWrapperBottomSidePosition;
+  }
+    return {x,y}
+}
 
 
   showElementContextMenu(HTMLElementsService:HTMLElementsService,event:MouseEvent){
@@ -491,8 +506,8 @@ export class StorageService {
     const mainParentElement = element.closest(".cell") as HTMLElement;
 
     const renderer = this.HTMLElementsService.Renderer2
-    const x = event.clientX
-    const y = event.clientY
+    let x = event.clientX-20
+    const y = event.clientY-20
     let elementType
     let id
     if(mainParentElement.classList.contains("directory")){
@@ -503,12 +518,14 @@ export class StorageService {
       id = mainParentElement.getAttribute("_id")!
     }
     setTimeout(()=>{
-
-    renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-type",elementType!)
-    renderer.setAttribute(this.HTMLElementsService.rightClickMenu.nativeElement,"element-id",id!)
-    renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"display","flex")
-    renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"top",y+"px")
-    renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement,"left",x+"px")
+      const contextMenu = this.HTMLElementsService.rightClickMenu.nativeElement as HTMLElement
+      const recalculatedPositions = this.recalculateContextMenusPosition(x,y,contextMenu)
+      
+    renderer.setAttribute(contextMenu,"element-type",elementType!)
+    renderer.setAttribute(contextMenu,"element-id",id!)
+    renderer.setStyle(contextMenu,"display","flex")
+    renderer.setStyle(contextMenu,"top",recalculatedPositions.y+"px")
+    renderer.setStyle(contextMenu,"left",recalculatedPositions.x+"px")
     },0)
 
   }
