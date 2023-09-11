@@ -37,6 +37,7 @@
 .urlWrapper .url input {
   height: 30px;
   border:none;
+  padding-left: 10px;
   /*width: 100%;*/
   background-color: var(--searchBarBGColor);
   width: 300px;

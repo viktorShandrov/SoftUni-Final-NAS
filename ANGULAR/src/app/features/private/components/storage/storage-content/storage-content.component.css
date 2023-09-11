@@ -29,6 +29,7 @@
   transition: 1s;
   flex-wrap: wrap;
   align-content: baseline;
+  align-items: flex-start;
 }
 
 
@@ -37,39 +38,47 @@
 .storage .cell{
   display: flex;
   width: clamp(100px,14vw,250px);
+  flex-direction: column;
   /*height: clamp(100px,50vw,130px);*/
-  height: 100px;
+  /*height: 100px;*/
   /*aspect-ratio: 1/1;*/
   text-align: center;
   position: relative;
-  padding-top: 10px;
+  padding: 10px 0;
   /*border:solid #e8e8e8 0.1px;*/
   border-radius: 10px;
   white-space: nowrap;
   background-color: #f2f1f1;
 
 }
+.storage .cell .imageAndDots{
+  display: flex;
 
-.storage .allowedTextOverflowing {
-  overflow: visible;
-  height: max-content;
 }
-.storage .allowedTextOverflowing .elementName {
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  padding: 0 10px;
-}
+
 
 
 .storage .cell:hover{
   background-color: var(--cellOnHover)
 }
+/*.storage .cell:hover .elementName{*/
+/*  text-overflow: initial;*/
+/*  overflow: visible;*/
+/* transform: translateX(-100%);*/
+/*  transition: transform 5s linear;*/
+/*}*/
 .imageContainer{
-  display: flex;
+  /*display: flex;*/
   /*height: 100%;*/
+  /*flex-direction: column;*/
+  /*align-items: center;*/
+  display: flex;
   justify-content: center;
-  flex: 1;
+  padding-left: 10px;
+  width: 120px;
+  height: 80px;
+  max-height: 90px;
+  /*flex: 1;*/
 
 }
 .image{
@@ -85,6 +94,34 @@ img{
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.cell .threeDots{
+  /*flex: 1;*/
+  display: flex;
+  /*justify-content: flex-end;*/
+  height: 20px;
+  margin-left: auto;
+  padding: 5px 20px;
+  width: min-content;
+  font-size: 2.5px;
+  gap: 1px;
+}
+.cell .threeDots .dot{
+  width: 5px;
+  height: 5px;
+  border-radius: 100px;
+  background-color: grey;
+}
+
+.storage .allowedTextOverflowing {
+  overflow: visible;
+  height: max-content;
+}
+.storage .allowedTextOverflowing .elementName {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding: 0 20px;
 }
 .crossMarkContainer{
   position: absolute;
@@ -112,9 +149,12 @@ img{
   color: var(--textColor);
   transition: 1s;
   cursor: default;
-  max-width: 50%;
+  /*max-width: 50%;*/
+  text-align: left;
+  padding: 0 20px;
   height: fit-content;
   overflow-wrap: break-word;
+
 }
 
 .storage .directory i{

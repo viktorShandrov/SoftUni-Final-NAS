@@ -52,10 +52,10 @@ export class DoubleClickDirective {
 
 
       if(mainParentElement){
-        this.StorageService.showOverflowingCellText(mainParentElement)
         if(!mainParentElement.classList.contains("sharedWithMe")){
           this.PopupService.hideAllOtherMenus()
           this.StorageService.hideAllOverflowingCellText(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
+          this.StorageService.showOverflowingCellText(mainParentElement)
           mainParentElement.addEventListener("contextmenu",(e)=>{
               e.preventDefault()
               const x = e.clientX

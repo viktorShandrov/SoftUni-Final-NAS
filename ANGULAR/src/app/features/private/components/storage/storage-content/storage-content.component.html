@@ -16,16 +16,24 @@
 
         <div *ngIf="enviroments.storageViewCellStructure" class="storage">
           <div #folderCell [@cellDisappear]="folder.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'folder')"   #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell directory"  [attr._id]="folder._id">
-            <div  class="imageContainer">
-              <div  class="image">
-                <div  class="crossMarkContainer">
-                  <div [@crossMarkAnim]="folder.isDisappearing?'in':'out'" (@crossMarkAnim.done)="crossMarkAnimationDone($event,folder)"  class="crossMark"></div>
+            <div class="imageAndDots">
+                <div  class="imageContainer">
+                  <div  class="image">
+                    <div  class="crossMarkContainer">
+                      <div [@crossMarkAnim]="folder.isDisappearing?'in':'out'" (@crossMarkAnim.done)="crossMarkAnimationDone($event,folder)"  class="crossMark"></div>
+                    </div>
+                    <img src="assets/folder.png" alt="image">
+                  </div>
                 </div>
-                <img src="assets/folder.png" alt="image">
-              </div>
-    <!--          <i class="fa-solid fa-folder"></i>-->
+                <div class="threeDots">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
             </div>
-            <h3 class="elementName">{{folder.name}}</h3>
+            <div class="name">
+              <h3 class="elementName">{{folder.name}}</h3>
+            </div>
           </div>
           <div #fileCell [@cellDisappear]="file.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'file')" #fileElement appFolderDoubleClick *ngFor="let file of files;let index = index" class="cell file"  [attr._id]="file._id">
                <div  class="imageContainer">
