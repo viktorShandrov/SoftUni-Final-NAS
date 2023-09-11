@@ -1,36 +1,60 @@
-.menu,.shareContainer,.onFileShareAttemptMessage{
+/*.menu,.shareContainer,.onFileShareAttemptMessage{*/
+/*  width: 100px;*/
+/*  border-radius: 20px;*/
+/*  border: 0.1cm solid tan;*/
+/*  border-top-left-radius: 0;*/
+/*  transition: 0.3s;*/
+/*}*/
+.menu{
+  position: absolute ;
   display:  none;
   flex-direction: column;
-  position: absolute ;
-  width: 100px;
-  border-radius: 20px;
-  border: 0.1cm solid tan;
-  border-top-left-radius: 0;
-  transition: 0.3s;
-  z-index: 999;
+  width: 200px;
+  background-color: white;
+  border: solid 2px #e6e6eb;
+  border-radius: 5px;
+  padding: 10px;
+  color: #9ca2af;
+  z-index: 9999;
+
 }
 .onFileShareAttemptMessage{
   padding: 10px;
   background-color: red;
 }
 .option {
+  display:flex ;
+  align-items: center;
   padding: 7px 5px;
   margin: 0;
-  background-color: chocolate;
-  display:flex ;
-  justify-content: center;
-  text-align: center;
+  /*background-color: chocolate;*/
+  /*justify-content: flex-start;*/
+  /*text-align: left;*/
+
 }
-p {
+.option:hover {
+  border-radius: 3px;
+  background-color: #f2f3f6;
+  color: black;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.option i{
+  margin-right:  10px;
+  padding: 1px 0;
+  text-align: center;
+  width: 25px;
+}
+.menu p {
   margin: 0;
 }
 .delete{
-  background-color: red;
+  /*background-color: red;*/
+  color: #e5474d;
 }
-.option:hover {
-  background-color: antiquewhite;
-  transition: 0.2s;
-  cursor: pointer;
+.delete:hover{
+  color: #e5474d;
+  background-color: #fef2f3;
 }
 
 
