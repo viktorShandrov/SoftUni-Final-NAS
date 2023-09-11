@@ -482,19 +482,26 @@ export class StorageService {
       }
     })
   }
-recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement){
-  const menuWidth =Number(getComputedStyle(contextMenu).width.slice(0,-2))
-  const menuHeight =Number(getComputedStyle(contextMenu).width.slice(0,-2))
+recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement,elementType:string){
+  const menuWidth =contextMenu.getBoundingClientRect().width
+  const menuHeight =contextMenu.getBoundingClientRect().height
   const mainWrapper = document.querySelector(".mainWrapper")
   const mainWrapperRightSidePosition = mainWrapper!.getBoundingClientRect().right
   const mainWrapperBottomSidePosition = mainWrapper!.getBoundingClientRect().bottom
   const menuRightSidePosition = x+menuWidth
   const menuBottomSidePosition = y+menuHeight
+  let margin
+  console.log(contextMenu.getBoundingClientRect())
+  if(elementType==="directory"){
+    margin = 70
+  }else{
+    margin =0
+  }
   if(menuRightSidePosition>mainWrapperRightSidePosition){
-    x -=  menuRightSidePosition - mainWrapperRightSidePosition;
+    x -=  menuRightSidePosition - mainWrapperRightSidePosition+margin;
   }
   if(menuBottomSidePosition>mainWrapperBottomSidePosition){
-    y -=  menuBottomSidePosition - mainWrapperBottomSidePosition;
+    y -=  menuBottomSidePosition - mainWrapperBottomSidePosition+margin;
   }
     return {x,y}
 }
@@ -508,7 +515,7 @@ recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement){
     const renderer = this.HTMLElementsService.Renderer2
     let x = event.clientX-20
     const y = event.clientY-20
-    let elementType
+    let elementType:string
     let id
     if(mainParentElement.classList.contains("directory")){
       elementType = "directory"
@@ -519,13 +526,16 @@ recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement){
     }
     setTimeout(()=>{
       const contextMenu = this.HTMLElementsService.rightClickMenu.nativeElement as HTMLElement
-      const recalculatedPositions = this.recalculateContextMenusPosition(x,y,contextMenu)
-      
-    renderer.setAttribute(contextMenu,"element-type",elementType!)
-    renderer.setAttribute(contextMenu,"element-id",id!)
-    renderer.setStyle(contextMenu,"display","flex")
-    renderer.setStyle(contextMenu,"top",recalculatedPositions.y+"px")
-    renderer.setStyle(contextMenu,"left",recalculatedPositions.x+"px")
+
+      renderer.setAttribute(contextMenu,"element-type",elementType!)
+      renderer.setAttribute(contextMenu,"element-id",id!)
+      renderer.setStyle(contextMenu,"display","flex")
+      setTimeout(()=>{
+        const recalculatedPositions = this.recalculateContextMenusPosition(x,y,contextMenu,elementType)
+        renderer.setStyle(contextMenu,"top",recalculatedPositions.y+"px")
+        renderer.setStyle(contextMenu,"left",recalculatedPositions.x+"px")
+
+      },0)
     },0)
 
   }
