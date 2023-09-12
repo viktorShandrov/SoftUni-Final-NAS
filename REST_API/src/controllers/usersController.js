@@ -1,6 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const { createRoot } = require("../managers/filesManager");
-const userManager = require("../managers/usersManager")
+const userManager = require("../managers/usersManager");
+const { isAuth } = require("../utils/authentication");
 const router = require("express").Router()
 
 
@@ -60,6 +61,16 @@ router.post("/login",async (req,res)=>{
         //TODO: req.body=> JSON.parse(req.body)
         const {email,password} = req.body
          const payload = await userManager.login(email,password);
+        res.status(200).json(payload)
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+})
+router.post("/getNotifications",isAuth,async (req,res)=>{
+    try {
+        const {_id} = req.user
+        
         res.status(200).json(payload)
     } catch (error) {
         console.log(error);

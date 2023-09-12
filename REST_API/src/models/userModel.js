@@ -9,6 +9,12 @@ const schema = new mongoose.Schema({
     password:{
         type:String,
     },
+    notifications:[
+        {
+            type:mongoose.Types.ObjectId,
+            ref:"Notification"
+        }
+    ],
     rootId:{
         type:mongoose.Types.ObjectId,
         ref:"Root"
