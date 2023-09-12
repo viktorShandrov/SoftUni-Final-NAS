@@ -163,7 +163,7 @@ img{
   padding: 0 20px;
   height: fit-content;
   overflow-wrap: break-word;
-
+  user-select: none;
 }
 
 .storage .directory i{
@@ -211,10 +211,18 @@ img{
   color: var(--textColor);
   transition: 1s;
 }
+.tableCellView tbody tr td:hover{
+/*background-color: var(--cellOnHover)*/
+}
 
 .tableCellView .tableListViewH3{
   margin: 0;
   padding: 10px;
+  user-select: none;
+
+}
+.tableCellView .tableListViewH3:hover{
+  cursor: default;
 
 }
 .tableCellView .directory i,.tableCellView .file i{

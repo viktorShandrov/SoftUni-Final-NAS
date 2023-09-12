@@ -400,7 +400,6 @@ export class StorageService {
 
   makeFolderOrFileClickableEffect(element:ElementRef){
     this.HTMLElementsService.Renderer2.listen(element.nativeElement, 'click', () => {
-      console.log(1121212)
       if(this.HTMLElementsService.foldersQL.length>0){
         for (const folder of this.HTMLElementsService.foldersQL) {
           this.HTMLElementsService.Renderer2.removeStyle(folder.nativeElement, 'background-color');
