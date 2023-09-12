@@ -24,8 +24,14 @@ import {
   SharedWithUsersViewComponent
 } from "../../features/private/components/shared-with-users/shared-with-users-view/shared-with-users-view.component";
 import {PlansViewComponent} from "../../features/public/components/plans-view/plans-view.component";
+import {AdminPanelComponent} from "../../features/private/components/admin-panel/admin-panel.component";
 
 const routes: Routes = [
+  {
+    path:"admin",
+    pathMatch:"full",
+    component:AdminPanelComponent
+  },
   {
     path:"",
     pathMatch: "full",

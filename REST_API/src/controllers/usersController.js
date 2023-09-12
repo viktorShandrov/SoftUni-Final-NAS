@@ -2,6 +2,7 @@ const { default: mongoose } = require("mongoose");
 const { createRoot } = require("../managers/filesManager");
 const userManager = require("../managers/usersManager");
 const { isAuth } = require("../utils/authentication");
+const { admins } = require("../utils/utils");
 const router = require("express").Router()
 
 
@@ -67,10 +68,24 @@ router.post("/login",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/getNotifications",isAuth,async (req,res)=>{
+router.post("/isAdmin",isAuth,async (req,res)=>{
     try {
         const {_id} = req.user
         
+        if(admins.includes(_id)){
+            res.status(200)
+        }else{
+            throw new Error("you are not admin")
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+})
+router.post("/getNotifications",isAuth,async (req,res)=>{
+    try {
+        const {_id} = req.user
+
         res.status(200).json(payload)
     } catch (error) {
         console.log(error);

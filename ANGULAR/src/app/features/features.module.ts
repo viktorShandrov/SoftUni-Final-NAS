@@ -34,6 +34,7 @@ import { NavigationTrimPipe } from './private/pipes/navigation-trim.pipe';
 import { FileOrFolderDetailsAsideComponent } from './private/components/storage/file-or-folder-details-aside/file-or-folder-details-aside.component';
 import { TrimDetailsElementNamePipe } from './private/pipes/trim-details-element-name.pipe';
 import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-name.pipe';
+import { AdminPanelComponent } from './private/components/admin-panel/admin-panel.component';
 
 
 
@@ -64,7 +65,8 @@ import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-nam
     NavigationTrimPipe,
     FileOrFolderDetailsAsideComponent,
     TrimDetailsElementNamePipe,
-    TrimChartElementNamePipe
+    TrimChartElementNamePipe,
+    AdminPanelComponent
 
   ],
   imports: [
