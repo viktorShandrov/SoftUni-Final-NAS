@@ -78,30 +78,32 @@ export class RightClickMenuComponent implements AfterViewInit{
     this.renderer.listen(this.HTMLElementsService.rightClickMenu.nativeElement,"change",()=>{
       console.log(this.HTMLElementsService.rightClickMenu.nativeElement.getAttribute("element-id"))
     })
+    if(this.optionShare){
+      this.optionShare.nativeElement.addEventListener("click",(e:MouseEvent)=>{
+        const shareMenu = this.menu.nativeElement as HTMLElement
+        const elementType = shareMenu.getAttribute("element-type")
+        const x = e.clientX
+        const y = e.clientY
+        if(elementType==="directory"){
 
-    this.optionShare.nativeElement.addEventListener("click",(e:MouseEvent)=>{
-      const shareMenu = this.menu.nativeElement as HTMLElement
-      const elementType = shareMenu.getAttribute("element-type")
-      const x = e.clientX
-      const y = e.clientY
-      if(elementType==="directory"){
+          // this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
 
-        // this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
+          this.renderer.setAttribute(this.HTMLElementsService.shareContainer.nativeElement,"folder-id",this.HTMLElementsService.rightClickMenu.nativeElement.getAttribute("element-id"))
 
-        this.renderer.setAttribute(this.HTMLElementsService.shareContainer.nativeElement,"folder-id",this.HTMLElementsService.rightClickMenu.nativeElement.getAttribute("element-id"))
+          this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"display","flex")
+          this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"top",y+"px")
+          this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"left",x+"px")
+        }else if(elementType==="file"){
+          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","flex")
+          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"top",y+"px")
+          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"left",x+"px")
+          setTimeout(()=>{
+            this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","none")
+          },1500)
+        }
+      })
 
-        this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"display","flex")
-        this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"top",y+"px")
-        this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"left",x+"px")
-      }else if(elementType==="file"){
-        this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","flex")
-        this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"top",y+"px")
-        this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"left",x+"px")
-        setTimeout(()=>{
-          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","none")
-        },1500)
-      }
-    })
+    }
   }
   makeFolderPublic(){
     const folderId = this.menu.nativeElement.getAttribute("element-id")

@@ -42,6 +42,7 @@ export class DoubleClickDirective {
 
     const mainParentElement = clickedElement.closest(".cell") as HTMLElement;
 
+    const threeDots = clickedElement.closest(".threeDots")
 
     if (this.clicks === 1) {
       setTimeout(() => {
@@ -57,7 +58,6 @@ export class DoubleClickDirective {
           this.StorageService.hideAllOverflowingCellText(this.HTMLElementsService.foldersQL,this.HTMLElementsService.filesQL)
 
           //if we click on the tree dots, overflowing text should not be visible
-          const threeDots = clickedElement.closest(".threeDots")
           if(!threeDots){
             this.StorageService.showOverflowingCellText(mainParentElement)
           }
@@ -69,7 +69,8 @@ export class DoubleClickDirective {
       }
 
     } else if (this.clicks === 2) {
-      if(mainParentElement){
+
+      if(mainParentElement&&!threeDots){
 
         if (mainParentElement.classList.contains('directory')) {
           if(!mainParentElement.classList.contains("sharedWithMe")){

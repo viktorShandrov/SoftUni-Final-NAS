@@ -491,7 +491,6 @@ recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement,elemen
   const menuRightSidePosition = x+menuWidth
   const menuBottomSidePosition = y+menuHeight
   let margin
-  console.log(contextMenu.getBoundingClientRect())
   if(elementType==="directory"){
     margin = 70
   }else{

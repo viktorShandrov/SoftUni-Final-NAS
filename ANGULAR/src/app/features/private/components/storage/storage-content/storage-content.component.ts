@@ -20,6 +20,7 @@ import {animate, keyframes, state, style, transition, trigger} from "@angular/an
 import {ToastrService} from "ngx-toastr";
 import {constants} from "../../../../../shared/constants";
 import {UserService} from "../../../../../core/services/user.service";
+import {PopupService} from "../../../../../shared/services/popup.service";
 
 
 @Component({
@@ -84,7 +85,9 @@ export class StorageContentComponent implements AfterViewInit {
     public HTMLElementsService: HTMLElementsService,
     public UserService: UserService,
     public ToastrService: ToastrService,
+    public PopupService: PopupService,
     public Router: Router,
+    private element: ElementRef,
     private renderer: Renderer2
   ) {
     this.enviroments = enviroments
@@ -107,7 +110,9 @@ export class StorageContentComponent implements AfterViewInit {
       }
   }
   ngAfterViewInit(): void {
-
+    this.renderer.listen(this.element.nativeElement,"mousewheel",(e)=>{
+      this.PopupService.hideAllOtherMenus()
+    })
 
     this.folders =this.CacheService.folders;
     for (const folder of this.folders) {
