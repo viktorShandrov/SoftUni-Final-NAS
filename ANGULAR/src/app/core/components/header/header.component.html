@@ -1,7 +1,22 @@
 <header>
   <div class="user-section">
-    <div class="notifications">
+    <div class="notifications" (click)="HeaderService.toggleNotificationSection()">
       <i class="fa-regular fa-bell"></i>
+      <div #notificationSection class="notificationSectionWrapper">
+        <div  class="notificationSection" >
+          <div *ngFor="let notification of notifications" class="notification">
+            <div class="wrapper">
+              <div class="infoIcon">
+                <i class="fa-solid fa-info"></i>
+              </div>
+              <div class="notificationMessage">
+               {{notification.message}}
+              </div>
+            </div>
+            <div class="hr"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="user-profile-picture" (click)="HeaderService.toggleUserMenu()">
       <i class="fa-solid fa-user"></i>

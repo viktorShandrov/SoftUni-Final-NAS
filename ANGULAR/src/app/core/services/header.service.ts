@@ -26,12 +26,25 @@ export class HeaderService {
       this.showUserMenu()
     }
   }
+  toggleNotificationSection(){
+    if(this.HTMLElementsService.notificationSection.nativeElement.style.display==="flex"){
+      this.hideNotificationSection()
+    }else{
+      this.showNotificationSection()
+    }
+  }
 
   showUserMenu(){
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu.nativeElement,"display","flex")
   }
+  showNotificationSection(){
+    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.notificationSection.nativeElement,"display","block")
+  }
   hideUserMenu(){
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu.nativeElement,"display","none")
+  }
+  hideNotificationSection(){
+    this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.notificationSection.nativeElement,"display","none")
   }
 
   transformTheHeaderStorageInfoForUpload(selectedFileSizeInMB:number){

@@ -79,4 +79,8 @@ exports.newNotification = async (message,level,userId) =>{
         await this.addNotificationForEveryone(_id)
     }
 }
+exports.getNotifications=async(userId)=>{
+    
+    return (await userModel.findById(userId).populate("notifications")).notifications
+}
 

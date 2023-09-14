@@ -16,6 +16,7 @@ export class HTMLElementsService {
   fileCells!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
   userMenu!: ElementRef;
+  notificationSection!: ElementRef;
   dashboardStorageProgressBar!: ElementRef;
   FileOrFolderDetailsAsideComponent!: ElementRef;
   divDirContainer!: ElementRef;

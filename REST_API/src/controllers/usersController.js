@@ -81,11 +81,11 @@ router.get("/isAdmin",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/getNotifications",isAuth,async (req,res)=>{
+router.get("/getNotifications",isAuth,async (req,res)=>{
     try {
         const {_id} = req.user
-
-        res.status(200).json(payload)
+        const notifications = await userManager.getNotifications(_id)
+        res.status(200).json(notifications)
     } catch (error) {
         console.log(error);
         res.status(400).json({message:error.message})
