@@ -23,12 +23,13 @@ export class PopupService {
   }
 
   hideAllOtherMenus() {
-    if (this.HTMLElementsService.rightClickMenu && this.HTMLElementsService.createFolderOrFileMenu && this.HTMLElementsService.shareContainer) {
+    // if (this.HTMLElementsService.rightClickMenu && this.HTMLElementsService.createFolderOrFileMenu && this.HTMLElementsService.shareContainer) {
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.rightClickMenu?.nativeElement, "display", "none")
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.createFolderOrFileMenu?.nativeElement, "display", "none")
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.shareContainer?.nativeElement, "display", "none")
       this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu?.nativeElement, "display", "none")
-    }
+      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.notificationSection?.nativeElement, "display", "none")
+    // }
   }
 
 

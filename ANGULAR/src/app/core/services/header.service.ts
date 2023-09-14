@@ -2,6 +2,7 @@ import {ElementRef, Injectable, Renderer2} from '@angular/core';
 import {enviroments} from "../../shared/environments";
 import {HTMLElementsService} from "../../shared/services/htmlelements.service";
 import {constants} from "../../shared/constants";
+import {PopupService} from "../../shared/services/popup.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,15 @@ export class HeaderService {
   usedStoragePercentage!:number
   isLoading!:Boolean
   constructor(
-    private HTMLElementsService:HTMLElementsService
+    private HTMLElementsService:HTMLElementsService,
+    private PopupService:PopupService,
   ) {
     this.usedStorage=0
     this.totalVolume=0
   }
 
   toggleUserMenu(){
+    this.PopupService.hideAllOtherMenus()
     if(this.HTMLElementsService.userMenu.nativeElement.style.display==="flex"){
       this.hideUserMenu()
     }else{
@@ -30,8 +33,10 @@ export class HeaderService {
     if(this.HTMLElementsService.notificationSection.nativeElement.style.display==="block"){
       this.hideNotificationSection()
     }else{
+      this.PopupService.hideAllOtherMenus()
       this.showNotificationSection()
     }
+    
   }
 
   showUserMenu(){
