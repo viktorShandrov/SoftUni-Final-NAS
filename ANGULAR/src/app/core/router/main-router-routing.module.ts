@@ -25,12 +25,14 @@ import {
 } from "../../features/private/components/shared-with-users/shared-with-users-view/shared-with-users-view.component";
 import {PlansViewComponent} from "../../features/public/components/plans-view/plans-view.component";
 import {AdminPanelComponent} from "../../features/private/components/admin-panel/admin-panel.component";
+import {AdminGuard} from "./admin-guard";
 
 const routes: Routes = [
   {
     path:"admin",
     pathMatch:"full",
-    component:AdminPanelComponent
+    component:AdminPanelComponent,
+    canActivate:[AdminGuard]
   },
   {
     path:"",
