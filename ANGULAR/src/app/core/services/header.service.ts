@@ -27,7 +27,7 @@ export class HeaderService {
     }
   }
   toggleNotificationSection(){
-    if(this.HTMLElementsService.notificationSection.nativeElement.style.display==="flex"){
+    if(this.HTMLElementsService.notificationSection.nativeElement.style.display==="block"){
       this.hideNotificationSection()
     }else{
       this.showNotificationSection()
