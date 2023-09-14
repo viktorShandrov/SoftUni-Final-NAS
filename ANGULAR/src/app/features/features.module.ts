@@ -12,7 +12,7 @@ import {LoginComponent} from "./public/components/login/login.component";
 import {DoubleClickDirective} from "./private/directives/double-click.directive";
 import { AddFileComponent } from '../shared/Components/add-file/add-file.component';
 import { AddFolderComponent } from '../shared/Components/add-folder/add-folder.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StorageContentComponent} from "./private/components/storage/storage-content/storage-content.component";
 import {StorageNavigationComponent} from "./private/components/storage/storage-navigation/storage-navigation.component";
 import {RightClickMenuComponent} from "./private/components/storage/right-click-menu/right-click-menu.component";
@@ -70,6 +70,7 @@ import { AdminPanelComponent } from './private/components/admin-panel/admin-pane
 
   ],
   imports: [
+    FormsModule,
     CommonModule,
     SharedModule,
     RouterOutlet,

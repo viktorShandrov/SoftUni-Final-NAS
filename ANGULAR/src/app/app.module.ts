@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {HttpService} from "./shared/services/http.service";
 import {ClipboardModule} from "ngx-clipboard";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {ClipboardModule} from "ngx-clipboard";
     BrowserModule,
     SharedModule,
     CoreModule,
+    FormsModule,
     FeaturesModule,
     MainRouterRoutingModule,
     BrowserAnimationsModule,

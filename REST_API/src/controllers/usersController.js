@@ -68,14 +68,13 @@ router.post("/login",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/isAdmin",isAuth,async (req,res)=>{
+router.get("/isAdmin",isAuth,async (req,res)=>{
     try {
         const {_id} = req.user
-        
         if(admins.includes(_id)){
-            res.status(200)
+            res.status(200).json({isAdmin:true})
         }else{
-            throw new Error("you are not admin")
+            res.status(200).json({isAdmin:false})
         }
     } catch (error) {
         console.log(error);
