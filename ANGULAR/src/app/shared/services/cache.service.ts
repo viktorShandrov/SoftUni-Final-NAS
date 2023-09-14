@@ -11,7 +11,15 @@ export class CacheService {
   completions: Completions[] =[];
   allCompletions: Completions[] =[];
   dirs: Dirs[] = [];
-  notifications!: [{message:string,level:number}];
+  notifications!: [
+    {
+      notification:{
+        message:string
+        ,level:number
+      },
+      seen:boolean
+    }
+  ];
 
 
   files: file[] = [];

@@ -11,8 +11,11 @@ const schema = new mongoose.Schema({
     },
     notifications:[
         {
-            type:mongoose.Types.ObjectId,
-            ref:"Notification"
+            notification:  {
+                type:mongoose.Types.ObjectId,
+                ref:"Notification"
+            },
+            seen:Boolean
         }
     ],
     rootId:{

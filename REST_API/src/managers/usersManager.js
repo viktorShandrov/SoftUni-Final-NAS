@@ -60,7 +60,7 @@ exports.login = async (email,password,isLoggingFromGoogle)=>{
 }
 exports.addNotification = async (userId,notificationId)=>{
     const user = await userModel.findById(userId)
-    user.notifications.push(notificationId)
+    user.notifications.push({notification:notificationId,seen:false})
     await user.save()
 }
 exports.addNotificationForEveryone = async(notId)=>{
@@ -79,8 +79,16 @@ exports.newNotification = async (message,level,userId) =>{
         await this.addNotificationForEveryone(_id)
     }
 }
+async function makeAllNotificationsSeen(user){
+    for (const notification of user.notifications) {
+        notification.seen = true
+    }
+    await user.save()
+}
 exports.getNotifications=async(userId)=>{
-    
-    return (await userModel.findById(userId).populate("notifications")).notifications
+    const user = await userModel.findById(userId).populate("notifications.notification")
+    //could be awaited
+    makeAllNotificationsSeen(user)
+    return user.notifications
 }
 
