@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const schema = new mongoose.Schema({
-    text:String,
+    message:String,
     level:{
         type:Number,
         enum:[3,2,1]

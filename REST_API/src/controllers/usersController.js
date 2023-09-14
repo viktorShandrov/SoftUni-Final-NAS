@@ -91,6 +91,18 @@ router.post("/getNotifications",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.post("/createNotification",isAuth,async (req,res)=>{
+    try {
+        const {_id} = req.user
+        const {message,level,userId} = req.body
+        await userManager.newNotification(message,level,userId)
+
+        res.status(200)
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+})
 
 
 module.exports = router
