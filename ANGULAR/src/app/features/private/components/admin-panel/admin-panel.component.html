@@ -1,5 +1,8 @@
 <div class="wrapper">
-  <button id="homePage"> <a [routerLink]="['/storage', { outlets: { 'storage-outlet': UserService.rootId } }]">Home</a></button>
+  <button id="homePage">
+
+    <a [routerLink]="['/storage', { outlets: { 'storage-outlet': UserService.rootId } }]">Home</a>
+  </button>
 
   <form #newNotificationForm="ngForm" (ngSubmit)="onSubmit(allUsersCheckBox,levelInput)" >
     <input name="message" type="text" id="notificationInput" [(ngModel)]="formData.message" placeholder="message" required>

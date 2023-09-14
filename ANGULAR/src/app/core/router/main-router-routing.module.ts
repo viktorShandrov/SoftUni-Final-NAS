@@ -31,8 +31,8 @@ const routes: Routes = [
   {
     path:"admin",
     pathMatch:"full",
+    canActivate:[AdminGuard],
     component:AdminPanelComponent,
-    canActivate:[AdminGuard]
   },
   {
     path:"",

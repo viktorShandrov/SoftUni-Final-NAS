@@ -26,6 +26,12 @@ export class RouterService {
   ) {
 
   }
+  saveRootId(){
+    const rootId = localStorage.getItem("rootId")
+    if(rootId){
+      this.UserService.rootId=rootId
+    }
+  }
 
   navigate(section:string,outlet:string,idOrSection:string){
     this.router.navigate([
@@ -50,13 +56,10 @@ export class RouterService {
 
       if(event.id==1&&match){
         console.log("Initial load:")
-        const rootId = localStorage.getItem("rootId")
-        if(rootId){
-          this.UserService.rootId=rootId
-        }
+        this.saveRootId()
         this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
-      }else {
-
+      }else if(fullUrl.includes("admin")) {
+        this.saveRootId()
       }
 
 
