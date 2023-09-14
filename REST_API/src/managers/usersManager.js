@@ -64,7 +64,7 @@ exports.addNotification = async (userId,notificationId)=>{
     await user.save()
 }
 exports.addNotificationForEveryone = async(notId)=>{
-    const allUsers = userModel.find()
+    const allUsers =await userModel.find()
     for (const user of allUsers) {
         this.addNotification(user._id,notId)
     }
@@ -78,6 +78,5 @@ exports.newNotification = async (message,level,userId) =>{
         //to everyone
         await this.addNotificationForEveryone(_id)
     }
-    console.log(await userModel.findById(userId).populate("notifications"));
 }
 
