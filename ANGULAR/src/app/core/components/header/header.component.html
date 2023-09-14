@@ -3,8 +3,9 @@
     <div class="notifications" (click)="HeaderService.toggleNotificationSection()">
       <i class="fa-regular fa-bell"></i>
       <div #notificationSection class="notificationSectionWrapper">
+        <app-loader *ngIf="HeaderService.notificationPanelIsLoading"></app-loader>
         <div  class="notificationSection" >
-          <div *ngFor="let notification of notifications" class="notification">
+          <div *ngFor="let notification of CacheService.notifications" class="notification">
             <div class="wrapper">
               <div class="infoIcon">
                 <i class="fa-solid fa-info"></i>

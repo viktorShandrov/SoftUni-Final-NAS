@@ -5,6 +5,7 @@ import {UserSettingsPopupService} from "../../services/user-settings-popup.servi
 import {HttpService} from "../../../shared/services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {constants} from "../../../shared/constants";
+import {CacheService} from "../../../shared/services/cache.service";
 
 @Component({
   selector: 'app-header',
@@ -20,25 +21,16 @@ constructor(
   private renderer2:Renderer2,
   public UserSettingsPopupService:UserSettingsPopupService,
   public HTMLElementsService:HTMLElementsService,
+  public CacheService:CacheService,
   private ToastrService:ToastrService,
   public HttpService:HttpService,
   public HeaderService:HeaderService,
 ) {}
-  getUserNotifications(){
-    this.HttpService.httpGETRequest("api/users/getNotifications",).subscribe(
-      (res:any)=>{
-        this.notifications = res.reverse()
-      },
-      (error)=>{
-        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-      }
-    )
-  }
+
 
 ngAfterViewInit(){
   this.HTMLElementsService.userMenu = this.userMenu
   this.HTMLElementsService.notificationSection = this.notificationSection
-  this.getUserNotifications()
   this.renderer2.setStyle(this.element.nativeElement,"display","flex")
   this.renderer2.setStyle(this.element.nativeElement,"align-items","center")
   this.renderer2.setStyle(this.element.nativeElement,"position","relative")

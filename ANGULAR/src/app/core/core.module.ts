@@ -7,6 +7,7 @@ import {RouterService} from "./router/router.service";
 import { UploadProgressPopupComponent } from './components/upload-progress-popup/upload-progress-popup.component';
 import { UsedStorageComponent } from './components/used-storage/used-storage.component';
 import { UserSettingsPopupComponent } from './components/user-settings-popup/user-settings-popup.component';
+import {SharedModule} from "../shared/shared.module";
 
 
 
@@ -24,10 +25,11 @@ import { UserSettingsPopupComponent } from './components/user-settings-popup/use
         UserSettingsPopupComponent,
 
     ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterLink
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        RouterLink,
+        SharedModule
+    ]
 })
 export class CoreModule { }

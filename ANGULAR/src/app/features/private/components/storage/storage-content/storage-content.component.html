@@ -14,7 +14,7 @@
 
                 </div>
 
-        <div *ngIf="enviroments.storageViewCellStructure" class="storage">
+        <div #storageContainer *ngIf="enviroments.storageViewCellStructure" class="storage">
           <div #folderCell [@cellDisappear]="folder.isCrossed?'out':'in'" (@cellDisappear.done)="StorageService.spliceFromList($event,index,'folder')"   #folderElement appFolderDoubleClick *ngFor="let folder of folders;let index = index" class="cell directory"  [attr._id]="folder._id">
             <div class="imageAndDots">
                 <div  class="imageContainer">

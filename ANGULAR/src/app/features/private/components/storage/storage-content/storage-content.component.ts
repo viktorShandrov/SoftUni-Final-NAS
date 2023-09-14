@@ -76,6 +76,7 @@ export class StorageContentComponent implements AfterViewInit {
   @ViewChildren("fileCell") fileCells!:QueryList<ElementRef>
   @ViewChildren('folderElement') foldersRef!: QueryList<ElementRef>;
   @ViewChildren('fileElement') filesRef!: QueryList<ElementRef>;
+  @ViewChild("storageContainer") storageContainer!:ElementRef
 
   constructor(
     private HttpService: HttpService,
@@ -110,9 +111,12 @@ export class StorageContentComponent implements AfterViewInit {
       }
   }
   ngAfterViewInit(): void {
-    this.renderer.listen(this.element.nativeElement,"mousewheel",(e)=>{
-      this.PopupService.hideAllOtherMenus()
-    })
+    setTimeout(()=>{
+      this.renderer.listen(this.storageContainer.nativeElement,"mousewheel",(e)=>{
+        this.PopupService.hideAllOtherMenus()
+      })
+
+    },300)
 
     this.folders =this.CacheService.folders;
     for (const folder of this.folders) {

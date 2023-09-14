@@ -3,6 +3,9 @@ import {enviroments} from "../../shared/environments";
 import {HTMLElementsService} from "../../shared/services/htmlelements.service";
 import {constants} from "../../shared/constants";
 import {PopupService} from "../../shared/services/popup.service";
+import {HttpService} from "../../shared/services/http.service";
+import {ToastrService} from "ngx-toastr";
+import {CacheService} from "../../shared/services/cache.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +14,33 @@ export class HeaderService {
 
   usedStorage!:number
   totalVolume!:number
+  notificationPanelClicks:number = 0
+  notificationPanelIsLoading!:boolean
   usedStoragePercentage!:number
   isLoading!:Boolean
   constructor(
     private HTMLElementsService:HTMLElementsService,
+    private HttpService:HttpService,
+    private CacheService:CacheService,
+    private ToastrService:ToastrService,
     private PopupService:PopupService,
   ) {
     this.usedStorage=0
     this.totalVolume=0
+  }
+  getUserNotifications(){
+    this.notificationPanelIsLoading = true
+    this.HttpService.httpGETRequest("api/users/getNotifications",).subscribe(
+      (res:any)=>{
+        this.CacheService.notifications = res.reverse()
+        console.log(this.CacheService.notifications )
+        this.notificationPanelIsLoading = false
+      },
+      (error)=>{
+        this.notificationPanelIsLoading = false
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+      }
+    )
   }
 
   toggleUserMenu(){
@@ -36,13 +58,17 @@ export class HeaderService {
       this.PopupService.hideAllOtherMenus()
       this.showNotificationSection()
     }
-    
+
   }
 
   showUserMenu(){
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu.nativeElement,"display","flex")
   }
   showNotificationSection(){
+    // this.notificationPanelClicks
+    if( ++this.notificationPanelClicks==1){
+      this.getUserNotifications()
+    }
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.notificationSection.nativeElement,"display","block")
   }
   hideUserMenu(){

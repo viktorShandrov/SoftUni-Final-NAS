@@ -40,6 +40,8 @@ header .user-section i{
 
 }
 .notificationSectionWrapper {
+  min-width: 100px;
+  /*position: relative;*/
   height: 180px;
   overflow-y: scroll;
 }
