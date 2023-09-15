@@ -16,7 +16,9 @@ export class HeaderService {
   totalVolume!:number
   notificationPanelClicks:number = 0
   notificationPanelIsLoading!:boolean
+  areThereNewNotifications!:boolean
   usedStoragePercentage!:number
+
   isLoading!:Boolean
   constructor(
     private HTMLElementsService:HTMLElementsService,
@@ -27,6 +29,17 @@ export class HeaderService {
   ) {
     this.usedStorage=0
     this.totalVolume=0
+  }
+
+  checkForNeNotifications(){
+    this.HttpService.httpGETRequest("api/users/areThereUnSeenNotifications").subscribe(
+      (res:any)=>{
+        this.areThereNewNotifications = res
+      },
+      (error)=>{
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+      }
+    )
   }
   getUserNotifications(){
     this.notificationPanelIsLoading = true
@@ -65,7 +78,7 @@ export class HeaderService {
     this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu.nativeElement,"display","flex")
   }
   showNotificationSection(){
-    // this.notificationPanelClicks
+    this.areThereNewNotifications = false
     if( ++this.notificationPanelClicks==1){
       this.getUserNotifications()
     }

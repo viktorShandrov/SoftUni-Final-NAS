@@ -1,14 +1,18 @@
 <header>
   <div class="user-section">
     <div class="notifications" (click)="HeaderService.toggleNotificationSection()">
-      <i class="fa-regular fa-bell"></i>
+      <i id="notificationIcon" class="fa-regular fa-bell ">
+        <div *ngIf="HeaderService.areThereNewNotifications" class="newNotificationCircle">
+          <div class="whiteCircle"></div>
+        </div>
+      </i>
       <div #notificationSection class="notificationSectionWrapper">
         <app-loader *ngIf="HeaderService.notificationPanelIsLoading"></app-loader>
         <div  class="notificationSection" >
           <div *ngFor="let element of CacheService.notifications" class="notification" [attr.level]="element.notification.level">
             <div class="wrapper">
               <div class="infoIcon">
-                <i class="fa-solid fa-info"></i>
+                <i  class="fa-solid fa-info"></i>
               </div>
               <div class="notificationMessage">
                {{element.notification.message}}

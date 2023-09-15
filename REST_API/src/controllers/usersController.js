@@ -103,6 +103,16 @@ router.post("/createNotification",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/areThereUnSeenNotifications",isAuth,async (req,res)=>{
+    try {
+        const {_id}= req.user
+        const response = await userManager.areThereUnSeenNotifications(_id)
+        res.status(200).send(response)  
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+})
 
 
 module.exports = router

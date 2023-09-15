@@ -6,7 +6,7 @@ const { createRoot } = require("./filesManager")
 const {OAuth2Client} = require('google-auth-library');
 const {googleClientId} = require('../utils/utils');
 const notificationModel = require("../models/notificationModel")
-const { default: mongoose } = require("mongoose")
+const { default: mongoose, trusted } = require("mongoose")
 
 exports.register =async (email,password,repeatePassword,rootId,userId)=>{
     const user =await userModel.findOne({email})
@@ -90,5 +90,14 @@ exports.getNotifications=async(userId)=>{
     //could be awaited
     makeAllNotificationsSeen(user)
     return user.notifications
+}
+exports.areThereUnSeenNotifications=async(userId)=>{
+    const user = await userModel.findById(userId)
+    for (const notification of user.notifications) {
+        if(!notification.seen){
+            return true
+        }
+    }
+    return false
 }
 

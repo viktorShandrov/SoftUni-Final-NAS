@@ -7,6 +7,10 @@ import {StorageService} from "../../features/private/services/storage.service";
 import {HTMLElementsService} from "../../shared/services/htmlelements.service";
 import {CacheService} from "../../shared/services/cache.service";
 import {DashboardService} from "../../features/private/services/dashboard.service";
+import {HttpService} from "../../shared/services/http.service";
+import {ToastrService} from "ngx-toastr";
+import {constants} from "../../shared/constants";
+import {HeaderService} from "../services/header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +24,9 @@ export class RouterService {
     private DashboardService: DashboardService,
 
     private HTMLElementsService: HTMLElementsService,
+    private HeaderService: HeaderService,
+    private ToastrService: ToastrService,
+    private HttpService: HttpService,
 
     private CacheService: CacheService,
 
@@ -44,6 +51,7 @@ export class RouterService {
     ]);
   }
 
+
    detectInitialNavigation() {
 
     this.router.events.pipe(
@@ -58,6 +66,7 @@ export class RouterService {
         console.log("Initial load:")
         this.saveRootId()
         this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
+        this.HeaderService.checkForNeNotifications()
       }else if(fullUrl.includes("admin")) {
         this.saveRootId()
       }
