@@ -61,6 +61,15 @@ header .user-section i{
   /*gap: 10px;*/
 
 }
+.notification[level="3"]{
+  background-color: #5b91ff;
+}
+.notification[level="2"]{
+  background-color: #fffda0;
+}
+.notification[level="1"]{
+  background-color: red;
+}
 .notifications .wrapper{
   display: flex;
 }
