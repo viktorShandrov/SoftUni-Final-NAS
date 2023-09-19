@@ -62,6 +62,7 @@ export class DashboardViewComponent implements AfterViewInit{
   ];
   constructor(
     private Renderer2: Renderer2,
+    private element: ElementRef,
     private DashboardService: DashboardService,
     public HeaderService: HeaderService,
     private HTMLElementsService: HTMLElementsService,
@@ -81,6 +82,9 @@ export class DashboardViewComponent implements AfterViewInit{
     return `${volume.toFixed(2)}${mesure}`
   }
   ngAfterViewInit() {
+    this.Renderer2.setStyle(this.element.nativeElement,"display","flex")
+    this.Renderer2.setStyle(this.element.nativeElement,"flex-direction","column")
+    this.Renderer2.setStyle(this.element.nativeElement,"height","100%")
     this.HTMLElementsService.dashboardStorageProgressBar = this.dashboardStorageProgressBar
         setTimeout(async ()=>{
 
