@@ -45,6 +45,7 @@ header .user-section i{
   /*position: relative;*/
   height: 180px;
   overflow-y: scroll;
+  border: solid 0.1cm black;
 }
 
 .notificationSection{
