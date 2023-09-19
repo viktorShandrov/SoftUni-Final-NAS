@@ -158,8 +158,8 @@ router.get("/:rootId/getOnlyRootInfo", async (req, res) => {
 router.get("/:rootId/topFileExts", async (req, res) => {
   try {
     const { rootId } = req.params
-    const topFileExts = await fileManager.getTopFileExts(rootId)
-    res.status(200).json({topFileExts})
+    const payload = await fileManager.getTopFileExts(rootId)
+    res.status(200).json(payload)
   } catch (error) {
     console.log(error.message);
     res.status(409).json({message:"Problem with fetching top file extensions info"})
@@ -169,8 +169,8 @@ router.get("/:rootId/getTopFolders", async (req, res) => {
   try {
     const { rootId } = req.params
     const userId = req.user._id
-    const topFolders = await fileManager.getTopFolders(rootId,userId)
-    res.status(200).json({topFolders})
+    const payload = await fileManager.getTopFolders(rootId,userId)
+    res.status(200).json(payload)
   } catch (error) {
     console.log(error.message);
     res.status(409).json({message:"Problem with fetching top file extensions info"})

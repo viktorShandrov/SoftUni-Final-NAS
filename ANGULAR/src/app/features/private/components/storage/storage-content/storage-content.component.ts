@@ -62,6 +62,7 @@ import {PopupService} from "../../../../../shared/services/popup.service";
 })
 export class StorageContentComponent implements AfterViewInit {
   folders!: folder[];
+  constants = constants
   files!: file[];
   haveFolder: Boolean = false;
   cellCrossMarkLength:Number = 0
@@ -70,7 +71,7 @@ export class StorageContentComponent implements AfterViewInit {
   isLoading:boolean=true
   loadingDelayPassed = false;
 
-  fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
+  // fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
 
   @ViewChildren("folderCell") folderCells!:QueryList<ElementRef>
   @ViewChildren("fileCell") fileCells!:QueryList<ElementRef>

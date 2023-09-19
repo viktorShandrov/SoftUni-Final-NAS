@@ -11,7 +11,9 @@ const toastrOptions = {progressBar:true,timeOut:3000}
 
 const HeaderStorageInfoMainColor  = "#0cc0df"
 const HeaderStorageInfoColorWhenUpload  = "#29d60b"
+const fileExtensions:Array<String> = ["pdf","mp3","html","jpg","png","txt","docx","zip","rar","exe"]
 export const constants = {
+  fileExtensions,
   REST_API_DOMAIN,
   jsonHeaders,
   fileHeaders,

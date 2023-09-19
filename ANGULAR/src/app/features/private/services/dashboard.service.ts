@@ -25,26 +25,32 @@ export class DashboardService {
     private HeaderService:HeaderService,
   ) { }
 
+setTopExtBarsWidth(Renderer2:Renderer2,extQ:QueryList<ElementRef>,res:any){
+  for (let i=0;i<this.topExt.length;i++){
+    const percentage  = (this.topExt[i].count/res.fileCount)*100
+    Renderer2.setStyle(extQ.toArray()[i].nativeElement,"width",percentage+"%")
 
+  }
+}
+setTopFoldersBarsWidth(Renderer2:Renderer2,foldersQ:QueryList<ElementRef>,res:any){
+  for (let i=0;i<this.topFolders.length;i++){
+    const percentage  = (this.topFolders[i].count/res.fileCount)*100
+    console.log(percentage);
+    Renderer2.setStyle(foldersQ.toArray()[i].nativeElement,"width",percentage+"%")
+
+  }
+}
   getTopExtData(extQ:QueryList<ElementRef>,Renderer2:Renderer2){
 
     return new Promise((resolve,reject)=>{
       setTimeout(() => {
         this.HttpClient.get(`api/files/${this.UserService.rootId}/topFileExts`).subscribe(
           (res:any)=>{
-            const maxHeight = 200; //px
             this.topExt=res.topFileExts
-            const count: number = this.topExt.reduce(
-              (sum, item) => (sum += item.count),
-              0
-            );
-            console.log('count: ', count);
-            setTimeout(() => {
-              extQ.forEach((bar,index) => {
-                const domElementHeight = Number((( this.topExt[index]?.count / count) * maxHeight).toFixed(0));
-                Renderer2.setStyle(bar.nativeElement,"height",domElementHeight+"px")
-              });
-            }, 0);
+            setTimeout(()=>{
+              this.setTopExtBarsWidth(Renderer2,extQ,res)
+
+            },0)
             resolve(1)
           },
           (err)=>{
@@ -61,24 +67,17 @@ export class DashboardService {
     return new Promise((resolve,reject)=>{
       this.HttpClient.get(`api/files/${this.UserService.rootId}/getTopFolders`).subscribe(
         (res:any)=>{
-          const maxHeight = 200; //px
-          this.topFolders=res.topFolders
-          const count: number = this.topFolders.reduce(
-            (sum, item) => (sum += item.count),
-            0
-          );
-          console.log('count: ', count);
-          setTimeout(() => {
-            foldersQ.forEach((bar,index) => {
-              const domElementHeight = Number((( this.topFolders[index]?.count / count) * maxHeight).toFixed(0));
-              Renderer2.setStyle(bar.nativeElement,"height",domElementHeight+"px")
-            });
-          }, 0);
-          resolve(1)
-        },
-        (err)=>{
-          reject(0)
-        }
+          console.log(res)
+          this.topFolders = res.topFolders
+            setTimeout(()=>{
+              this.setTopFoldersBarsWidth(Renderer2,foldersQ,res)
+
+            },0)
+            resolve(1)
+          },
+            (err)=>{
+              reject(0)
+            }
       )
 
     })

@@ -281,9 +281,10 @@ exports.getTopFileExts=async(rootId)=>{
     }
 
 
-    return payload
+    return {topFileExts:payload,fileCount:files.length}
 }
 exports.getTopFolders=async(rootId,userId)=>{
+    let files = await fileModel.find({rootId})
     const folders = await folderModel.find({rootId})
     const filtered = folders.filter((folder)=>folder.autorised.includes(userId))
 
@@ -295,8 +296,8 @@ exports.getTopFolders=async(rootId,userId)=>{
     }
     
 
-
-    return payload
+    
+    return {topFolders:payload.slice(0,3),fileCount:files.length}
 }
 
 // exports.autoriseUserToFolder = async (folderId,email)=>{

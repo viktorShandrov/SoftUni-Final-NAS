@@ -66,42 +66,60 @@
 
 
 
-
+.chartsWrapper,
 .foldersWithMostElementsInWrapper,
 .foldersWithMostElementsInWrapper .topFoldersContainer,
 .foldersWithMostElementsInWrapper .topFoldersContainer .folder,
 .foldersWithMostElementsInWrapper .topFoldersContainer .folder .info,
 .foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount,
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount>*{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount>*,
+.mostCommonFileExtensionsWrapper,
+.mostCommonFileExtensionsWrapper .topFoldersContainer,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info .nameAndCount,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info .nameAndCount>*{
   display: flex;
 }
+.chartsWrapper{
+gap: 40px;
+}
 
-
-
-.foldersWithMostElementsInWrapper{
+.foldersWithMostElementsInWrapper,
+.mostCommonFileExtensionsWrapper{
   flex-direction: column;
 
 }
-.foldersWithMostElementsInWrapper .topFoldersContainer{
+.foldersWithMostElementsInWrapper .topFoldersContainer,
+.mostCommonFileExtensionsWrapper .topFoldersContainer{
   flex-direction: column;
   gap: 10px;
 }
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .folderImage{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder{
+  justify-content: center;
+}
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .folderImage,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .folderImage{
   width: 20px;
   height: 20px;
 }
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info{
   flex-direction: column;
   margin: 0 10px;
 }
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info .nameAndCount {
   justify-content: space-between;
 }
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount>*{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .nameAndCount>*,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info .nameAndCount>*{
   margin: 0;
   align-self: center;
 }
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .bar{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .bar,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info .bar{
   width: 140px;
   height: 3px;
   background-color: grey;
@@ -109,7 +127,8 @@
 
 }
 
-.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .bar .progress{
+.foldersWithMostElementsInWrapper .topFoldersContainer .folder .info .bar .progress,
+.mostCommonFileExtensionsWrapper .topFoldersContainer .folder .info .bar .progress{
   width: 60%;
   height: 100%;
   background-color: #f8d058;
