@@ -1,5 +1,6 @@
 .headerWrapper{
   display: flex;
+  position: relative;
   justify-content: space-between;
 }
 
@@ -8,19 +9,29 @@
 .urlWrapper{
   display: flex ;
   flex-direction: column;
+  width: 35%;
   /*justify-content: center;*/
   margin: 30px auto 30px auto;
+  transition: 0.7s;
 
 }
+.urlWrapper:focus-within{
+  /*background-color: red;*/
+  width: 50%;
+
+}
+
+.urlWrapper .url,
+.urlWrapper .searchCompletionsWrapper,
+.urlWrapper .searchCompletionsWrapper .searchCompletion {
+  width: 100%;
+}
+
+
 .urlWrapper .url{
-  /*flex: 1 0 200px; !* Adjust as needed *!*/
-  min-width: 60px;
   position: relative;
   display: flex;
-  width: fit-content;
-  /*padding: 20px;*/
   border-radius: 20px;
-  /*border: solid 0.02cm grey;*/
 }
 
 .urlWrapper .url  label {
@@ -36,36 +47,38 @@
 }
 .urlWrapper .url input {
   height: 30px;
+  width: 100%;
   border:none;
   padding-left: 10px;
-  /*width: 100%;*/
   background-color: #f3f1f1;
-  width: 300px;
-  transition: 0.7s;
+
 
 }
 
 .urlWrapper .url input:focus {
   outline: none;
-  width: 600px;
 }
 
 .searchCompletionsWrapper{
+  width: 100%;
+  height: 10px;
   position: relative;
 }
 
 .urlWrapper .searchCompletion {
   border-radius: 20px;
-  position: fixed;
+  /*position: fixed;*/
   width: 100%;
+  position: absolute;
   display: none;
   background-color: #ffd8d8;
+  height: fit-content;
   max-height: 300px;
-  max-width: 625px;
+  /*max-width: 625px;*/
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-  z-index: 9999; /* Set a high z-index value */
+  z-index: 99999;
 }
 
 .urlWrapper .searchCompletion::-webkit-scrollbar{
