@@ -10,7 +10,7 @@ header{
 
 header .user-section{
   display: flex;
-  gap: 20px;
+  /*gap: 20px;*/
   position: relative;
   z-index: 1;
 }
@@ -18,6 +18,11 @@ header .user-section i{
   padding: 1px;
   color: grey;
   font-size: 23px;
+}
+header .user-profile-picture .userImage{
+  width: 40px;
+  height: 40px;
+  border-radius: 1000px;
 }
 .user-profile-picture .user-menu, .notificationSectionWrapper{
   display: none;
@@ -30,14 +35,34 @@ header .user-section i{
   text-align: center;
   z-index: 9999;
 }
-.user-profile-picture,.notifications{
+.user-profile-picture,
+.notifications{
+  display: flex;
+  align-items: center;
   padding: 8px 13px 7px 13px;
-  border: solid grey 0.01cm;
+  /*border: solid grey 0.01cm;*/
   border-radius: 100px  ;
+}
+.notifications{
+  margin-right: 20px;
 }
 .user-profile-picture:hover,.notifications:hover{
   cursor: pointer;
 
+}
+.usernameContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.usernameContainer .username,
+.usernameContainer .email
+{
+  margin: 0;
+}
+.usernameContainer .email{
+  font-size: 13px;
+  color: #b5b5b5;
 }
 .notificationSectionWrapper {
   min-width: 100px;

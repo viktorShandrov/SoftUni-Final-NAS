@@ -24,13 +24,18 @@
       </div>
     </div>
     <div class="user-profile-picture" (click)="HeaderService.toggleUserMenu()">
-      <i class="fa-solid fa-user"></i>
+<!--      <i class="fa-solid fa-user"></i>-->
+      <img class="userImage" src="./assets/COVIDREADY.png" alt="">
       <div  #userMenu class="user-menu" >
         <div (click)="UserSettingsPopupService.showPopup()" class="option settings">Settings</div>
         <div class="option logout">
           <a [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">Logout</a>
         </div>
       </div>
+    </div>
+    <div class="usernameContainer">
+      <p class="username">Viktor Shandrov</p>
+      <p class="email">shadopest@abv.bg</p>
     </div>
   </div>
 

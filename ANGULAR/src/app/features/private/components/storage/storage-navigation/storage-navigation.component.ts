@@ -193,7 +193,6 @@ export class StorageNavigationComponent implements AfterViewInit {
         setTimeout(()=>{
           for (let i = 0;i < completionDivsRefs.length  ; i++) {
             if(!filteredCompletionsAR.includes(completionDivsRefs.toArray()[i])){
-              console.log(completionDivsRefs.toArray()[i])
              this.StorageService.addEventListenersToSingleCompletionElement(completionDivsRefs.toArray()[i],this.router)
             }
           }
