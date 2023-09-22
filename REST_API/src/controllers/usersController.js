@@ -86,6 +86,7 @@ router.get("/getNotifications",isAuth,async (req,res)=>{
         const {_id} = req.user
         const notifications = await userManager.getNotifications(_id)
         res.status(200).json(notifications)
+        userManager.makeAllNotificationsSeen(_id)
     } catch (error) {
         console.log(error);
         res.status(400).json({message:error.message})

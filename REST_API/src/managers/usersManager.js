@@ -79,7 +79,8 @@ exports.newNotification = async (message,level,userId) =>{
         await this.addNotificationForEveryone(_id)
     }
 }
-async function makeAllNotificationsSeen(user){
+exports.makeAllNotificationsSeen=async(userId)=>{
+    const user = await userModel.findById(userId).populate("notifications.notification")
     for (const notification of user.notifications) {
         notification.seen = true
     }
@@ -87,8 +88,6 @@ async function makeAllNotificationsSeen(user){
 }
 exports.getNotifications=async(userId)=>{
     const user = await userModel.findById(userId).populate("notifications.notification")
-    //could be awaited
-    makeAllNotificationsSeen(user)
     return user.notifications
 }
 exports.areThereUnSeenNotifications=async(userId)=>{
