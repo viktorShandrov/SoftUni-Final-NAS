@@ -8,9 +8,9 @@
       </i>
       <div #notificationSection class="notificationSectionWrapper">
         <app-loader *ngIf="HeaderService.notificationPanelIsLoading"></app-loader>
-        <h2>Notifications</h2>
+        <h2 class="label">Notifications</h2>
         <div  class="notificationSection" >
-          <div *ngFor="let element of CacheService.notifications" class="notification" [attr.level]="element.notification.level">
+          <div *ngFor="let element of CacheService.notifications" class="notification" [attr.seen]="element.seen">
             <div class="wrapper">
               <div class="infoIcon">
                 <i  class="fa-solid fa-info"></i>

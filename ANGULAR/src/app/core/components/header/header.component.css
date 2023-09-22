@@ -11,7 +11,7 @@ header{
 header .user-section{
   display: flex;
   /*gap: 20px;*/
-  position: relative;
+  /*position: relative;*/
   z-index: 1;
 }
 header .user-section i{
@@ -26,19 +26,20 @@ header .user-profile-picture .userImage{
 }
 .user-profile-picture .user-menu,
 .notificationSectionWrapper{
+  position: fixed;
   display: none;
   flex-direction: column;
-  position: fixed;
   background-color: white;
   /*box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;*/
   transform: translate(-30%);
   border: solid #c7c7c7 0.01cm;
   border-radius: 5px;
+  top: 120px;
   text-align: center;
   z-index: 9999;
 }
 .notificationSectionWrapper::-webkit-scrollbar{
-
+  display: none;
 }
 header .user-profile-picture .user-menu{
   width: clamp(105px,20vw,200px);
@@ -54,6 +55,7 @@ header .user-profile-picture .user-menu{
 }
 .notifications{
   margin-right: 20px;
+  position: relative;
 }
 .user-profile-picture:hover,
 .notifications:hover{
@@ -77,12 +79,19 @@ header .user-profile-picture .user-menu{
 .notificationSectionWrapper {
   background-color: white;
   min-width: 100px;
+  max-width: 250px;
   width: fit-content;
   /*position: relative;*/
   height: 180px;
   overflow-y: scroll;
-  /*border: solid 0.1cm black;*/
   border-radius: 10px;
+  /*position: absolute;*/
+  z-index: 9999;
+}
+.notificationSectionWrapper .label{
+  text-align: left;
+  font-size: 18px;
+  margin: 15px;
 }
 
 .notificationSection{
@@ -91,13 +100,24 @@ header .user-profile-picture .user-menu{
   flex-direction: column;
   gap: 5px;
 }
-.notification{
+.notifications .notification{
   display: flex;
   flex-direction: column;
   height: fit-content;
-  padding: 0 10px;
+  padding:  10px;
   /*gap: 10px;*/
 
+}
+.notifications .notification:hover{
+  background-color: #f4f6f8;
+}
+.notification .notificationMessage{
+  display: flex;
+  align-items: center;
+
+}
+.notification[seen="false"]{
+  background-color: #e8f2fc;
 }
 /*.notification[level="3"]{*/
 /*  background-color: #5b91ff;*/
@@ -110,9 +130,6 @@ header .user-profile-picture .user-menu{
 /*}*/
 .notifications .wrapper{
   display: flex;
-}
-.notifications .wrapper:hover{
-  background-color: #e8f2fc;
 }
 .hr {
   height: 1px;
@@ -132,10 +149,11 @@ header .user-profile-picture .user-menu{
 header .user-section .infoIcon {
   width: fit-content;
   height: fit-content;
-  padding: 5px;
+  padding: 5px 15px;
   font-size: 15px;
   border: solid grey 0.01cm;
-  border-radius: 10px;
+  border-radius: 100px;
+  margin-right: 10px;
 }
 header .user-section .user-menu h2{
   margin: 10px;
