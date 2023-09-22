@@ -1,6 +1,6 @@
  <div class="headerWrapper">
       <div class="urlWrapper">
-        <div class="url">
+        <div #url class="url">
           <label for="searchBar">
             <i class="fa-solid fa-magnifying-glass"></i>
           </label>
@@ -10,7 +10,6 @@
         </div>
         <div class="searchCompletionsWrapper">
           <div #searchCompletion class="searchCompletion" >
-
               <div *ngFor="let completion of completions" class="completion" [attr.id]="completion._id" #completionDiv>
                 <p>{{completion.name}}</p>
               </div>

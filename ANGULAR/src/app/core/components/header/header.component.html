@@ -8,6 +8,7 @@
       </i>
       <div #notificationSection class="notificationSectionWrapper">
         <app-loader *ngIf="HeaderService.notificationPanelIsLoading"></app-loader>
+        <h2>Notifications</h2>
         <div  class="notificationSection" >
           <div *ngFor="let element of CacheService.notifications" class="notification" [attr.level]="element.notification.level">
             <div class="wrapper">
@@ -18,7 +19,7 @@
                {{element.notification.message}}
               </div>
             </div>
-            <div class="hr"></div>
+<!--            <div class="hr"></div>-->
           </div>
         </div>
       </div>
@@ -27,9 +28,16 @@
 <!--      <i class="fa-solid fa-user"></i>-->
       <img class="userImage" src="./assets/COVIDREADY.png" alt="">
       <div  #userMenu class="user-menu" >
-        <div (click)="UserSettingsPopupService.showPopup()" class="option settings">Settings</div>
+        <h2>Account</h2>
+        <div (click)="UserSettingsPopupService.showPopup()" class="option settings">
+          <i class="fa-solid fa-gear"></i>
+          <h5>Settings</h5>
+        </div>
         <div class="option logout">
-          <a [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">Logout</a>
+          <a [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <h5>Sign Out</h5>
+          </a>
         </div>
       </div>
     </div>

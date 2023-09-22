@@ -38,6 +38,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class StorageNavigationComponent implements AfterViewInit {
   @ViewChild('urlBarInput') urlBarInput!: ElementRef;
+  @ViewChild('url') url!: ElementRef;
   @ViewChild('divDirContainer') divDirContainer!: ElementRef;
   @ViewChild('searchCompletion') searchCompletion!: ElementRef;
   @ViewChildren('completionDiv') completionDivsRefs!: QueryList<ElementRef>;
@@ -121,6 +122,7 @@ export class StorageNavigationComponent implements AfterViewInit {
   ngAfterViewInit() {
     setTimeout(()=>{
     this.HTMLElementsService.urlBar = this.urlBarInput
+    this.HTMLElementsService.url = this.url
     this.HTMLElementsService.divDirContainer = this.divDirContainer
       this.HTMLElementsService.searchCompletion = this.searchCompletion
     this.HTMLElementsService.completionDivsRefs =this.completionDivsRefs
@@ -141,7 +143,6 @@ export class StorageNavigationComponent implements AfterViewInit {
       let setELtoAllCompletions = false
       this.renderer.listen(urlBarInput,"input",()=>{
         if(urlBarInput.value!==""){
-          console.log("all",allCompletions)
           filteredCompletions = allCompletions.filter(completion=>completion.name.includes(urlBarInput.value))
 
 

@@ -130,10 +130,15 @@ export class StorageService {
 
     renderer.listen(urlBar.nativeElement, 'focus', (event: any) => {
       renderer.setStyle(searchCompletion.nativeElement, 'display', 'block');
+      setTimeout(()=>{
+        renderer.setStyle(searchCompletion.nativeElement,"width",this.HTMLElementsService.url.nativeElement.getBoundingClientRect().width+"px")
+
+      },400)
     });
     renderer.listen(urlBar.nativeElement, 'blur', (event: any) => {
       setTimeout(() => {
         renderer.setStyle(searchCompletion.nativeElement, 'display', 'none');
+        renderer.setStyle(searchCompletion.nativeElement,"width",0)
       }, 100);
     });
   }

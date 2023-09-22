@@ -8,6 +8,8 @@
 
 .urlWrapper{
   display: flex ;
+  position: relative;
+  /*z-index: 9999;*/
   flex-direction: column;
   width: 35%;
   /*justify-content: center;*/
@@ -60,25 +62,27 @@
 }
 
 .searchCompletionsWrapper{
-  width: 100%;
+  width: 0;
   height: 10px;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.urlWrapper .searchCompletion {
-  border-radius: 20px;
-  /*position: fixed;*/
-  width: 100%;
-  position: absolute;
+.urlWrapper .searchCompletionsWrapper .searchCompletion {
+  position: fixed;
   display: none;
-  background-color: #ffd8d8;
+  width: 0;
   height: fit-content;
+  border-radius: 20px;
+
+  background-color: #ffd8d8;
   max-height: 300px;
-  /*max-width: 625px;*/
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-  z-index: 99999;
+  transition: 0.7s;
+  z-index: 9999;
 }
 
 .urlWrapper .searchCompletion::-webkit-scrollbar{
@@ -90,6 +94,9 @@
 .urlWrapper  .searchCompletion .completion p{
   margin: 0 ;
   padding: 15px 15px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 .urlWrapper .searchCompletion .completion:hover{
   background-color: rgb(9, 181, 181);
@@ -101,8 +108,8 @@
 .navigation {
   display: flex;
   padding: 10px;
-  background-color: #cacaca;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: #f0f0f0;
+  box-shadow: inset 0 0 10px rgba(165, 165, 165, 0.5);
    /*height: 26px;*/
 }
 
@@ -120,7 +127,7 @@
   color: black;
   transition: 0.3s;
   cursor: pointer;
-  background-color: #cacaca;
+  background-color: #f0f0f0;
 
 }
 .navigation .actionBtn:hover{
@@ -134,7 +141,7 @@
 }
 .navigation .back-and-further-btns{
   /*background-color: var(--BGcolor);*/
-  background-color: #cacaca;
+  background-color: #f0f0f0;
   transition: 1s;
 }
 .navigation .back,  .navigation .back-and-further-btns {
@@ -153,7 +160,8 @@
 }
 
 
-.navigation .urlBar .dirBtn,.navigation .urlBar .mainRootBtn {
+.navigation .urlBar .dirBtn,
+.navigation .urlBar .mainRootBtn {
   background-color: #D9D9D9;
   display: flex;
   align-items: center;
@@ -166,7 +174,7 @@
   position: relative;
 }
 .navigation .urlBar .mainRootBtn {
-  background-color: #748183;
+  background-color: #afb1b2;
   display: flex;
   align-items: center;
   padding: 0 20px;

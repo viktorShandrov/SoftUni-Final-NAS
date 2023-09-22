@@ -30,6 +30,7 @@ export class HTMLElementsService {
   wholeStorage!: ElementRef;
   searchCompletion!: ElementRef;
   dashboard!: ElementRef;
+  url!: ElementRef;
   sharedWithMe!: ElementRef;
   sharedWithUsers!: ElementRef;
   urlBar!: ElementRef;

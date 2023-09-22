@@ -24,16 +24,25 @@ header .user-profile-picture .userImage{
   height: 40px;
   border-radius: 1000px;
 }
-.user-profile-picture .user-menu, .notificationSectionWrapper{
+.user-profile-picture .user-menu,
+.notificationSectionWrapper{
   display: none;
   flex-direction: column;
   position: fixed;
   background-color: white;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
+  /*box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;*/
   transform: translate(-30%);
-  border-radius: 10px;
+  border: solid #c7c7c7 0.01cm;
+  border-radius: 5px;
   text-align: center;
   z-index: 9999;
+}
+.notificationSectionWrapper::-webkit-scrollbar{
+
+}
+header .user-profile-picture .user-menu{
+  width: clamp(105px,20vw,200px);
+  text-align: left;
 }
 .user-profile-picture,
 .notifications{
@@ -46,7 +55,8 @@ header .user-profile-picture .userImage{
 .notifications{
   margin-right: 20px;
 }
-.user-profile-picture:hover,.notifications:hover{
+.user-profile-picture:hover,
+.notifications:hover{
   cursor: pointer;
 
 }
@@ -65,12 +75,14 @@ header .user-profile-picture .userImage{
   color: #b5b5b5;
 }
 .notificationSectionWrapper {
+  background-color: white;
   min-width: 100px;
   width: fit-content;
   /*position: relative;*/
   height: 180px;
   overflow-y: scroll;
-  border: solid 0.1cm black;
+  /*border: solid 0.1cm black;*/
+  border-radius: 10px;
 }
 
 .notificationSection{
@@ -83,21 +95,24 @@ header .user-profile-picture .userImage{
   display: flex;
   flex-direction: column;
   height: fit-content;
-  padding: 0 20px;
+  padding: 0 10px;
   /*gap: 10px;*/
 
 }
-.notification[level="3"]{
-  background-color: #5b91ff;
-}
-.notification[level="2"]{
-  background-color: #fffda0;
-}
-.notification[level="1"]{
-  background-color: red;
-}
+/*.notification[level="3"]{*/
+/*  background-color: #5b91ff;*/
+/*}*/
+/*.notification[level="2"]{*/
+/*  background-color: #fffda0;*/
+/*}*/
+/*.notification[level="1"]{*/
+/*  background-color: red;*/
+/*}*/
 .notifications .wrapper{
   display: flex;
+}
+.notifications .wrapper:hover{
+  background-color: #e8f2fc;
 }
 .hr {
   height: 1px;
@@ -121,6 +136,24 @@ header .user-section .infoIcon {
   font-size: 15px;
   border: solid grey 0.01cm;
   border-radius: 10px;
+}
+header .user-section .user-menu h2{
+  margin: 10px;
+  font-size: 18px;
+  font-weight: bolder;
+}
+header .user-section .user-menu .option.settings h5,
+header .user-section .user-menu .option.logout h5{
+  margin: 0 0 0 10px;
+}
+header .user-section .user-menu i{
+  font-size: 13px;
+}
+header .user-section .user-menu .option.settings,
+header .user-section .user-menu .option.logout a {
+  display: flex;
+  align-items: center;
+
 }
  #notificationIcon{
   position: relative;
@@ -158,19 +191,19 @@ a{
 
 .user-profile-picture .user-menu .option{
   padding: 7px 10px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
+  /*box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;*/
 
 }
 .user-profile-picture .user-menu .option.logout{
-  background-color: #f37777;
+  background-color: #ffe2e2;
 
 
 }
 .user-profile-picture .user-menu .option:hover{
   background-color: #c1f6ff;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
+  /*box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;*/
 }
 .user-profile-picture .user-menu .option.logout:hover{
-  background-color: #ff4444;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;
+  background-color: #ffcbcb;
+  /*box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5) ;*/
 }
