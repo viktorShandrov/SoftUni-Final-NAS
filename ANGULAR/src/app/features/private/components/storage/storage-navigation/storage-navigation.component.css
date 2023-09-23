@@ -6,6 +6,7 @@
 
 
 
+
 .urlWrapper{
   display: flex ;
   position: relative;
@@ -13,7 +14,7 @@
   flex-direction: column;
   width: 35%;
   /*justify-content: center;*/
-  margin: 30px auto 30px auto;
+  margin: 30px auto;
   transition: 0.7s;
 
 }
@@ -30,11 +31,13 @@
 }
 
 
-.urlWrapper .url{
+.urlWrapper .url {
   position: relative;
   display: flex;
   border-radius: 20px;
 }
+
+
 
 .urlWrapper .url  label {
   display: flex;
@@ -147,6 +150,7 @@
 }
 
 .navigation .back-and-further-btns {
+
   display: flex;
   width: fit-content;
   max-height: 26px;
@@ -246,4 +250,15 @@
 .navigation .urlBar .dirDivBorder:last-child .dirBtn{
   color: white;
   background-color: #6197E8;
+}
+
+@media (max-width: 900px){
+  .headerWrapper{
+    flex-direction: column-reverse;
+    align-items: center;
+
+  }
+  .urlWrapper{
+    margin: 10px auto;
+  }
 }
