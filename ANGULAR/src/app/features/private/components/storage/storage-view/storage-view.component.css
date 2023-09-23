@@ -15,5 +15,5 @@ app-storage-navigation{
   /*position: relative;*/
   background-color: var(--BGcolor);
   transition: 1s;
-  margin: 30px;
+  margin: clamp(0px,2vw,30px);
 }
