@@ -2,7 +2,7 @@ header{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 50px  ;
+  margin-right: clamp(10px,2vw,50px);
   position: relative;
   color: black;
   z-index: 1;
@@ -49,12 +49,12 @@ header .user-profile-picture .user-menu{
 .notifications{
   display: flex;
   align-items: center;
-  padding: 8px 13px 7px 13px;
+  padding: 8px clamp(3px,1vw,13px) 7px clamp(3px,1vw,13px);
   /*border: solid grey 0.01cm;*/
   border-radius: 100px  ;
 }
 .notifications{
-  margin-right: 20px;
+  margin-right: clamp(0px,1vw,20px);
   position: relative;
 }
 .user-profile-picture:hover,
@@ -72,8 +72,11 @@ header .user-profile-picture .user-menu{
 {
   margin: 0;
 }
+.usernameContainer .username{
+  font-size: clamp(10px,1vw,16px);
+}
 .usernameContainer .email{
-  font-size: 13px;
+  font-size: clamp(9px,1vw,13px);
   color: #b5b5b5;
 }
 .notificationSectionWrapper {
