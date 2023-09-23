@@ -67,6 +67,7 @@ export class StorageNavigationComponent implements AfterViewInit {
     private UserService: UserService,
     private HttpService: HttpService,
     private HTMLElementsService: HTMLElementsService,
+    private element: ElementRef,
 
     private location: Location
   ) {
@@ -120,6 +121,7 @@ export class StorageNavigationComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.renderer.setStyle(this.element.nativeElement,"height","100%")
     setTimeout(()=>{
     this.HTMLElementsService.urlBar = this.urlBarInput
     this.HTMLElementsService.url = this.url

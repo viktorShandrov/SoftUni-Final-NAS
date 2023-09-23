@@ -1,11 +1,11 @@
 <app-loader *ngIf="isLoading"></app-loader>
-<div>
+<div class="storageWrapper">
   <app-popup-bg></app-popup-bg>
   <app-right-click-menu></app-right-click-menu>
   <app-create-folder-or-file-menu></app-create-folder-or-file-menu>
   <app-storage-navigation></app-storage-navigation>
 
-  <div >
+  <div class="storageContentWrapper">
     <div class="haveFolder" *ngIf="haveFolder">
                 <div class="noFileAndNoFoldersContainer" *ngIf="!this.StorageService.hasFiles&&!this.StorageService.hasFolders">
                   <p>This folder is empty<i class="em em-hot_face"></i></p>

@@ -10,17 +10,17 @@
 .settings-wrapper{
   position: relative;
   display: flex;
-  border-radius: 20px;
+  border-radius: 10px;
   justify-content: center;
   width: fit-content;
   height:fit-content;
   padding: 30px;
-  background-color: #2C2C2C;
+  background-color: white;
   opacity: 1;
   gap: 20px;
 }
 .settings-wrapper i {
- color: white;
+ color: black ;
 }
 .section{
   display: flex;
@@ -29,16 +29,19 @@
 }
 select{
   /*border-radius: 10px;*/
-  background-color: #808080;
-  color: white;
+  background-color: white;
+  color: #6c6c6c;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 select option{
   border-radius: 0;
 }
 .section.label-section{
-  color: white;
-  text-align: right;
+  color: #aeaeae;
+  text-align: left;
+  gap: 27px;
 }
 .closeBtn{
   position: absolute;
