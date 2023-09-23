@@ -32,13 +32,14 @@
 .storage{
   height: 100%;
   display: flex;
-  padding: 0 50px 50px 50px;
+  padding: 0 clamp(10px,3vw,50px) 50px clamp(10px,3vw,50px);
   gap: 20px;
   /*margin-bottom: 130px;*/
   overflow-y: scroll;
   background-color: var(--BGcolor);
   flex-wrap: wrap;
   align-content: baseline;
+  justify-content: center;
   align-items: flex-start;
   transition: 1s;
 }
@@ -74,6 +75,11 @@
 
 .storage .cell:hover{
   background-color: var(--cellOnHover)
+}
+@media (max-width: 700px){
+  .storage::-webkit-scrollbar{
+    display: none;
+  }
 }
 /*.storage .cell:hover .elementName{*/
 /*  text-overflow: initial;*/

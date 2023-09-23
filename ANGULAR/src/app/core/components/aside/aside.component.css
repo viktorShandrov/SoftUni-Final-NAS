@@ -1,5 +1,5 @@
 .aside{
-  width: clamp(100px,20vw,250px);
+  width: clamp(40px,19vw,250px);
   height: 100%;
   background-color: var(--BGcolor);
   transition: 1s;
@@ -9,10 +9,14 @@
   text-align: center;
   /*border-bottom: solid #5D5D5D 0.01cm;*/
 }
+.aside .companyName .companyLogo{
+  display: none;
+  padding: 20px 0;
+}
 .aside .companyName h1{
   color: #6197E8;
   padding: 15px;
-  font-size: 27px;
+  font-size: clamp(10px,2vw,27px);
   font-weight: bolder;
   margin-bottom: 0;
 }
@@ -28,7 +32,7 @@
 }
 .aside .toggleAsideBar i:hover{
   padding: 10px;
-  background-color: white;
+  /*background-color: white;*/
 
 }
 
@@ -42,8 +46,8 @@
   justify-content: center;
   align-items: center;
   text-align: left;
-  white-space: nowrap;
-  font-size: clamp(10px,1.4vw,16px);
+  /*white-space: nowrap;*/
+  font-size: clamp(10px,1vw,16px);
 
   /*color: var(--textColor);*/
 
@@ -66,9 +70,10 @@
 }
 a{
   text-decoration: none;
+  /*width: fit-content;*/
   color: #a4a4a4  ;
   display: flex;
-  padding: 0 40px;
+  padding: 0 clamp(0px,2vw,40px);
   justify-content: flex-start;
   gap: 20px;
   text-align: left;
@@ -86,8 +91,25 @@ a{
 
 
 .icon:hover{
-  background-color: white;
+  /*background-color: white;*/
   transition: 0.3s;
+}
+
+@media (max-width: 850px){
+  .asideElement{
+    display: none;
+  }
+  a{
+    justify-content: center;
+  }
+}
+@media (max-width: 600px){
+  .aside .companyName .companyLogo{
+    display: block;
+  }
+  .aside .companyName h1{
+    display: none;
+  }
 }
 .lastIcon{
 
