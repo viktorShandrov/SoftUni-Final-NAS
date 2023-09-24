@@ -121,20 +121,20 @@ export class StorageNavigationComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.renderer.setStyle(this.element.nativeElement,"height","100%")
-    this.renderer.setStyle(this.element.nativeElement,"flex","1 0 1fr")
+    this.renderer.setStyle(this.element.nativeElement,"height","40%")
+    // this.renderer.setStyle(this.element.nativeElement,"flex","1 0 1fr")
     setTimeout(()=>{
-    this.HTMLElementsService.urlBar = this.urlBarInput
-    this.HTMLElementsService.url = this.url
-    this.HTMLElementsService.divDirContainer = this.divDirContainer
-      this.HTMLElementsService.searchCompletion = this.searchCompletion
-    this.HTMLElementsService.completionDivsRefs =this.completionDivsRefs
-    this.StorageService.addEventListenerToTheMainRootBtn(
-        this.mainRootBtn,
-        this.CacheService.dirs,
-        this.HTMLElementsService.Renderer2,
-        this.router
-      )
+      this.HTMLElementsService.urlBar = this.urlBarInput
+      this.HTMLElementsService.url = this.url
+      this.HTMLElementsService.divDirContainer = this.divDirContainer
+        this.HTMLElementsService.searchCompletion = this.searchCompletion
+      this.HTMLElementsService.completionDivsRefs =this.completionDivsRefs
+      this.StorageService.addEventListenerToTheMainRootBtn(
+          this.mainRootBtn,
+          this.CacheService.dirs,
+          this.HTMLElementsService.Renderer2,
+          this.router
+        )
 
     },0)
     setTimeout(()=>{
