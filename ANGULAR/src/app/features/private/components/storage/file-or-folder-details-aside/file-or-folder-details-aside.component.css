@@ -5,7 +5,7 @@
 }
 .wrapper{
   background-color: white;
-    width: 300px;
+    /*width: 300px;*/
   height: 100%;
   /*max-height: 500px;*/
   overflow-y: scroll;
@@ -60,9 +60,11 @@
   cursor: pointer;
 }
 
-
+.heading{
+  font-size: clamp(13px,2vw,19px);
+}
 .main{
-  margin:70px 20px 0 20px;
+  margin:70px clamp(15px,1vw,20px) 0 clamp(15px,1vw,20px);
 }
 .main .whoHasAccess{
   display:  flex;
@@ -108,12 +110,14 @@
 
 .main .elementDetails  {
   margin-top: 10px;
-  padding: 0 30px 30px 30px;
+  width: fit-content;
+  padding: 0 clamp(15px,2vw,30px) clamp(15px,2vw,30px) clamp(15px,2vw,30px);
   background-color: #dfdfdf;
   border-radius: 20px;
 }
 .main .elementDetails #elementDetailsHeading {
   display: flex;
+  width: fit-content;
   justify-content: center;
 }
 .main .elementDetails .straightLine {

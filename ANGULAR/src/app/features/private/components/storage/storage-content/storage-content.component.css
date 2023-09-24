@@ -35,7 +35,7 @@
   padding: 0 clamp(10px,3vw,50px) 50px clamp(10px,3vw,50px);
   gap: 20px;
   /*margin-bottom: 130px;*/
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: var(--BGcolor);
   flex-wrap: wrap;
   align-content: baseline;

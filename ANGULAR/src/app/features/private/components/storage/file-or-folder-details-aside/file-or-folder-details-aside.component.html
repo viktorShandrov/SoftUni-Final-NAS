@@ -15,7 +15,7 @@
   <div class="section" *ngIf="this.CacheService.elementInfo">
       <div class="main">
         <div *ngIf="this.CacheService.elementInfo?.elementType=='directory'" class="whoHasAccess">
-          <h3>Who has access</h3>
+          <h3 class="heading">Who has access</h3>
           <div class="usersContainer">
             <i #userIcon  *ngFor="let user of this.CacheService.elementInfo?.autorised" class="fa-solid fa-user userIcon" [attr.userEmail]="user.email" [attr.userId]="user._id">
               <div *ngIf="userIcon.getAttribute('isSelected')=='true'" class="userInfoFromIcon">
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="elementDetails">
-          <h3 id="elementDetailsHeading">Element details</h3>
+          <h3 id="elementDetailsHeading heading">Element details</h3>
           <div class="straightLine"></div>
           <div class="type">
             <h5>Type</h5>
@@ -50,18 +50,18 @@
             <h5>Created at</h5>
             <p>{{this.CacheService.elementInfo?.createdAt|date:"medium"}}</p>
           </div>
-          <div class="inCaseOfEmergency">
-            <h5 id="inCaseOfEmergencyTitle">In case of emergency:</h5>
-            <button id="openATicket">Open a ticket</button>
-            <div class="elementId">
-              <h5>Element ID</h5>
-              <div class="idContainer">
-                <p>{{this.CacheService.elementInfo?._id}}</p>
-                <label (click)="copy(this.CacheService.elementInfo?._id)">Copy</label>
-              </div>
-            </div>
+<!--          <div class="inCaseOfEmergency">-->
+<!--            <h5 id="inCaseOfEmergencyTitle">In case of emergency:</h5>-->
+<!--            <button id="openATicket">Open a ticket</button>-->
+<!--            <div class="elementId">-->
+<!--              <h5>Element ID</h5>-->
+<!--              <div class="idContainer">-->
+<!--                <p>{{this.CacheService.elementInfo?._id}}</p>-->
+<!--                <label (click)="copy(this.CacheService.elementInfo?._id)">Copy</label>-->
+<!--              </div>-->
+<!--            </div>-->
 
-          </div>
+<!--          </div>-->
         </div>
       </div>
   </div>
