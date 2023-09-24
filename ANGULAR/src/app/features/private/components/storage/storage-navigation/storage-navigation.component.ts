@@ -122,6 +122,7 @@ export class StorageNavigationComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.renderer.setStyle(this.element.nativeElement,"height","100%")
+    this.renderer.setStyle(this.element.nativeElement,"flex","1 0 1fr")
     setTimeout(()=>{
     this.HTMLElementsService.urlBar = this.urlBarInput
     this.HTMLElementsService.url = this.url

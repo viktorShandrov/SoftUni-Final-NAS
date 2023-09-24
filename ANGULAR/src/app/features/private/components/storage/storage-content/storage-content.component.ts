@@ -112,6 +112,8 @@ export class StorageContentComponent implements AfterViewInit {
       }
   }
   ngAfterViewInit(): void {
+    // this.renderer.setStyle(this.element.nativeElement,"flex",1)
+
     setTimeout(()=>{
       this.renderer.listen(this.storageContainer.nativeElement,"mousewheel",(e)=>{
         this.PopupService.hideAllOtherMenus()

@@ -12,6 +12,7 @@ app-storage-navigation{
 .contentWrapper{
   border-radius: 20px;
   flex: 1;
+  /*display: flex;*/
   /*position: relative;*/
   background-color: var(--BGcolor);
   transition: 1s;
