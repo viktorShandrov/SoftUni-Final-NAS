@@ -18,7 +18,7 @@
   color: var(--textColor);
   flex: 1;
   transition: 1s;
-  z-index: 1;
+  /*z-index: 1;*/
   /*position: relative;*/
 
 }

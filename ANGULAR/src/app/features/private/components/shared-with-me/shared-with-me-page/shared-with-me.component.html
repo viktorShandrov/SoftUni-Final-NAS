@@ -8,8 +8,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!haveFolder">
-    <p>There are no shared with you folders</p>
+  <div class="noFoldersMSGContainer" *ngIf="!haveFolder">
+    <p class="noFoldersMSG">There are no shared with you folders</p>
   </div>
 </div>
 <app-loader *ngIf="isLoading"></app-loader>

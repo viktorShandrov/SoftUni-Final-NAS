@@ -1,3 +1,5 @@
+
+
 .storage{
   height: 100vh;
   display: grid;
@@ -32,4 +34,15 @@
   color: var(--textColor);
   transition: 1s;
 }
-
+.noFoldersMSGContainer{
+  display: flex;
+  justify-content: center;
+}
+.noFoldersMSG{
+  justify-self: center;
+  padding: 20px;
+  width: 80%;
+  background-color: #c6ffc6;
+  border: solid 0.1cm grey;
+  text-align: center;
+}
