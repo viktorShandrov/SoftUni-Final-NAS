@@ -39,10 +39,11 @@
   justify-content: center;
 }
 .noFoldersMSG{
-  justify-self: center;
   padding: 20px;
   width: 80%;
+  justify-self: center;
   background-color: #c6ffc6;
-  border: solid 0.1cm grey;
+  border: solid 0.07cm grey;
+  border-radius: 20px;
   text-align: center;
 }

@@ -57,10 +57,10 @@ export class HeaderService {
   }
 
   toggleUserMenu(){
-    this.PopupService.hideAllOtherMenus()
     if(this.HTMLElementsService.userMenu.nativeElement.style.display==="flex"){
       this.hideUserMenu()
     }else{
+      this.PopupService.hideAllOtherMenus()
       this.showUserMenu()
     }
   }
