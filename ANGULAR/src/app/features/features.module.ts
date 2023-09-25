@@ -35,6 +35,7 @@ import { FileOrFolderDetailsAsideComponent } from './private/components/storage/
 import { TrimDetailsElementNamePipe } from './private/pipes/trim-details-element-name.pipe';
 import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-name.pipe';
 import { AdminPanelComponent } from './private/components/admin-panel/admin-panel.component';
+import { ToggleMenuDirective } from './private/directives/toggle-menu.directive';
 
 
 
@@ -66,7 +67,8 @@ import { AdminPanelComponent } from './private/components/admin-panel/admin-pane
     FileOrFolderDetailsAsideComponent,
     TrimDetailsElementNamePipe,
     TrimChartElementNamePipe,
-    AdminPanelComponent
+    AdminPanelComponent,
+    ToggleMenuDirective
 
   ],
   imports: [
