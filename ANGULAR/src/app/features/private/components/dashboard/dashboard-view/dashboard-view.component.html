@@ -31,7 +31,7 @@
   </div>
 <div class="chartsWrapper">
 
-  <div class="foldersWithMostElementsInWrapper">
+  <div class="foldersWithMostElementsInWrapper chart">
     <h5 class="title">Folders With Most Elements In</h5>
     <div class="topFoldersContainer">
       <div *ngFor="let folder of DashboardService.topFolders" class="folder">
@@ -52,8 +52,8 @@
 
 
   </div>
-  <div class="mostCommonFileExtensionsWrapper">
-    <h5 class="title">Most common file extensions (deleted are included)</h5>
+  <div class="mostCommonFileExtensionsWrapper chart">
+    <h5 class="title">Most common file extensions</h5>
     <div class="topFoldersContainer">
       <div *ngFor="let ext of topExt" class="folder">
         <i *ngIf="!constants.fileExtensions.includes(ext.name)" class="fa-regular fa-file"></i>

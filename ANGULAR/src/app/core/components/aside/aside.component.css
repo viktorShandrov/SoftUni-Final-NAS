@@ -1,6 +1,8 @@
 .aside{
   width: clamp(40px,19vw,250px);
   height: 100%;
+  display: flex;
+  flex-direction: column;
   background-color: var(--BGcolor);
   transition: 1s;
   /*border-right: solid #5D5D5D 0.01cm;*/
@@ -65,7 +67,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  height: fit-content;
 
 }
 a{
@@ -104,6 +106,12 @@ a{
   }
 }
 @media (max-width: 600px){
+  .aside{
+    justify-content: center;
+  }
+  app-used-storage{
+    display: none;
+  }
   .aside .companyName .companyLogo{
     display: block;
   }

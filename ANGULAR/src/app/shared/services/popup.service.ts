@@ -24,11 +24,11 @@ export class PopupService {
 
   hideAllOtherMenus() {
     // if (this.HTMLElementsService.rightClickMenu && this.HTMLElementsService.createFolderOrFileMenu && this.HTMLElementsService.shareContainer) {
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.rightClickMenu?.nativeElement, "display", "none")
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.createFolderOrFileMenu?.nativeElement, "display", "none")
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.shareContainer?.nativeElement, "display", "none")
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu?.nativeElement, "display", "none")
-      this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.notificationSection?.nativeElement, "display", "none")
+    this.HTMLElementsService.rightClickMenu?this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.rightClickMenu?.nativeElement, "display", "none"):null
+    this.HTMLElementsService.createFolderOrFileMenu?this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.createFolderOrFileMenu?.nativeElement, "display", "none"):null
+    this.HTMLElementsService.shareContainer?this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.shareContainer?.nativeElement, "display", "none"):null
+    this.HTMLElementsService.userMenu?this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.userMenu?.nativeElement, "display", "none"):null
+    this.HTMLElementsService.notificationSection?this.HTMLElementsService.Renderer2.setStyle(this.HTMLElementsService.notificationSection?.nativeElement, "display", "none"):null
     // }
   }
 
