@@ -112,7 +112,7 @@
 .navigation {
   display: flex;
   padding: clamp(0px,1vw,10px);
-  height: 100%;
+  height: fit-content;
   max-height: 90px;
   /*overflow: visible;*/
   background-color: #f0f0f0;
@@ -271,9 +271,17 @@
   background-color: #6197E8;
 }
 
-.menu{
+
+
+
+
+
+.navigation .actionBtnsToggle{
+  display: none;
+}
+.navigation .actionBtnsToggle .menu{
   position: absolute ;
-  display:  flex;
+  display:  none;
   flex-direction: column;
   width: 200px;
   background-color: white;
@@ -284,11 +292,11 @@
   z-index: 9999;
 
 }
-.onFileShareAttemptMessage{
+.navigation .actionBtnsToggle .onFileShareAttemptMessage{
   padding: 10px;
   background-color: red;
 }
-.option {
+.navigation .actionBtnsToggle .option {
   display:flex ;
   align-items: center;
   padding: 7px 5px;
@@ -298,24 +306,34 @@
   /*text-align: left;*/
 
 }
-.option:hover {
+.navigation .actionBtnsToggle .option:hover {
   border-radius: 3px;
   background-color: #f2f3f6;
   color: black;
   transition: 0.5s;
   cursor: pointer;
 }
-.option i{
+.navigation .actionBtnsToggle .option i{
   margin-right:  10px;
   padding: 1px 0;
   text-align: center;
   width: 25px;
 }
-.menu p {
+.navigation .actionBtnsToggle .menu p {
   margin: 0;
 }
 
+
+
+
+[appToggleMenu][isshown="true"] .menu{
+  display: flex;
+}
+
 @media (max-width: 900px){
+  .navigation .actionBtnsToggle{
+    display: flex;
+  }
   .navigation .back-and-further-btns{
     display: none;
   }
