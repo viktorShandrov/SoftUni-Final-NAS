@@ -15,6 +15,7 @@ export class HTMLElementsService {
   folderCells!: QueryList<ElementRef>;
   fileCells!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;
+  menus: ElementRef[] =[];
   userMenu!: ElementRef;
   notificationSection!: ElementRef;
   dashboardStorageProgressBar!: ElementRef;
