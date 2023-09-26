@@ -1,4 +1,4 @@
-<div #menu class="menu">
+<div appMenu #menu class="menu">
 <!--  <div #option (click)="StorageService.getDetails(menu)" class="option">-->
 <!--    <p>Details</p>-->
 <!--  </div>-->
@@ -30,7 +30,7 @@
     <p>Delete</p>
   </div>
 </div>
-<div #shareContainer class=" shareContainer">
+<div appMenu #shareContainer class=" shareContainer">
   <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(form)">
     <h5>Share with:</h5>
     <input type="text" formControlName="email" name="email" placeholder="user email" >

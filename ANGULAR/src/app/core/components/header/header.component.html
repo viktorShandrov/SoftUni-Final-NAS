@@ -6,7 +6,7 @@
           <div class="whiteCircle"></div>
         </div>
       </i>
-      <div #notificationSection class="notificationSectionWrapper">
+      <div appMenu #notificationSection class="notificationSectionWrapper">
         <app-loader *ngIf="HeaderService.notificationPanelIsLoading"></app-loader>
         <h2 class="label">Notifications</h2>
         <div  class="notificationSection" >
@@ -27,7 +27,7 @@
     <div class="user-profile-picture" (click)="HeaderService.toggleUserMenu()">
 <!--      <i class="fa-solid fa-user"></i>-->
       <img class="userImage" src="./assets/COVIDREADY.png" alt="">
-      <div  #userMenu class="user-menu" >
+      <div appMenu  #userMenu class="user-menu" >
         <h2>Account</h2>
         <div (click)="UserSettingsPopupService.showPopup()" class="option settings">
           <i class="fa-solid fa-gear"></i>

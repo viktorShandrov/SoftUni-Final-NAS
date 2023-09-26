@@ -8,6 +8,7 @@ import { UploadProgressPopupComponent } from './components/upload-progress-popup
 import { UsedStorageComponent } from './components/used-storage/used-storage.component';
 import { UserSettingsPopupComponent } from './components/user-settings-popup/user-settings-popup.component';
 import {SharedModule} from "../shared/shared.module";
+import {FeaturesModule} from "../features/features.module";
 
 
 
@@ -29,7 +30,8 @@ import {SharedModule} from "../shared/shared.module";
         CommonModule,
         RouterModule,
         RouterLink,
-        SharedModule
+        SharedModule,
+
     ]
 })
 export class CoreModule { }

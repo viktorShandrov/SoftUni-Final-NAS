@@ -6,6 +6,7 @@ import {AddFileComponent} from "./Components/add-file/add-file.component";
 import {AddFolderComponent} from "./Components/add-folder/add-folder.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import { LoaderComponent } from './Components/loader/loader.component';
+import {MenuDirective} from "./directives/menu.directive";
 
 
 
@@ -15,7 +16,8 @@ import { LoaderComponent } from './Components/loader/loader.component';
     PopupBGComponent,
     AddFileComponent,
     AddFolderComponent,
-    LoaderComponent
+    LoaderComponent,
+    MenuDirective
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { LoaderComponent } from './Components/loader/loader.component';
   ],
     exports: [
         LoaderComponent,
-        PopupBGComponent
+        PopupBGComponent,
+        MenuDirective
     ]
 })
 export class SharedModule { }

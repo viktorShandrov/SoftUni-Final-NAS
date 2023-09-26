@@ -36,6 +36,7 @@ import { TrimDetailsElementNamePipe } from './private/pipes/trim-details-element
 import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-name.pipe';
 import { AdminPanelComponent } from './private/components/admin-panel/admin-panel.component';
 import { ToggleMenuDirective } from './private/directives/toggle-menu.directive';
+import { MenuDirective } from '../shared/directives/menu.directive';
 
 
 
@@ -68,7 +69,7 @@ import { ToggleMenuDirective } from './private/directives/toggle-menu.directive'
     TrimDetailsElementNamePipe,
     TrimChartElementNamePipe,
     AdminPanelComponent,
-    ToggleMenuDirective
+    ToggleMenuDirective,
 
   ],
   imports: [
@@ -85,7 +86,8 @@ import { ToggleMenuDirective } from './private/directives/toggle-menu.directive'
         RegisterComponent,
         UsersViewComponent,
         StorageNavigationComponent,
-        RightClickMenuComponent
+        RightClickMenuComponent,
+
     ],
   providers:[HttpService]
 })

@@ -278,6 +278,7 @@
 
 .navigation .actionBtnsToggle{
   display: none;
+  /*position: relative;*/
 }
 .navigation .actionBtnsToggle .menu{
   position: absolute ;
@@ -289,13 +290,12 @@
   border-radius: 5px;
   padding: 10px;
   color: #9ca2af;
+  /*top: 10px;*/
+  /*left: 10px;*/
   z-index: 9999;
 
 }
-.navigation .actionBtnsToggle .onFileShareAttemptMessage{
-  padding: 10px;
-  background-color: red;
-}
+
 .navigation .actionBtnsToggle .option {
   display:flex ;
   align-items: center;
@@ -326,8 +326,8 @@
 
 
 
-[appToggleMenu][isshown="true"] .menu{
-  display: flex;
+.navigation [appToggleMenu][isshown="true"] .menu{
+  display: flex !important;
 }
 
 @media (max-width: 900px){
