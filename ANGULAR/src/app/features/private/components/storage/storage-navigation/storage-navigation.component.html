@@ -34,10 +34,18 @@
       </div>
       <div appToggleMenu class="actionBtnsToggle">
         <i class="fa-solid fa-ellipsis"></i>
-        <div  #menu class="menu">
-          <div #option class="option">
-            <i class="fa-solid fa-info"></i>
-            <p>Details</p>
+        <div appMenu class="menu">
+          <div (click)="backBtnOnClick()" #option class="option">
+            <i class="fa-solid fa-chevron-left"></i>
+            <p>Previous folder</p>
+          </div>
+          <div (click)="sortFilesAndFolders(sortIcon)" #option class="option">
+            <i #sortIcon class="fa-solid fa-arrow-down-z-a"></i>
+            <p>Sort</p>
+          </div>
+          <div (click)="toggleViewStructure(toggleViewIcon)" #option class="option">
+            <i #toggleViewIcon class="fa-solid fa-table-list"></i>
+            <p>Switch table view</p>
           </div>
         </div>
       </div>
