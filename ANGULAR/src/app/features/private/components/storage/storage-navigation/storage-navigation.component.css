@@ -111,6 +111,7 @@
 
 .navigation {
   display: flex;
+  /*align-items: center;*/
   padding: clamp(0px,1vw,10px);
   height: fit-content;
   max-height: 90px;
@@ -167,6 +168,12 @@
   width: fit-content;
   max-height: 26px;
 }
+
+
+
+
+
+
 
 .navigation .urlBarWrapper{
   width: 100%;
@@ -274,12 +281,20 @@
 
 
 
-
-
-.navigation .actionBtnsToggle{
+.navigation .actionBtnsToggle {
   display: none;
-  /*position: relative;*/
+  align-items: center;
+  padding: 5px;
+  border-radius: 100px;
+  margin-right: 8px;
 }
+.navigation .actionBtnsToggle:hover{
+  cursor: pointer;
+  background-color: white;
+  transition: 0.5s;
+}
+
+
 .navigation .actionBtnsToggle .menu{
   position: absolute ;
   display:  none;
@@ -290,8 +305,7 @@
   border-radius: 5px;
   padding: 10px;
   color: #9ca2af;
-  /*top: 10px;*/
-  /*left: 10px;*/
+  transform: translateY(50%);
   z-index: 9999;
 
 }
@@ -337,6 +351,7 @@
   .navigation .back-and-further-btns{
     display: none;
   }
+
 
   .navigation .actionBtn:first-child{
 
