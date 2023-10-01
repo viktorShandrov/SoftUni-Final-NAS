@@ -137,7 +137,6 @@ export class RightClickMenuComponent implements AfterViewInit{
           form.resetForm()
         },
         (err)=>{
-          console.log(err.error.message)
           document.querySelector("#error-container")!.innerHTML = err.error.message
         }
       )

@@ -54,7 +54,6 @@ exports.autorizeUserToEveryNestedFolder=async(userId,folderId,rootId)=>{
     const root = await rootModel.findById(rootId)
     if(root.allSharedFolders.some(sharedFolder=>sharedFolder.userId.equals(userId)&&
         sharedFolder.sharedFolderId.equals(folderId))){
-            console.log(1112);
         throw new Error("User is already autorized to this folder")
     }else{
         root.allSharedFolders.push({userId,sharedFolderId:folderId})
