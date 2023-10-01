@@ -4,16 +4,14 @@ import {HTMLElementsService} from "../services/htmlelements.service";
 @Directive({
   selector: '[appMenu]'
 })
-export class MenuDirective implements AfterViewInit,OnInit{
+export class MenuDirective implements AfterViewInit{
 
   constructor(
     private element:ElementRef,
     private HTMLElementsService:HTMLElementsService,
 
   ) { }
-  ngOnInit() {
-    console.log(1111)
-  }
+
 
   ngAfterViewInit() {
     this.HTMLElementsService.menus.push(this.element)

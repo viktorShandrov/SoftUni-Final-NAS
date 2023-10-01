@@ -206,18 +206,24 @@ export class StorageService {
         renderer.setStyle(this.HTMLElementsService.rightClickMenu.nativeElement, 'display', 'none');
 
         if(elementType==="directory"){
-          const indexInFoldersCache = this.CacheService.folders.findIndex((el) => el._id == elementId)
-          const indexInCompletionCache = this.CacheService.completions.findIndex((el) => el._id == elementId)
 
-          this.setCrossMarkLength(indexInFoldersCache,"directory")
-          this.CacheService.folders[indexInFoldersCache].isDisappearing = true
-          this.CacheService.completions.splice(indexInCompletionCache,1)
+            const indexInFoldersCache = this.CacheService.folders.findIndex((el) => el._id == elementId)
+            const indexInCompletionCache = this.CacheService.completions.findIndex((el) => el._id == elementId)
+            this.CacheService.folders[indexInFoldersCache].isDisappearing = true
+            this.CacheService.completions.splice(indexInCompletionCache,1)
+              if(enviroments.storageViewCellStructure){
+                this.setCrossMarkLength(indexInFoldersCache,"directory")
+
+              }
 
 
-        }else{
+        }else if(elementType==="file"){
           const index = this.CacheService.files.findIndex((el) => el._id == elementId)
-          this.setCrossMarkLength(index,"file")
           this.CacheService.files[index].isDisappearing = true
+          if (enviroments.storageViewCellStructure){
+            this.setCrossMarkLength(index,"file")
+
+          }
 
 
 
