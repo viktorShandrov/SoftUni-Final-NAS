@@ -21,26 +21,34 @@
     <i class="fa-solid fa-users-slash"></i>
     <p  (click)="unPublicFolder()">Un-public</p>
   </div>
-  <div #optionShare *ngIf="menu.getAttribute('element-type')=='directory'"  class="option share">
-    <i class="fa-solid fa-share"></i>
-    <p>Share</p>
+  <div #optionShare   class="option share">
+    <div *ngIf="menu.getAttribute('element-type')=='directory'">
+      <i class="fa-solid fa-share"></i>
+      <p>Share</p>
+    </div>
+
   </div>
   <div #option (click)="StorageService.deleteItem(menu,renderer)" class="option delete">
     <i class="fa-solid fa-trash-can"></i>
     <p>Delete</p>
   </div>
 </div>
-<div appMenu #shareContainer class=" shareContainer">
-  <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(form)">
-    <h5>Share with:</h5>
-    <input type="text" formControlName="email" name="email" placeholder="user email" >
-    <button type="submit">Send</button>
-    <div *ngIf="formGroup?.get('email')?.touched">
-      <p *ngIf="formGroup?.get('email')?.errors?.['required']">Email is required</p>
-      <p *ngIf="formGroup?.get('email')?.errors?.['email']">Invalid email format</p>
-      <p id="error-container"></p>
-    </div>
-  </form>
+<div appMenu #shareContainer class="menu shareContainerBG">
+  <div class=" shareContainer">
+    <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(form)">
+      <h5>Share with:</h5>
+      <input type="text" formControlName="email" name="email" placeholder="user email" >
+      <div class="errorContainer" *ngIf="formGroup?.get('email')?.touched">
+        <p *ngIf="formGroup?.get('email')?.errors?.['required']">Email is required</p>
+        <p *ngIf="formGroup?.get('email')?.errors?.['email']">Invalid email format</p>
+        <p id="error-container"></p>
+      </div>
+      <div class="btns">
+        <button appCloseBtn class="cancelBtn">Cancel</button>
+        <button type="submit">Send</button>
+      </div>
+    </form>
+  </div>
 </div>
 <!--<div #onFileShareAttemptMessageContainer class="onFileShareAttemptMessage">-->
 <!--  <p>Try sharing folder</p>-->

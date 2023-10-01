@@ -19,6 +19,7 @@ import {folder} from "../../../../../shared/types";
 import {HttpService} from "../../../../../shared/services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {constants} from "../../../../../shared/constants";
+import {PopupService} from "../../../../../shared/services/popup.service";
 
 @Component({
   selector: 'app-right-click-menu',
@@ -46,6 +47,7 @@ export class RightClickMenuComponent implements AfterViewInit{
     public renderer :Renderer2,
     private formBuilder: FormBuilder,
     public CacheService: CacheService,
+    public PopupService: PopupService,
   ){}
 
   private observeMenuChanges() {
@@ -81,26 +83,11 @@ export class RightClickMenuComponent implements AfterViewInit{
     if(this.optionShare){
       this.optionShare.nativeElement.addEventListener("click",(e:MouseEvent)=>{
         const shareMenu = this.menu.nativeElement as HTMLElement
-        const elementType = shareMenu.getAttribute("element-type")
-        const x = e.clientX
-        const y = e.clientY
-        if(elementType==="directory"){
-
-          // this.renderer.setStyle(this.StorageService.rightClickMenu.nativeElement,"display","none")
-
+          this.PopupService.hideAllOtherMenus()
           this.renderer.setAttribute(this.HTMLElementsService.shareContainer.nativeElement,"folder-id",this.HTMLElementsService.rightClickMenu.nativeElement.getAttribute("element-id"))
-
           this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"display","flex")
-          this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"top",y+"px")
-          this.renderer.setStyle( this.HTMLElementsService.shareContainer.nativeElement,"left",x+"px")
-        }else if(elementType==="file"){
-          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","flex")
-          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"top",y+"px")
-          this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"left",x+"px")
-          setTimeout(()=>{
-            this.renderer.setStyle( this.onFileShareAttemptMessageContainer.nativeElement,"display","none")
-          },1500)
-        }
+
+
       })
 
     }

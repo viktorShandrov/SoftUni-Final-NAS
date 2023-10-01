@@ -30,7 +30,11 @@
   /*background-color: chocolate;*/
   /*justify-content: flex-start;*/
   /*text-align: left;*/
-
+}
+.option>div{
+  display:flex ;
+  align-items: center;
+  margin: 0;
 }
 .option:hover {
   border-radius: 3px;
@@ -58,18 +62,43 @@
 }
 
 
+
+
+
+
+
+.shareContainerBG{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(99, 99, 99, 0.7);
+  z-index: 9999;
+}
+
+.shareContainer{
+  width: 30%;
+  max-width: 500px;
+  min-width: 250px;
+  border-radius: 20px;
+  background-color: white;
+  padding: 20px;
+
+
+}
 form{
   display: flex;
   flex-direction: column;
   justify-content: center;
 
 }
-.shareContainer{
-  display: none;
-}
 .shareContainer h5{
   margin: 0;
-  background-color: chocolate;
+
   padding: 5px 0px;
 
 }
@@ -78,8 +107,34 @@ form{
   text-align: center;
 
 }
+.errorContainer{
+  margin: 10px 0;
+}
+.btns{
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+
 .shareContainer button{
   all: unset;
-  background-color: #aa4705;
+  display: flex;
+  margin-top: 10px;
+  padding: 10px 30px;
+  background-color: dodgerblue;
+  border-radius: 10px;
+  color: white;
+
   text-align: center;
+
 }
+
+.shareContainer button:hover{
+  cursor: pointer;
+}
+.shareContainer button.cancelBtn{
+  background-color: white;
+  color: dodgerblue;
+}
+
