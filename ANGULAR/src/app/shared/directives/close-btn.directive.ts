@@ -1,5 +1,5 @@
 import {Directive, ElementRef, HostListener, Input} from '@angular/core';
-import {PopupService} from "../../../shared/services/popup.service";
+import {PopupService} from "../services/popup.service";
 import {FormGroupDirective} from "@angular/forms";
 
 @Directive({

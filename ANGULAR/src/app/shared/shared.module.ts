@@ -7,6 +7,8 @@ import {AddFolderComponent} from "./Components/add-folder/add-folder.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import { LoaderComponent } from './Components/loader/loader.component';
 import {MenuDirective} from "./directives/menu.directive";
+import {FeaturesModule} from "../features/features.module";
+import {CloseBtnDirective} from "./directives/close-btn.directive";
 
 
 
@@ -17,17 +19,20 @@ import {MenuDirective} from "./directives/menu.directive";
     AddFileComponent,
     AddFolderComponent,
     LoaderComponent,
-    MenuDirective
+    MenuDirective,
+    CloseBtnDirective
   ],
-  imports: [
-    CommonModule,
-    RouterLink,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        RouterLink,
+        ReactiveFormsModule,
+
+    ],
     exports: [
         LoaderComponent,
         PopupBGComponent,
-        MenuDirective
+        MenuDirective,
+        CloseBtnDirective
     ]
 })
 export class SharedModule { }

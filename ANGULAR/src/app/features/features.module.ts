@@ -37,7 +37,7 @@ import { TrimChartElementNamePipe } from './private/pipes/trim-chart-element-nam
 import { AdminPanelComponent } from './private/components/admin-panel/admin-panel.component';
 import { ToggleMenuDirective } from './private/directives/toggle-menu.directive';
 import { MenuDirective } from '../shared/directives/menu.directive';
-import { CloseBtnDirective } from './private/directives/close-btn.directive';
+import { CloseBtnDirective } from '../shared/directives/close-btn.directive';
 
 
 
@@ -71,7 +71,7 @@ import { CloseBtnDirective } from './private/directives/close-btn.directive';
     TrimChartElementNamePipe,
     AdminPanelComponent,
     ToggleMenuDirective,
-    CloseBtnDirective,
+
 
   ],
   imports: [
@@ -89,6 +89,7 @@ import { CloseBtnDirective } from './private/directives/close-btn.directive';
         UsersViewComponent,
         StorageNavigationComponent,
         RightClickMenuComponent,
+
 
     ],
   providers:[HttpService]
