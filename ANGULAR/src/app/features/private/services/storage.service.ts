@@ -330,7 +330,9 @@ export class StorageService {
   }
   hideFileOrFolderDetailsSection(){
     const section =  this.HTMLElementsService.FileOrFolderDetailsAsideComponent
-    this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","none")
+    if(section&&this.HTMLElementsService.Renderer2){
+      this.HTMLElementsService.Renderer2.setStyle(section.nativeElement,"display","none")
+    }
   }
   fetchDetails(id: String,elementType:String){
     return this.HttpService.httpPOSTRequest(`api/files/${id}/getDetails`,JSON.stringify({elementType}))

@@ -69,6 +69,8 @@ export class RouterService {
         this.HeaderService.checkForNeNotifications()
       }else if(fullUrl.includes("admin")) {
         this.saveRootId()
+      }else{
+        this.saveRootId()
       }
 
 
