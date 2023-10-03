@@ -36,7 +36,8 @@ import {FormsModule} from "@angular/forms";
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
-    })
+    }),
+
 
 
   ],
@@ -51,4 +52,5 @@ import {FormsModule} from "@angular/forms";
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
