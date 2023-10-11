@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon ./src/server.js"
   },
+  "proxy": "<http://localhost:4242>",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "multer-gridfs-storage": "^5.0.2",
     "node-fetch": "^3.3.2",
     "nodemon": "^2.0.22",
+    "stripe": "^13.8.0",
     "uuid": "^9.0.0"
   }
 }

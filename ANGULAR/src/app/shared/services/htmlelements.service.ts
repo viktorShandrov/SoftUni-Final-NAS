@@ -12,6 +12,7 @@ export class HTMLElementsService {
   dirDivsRefs!: QueryList<ElementRef>;
   completionDivsRefs!: QueryList<ElementRef>;
   userIconsRefs!: QueryList<ElementRef>;
+  menuToggles: ElementRef[] =[];
   folderCells!: QueryList<ElementRef>;
   fileCells!: QueryList<ElementRef>;
   rightClickMenu!: ElementRef;

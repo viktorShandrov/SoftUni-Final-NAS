@@ -23,6 +23,9 @@ export class PopupService {
   }
 
   hideAllOtherMenus() {
+    this.HTMLElementsService.menuToggles.forEach((menu:ElementRef)=> {
+      this.HTMLElementsService.Renderer2.setAttribute(menu.nativeElement, "isShown", "false")
+    })
     for (const menu of this.HTMLElementsService.menus) {
       this.HTMLElementsService.Renderer2.setStyle(menu.nativeElement, "display", "none")
     }

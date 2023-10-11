@@ -29,8 +29,8 @@
   transition: 1s;
 }
 
-.storage .directory i, .storage .file i{
-  font-size: 720%;
+.storage .directory i {
+  font-size: clamp(500%,27vw,720%);
   color: var(--textColor);
   transition: 1s;
 }

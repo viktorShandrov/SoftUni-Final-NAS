@@ -5,6 +5,29 @@ const { isAuth } = require("../utils/authentication");
 const { admins } = require("../utils/utils");
 const router = require("express").Router()
 
+const stripe = require('stripe')('sk_test_51MVy7FHWjRJobyftLPhg8KC5HmzfnRDipJQtsFebHEwGW40AdzYcJMNO7i9P7FrdasPkYrOYZw3HmUnDbj2mL8Kh00w0nNNBBf');
+
+async function stripeConfig (){
+    
+    const product = await stripe.products.create({
+        name: 'T-shirt',
+      });
+      console.log(product);
+    
+      const price = await stripe.prices.create({
+        product: product,
+        unit_amount: 2000,
+        currency: 'usd',
+      });
+}
+// stripeConfig()
+
+
+
+
+
+
+
 
 router.post("/register",async (req,res)=>{
     try {
@@ -114,6 +137,20 @@ router.get("/areThereUnSeenNotifications",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-
-
+router.post('/create-checkout-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+            price: 'price_1NxW7DHWjRJobyftQjxNMUOA',
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: `http://localhost:3000/success`,
+        cancel_url: `http://localhost:3000/canceled`,
+      });
+      res.redirect(303, session.url);
+    }
+)
 module.exports = router
