@@ -3,6 +3,8 @@ const { createRoot } = require("../managers/filesManager");
 const userManager = require("../managers/usersManager");
 const { isAuth } = require("../utils/authentication");
 const { admins } = require("../utils/utils");
+const bodyParser = require("body-parser");
+const express = require("express");
 const router = require("express").Router()
 
 const stripe = require('stripe')('sk_test_51MVy7FHWjRJobyftLPhg8KC5HmzfnRDipJQtsFebHEwGW40AdzYcJMNO7i9P7FrdasPkYrOYZw3HmUnDbj2mL8Kh00w0nNNBBf');
@@ -137,12 +139,11 @@ router.get("/areThereUnSeenNotifications",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/paymentMade",isAuth,async (req,res)=>{
+router.post("/paymentMade",express.raw({ type: 'application/json' }),async (req,res)=>{
     try {
-        console.log("here1")
         const sig = req.headers['stripe-signature'];
-        
-            const event = stripe.webhooks.constructEvent(req.body, sig, 'your_stripe_webhook_secret');
+        console.log("here")
+            const event = stripe.webhooks.constructEvent(req.body, sig, 'whsec_d59df066433e3aee1d167b7b8fd416019540874de9d7a18d65926058046b075d');
 
             if (event.type === 'checkout.session.completed') {
                 console.log("super")
