@@ -137,22 +137,47 @@ router.get("/areThereUnSeenNotifications",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.post("/paymentMade",isAuth,async (req,res)=>{
+    try {
+        console.log("here1")
+        const sig = req.headers['stripe-signature'];
+        
+            const event = stripe.webhooks.constructEvent(req.body, sig, 'your_stripe_webhook_secret');
+
+            if (event.type === 'checkout.session.completed') {
+                console.log("super")
+            }
+
+            res.json({ received: true });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+    })
+
 router.post('/create-checkout-session', async (req, res) => {
     try {
 
         const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
             line_items: [
-              {
-                // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                price: 'price_1NxW7DHWjRJobyftQjxNMUOA',
-                quantity: 1,
-              },
+                {
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: 'T-shirt',
+                        },
+                        unit_amount: 2000,
+                    },
+                    quantity: 1,
+                },
             ],
             mode: 'payment',
-            success_url: `http://localhost:3000/success`,
-            cancel_url: `http://localhost:3000/canceled`,
-          });
-          res.redirect(303, session.url);
+            success_url: 'https://example.com/success',
+            cancel_url: 'https://example.com/cancel',
+        });
+
+        res.json({ id: session.id });
 
     }catch (error) {
         console.log(error);

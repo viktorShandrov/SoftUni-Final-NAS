@@ -18,6 +18,7 @@ import {ToastrModule} from "ngx-toastr";
 import {HttpService} from "./shared/services/http.service";
 import {ClipboardModule} from "ngx-clipboard";
 import {FormsModule} from "@angular/forms";
+import {NgxStripeModule} from "ngx-stripe";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {FormsModule} from "@angular/forms";
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),
+    NgxStripeModule.forRoot("pk_test_51MVy7FHWjRJobyftqUOdDRoMwSs9sQvQkjQEDjDG0ctCnBhELCT4BrOWMAWfqgmQMyPcODRR45UpxmQ1WtdhX3ye00lrOHhy8i")
 
 
 
