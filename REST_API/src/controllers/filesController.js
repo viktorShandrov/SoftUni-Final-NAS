@@ -10,8 +10,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const archiver = require('archiver');
 const mongoose = require('mongoose');
+const express = require("express");
 
-
+router.use(express.urlencoded({ extended: true, limit: "1gb" }))
+router.use(express.json({ limit: "1gb" }))
 
 //TODO=> isAuth
 router.post('/upload', upload.single('file'), async (req, res) => {

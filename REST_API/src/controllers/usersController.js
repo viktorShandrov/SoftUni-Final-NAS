@@ -2,29 +2,17 @@ const { default: mongoose } = require("mongoose");
 const { createRoot } = require("../managers/filesManager");
 const userManager = require("../managers/usersManager");
 const { isAuth } = require("../utils/authentication");
-const { admins } = require("../utils/utils");
+const { admins, stripeSecret ,stripeSecretKey} = require("../utils/utils");
 const bodyParser = require("body-parser");
 const express = require("express");
 const router = require("express").Router()
 
-const stripe = require('stripe')('sk_test_51MVy7FHWjRJobyftLPhg8KC5HmzfnRDipJQtsFebHEwGW40AdzYcJMNO7i9P7FrdasPkYrOYZw3HmUnDbj2mL8Kh00w0nNNBBf');
-
-async function stripeConfig (){
-    
-    const product = await stripe.products.create({
-        name: 'T-shirt',
-      });
-      console.log(product);
-    
-      const price = await stripe.prices.create({
-        product: product,
-        unit_amount: 2000,
-        currency: 'usd',
-      });
-}
-// stripeConfig()
 
 
+
+
+router.use(express.urlencoded({ extended: true, limit: "1gb" }))
+router.use(express.json({ limit: "1gb" }))
 
 
 
@@ -86,7 +74,7 @@ router.post("/login",async (req,res)=>{
     try {
         //TODO: req.body=> JSON.parse(req.body)
         const {email,password} = req.body
-         const payload = await userManager.login(email,password);
+        const payload = await userManager.login(email,password);
         res.status(200).json(payload)
     } catch (error) {
         console.log(error);
@@ -139,51 +127,6 @@ router.get("/areThereUnSeenNotifications",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/paymentMade",express.raw({ type: 'application/json' }),async (req,res)=>{
-    try {
-        const sig = req.headers['stripe-signature'];
-        console.log("here")
-            const event = stripe.webhooks.constructEvent(req.body, sig, 'whsec_d59df066433e3aee1d167b7b8fd416019540874de9d7a18d65926058046b075d');
 
-            if (event.type === 'checkout.session.completed') {
-                console.log("super")
-            }
 
-            res.json({ received: true });
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({message:error.message})
-    }
-    })
-
-router.post('/create-checkout-session', async (req, res) => {
-    try {
-
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'usd',
-                        product_data: {
-                            name: 'T-shirt',
-                        },
-                        unit_amount: 2000,
-                    },
-                    quantity: 1,
-                },
-            ],
-            mode: 'payment',
-            success_url: 'https://example.com/success',
-            cancel_url: 'https://example.com/cancel',
-        });
-
-        res.json({ id: session.id });
-
-    }catch (error) {
-        console.log(error);
-        res.status(400).json({message:error.message})
-    }
-    }
-)
 module.exports = router

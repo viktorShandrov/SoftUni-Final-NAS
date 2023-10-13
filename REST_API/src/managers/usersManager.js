@@ -52,10 +52,10 @@ exports.login = async (email,password,isLoggingFromGoogle)=>{
         return {token,rootId:user.rootId,userId:user._id}
        }
        else{
-        throw new Error("No such user or password is incorect");
+        throw new Error("No such user or password is incorrect");
        }
     }else{
-        throw new Error("No such user or password is incorect")
+        throw new Error("No such user or password is incorrect")
     }
 }
 exports.addNotification = async (userId,notificationId)=>{
