@@ -19,6 +19,14 @@ const schema = new mongoose.Schema({
             ref: 'File'
         }
     ],
+    freeFileContainer:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FileContainer'
+    },
+    paidFileContainer:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FileContainer'
+    },
     autorised:Array,
     allSharedFolders:[{
         userId:{
