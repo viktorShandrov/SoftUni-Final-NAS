@@ -444,6 +444,7 @@ exports.downloadFolder=async (folderId,res)=>{
     zip.finalize();
 }
 
+
  async function populateFolder(folderTreeNames,folderId){
     const folder = await folderModel.findById(folderId)
     const updatedFolderTreeNames=[...folderTreeNames,folder.name]

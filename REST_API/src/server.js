@@ -3,6 +3,7 @@ const path = require("path")
 
 const { expressConfig } = require('./config/expressConfig');
 const { mongodbConfig } = require('./config/mongoDBConfig');
+const {runTest} = require("./test/tests");
 
 
 
@@ -14,7 +15,7 @@ expressConfig(app)
 
 mongodbConfig()
 
-
+runTest()
 
 app.get("/",(req,res)=>{
   console.log("home");
