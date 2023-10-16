@@ -522,7 +522,7 @@ recalculateContextMenusPosition(x:number,y:number,contextMenu:HTMLElement,elemen
     event.preventDefault()
     const element = event!.target! as HTMLElement
     const mainParentElement = element.closest(".cell") as HTMLElement;
-
+    if(mainParentElement.getAttribute("isLocked")) return
     const renderer = this.HTMLElementsService.Renderer2
     let x = event.clientX-20
     const y = event.clientY-20
