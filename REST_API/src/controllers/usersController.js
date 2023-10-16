@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const { createRoot } = require("../managers/filesManager");
+const { createRoot, createFileContainer} = require("../managers/filesManager");
 const userManager = require("../managers/usersManager");
 const { isAuth } = require("../utils/authentication");
 const { admins, stripeSecret ,stripeSecretKey} = require("../utils/utils");
@@ -28,8 +28,11 @@ router.post("/register",async (req,res)=>{
             throw new Error("All fields are required")
        }
         const newUser = await userManager.register(email,password,repeatePassword);
-        const rootId = await createRoot(newUser._id)
-        newUser.rootId = rootId;
+        const root = await createRoot(newUser._id)
+        const fileContainerId = await createFileContainer("free",newUser._id,root._id,10)
+        newUser.rootId = root._id;
+        root.freeFileContainer = fileContainerId
+        await root.save()
         await newUser.save()
 
         const payload = await userManager.login(email,password);
@@ -47,8 +50,12 @@ router.post("/registerViaGoogle",async (req,res)=>{
     const newUser = await userManager.register(email,undefined,undefined,undefined,id);
 
     //  newUser._id =  new mongoose.Types.ObjectId(id)   
-    const rootId = await createRoot(id)
-    newUser.rootId = rootId;
+    const root = await createRoot(id)
+    const fileContainerId = await createFileContainer("free",newUser._id,root._id,10)
+    newUser.rootId = root._id;
+    root.freeFileContainer = fileContainerId;
+
+    await root.save()
     await newUser.save()
     const payload = await userManager.login(email,undefined,true);
     res.status(200).json(payload)
