@@ -42,6 +42,8 @@ export class DoubleClickDirective {
 
     const mainParentElement = clickedElement.closest(".cell") as HTMLElement;
 
+    if(mainParentElement.getAttribute("isLocked")) return
+
     const threeDots = clickedElement.closest(".threeDots")
 
     if (this.clicks === 1) {
