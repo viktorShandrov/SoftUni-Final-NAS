@@ -71,16 +71,17 @@ export class DashboardViewComponent implements AfterViewInit{
     private StorageService: StorageService,
   ) {}
   transform(value: number): string {
-    let mesure = "GB"
-    let volume = value/1000000000 //GB
-    if(volume<1){
-      mesure = "MB"
-      volume =  volume*1000 //MB
-      if(volume<1){
-        return `<${volume.toFixed(0)}${mesure}`
-      }
-    }
-    return `${volume.toFixed(2)}${mesure}`
+    return (value / (1024 * 1024 * 1024)).toFixed(2)
+    // // let mesure = "GB"
+    // let volume = value/1000000000 //GB
+    // if(volume<1){
+    //   mesure = "MB"
+    //   volume =  volume*1000 //MB
+    //   if(volume<1){
+    //     return `<${volume.toFixed(0)}${mesure}`
+    //   }
+    // }
+    // return `${volume.toFixed(2)}${mesure}`
   }
   ngAfterViewInit() {
     this.Renderer2.setStyle(this.element.nativeElement,"display","flex")
