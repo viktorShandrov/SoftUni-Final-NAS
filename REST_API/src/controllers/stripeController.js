@@ -1,6 +1,7 @@
 const express = require("express")
 const {stripeSecret, stripeSecretKey} = require("../utils/utils");
 const stripe = require('stripe')(stripeSecretKey);
+const filesManager = require("../managers/filesManager")
 const router = express.Router()
 
 router.use(express.raw({ type: 'application/json' }))
@@ -10,8 +11,13 @@ router.post("/paymentMade",async (req,res)=>{
 
         const sig = req.headers['stripe-signature'];
         const event = stripe.webhooks.constructEvent(req.body, sig, stripeSecret);
-        if (event.type === 'checkout.session.completed') {
-            console.log("super")
+        //checkout.session.completed
+        if (event.type === 'payment_intent.succeeded') {
+
+            const paidFileContainer = await filesManager.createFileContainer("paid",req.user._id,req.user.rootId,100)
+            const root = await filesManager.getOnlyRootInfo(req.user.rootId)
+            root.paidFileContainer = paidFileContainer._id
+            await root.save()
         }
 
         res.json({ received: true });
