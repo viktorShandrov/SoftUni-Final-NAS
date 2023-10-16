@@ -30,6 +30,7 @@ export interface file {
   rootId: String;
   fileChunks: String;
   type: String;
+  isLocked?:Boolean
   length: Number;
   uploadDate: Date;
   fileName: String;
