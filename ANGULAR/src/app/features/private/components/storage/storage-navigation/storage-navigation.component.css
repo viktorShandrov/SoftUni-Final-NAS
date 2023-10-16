@@ -138,7 +138,7 @@
   justify-content: center;
   align-items: center;
   color: black;
-  font-size: clamp(13px,1vw,18px);
+  font-size: clamp(13px,1vw,15px);
   transition: 0.3s;
   cursor: pointer;
   background-color: #f0f0f0;
