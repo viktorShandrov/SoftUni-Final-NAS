@@ -9,21 +9,21 @@
   <div class="storageUsageInfoWrapper">
       <div class="segment">
         <div class="data">
-          <div class="volume">2.0</div>
+          <div class="volume">{{transform(DashboardService.storageVolume)}}</div>
           <div class="measure">GB</div>
         </div>
         <label >Plan Storage Volume</label>
       </div>
       <div class="segment">
         <div class="data">
-          <div class="volume">2.0</div>
+          <div class="volume">{{transform(DashboardService.usedStorage)}}</div>
           <div class="measure">GB</div>
         </div>
         <label >Used Storage</label>
       </div>
       <div class="segment">
         <div class="data">
-          <div class="volume">0.39</div>
+          <div class="volume">{{transform(DashboardService.storageLeft)}}</div>
           <div class="measure">GB</div>
         </div>
         <label >Storage left</label>
