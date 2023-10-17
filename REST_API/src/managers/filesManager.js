@@ -267,15 +267,15 @@ exports.addBytesToStorage= async(rootId,Bytes)=>{
     root.usedStorage+=Bytes
     await root.save()
 }
-exports.checkIfStorageHaveEnoughtSpace =checkIfStorageHaveEnoughtSpace
 checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
     if(!root)  root = await rootModel.findById(rootId)
 
     if(root.usedStorage+Bytes>root.storageVolume){
         throw new Error("There is no enough space")
     }
-    
+
 }
+
 exports.checkIfStorageHaveEnoughtSpace = checkIfStorageHaveEnoughtSpace
 exports.createFolder = async (name, rootId, parentFolderId) => {
 

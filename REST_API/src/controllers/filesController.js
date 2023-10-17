@@ -18,10 +18,13 @@ router.use(express.json({ limit: "1gb" }))
 
 
 
-router.get('/signedGC-URI', async (req, res) => {
+router.post('/signedGC-URI', async (req, res) => {
   try {
-    await fileManager.checkIfStorageHaveEnoughtSpace()
-    await fileManager.getSignedURIFroFileUpload(originalname)
+    const {originalname,bytes} =req.body
+    const {rootId} = req.user
+    await fileManager.checkIfStorageHaveEnoughtSpace(null,rootId,bytes)
+    res.status(201).json({key:await fileManager.getSignedURIFroFileUpload(originalname)})
+
   } catch (error) {
     res.status(400).json({message:error.message})
   }

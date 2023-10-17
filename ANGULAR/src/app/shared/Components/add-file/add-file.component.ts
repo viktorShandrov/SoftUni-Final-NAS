@@ -90,22 +90,31 @@ export class AddFileComponent implements AfterViewInit{
       this.selectedFile = undefined;
     }
   }
-
+  getFileInputName(){
+    return this.fileForm.get('fileName')?.value;
+  }
+  getFileOriginalName(){
+    return this.selectedFile!.name;
+  }
+  checkForFileNameInput(fileNameFromForm:string,FinalFileName:string){
+    if (fileNameFromForm&&fileNameFromForm.length > 0) {
+      FinalFileName =
+        fileNameFromForm +
+        this.selectedFile!.name.substring(
+          this.selectedFile!.name.lastIndexOf('.')
+        );
+    }
+  }
   onSubmit() {
     if (this.selectedFile) {
       const formData = new FormData();
-      let fileNameFromForm = this.fileForm.get('fileName')?.value;
-      let FinalFileName = this.selectedFile.name;
-      if (fileNameFromForm&&fileNameFromForm.length > 0) {
-        FinalFileName =
-          fileNameFromForm +
-          this.selectedFile.name.substring(
-            this.selectedFile.name.lastIndexOf('.')
-          );
-      }
+      let fileNameFromForm = this.getFileInputName()
+      let FinalFileName = this.getFileOriginalName()
+      this.checkForFileNameInput(fileNameFromForm,FinalFileName)
+
         this.areBtnDisabled= true
-      this.HttpService.httpPOSTRequest("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.UserService.rootId})).subscribe(
-        (response)=>{
+      // this.HttpService.httpPOSTRequest("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.UserService.rootId})).subscribe(
+      //   (response)=>{
           this.HttpService.httpGETRequest(`api/files/${enviroments.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`).subscribe(
               (response: any) => {
                 const originalName = this.selectedFile!.name; //contains the extension of the file
@@ -116,68 +125,100 @@ export class AddFileComponent implements AfterViewInit{
                   'parentFolderId',
                   enviroments.currentFolder
                 );
+
+
+
+
                 this.HeaderService.transformTheHeaderStorageInfoForUpload(this.selectedFileSizeInMB as number)
-                this.HttpService.httpPOSTRequest('api/files/upload',formData,{
-                  reportProgress: true,
-                  observe: 'events',
-                  headers : null
+                this.HttpService.httpPOSTRequest('api/files/signedGC-URI',
+                  {
+                    originalname:this.selectedFile!.name,
+                    bytes:this.selectedFile!.size
+                  }).subscribe(
+                  (res:any)=>{
+                    const signedGCKey = res.key[0]
 
-                }).subscribe((event:any) => {
 
-                    if (event.type === HttpEventType.UploadProgress) {
-                      const progress = Math.round(
-                        (100 * event.loaded) / (event.total?.valueOf() || 1)
-                      );
-                      this.HeaderService.updateUploadProgressBar(progress)
-
-                      document.getElementById(
-                        'progress-bar'
-                      )!.innerText = `Upload progress: ${progress}%`;
-                    } else if (event instanceof HttpResponse) {
-                      if(event.body?.message){
-                        //if error
+                    fetch(signedGCKey, {
+                      method: 'PUT',
+                      body: this.selectedFile,
+                    })
+                      .then(response => {
+                        if (response.status === 200) {
+                          this.ToastrService.success("file successfully created","Created",constants.toastrOptions)
+                        } else {
+                          this.ToastrService.error(`File upload failed with status code: ${response.status}`,"Error",constants.toastrOptions)
+                        }
                         this.areBtnDisabled= false
-                        document.getElementById('progress-bar')!.innerText =
-                          event.body.message?.toString();
-                        this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                      }else{
-                        //returns the newFile info
-
-
+                      })
+                      .catch(error => {
                         this.areBtnDisabled= false
-                        this.CacheService.files.push(event.body)
-                        setTimeout(()=>{
-                          const lastFile = this.HTMLElementsService.filesQL.toArray()[this.HTMLElementsService.filesQL.length-1]
-                          this.StorageService.makeFolderOrFileClickableEffect(lastFile)
-                          this.StorageService.setCrossMarkProperly(lastFile.nativeElement)
-                        },0)
-                        this.clearForm()
-                        this.StorageService.hasFiles = true
+                        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+                      });
+                  }
+                )
 
-                          this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
-                            (response:any) => {
-
-                              const {folder} = response
-                              setTimeout(()=>{
-                                this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
-                              },300)
-                                this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                            },
-                            (error)=>{
-                              this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-                              this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                            })
-
-                        this.PopupService.hidePopup()
-                      }
-
-                    }
-                  },
-                  error => {
-                    this.areBtnDisabled= false
-                    this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                    this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-                  });
+                // this.HttpService.httpPOSTRequest('api/files/upload',formData,{
+                //   reportProgress: true,
+                //   observe: 'events',
+                //   headers : null
+                //
+                // }).subscribe((event:any) => {
+                //
+                //     if (event.type === HttpEventType.UploadProgress) {
+                //       // const progress = Math.round(
+                //       //   (100 * event.loaded) / (event.total?.valueOf() || 1)
+                //       // );
+                //       // this.HeaderService.updateUploadProgressBar(progress)
+                //       //
+                //       // document.getElementById(
+                //       //   'progress-bar'
+                //       // )!.innerText = `Upload progress: ${progress}%`;
+                //     } else if (event instanceof HttpResponse) {
+                //       if(event.body?.message){
+                //         //if error
+                //         this.areBtnDisabled= false
+                //         document.getElementById('progress-bar')!.innerText =
+                //           event.body.message?.toString();
+                //         this.HeaderService.transformTheHeaderStorageInfoByDefault()
+                //       }else{
+                //         //returns the newFile info
+                //
+                //
+                //         this.areBtnDisabled= false
+                //         this.CacheService.files.push(event.body)
+                //         setTimeout(()=>{
+                //           const lastFile = this.HTMLElementsService.filesQL.toArray()[this.HTMLElementsService.filesQL.length-1]
+                //           this.StorageService.makeFolderOrFileClickableEffect(lastFile)
+                //           this.StorageService.setCrossMarkProperly(lastFile.nativeElement)
+                //         },0)
+                //         this.clearForm()
+                //         this.StorageService.hasFiles = true
+                //
+                //           this.HttpService.httpGETRequest(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
+                //             (response:any) => {
+                //
+                //               const {folder} = response
+                //               setTimeout(()=>{
+                //                 this.HeaderService.updateUsedStorage(folder.storageVolume,folder.usedStorage)
+                //               },300)
+                //                 this.HeaderService.transformTheHeaderStorageInfoByDefault()
+                //             },
+                //             (error)=>{
+                //               this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+                //               this.HeaderService.transformTheHeaderStorageInfoByDefault()
+                //             })
+                //
+                //         this.PopupService.hidePopup()
+                //       }
+                //
+                //     }
+                //   },
+                //   error => {
+                //     this.areBtnDisabled= false
+                //     this.HeaderService.transformTheHeaderStorageInfoByDefault()
+                //     this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+                //   });
               },
               (error) => {
                 this.areBtnDisabled= false
@@ -186,13 +227,13 @@ export class AddFileComponent implements AfterViewInit{
                   error.error.message;
               }
             );
-        },
-        (error)=>{
-          this.areBtnDisabled= false
-          this.HeaderService.transformTheHeaderStorageInfoByDefault()
-          document.getElementById('progress-bar')!.innerText =
-            error.error.message;
-        })
+        // },
+        // (error)=>{
+        //   this.areBtnDisabled= false
+        //   this.HeaderService.transformTheHeaderStorageInfoByDefault()
+        //   document.getElementById('progress-bar')!.innerText =
+        //     error.error.message;
+        // })
     } else {
       this.areBtnDisabled= false
       this.HeaderService.transformTheHeaderStorageInfoByDefault()
