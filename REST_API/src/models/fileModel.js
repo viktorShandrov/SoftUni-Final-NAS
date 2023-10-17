@@ -9,10 +9,10 @@ const schema = new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref: "Root"
     },
-    fileChunks:{
-        type:String,
-        ref: "files.files"
-    },
+    // fileChunks:{
+    //     type:String,
+    //     ref: "files.files"
+    // },
     type:String,
     length:Number,
     createdAt:Date,
