@@ -178,7 +178,7 @@ async function putInFileContainer(file,root){
 
 
 
-exports.getSignedURIFroFileUpload = (fileName)=>{
+exports.getSignedURIFroFileUpload =async (fileName)=>{
     const bucketName = 'theconfederacyfiles';
     const options = {
         version: 'v4',
@@ -186,9 +186,9 @@ exports.getSignedURIFroFileUpload = (fileName)=>{
         expires: Date.now() + 15 * 60 * 1000,
     };
 
-    const [url] = storage.bucket(bucketName).file(fileName).getSignedUrl(options);
+    return await storage.bucket(bucketName).file(fileName).getSignedUrl(options);
 
-    console.log('Signed URL: ', url);
+
 }
 
 
@@ -267,6 +267,7 @@ exports.addBytesToStorage= async(rootId,Bytes)=>{
     root.usedStorage+=Bytes
     await root.save()
 }
+exports.checkIfStorageHaveEnoughtSpace =checkIfStorageHaveEnoughtSpace
 checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
     if(!root)  root = await rootModel.findById(rootId)
 

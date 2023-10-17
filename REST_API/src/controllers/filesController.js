@@ -12,10 +12,20 @@ const archiver = require('archiver');
 const mongoose = require('mongoose');
 const express = require("express");
 
+
 router.use(express.urlencoded({ extended: true, limit: "1gb" }))
 router.use(express.json({ limit: "1gb" }))
 
-//TODO=> isAuth
+
+
+router.get('/signedGC-URI', async (req, res) => {
+  try {
+    await fileManager.checkIfStorageHaveEnoughtSpace()
+    await fileManager.getSignedURIFroFileUpload(originalname)
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
+});
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
 
@@ -25,12 +35,12 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     
     
     
-    // const newFile = await fileManager.createFile(originalname, buffer, size, rootId, parentFolderId,userId)
-    fileManager.getSignedURIFroFileUpload(originalname)
+    const newFile = await fileManager.createFile(originalname, buffer, size, rootId, parentFolderId,userId)
+    await fileManager.getSignedURIFroFileUpload(originalname)
 
     res.status(201).json(newFile)
   } catch (error) {
-
+    console.log(error.message)
     res.status(400).json({message:error.message})
   }
 });
