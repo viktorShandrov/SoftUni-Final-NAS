@@ -220,8 +220,19 @@ function storeFileIntoMongoDB(buffer,originalname){
     uploadStream.end();
     return uploadStream
 }
+exports.newFile = async (fileName,size,type,rootId,userId)=>{
+    await fileModel.create({
 
-exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
+        type,
+        length:size,
+        createdAt:Date.now(),
+        fileName,
+        rootId,
+        ownerId: userId
+    })
+}
+
+ /* MONGODB storing LEgacy */ ;  exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
 
     const root = await rootModel.findById(rootId).populate("fileComponents")
 

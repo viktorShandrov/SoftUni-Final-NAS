@@ -29,7 +29,18 @@ router.post('/signedGC-URI', async (req, res) => {
     res.status(400).json({message:error.message})
   }
 });
-router.post('/upload', upload.single('file'), async (req, res) => {
+router.post('/newFileCreated', async (req, res) => {
+  try {
+    const {fileName,size,type} =req.body
+    const {rootId,_id} = req.user
+    await fileManager.newFile(fileName,size,type,rootId,_id)
+    res.status(201).end()
+
+  } catch (error) {
+    res.status(400).json({message:error.message})
+  }
+});
+/* mongodb storing legacy*/; router.post('/upload', upload.single('file'), async (req, res) => {
   try {
 
     const { originalname, buffer, size } = req.file;

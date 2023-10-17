@@ -11,6 +11,8 @@ import {CacheService} from "../../services/cache.service";
 import {HTMLElementsService} from "../../services/htmlelements.service";
 import {constants} from "../../constants";
 import {ToastrService} from "ngx-toastr";
+import {AddFileService} from "../../services/add-file.service";
+
 
 
 @Component({
@@ -25,7 +27,7 @@ export class AddFileComponent implements AfterViewInit{
   selectedFile: File | undefined;
   selectedFileSizeInMB: Number | undefined;
 
-  areBtnDisabled:Boolean = false
+
   constructor(
     public PopupService: PopupService,
     private StorageService: StorageService,
@@ -36,6 +38,7 @@ export class AddFileComponent implements AfterViewInit{
     private ToastrService: ToastrService,
     private HttpService: HttpService,
     private HTMLElementsService: HTMLElementsService,
+    public AddFileService: AddFileService,
     private CacheService: CacheService,
     private FormBuilder: FormBuilder,
 
@@ -104,59 +107,36 @@ export class AddFileComponent implements AfterViewInit{
           this.selectedFile!.name.lastIndexOf('.')
         );
     }
+    return FinalFileName
   }
   onSubmit() {
     if (this.selectedFile) {
-      const formData = new FormData();
+      // const formData = new FormData();
       let fileNameFromForm = this.getFileInputName()
       let FinalFileName = this.getFileOriginalName()
       this.checkForFileNameInput(fileNameFromForm,FinalFileName)
 
-        this.areBtnDisabled= true
+        this.AddFileService.areBtnDisabled= true
       // this.HttpService.httpPOSTRequest("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.UserService.rootId})).subscribe(
       //   (response)=>{
           this.HttpService.httpGETRequest(`api/files/${enviroments.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`).subscribe(
               (response: any) => {
-                const originalName = this.selectedFile!.name; //contains the extension of the file
+                // const originalName = this.selectedFile!.name; //contains the extension of the file
 
-                formData.append('file', this.selectedFile!, FinalFileName);
-                formData.append('rootId', this.UserService.rootId);
-                formData.append(
-                  'parentFolderId',
-                  enviroments.currentFolder
-                );
+                // formData.append('file', this.selectedFile!, FinalFileName);
+                // formData.append('rootId', this.UserService.rootId);
+                // formData.append(
+                //   'parentFolderId',
+                //   enviroments.currentFolder
+                // );
 
 
 
 
                 this.HeaderService.transformTheHeaderStorageInfoForUpload(this.selectedFileSizeInMB as number)
-                this.HttpService.httpPOSTRequest('api/files/signedGC-URI',
-                  {
-                    originalname:this.selectedFile!.name,
-                    bytes:this.selectedFile!.size
-                  }).subscribe(
-                  (res:any)=>{
-                    const signedGCKey = res.key[0]
 
 
-                    fetch(signedGCKey, {
-                      method: 'PUT',
-                      body: this.selectedFile,
-                    })
-                      .then(response => {
-                        if (response.status === 200) {
-                          this.ToastrService.success("file successfully created","Created",constants.toastrOptions)
-                        } else {
-                          this.ToastrService.error(`File upload failed with status code: ${response.status}`,"Error",constants.toastrOptions)
-                        }
-                        this.areBtnDisabled= false
-                      })
-                      .catch(error => {
-                        this.areBtnDisabled= false
-                        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-                      });
-                  }
-                )
+                this.AddFileService.getGCsignedKey(this.selectedFile)
 
                 // this.HttpService.httpPOSTRequest('api/files/upload',formData,{
                 //   reportProgress: true,
@@ -221,10 +201,9 @@ export class AddFileComponent implements AfterViewInit{
                 //   });
               },
               (error) => {
-                this.areBtnDisabled= false
+                this.AddFileService.areBtnDisabled= false
                 this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                document.getElementById('progress-bar')!.innerText =
-                  error.error.message;
+                this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
               }
             );
         // },
@@ -235,7 +214,7 @@ export class AddFileComponent implements AfterViewInit{
         //     error.error.message;
         // })
     } else {
-      this.areBtnDisabled= false
+      this.AddFileService.areBtnDisabled= false
       this.HeaderService.transformTheHeaderStorageInfoByDefault()
       document.getElementById('progress-bar')!.innerText = "No file selected"
     }
