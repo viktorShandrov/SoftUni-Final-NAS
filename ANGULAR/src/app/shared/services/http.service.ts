@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {constants} from "../constants";
+import * as buffer from "buffer";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class HttpService {
     }
 
     return this.HttpClient.post(URL,payLoad,options)
+  }
+
+  httpPUTRequest(URL:string,payLoad:any,options?:object){
+    return this.HttpClient.put(URL,options)
   }
 }
