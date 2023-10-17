@@ -25,8 +25,8 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     
     
     
-    const newFile = await fileManager.createFile(originalname, buffer, size, rootId, parentFolderId,userId)
-    
+    // const newFile = await fileManager.createFile(originalname, buffer, size, rootId, parentFolderId,userId)
+    fileManager.getSignedURIFroFileUpload(originalname)
 
     res.status(201).json(newFile)
   } catch (error) {

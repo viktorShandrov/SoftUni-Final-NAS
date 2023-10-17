@@ -7,6 +7,9 @@ const mongoose = require("mongoose")
 const uuid = require("uuid")
 const { ObjectId } = require('mongodb');
 const archiver = require("archiver");
+const { Storage } = require('@google-cloud/storage');
+const path = require("path");
+const storage = new Storage();
 
 
 
@@ -172,6 +175,52 @@ async function putInFileContainer(file,root){
 }
 
 
+
+
+
+exports.getSignedURIFroFileUpload = (fileName)=>{
+    const bucketName = 'theconfederacyfiles';
+    const options = {
+        version: 'v4',
+        action: 'write',
+        expires: Date.now() + 15 * 60 * 1000,
+    };
+
+    const [url] = storage.bucket(bucketName).file(fileName).getSignedUrl(options);
+
+    console.log('Signed URL: ', url);
+}
+
+
+
+
+
+
+exports.uploadFileToGC=async()=>{
+    const bucketName = 'theconfederacyfiles';
+    const filename = path.join(__dirname,"../test/1111.docx");
+    const myBucket = storage.bucket(bucketName);
+
+    await myBucket.upload(filename, {
+        destination: 'destination/file.jpg',
+    });
+
+    console.log('File uploaded to Google Cloud Storage.');
+}
+
+function storeFileIntoMongoDB(buffer,originalname){
+    const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+        bucketName: 'files'
+    });
+
+    const id = uuid.v4()
+    const uploadStream = gridFile.openUploadStreamWithId(id, originalname);
+
+    uploadStream.write(buffer);
+    uploadStream.end();
+    return uploadStream
+}
+
 exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
 
     const root = await rootModel.findById(rootId).populate("fileComponents")
@@ -185,18 +234,10 @@ exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,u
         throw new Error("File with the same name already exists.")
     }
 
-    const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-        bucketName: 'files'
-    });
 
-    const id = uuid.v4()
-    const uploadStream = gridFile.openUploadStreamWithId(id, originalname);
+    const uploadStream = storeFileIntoMongoDB(buffer,originalname)
 
-    uploadStream.write(buffer);
-    uploadStream.end();
-
-
-    const fullFileName = uploadStream.filename;
+    const fullFileName = uploadStream.fileName
     const onlyName = fullFileName.substring(0,fullFileName.lastIndexOf('.'));
     const fileExtension = fullFileName.substring(fullFileName.lastIndexOf('.') + 1);
 
