@@ -70,7 +70,7 @@ export class AddFileService {
     console.log(fileServerRecord)
     this.HttpService.httpPOSTRequest('api/files/signedGC-URI',
       {
-        originalname:fileServerRecord.fileName,
+        originalname:fileServerRecord._id,
         bytes:file!.size,
         action:"write"
       }).subscribe(
