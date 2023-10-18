@@ -5,11 +5,21 @@ const path = require("path");
 const async = require("async");
 const {call} = require("express");
 const {uploadFileToGC} = require("../managers/filesManager");
-
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage();
 exports.runTest=()=>{
     // gzipFile()
     // gunzip()
     // uploadFileToGC()
+
+    // storage
+    //     .bucket("theconfederacyfiles")
+    //     .file("AI.txt")
+    //     .getMetadata()
+    //     .then((data) => {
+    //         const metadata = data[0];
+    //         console.log('Object metadata:', metadata);
+    //     })
 
 }
 function gunzip(){
