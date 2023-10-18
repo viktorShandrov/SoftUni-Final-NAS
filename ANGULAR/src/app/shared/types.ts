@@ -28,6 +28,7 @@ export interface file {
   elementType?:String
   _id:String
   rootId: String;
+
   fileChunks: String;
   type: String;
   isLocked?:Boolean
