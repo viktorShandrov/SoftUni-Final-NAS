@@ -66,34 +66,86 @@ export class StorageService {
         }
       );
   }
+  downloadFile(key:string,element:any){
+
+    fetch(key)
+      .then((response) => {
+      if (!response.ok) {
+        this.ToastrService.error('Network response was not ok', "Error", constants.toastrOptions)
+      }
+      return response.blob(); // Convert the response to a Blob
+    })
+      .then((response: any) => {
+        // Handle the downloaded file.
+        const blob = new Blob([response], {type: 'application/octet-stream'});
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${element.fileName}.${element.type}`; // Set the desired file name.
+        a.click();
+      })
+      .catch((error) => {
+        this.ToastrService.error(error.error.message, "Error", constants.toastrOptions)
+      })
+
+  }
+  getSignedURI(element:any){
+    this.HttpService.httpPOSTRequest("api/files/signedGC-URI", {action: "read",originalname:element.fileName}).subscribe(
+      (res: any) => {
+        const {key} = res
+        this.downloadFile(key,element)
+      },
+      (error) => {
+        this.ToastrService.error(error.error.message, "Error", constants.toastrOptions)
+      }
+    )
+  }
 
   getElementDownload(elementId: string, isFile:boolean) {
-    const options = {
-      headers: new HttpHeaders(),
-      responseType: 'blob' as 'json',
-    };
     this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/getElementInfo`).subscribe(
-      (element: any) => {
-        console.log(element)
-      this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/download`,options).subscribe(
-        (response: any) => {
-          const blob = new Blob([response], {
-            type: `application/${isFile?"octet-stream":"zip"}`,
-          });
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `${isFile?element.fileName:element.name}.${isFile?element.type:"zip"}`;
-          link.click();
-          window.URL.revokeObjectURL(url);
-        },
-        error => {
-          this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-        });
-    },
+          (element: any) => {
+            if(isFile){
+              this.getSignedURI(element)
+            }
+
+
+          },
       (error)=>{
-        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-      });
+        this.ToastrService.error(error.error.message, "Error", constants.toastrOptions)
+      }
+      )
+
+
+
+
+    //LEGACY
+
+  //   const options = {
+  //     headers: new HttpHeaders(),
+  //     responseType: 'blob' as 'json',
+  //   };
+  //   this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/getElementInfo`).subscribe(
+  //     (element: any) => {
+  //       console.log(element)
+  //     this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/download`,options).subscribe(
+  //       (response: any) => {
+  //         const blob = new Blob([response], {
+  //           type: `application/${isFile?"octet-stream":"zip"}`,
+  //         });
+  //         const url = window.URL.createObjectURL(blob);
+  //         const link = document.createElement('a');
+  //         link.href = url;
+  //         link.download = `${isFile?element.fileName:element.name}.${isFile?element.type:"zip"}`;
+  //         link.click();
+  //         window.URL.revokeObjectURL(url);
+  //       },
+  //       error => {
+  //         this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+  //       });
+  //   },
+  //     (error)=>{
+  //       this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+  //     });
   }
 
   addEventListenerToDivDir(
