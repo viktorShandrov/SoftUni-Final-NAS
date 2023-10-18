@@ -8,8 +8,9 @@ const uuid = require("uuid")
 const { ObjectId } = require('mongodb');
 const archiver = require("archiver");
 const { Storage } = require('@google-cloud/storage');
-const path = require("path");
 const storage = new Storage();
+const path = require("path");
+const {GCbucketName} = require("../utils/utils");
 
 
 
@@ -28,7 +29,7 @@ exports.getFolderInfo = (folderId) => {
     return folderModel.findById(folderId)
 }
 exports.checkIfFileNameAlreadyExists = async (parentFolderId,name) => {
-    console.log('name1: ', name);
+
     const file = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")
     const onlyName = name.substring(0,name.lastIndexOf("."))
     const extension = name.substring(name.lastIndexOf(".")+1)
@@ -162,7 +163,6 @@ function checkForLockedFiles(fileContainer,folder){
 // }
 async function putInFileContainer(file,root){
     root = await root.populate("freeFileContainer paidFileContainer")
-    console.log(root)
     if(root.freeFileContainer.storageVolume>=file.length){
         root.freeFileContainer.fileComponents.push(file._id)
        await root.freeFileContainer.save()
@@ -173,16 +173,37 @@ async function putInFileContainer(file,root){
 
     return root.save()
 }
+async function removeFromFileContainer(file,root){
+    root = await root.populate("freeFileContainer paidFileContainer")
+
+    if(root.freeFileContainer.fileComponents.some(f=>f.equals(file._id))){
+        root.freeFileContainer.fileComponents
+            .splice(
+                root.freeFileContainer.fileComponents.findIndex(f=>f.equals(file._id)),
+                1
+            )
+        await root.freeFileContainer.save()
+    }else if(root.paidFileContainer.fileComponents.some(f=>f.equals(file._id))){
+        root.paidFileContainer.fileComponents
+            .splice(
+                root.paidFileContainer.fileComponents.findIndex(f=>f.equals(file._id)),
+                1
+            )
+        await root.paidFileContainer.save()
+    }
+
+    return root.save()
+}
 
 
 
 
 
-exports.getSignedURIFroFileUpload =async (fileName)=>{
+exports.getSignedURIFroFileUploadOrDownload =async (fileName,action)=>{
     const bucketName = 'theconfederacyfiles';
     const options = {
         version: 'v4',
-        action: 'write',
+        action,
         expires: Date.now() + 15 * 60 * 1000,
     };
 
@@ -220,16 +241,96 @@ function storeFileIntoMongoDB(buffer,originalname){
     uploadStream.end();
     return uploadStream
 }
-exports.newFile = async (fileName,size,type,rootId,userId)=>{
-    await fileModel.create({
 
+const getRoot =async (rootId,...populates)=>{
+    const root = await rootModel.findById(rootId)
+    for (const populate of populates) {
+        await root.populate(populate)
+    }
+    return root
+}
+
+const addFileIdIntoFolder =async (folder,file)=>{
+    folder.fileComponents.push(file._id)
+    await folder.save()
+}
+const addToUsedStorage =async (root,file)=>{
+    root.usedStorage+=Number(file.length)
+    await root.save()
+}
+const removeToUsedStorage = (root,file)=>{
+    root.usedStorage-=file.length
+}
+const createNewMongoDBfileRecord =async (fileName,size,type,rootId,userId)=>{
+
+    return await fileModel.create({
         type,
         length:size,
         createdAt:Date.now(),
-        fileName,
+        fileName:fileName.slice(0,fileName.lastIndexOf(".")),
         rootId,
         ownerId: userId
     })
+}
+
+const saveFileIntoRightPlaces =async (rootId,parentFolderId,file)=>{
+    const root = await getRoot(rootId,"fileComponents")
+
+    let folder =  await folderModel.findById(parentFolderId).populate("fileComponents")
+
+    if(!folder) folder = root
+
+    await putInFileContainer(file,root)
+    await addFileIdIntoFolder(folder,file)
+
+    await addToUsedStorage(root,file)
+}
+async function unAttachFromFolder(parentFolder,userId,fileId){
+    if(!parentFolder.autorised.includes(userId)){
+        throw new Error("You are not able to delete that due to ownership issues")
+    }
+    parentFolder.fileComponents.splice(parentFolder.fileComponents.findIndex(objId => objId.equals(fileId)), 1)
+    return parentFolder.save()
+}
+async function deleteFileRecord(fileId){
+    return fileModel.findByIdAndDelete(fileId)
+}
+exports.deleteFileOnServer=async(fileId,rootId,parentFolderId,userId)=>{
+
+    await unAttachFileFromEveryPlace(fileId,rootId,parentFolderId,userId)
+    await deleteFileRecord(fileId)
+}
+const unAttachFileFromEveryPlace = async (fileId,rootId,parentFolderId,userId)=>{
+    const root = await rootModel.findById(rootId)
+    let parentFolder = await folderModel.findById(parentFolderId)
+    if(!parentFolder) parentFolder = root
+
+    const file = await fileModel.findById(fileId)
+
+    await unAttachFromFolder(parentFolder,userId,fileId)
+    removeToUsedStorage(root,file)
+    await removeFromFileContainer(file,root)
+
+}
+exports.unAttachFileFromEveryPlace = unAttachFileFromEveryPlace
+exports.newFile = async (fileName,size,type,rootId,userId,parentFolderId)=>{
+    const file = await  createNewMongoDBfileRecord(fileName,size,type,rootId,userId)
+
+
+    saveFileIntoRightPlaces(rootId,parentFolderId,file)
+
+
+    return file
+    // storage
+    //     .bucket(GCbucketName)
+    //     .file(fileName)
+    //     .setMetadata({ name:fileName})
+    //     .then(() => {
+    //         console.log('Metadata set successfully');
+    //     })
+    //     .catch((err) => {
+    //         console.error('Error:', err);
+    //     });
 }
 
  /* MONGODB storing LEgacy */ ;  exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
@@ -322,7 +423,7 @@ exports.deleteFolder = async (folderId, parentFolderId,userId) => {
     parentFolder.save()
     folder.save()
 }
-exports.deleteFile = async (fileId, parentFolderId,rootId,userId) => {
+/*LEGACY*/ exports.deleteFile = async (fileId, parentFolderId,rootId,userId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
     if(!parentFolder.autorised.includes(userId)){
