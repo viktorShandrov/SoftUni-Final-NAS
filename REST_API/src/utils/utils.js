@@ -20,5 +20,7 @@ exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
 exports.googleClientId = "341272107557-fp6lu6llorj0912vt59nj8j4mrstekst.apps.googleusercontent.com"
 exports.stripeSecret="whsec_d59df066433e3aee1d167b7b8fd416019540874de9d7a18d65926058046b075d"
 exports.stripeSecretKey="whsec_d59df066433e3aee1d167b7b8fd416019540874de9d7a18d65926058046b075d"
+exports.GCbucketName="theconfederacyfiles"
+
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =path.join(__dirname,'./GC-Owner-Credentials.json')
