@@ -136,7 +136,7 @@ export class AddFileComponent implements AfterViewInit{
                 this.HeaderService.transformTheHeaderStorageInfoForUpload(this.selectedFileSizeInMB as number)
 
 
-                this.AddFileService.getGCsignedKey(this.selectedFile)
+                this.AddFileService.startUploading(this.selectedFile,FinalFileName)
 
                 // this.HttpService.httpPOSTRequest('api/files/upload',formData,{
                 //   reportProgress: true,
