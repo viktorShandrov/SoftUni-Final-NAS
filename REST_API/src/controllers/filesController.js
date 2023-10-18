@@ -20,21 +20,23 @@ router.use(express.json({ limit: "1gb" }))
 
 router.post('/signedGC-URI', async (req, res) => {
   try {
-    const {originalname,bytes} =req.body
+    const {originalname,bytes,action} =req.body
     const {rootId} = req.user
-    await fileManager.checkIfStorageHaveEnoughtSpace(null,rootId,bytes)
-    res.status(201).json({key:await fileManager.getSignedURIFroFileUpload(originalname)})
+    if(action==="write"){
+      await fileManager.checkIfStorageHaveEnoughtSpace(null,rootId,bytes)
+    }
+    res.status(201).json({key:await fileManager.getSignedURIFroFileUploadOrDownload(originalname,action)})
 
   } catch (error) {
     res.status(400).json({message:error.message})
   }
 });
-router.post('/newFileCreated', async (req, res) => {
+router.post('/createNewFileOnServer', async (req, res) => {
   try {
-    const {fileName,size,type} =req.body
+    const {fileName,size,type,parentFolderId} =req.body
     const {rootId,_id} = req.user
-    await fileManager.newFile(fileName,size,type,rootId,_id)
-    res.status(201).end()
+    const file = await fileManager.newFile(fileName,size,type,rootId,_id,parentFolderId)
+    res.status(201).json({file})
 
   } catch (error) {
     res.status(400).json({message:error.message})
@@ -76,8 +78,8 @@ router.get('/:id/:elementType/getElementInfo', async (req, res) => {
 });
 router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, res) => {
   try {
-    const name = req.params.name
-    const parentFolderId = req.params.parentFolderId
+
+    const {parentFolderId,name} = req.params
     const alreadyExists = await fileManager.checkIfFileNameAlreadyExists(parentFolderId,name)
     if(alreadyExists){
       res.status(409).send(JSON.stringify({message:"File with same name and type already exist"}))
@@ -162,13 +164,14 @@ router.post("/deleteItem", async (req, res) => {
 
 
       if(elementType === "file"){
-        await fileManager.deleteFile(elementId,parentFolderId,rootId,_id)
+        // await fileManager.deleteFile(elementId,parentFolderId,rootId,_id)
+        await fileManager.deleteFileOnServer(elementId,rootId,parentFolderId,_id)
       }else if(elementType === "directory"){
         await fileManager.deleteFolder(elementId, parentFolderId,_id)
       }
     res.status(200).end()
   } catch (error) {
-
+    console.log(error)
     res.status(400).json({message:error.message})
   }
 })
