@@ -138,12 +138,92 @@ export class StorageService {
       })
 
   }
-  getSignedURI(element:any){
-    this.HttpService.httpPOSTRequest("api/files/signedGC-URI", {action: "read",originalname:element._id}).subscribe(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  async  downloadFolder(tree: any) {
+    const zip = new JSZip();
+
+    async function addFilesToZip(folder: any, parentPath: string) {
+      // Create a folder in the ZIP archive for the current folder
+      const currentFolder = zip.folder(parentPath + folder.name);
+
+      for (const fileName in folder.files) {
+        const fileUrl = folder.files[fileName];
+        try {
+          const response = await fetch(fileUrl);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const blob = await response.blob();
+          // Add the file to the current folder in the ZIP archive
+          currentFolder!.file(`${fileName}.txt`, blob);
+          console.log(`Added file: ${parentPath + folder.name}/${fileName}.txt`);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      for (const subFolder of folder.folders) {
+        await addFilesToZip(subFolder, parentPath + folder.name + '/');
+      }
+    }
+
+    await addFilesToZip(tree, '');
+
+    zip.generateAsync({ type: 'blob' }).then(function (blob: any) {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'myArchive.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getSignedURI(element:any,elementType:string){
+    this.HttpService.httpPOSTRequest("api/files/signedGC-URI", {action: "read",originalname:element._id,elementType}).subscribe(
       (res: any) => {
         const {key} = res
-        console.log(key)
-        this.downloadFile(key,element)
+        if(elementType==="file"){
+          this.downloadFile(key,element)
+        }else{
+          this.downloadFolder(key)
+        }
       },
       (error) => {
         this.ToastrService.error(error.error.message, "Error", constants.toastrOptions)
@@ -154,10 +234,8 @@ export class StorageService {
   getElementDownload(elementId: string, isFile:boolean) {
     this.HttpService.httpGETRequest(`api/files/${elementId}/${isFile?"file":"folder"}/getElementInfo`).subscribe(
           (element: any) => {
-            if(isFile){
-              this.getSignedURI(element)
-            }
 
+              this.getSignedURI(element,isFile?"file":"folder")
 
           },
       (error)=>{
