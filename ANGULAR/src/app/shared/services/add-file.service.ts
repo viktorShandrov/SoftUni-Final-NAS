@@ -67,10 +67,9 @@ export class AddFileService {
 
   }
   getGCsignedKey(file:any,fileServerRecord:any){
-    console.log(fileServerRecord)
     this.HttpService.httpPOSTRequest('api/files/signedGC-URI',
       {
-        originalname:fileServerRecord._id,
+        originalname:fileServerRecord._id.toString(),
         bytes:file!.size,
         action:"write"
       }).subscribe(

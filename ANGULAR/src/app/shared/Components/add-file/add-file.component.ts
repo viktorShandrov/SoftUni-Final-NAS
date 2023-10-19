@@ -114,7 +114,7 @@ export class AddFileComponent implements AfterViewInit{
       // const formData = new FormData();
       let fileNameFromForm = this.getFileInputName()
       let FinalFileName = this.getFileOriginalName()
-      this.checkForFileNameInput(fileNameFromForm,FinalFileName)
+      FinalFileName = this.checkForFileNameInput(fileNameFromForm,FinalFileName)
 
         this.AddFileService.areBtnDisabled= true
       // this.HttpService.httpPOSTRequest("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.UserService.rootId})).subscribe(
