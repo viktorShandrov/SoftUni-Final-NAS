@@ -4,10 +4,10 @@ const zlib = require('zlib');
 const path = require("path");
 const async = require("async");
 const {call} = require("express");
-const {uploadFileToGC} = require("../managers/filesManager");
+const {uploadFileToGC, signGCkeysForFolder} = require("../managers/filesManager");
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage();
-exports.runTest=()=>{
+exports.runTest=async()=>{
     // gzipFile()
     // gunzip()
     // uploadFileToGC()
@@ -20,6 +20,7 @@ exports.runTest=()=>{
     //         const metadata = data[0];
     //         console.log('Object metadata:', metadata);
     //     })
+    //  await signGCkeysForFolder("652bc30384237c46a98180ed")
 
 }
 function gunzip(){
