@@ -71,7 +71,8 @@ export class AddFileService {
       {
         originalname:fileServerRecord._id.toString(),
         bytes:file!.size,
-        action:"write"
+        action:"write",
+        elementType:"file"
       }).subscribe(
       (res:any)=>{
         const signedGCKey = res.key[0]
