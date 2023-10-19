@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const express = require("express");
 
 
+
 router.use(express.urlencoded({ extended: true, limit: "1gb" }))
 router.use(express.json({ limit: "1gb" }))
 
@@ -20,12 +21,18 @@ router.use(express.json({ limit: "1gb" }))
 
 router.post('/signedGC-URI', async (req, res) => {
   try {
-    const {originalname,bytes,action} =req.body
+    const {originalname,bytes,action,elementType} =req.body
     const {rootId} = req.user
     if(action==="write"){
       await fileManager.checkIfStorageHaveEnoughtSpace(null,rootId,bytes)
     }
-    res.status(201).json({key:await fileManager.getSignedURIFroFileUploadOrDownload(originalname,action)})
+    let key
+    if(elementType==="file"){
+      key=await fileManager.getSignedURIFroFileUploadOrDownload(originalname,action)
+    }else {
+      key = await fileManager.signGCkeysForFolder(originalname)
+    }
+    res.status(201).json({key})
 
   } catch (error) {
     res.status(400).json({message:error.message})
@@ -94,7 +101,7 @@ router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, re
 
 
 
-router.get("/:id/:elementType/download", isAuth, async (req, res) => {
+/*LEGACY*/ router.get("/:id/:elementType/download", isAuth, async (req, res) => {
   try {
     let {id,elementType} = req.params;
 
