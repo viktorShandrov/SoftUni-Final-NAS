@@ -146,6 +146,7 @@ export class StorageContentComponent implements AfterViewInit {
     setTimeout(()=>{
       this.StorageService.setCrossMarkProperlyOnFoldersAndFiles()
     },200)
+    this.StorageService.dowloadFolder()
   }
 
 
