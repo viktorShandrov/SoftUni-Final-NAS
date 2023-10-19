@@ -199,7 +199,7 @@ async function removeFromFileContainer(file,root){
 
 
 
-exports.getSignedURIFroFileUploadOrDownload =async (fileName,action)=>{
+const getSignedURIFroFileUploadOrDownload =async (fileName,action)=>{
     const bucketName = 'theconfederacyfiles';
     const options = {
         version: 'v4',
@@ -207,12 +207,12 @@ exports.getSignedURIFroFileUploadOrDownload =async (fileName,action)=>{
         expires: Date.now() + 15 * 60 * 1000,
     };
 
-    return await storage.bucket(bucketName).file(fileName).getSignedUrl(options);
+    return await storage.bucket(bucketName).file(fileName.toString()).getSignedUrl(options);
 
 
 }
 
-
+exports.getSignedURIFroFileUploadOrDownload = getSignedURIFroFileUploadOrDownload
 
 
 
@@ -597,6 +597,41 @@ exports.downloadFolder=async (folderId,res)=>{
     await populateFolder([],folderId)
     zip.finalize();
 }
+
+async function giveFolderFileComponents(folderId, previousFolder) {
+    const folderRecord = await folderModel.findById(folderId);
+
+    const folder = {
+        name: folderRecord.name,
+        folders: [], // Store folder objects here
+        files: {},
+    };
+
+    if (previousFolder) {
+        previousFolder.folders.push(folder); // Store the folder object
+    }
+
+    for (const fileComponent of folderRecord.fileComponents) {
+        folder.files[fileComponent] = (
+            await getSignedURIFroFileUploadOrDownload(fileComponent, "read")
+        )[0];
+    }
+
+    for (const subFolderId of folderRecord.dirComponents) {
+        await giveFolderFileComponents(subFolderId, folder);
+    }
+
+    return folder;
+}
+
+
+
+exports.signGCkeysForFolder=async(folderId)=>{
+   return await giveFolderFileComponents(folderId)
+}
+
+
+
 
 
  async function populateFolder(folderTreeNames,folderId){
