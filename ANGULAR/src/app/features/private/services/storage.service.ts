@@ -12,7 +12,10 @@ import {PopupService} from "../../../shared/services/popup.service";
 import {logMessages} from "@angular-devkit/build-angular/src/tools/esbuild/utils";
 import {constants} from "../../../shared/constants";
 import {ToastrService} from "ngx-toastr";
-import {timeout} from "rxjs";
+import * as JSZip from 'jszip';
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +69,52 @@ export class StorageService {
         }
       );
   }
+
+  dowloadFolder(){
+    const zip = new JSZip();
+
+    const fetchPromises:any = [];
+    const elementsToDownload:any=[
+      { fileName:"ivan",
+        key:"https://storage.googleapis.com/theconfederacyfiles/652fc5fd794933510d2ec890?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=borispavelbasnki%40storage-nas-angular.iam.gserviceaccount.com%2F20231018%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20231018T134616Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=ab8b15ce4545d405e8caeba0e82e5a7abdae3765553c4491f73f2cb6e07c518557c406475599b33fcf6f0da7e84f93c5939e67b7e2afe8dce088801eb6b58e7b2b8a4894a5075bbb0ba25bcb678355ea256cbadd91213aabbb37c826493dad77a835c07e0be1c49558c251141aaee2a06390e1deeff646c7e73bbf32bf93ce7f072779fdf7bdcc864168c712fe5a7028e9ae2b135070b93388f9d5f871c286537a2bff7b0af1178b1ad68d18c9cf50dfb5d9ed43406bbd05f62844e11ea55b77484afa00d106ba19cf37a707592f85e8096369b0c39871ee930ef99cd30649465b56348fd3829911443653cbe0877e872776c4262679931ca4b8eb06d1530320"},
+       { fileName:"di",
+        key:"https://storage.googleapis.com/theconfederacyfiles/652fc5fd794933510d2ec890?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=borispavelbasnki%40storage-nas-angular.iam.gserviceaccount.com%2F20231018%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20231018T134616Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=ab8b15ce4545d405e8caeba0e82e5a7abdae3765553c4491f73f2cb6e07c518557c406475599b33fcf6f0da7e84f93c5939e67b7e2afe8dce088801eb6b58e7b2b8a4894a5075bbb0ba25bcb678355ea256cbadd91213aabbb37c826493dad77a835c07e0be1c49558c251141aaee2a06390e1deeff646c7e73bbf32bf93ce7f072779fdf7bdcc864168c712fe5a7028e9ae2b135070b93388f9d5f871c286537a2bff7b0af1178b1ad68d18c9cf50dfb5d9ed43406bbd05f62844e11ea55b77484afa00d106ba19cf37a707592f85e8096369b0c39871ee930ef99cd30649465b56348fd3829911443653cbe0877e872776c4262679931ca4b8eb06d1530320"},
+
+       ]
+// Fetch each file and add it to the ZIP archive
+    elementsToDownload.forEach((element:any) => {
+      const fetchPromise = fetch(element.key)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.blob(); // Convert the response to a Blob
+        })
+        .then((blob) => {
+          // Add the fetched file to the ZIP archive
+          zip.file(element.fileName+".txt", blob);
+          zip.folder("te")
+        })
+        .catch((error) => {
+          // Handle errors here if needed
+          console.error(error);
+        });
+
+      fetchPromises.push(fetchPromise);
+    });
+
+// After all promises are resolved, generate the ZIP archive
+    Promise.all(fetchPromises).then(() => {
+      zip.generateAsync({ type: 'blob' }).then(function (blob:any) {
+        // Handle the ZIP archive here
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'myArchive.zip'; // Set the desired file name
+        a.click();
+      });
+    });
+  }
   downloadFile(key:string,element:any){
 
     fetch(key)
@@ -90,9 +139,10 @@ export class StorageService {
 
   }
   getSignedURI(element:any){
-    this.HttpService.httpPOSTRequest("api/files/signedGC-URI", {action: "read",originalname:element.fileName}).subscribe(
+    this.HttpService.httpPOSTRequest("api/files/signedGC-URI", {action: "read",originalname:element._id}).subscribe(
       (res: any) => {
         const {key} = res
+        console.log(key)
         this.downloadFile(key,element)
       },
       (error) => {
