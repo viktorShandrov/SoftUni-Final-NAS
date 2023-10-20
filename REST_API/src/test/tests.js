@@ -6,6 +6,7 @@ const async = require("async");
 const {call} = require("express");
 const {uploadFileToGC, signGCkeysForFolder} = require("../managers/filesManager");
 const { Storage } = require('@google-cloud/storage');
+const {sendConfirmationEmail} = require("../managers/usersManager");
 const storage = new Storage();
 exports.runTest=async()=>{
     // gzipFile()
@@ -21,7 +22,7 @@ exports.runTest=async()=>{
     //         console.log('Object metadata:', metadata);
     //     })
     //  await signGCkeysForFolder("652bc30384237c46a98180ed")
-
+    // sendConfirmationEmail("kufte200520052005@gmail.com")
 }
 function gunzip(){
     const inputFilePath = './output.zip'; // Replace with the path to your compressed file
