@@ -36,6 +36,7 @@
         <p *ngIf="formGroup.hasError('passwordMismatch')">Passwords do not match</p>
       </div>
     </div>
+    <h5 class="acceptTermsMessage">By signing up, you accept <a [routerLink]="['/terms']">Terms and Conditions </a> </h5>
     <button class="register" type="submit"><p>Register</p></button>
     <button (click)="toggleGoogleSignMenu()" class="googleBtn" ><img src="assets/google.png" alt="google"></button>
 <!--    <button (click)="handleGoogleBtn()">Register</button>-->
