@@ -69,3 +69,6 @@ form .login a{
 input.invalid{
   border: solid red 1cm;
 }
+.acceptTermsMessage{
+  margin: 0;
+}
