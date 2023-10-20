@@ -38,6 +38,8 @@ import { AdminPanelComponent } from './private/components/admin-panel/admin-pane
 import { ToggleMenuDirective } from './private/directives/toggle-menu.directive';
 import { MenuDirective } from '../shared/directives/menu.directive';
 import { CloseBtnDirective } from '../shared/directives/close-btn.directive';
+import { TermsComponent } from './public/components/terms/terms.component';
+import { RegistrationConfirmationComponent } from './public/components/registration-confirmation/registration-confirmation.component';
 
 
 
@@ -71,6 +73,8 @@ import { CloseBtnDirective } from '../shared/directives/close-btn.directive';
     TrimChartElementNamePipe,
     AdminPanelComponent,
     ToggleMenuDirective,
+    TermsComponent,
+    RegistrationConfirmationComponent,
 
 
   ],
