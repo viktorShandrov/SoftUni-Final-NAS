@@ -61,7 +61,7 @@ export class RegisterComponent implements AfterViewInit {
       const email = this.formGroup.get("email")!.value
       const password = this.formGroup.get("password")!.value
       const rePass = this.formGroup.get("rePass")!.value
-      this.RegisterService.register(email,password,rePass,this.renderer)
+      this.RegisterService.sendConfirmationEmail(email,password,rePass)
     }
   }
 }
