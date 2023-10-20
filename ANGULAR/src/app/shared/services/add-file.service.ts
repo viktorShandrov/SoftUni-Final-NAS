@@ -6,6 +6,7 @@ import {PopupService} from "./popup.service";
 import {enviroments} from "../environments";
 import {CacheService} from "./cache.service";
 import {StorageService} from "../../features/private/services/storage.service";
+import {HeaderService} from "../../core/services/header.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AddFileService {
     private HttpService: HttpService,
     private ToastrService: ToastrService,
     private StorageService: StorageService,
+    private HeaderService: HeaderService,
     private CacheService: CacheService,
     private PopupService: PopupService,
   ) { }
@@ -51,6 +53,7 @@ export class AddFileService {
         if (response.status === 200) {
           this.CacheService.files.push(fileServerRecord)
           this.StorageService.hasFiles = true
+          this.HeaderService.transformTheHeaderStorageInfoByDefault()
           this.ToastrService.success("file successfully created","Created",constants.toastrOptions)
         } else {
           this.ToastrService.error(`File upload failed with status code: ${response.status}`,"Error",constants.toastrOptions)
