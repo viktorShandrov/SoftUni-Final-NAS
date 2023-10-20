@@ -26,6 +26,10 @@ import {
 import {PlansViewComponent} from "../../features/public/components/plans-view/plans-view.component";
 import {AdminPanelComponent} from "../../features/private/components/admin-panel/admin-panel.component";
 import {AdminGuard} from "./admin-guard";
+import {TermsComponent} from "../../features/public/components/terms/terms.component";
+import {
+  RegistrationConfirmationComponent
+} from "../../features/public/components/registration-confirmation/registration-confirmation.component";
 
 const routes: Routes = [
   {
@@ -43,6 +47,15 @@ const routes: Routes = [
     path:"plans",
     pathMatch: "full",
     component:PlansViewComponent
+  },
+  {
+    path:"terms",
+    pathMatch: "full",
+    component:TermsComponent
+  },
+  {
+    path:"accountConfirmation/:email/:password",
+    component:RegistrationConfirmationComponent
   },
   {path:"users",component:UsersViewComponent,
     children:
