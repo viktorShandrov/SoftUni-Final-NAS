@@ -29,10 +29,10 @@
       <img class="userImage" src="./assets/COVIDREADY.png" alt="">
       <div appMenu  #userMenu class="user-menu" >
         <h2>Account</h2>
-        <div (click)="UserSettingsPopupService.showPopup()" class="option settings">
-          <i class="fa-solid fa-gear"></i>
-          <h5>Settings</h5>
-        </div>
+<!--        <div (click)="UserSettingsPopupService.showPopup()" class="option settings">-->
+<!--          <i class="fa-solid fa-gear"></i>-->
+<!--          <h5>Settings</h5>-->
+<!--        </div>-->
         <div class="option logout">
           <a [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -42,8 +42,8 @@
       </div>
     </div>
     <div class="usernameContainer">
-      <p class="username">Viktor Shandrov</p>
-      <p class="email">shadopest@abv.bg</p>
+      <p class="username">Profile</p>
+      <p class="email">{{UserService.email}}</p>
     </div>
   </div>
 
