@@ -134,13 +134,17 @@ exports.getFolder = async (id,userId,rootId) => {
         if(!folder.autorised.some(id=>id.equals(userId))){
              throw new Error("You are not authorized")
         }
+        if(root.paidFileContainer){
+                checkForLockedFiles(root.paidFileContainer,folder)
+        }
 
-        checkForLockedFiles(root.paidFileContainer,folder)
 
         return folder
     
     }else{
-        checkForLockedFiles(root.paidFileContainer,folder)
+        if(root.paidFileContainer){
+            checkForLockedFiles(root.paidFileContainer,folder)
+        }
 
         return folder
     }
@@ -148,6 +152,7 @@ exports.getFolder = async (id,userId,rootId) => {
 
 }
 function checkForLockedFiles(fileContainer,folder){
+    console.log(fileContainer)
     if(fileContainer.isLocked){
         for (const file of folder.fileComponents) {
             if(fileContainer.fileComponents.includes(file._id)){
@@ -604,7 +609,7 @@ async function giveFolderFileComponents(folderId, previousFolder) {
     const folder = {
         name: folderRecord.name,
         folders: [], // Store folder objects here
-        files: {},
+        files: [],
     };
 
     if (previousFolder) {
@@ -612,9 +617,12 @@ async function giveFolderFileComponents(folderId, previousFolder) {
     }
 
     for (const fileComponent of folderRecord.fileComponents) {
-        folder.files[fileComponent] = (
-            await getSignedURIFroFileUploadOrDownload(fileComponent, "read")
-        )[0];
+        const file = await fileModel.findById(fileComponent)
+        folder.files.push({
+            name:file.fileName,
+            type:file.type,
+            link: (await getSignedURIFroFileUploadOrDownload(fileComponent, "read"))[0]
+        })
     }
 
     for (const subFolderId of folderRecord.dirComponents) {
