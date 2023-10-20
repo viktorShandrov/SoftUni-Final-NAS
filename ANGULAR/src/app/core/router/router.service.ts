@@ -39,6 +39,12 @@ export class RouterService {
       this.UserService.rootId=rootId
     }
   }
+  saveEmailId(){
+    const email = localStorage.getItem("email")
+    if(email){
+      this.UserService.email=email
+    }
+  }
 
   navigate(section:string,outlet:string,idOrSection:string){
     this.router.navigate([
@@ -65,6 +71,7 @@ export class RouterService {
       if(event.id==1&&match){
         console.log("Initial load:")
         this.saveRootId()
+        this.saveEmailId()
         this.StorageService.getRootInfoForUpdatingHeaderStorageInfo()
         this.HeaderService.checkForNeNotifications()
       }else if(fullUrl.includes("admin")) {
