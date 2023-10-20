@@ -28,7 +28,8 @@ export class DarkModeService {
       this.clearDocumentThemeClasses()
       document.documentElement.classList.add("darkTheme")
     }
-    (document.querySelector("#theme") as HTMLSelectElement).value = theme
+    const themeElement = document.querySelector("#theme") as HTMLSelectElement
+    if(themeElement) themeElement.value = theme
     localStorage.setItem("theme",theme)
 
   }
