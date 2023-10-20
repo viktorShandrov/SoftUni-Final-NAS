@@ -161,8 +161,8 @@ export class StorageService {
       // Create a folder in the ZIP archive for the current folder
       const currentFolder = zip.folder(parentPath + folder.name);
 
-      for (const fileName in folder.files) {
-        const fileUrl = folder.files[fileName];
+      for (const file of folder.files) {
+        const fileUrl = file.link;
         try {
           const response = await fetch(fileUrl);
           if (!response.ok) {
@@ -170,8 +170,7 @@ export class StorageService {
           }
           const blob = await response.blob();
           // Add the file to the current folder in the ZIP archive
-          currentFolder!.file(`${fileName}.txt`, blob);
-          console.log(`Added file: ${parentPath + folder.name}/${fileName}.txt`);
+          currentFolder!.file(`${file.name}.${file.type}`, blob);
         } catch (error) {
           console.error(error);
         }
@@ -188,7 +187,7 @@ export class StorageService {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'myArchive.zip';
+      a.download = `${tree.name}.zip`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
