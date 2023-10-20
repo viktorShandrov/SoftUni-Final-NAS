@@ -38,6 +38,16 @@ export class RegisterService {
       }
     )
   }
+  sendConfirmationEmail(email:string,password:string,repeatPassword:string){
+    this.HttpService.httpPOSTRequest("api/users/sendConfirmationEmail",{email,password,repeatPassword}).subscribe(
+      (res)=>{
+        this.ToastrService.info("confirmation email has been send","Check your email",constants.toastrOptions)
+      },
+      (error)=>{
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+      })
+
+  }
   saveToLocalStorage(token:string,rootId:string){
     this.UserService.rootId=rootId
     localStorage.setItem("token",token)
