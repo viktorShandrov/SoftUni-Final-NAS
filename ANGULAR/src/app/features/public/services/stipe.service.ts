@@ -19,7 +19,7 @@ export class StipeService {
 
   checkout() {
     // Check the server.js tab to see an example implementation
-    this.HttpService.httpPOSTRequest('api/users/create-checkout-session', {})
+    this.HttpService.httpPOSTRequest('api/stripe/create-checkout-session', {})
       .pipe(
         switchMap((session:any) => {
           return this.StripeService.redirectToCheckout({ sessionId: session.id })
