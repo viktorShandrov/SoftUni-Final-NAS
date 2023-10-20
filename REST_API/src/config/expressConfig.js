@@ -2,6 +2,7 @@ const express = require("express");
 const router = require('../mainRouter');
 const cors = require('cors');
 const { auth } = require("../utils/authentication");
+const utils = require("../utils/utils");
 const bodyParser = require("body-parser");
 
 exports.expressConfig = (app) => {
@@ -12,7 +13,7 @@ exports.expressConfig = (app) => {
   // app.use(bodyParser.urlencoded({extended:true}))
   // app.use(bodyParser.json())
 
-  const allowedOrigins = ['http://localhost:4200', 'https://viktorshandrov.github.io'];
+  const allowedOrigins = [utils.FEdomain, 'https://viktorshandrov.github.io'];
   const corsMiddleware = (req, res, next) => {
 
     app.use((req, res, next) => {
