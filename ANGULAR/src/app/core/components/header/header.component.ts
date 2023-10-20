@@ -6,6 +6,7 @@ import {HttpService} from "../../../shared/services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {constants} from "../../../shared/constants";
 import {CacheService} from "../../../shared/services/cache.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ constructor(
   private renderer2:Renderer2,
   public UserSettingsPopupService:UserSettingsPopupService,
   public HTMLElementsService:HTMLElementsService,
+  public UserService:UserService,
   public CacheService:CacheService,
   private ToastrService:ToastrService,
   public HttpService:HttpService,
