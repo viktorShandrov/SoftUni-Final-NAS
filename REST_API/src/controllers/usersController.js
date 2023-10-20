@@ -15,13 +15,32 @@ router.use(express.urlencoded({ extended: true, limit: "1gb" }))
 router.use(express.json({ limit: "1gb" }))
 
 
+router.post("/sendConfirmationEmail",async (req,res)=>{
+    try {
 
+       const {email,password,repeatPassword} = req.body
+        console.log(req.body);
+        if(!email||!password||!repeatPassword){
+            throw new Error("All fields are required")
+        }
+        if(password!==repeatPassword){
+            throw new Error("Password mismatch")
+        }
+
+            await userManager.sendConfirmationEmail(email,password)
+        res.status(200).end()
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:error.message})
+    }
+})
 
 
 
 router.post("/register",async (req,res)=>{
     try {
-        //TODO: req.body=> JSON.parse(req.body)
+
         const {email,password,repeatePassword} = req.body
 
        if(!email||!password||!repeatePassword){
@@ -38,6 +57,7 @@ router.post("/register",async (req,res)=>{
         const payload = await userManager.login(email,password);
         res.status(201).json(payload)
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:error.message})
     }
 })
