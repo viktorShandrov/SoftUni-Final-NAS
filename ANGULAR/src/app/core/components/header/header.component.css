@@ -222,6 +222,7 @@ a{
 }
 .user-profile-picture .user-menu .option.logout{
   background-color: #ffe2e2;
+  display: flex;
 
 
 }
