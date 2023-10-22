@@ -396,6 +396,15 @@ exports.addBytesToStorage= async(rootId,Bytes)=>{
 }
 checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
     if(!root)  root = await rootModel.findById(rootId)
+const checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
+    if(!root)  root = await rootModel.findById(rootId).populate("freeFileContainer paidFileContainer")
+    const freeC = root.freeFileContainer
+    const paidC = root.paidFileContainer
+    const isFreeCFull = Number(freeC.usedStorage)+Bytes>Number(freeC.storageVolume)
+    let isPaidCFull
+    if(paidC){
+        isPaidCFull = Number(paidC.usedStorage)+Bytes>Number(paidC.storageVolume)
+    }
 
     if(root.usedStorage+Bytes>root.storageVolume){
         throw new Error("There is no enough space")
