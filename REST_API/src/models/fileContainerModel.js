@@ -13,8 +13,12 @@ const schema = new mongoose.Schema({
         type:String,
         enum: ["free","paid"]
     },
-    storageVolume:Number,
-    usedStorage:Number,
+    storageVolume:{
+        type:mongoose.Schema.Types.Decimal128
+    },
+    usedStorage:{
+        type:mongoose.Schema.Types.Decimal128
+    },
     fileComponents:[
         {
             type: mongoose.Schema.Types.ObjectId,
