@@ -33,12 +33,11 @@
 <!--          <i class="fa-solid fa-gear"></i>-->
 <!--          <h5>Settings</h5>-->
 <!--        </div>-->
-        <div class="option logout">
-          <a [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">
+          <a class="option logout" [routerLink]="['/users', { outlets: { 'users-view': 'login' } }]">
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
               <h5>Sign Out</h5>
           </a>
-        </div>
+
       </div>
     </div>
     <div class="usernameContainer">
