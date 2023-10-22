@@ -80,7 +80,6 @@ export class AddFileComponent implements AfterViewInit{
 
   clearForm(){
     this.fileForm.reset()
-    document.getElementById('progress-bar')!.innerText ="";
     document.querySelector('.fileLengthParagraph')!.textContent ="0 MB";
     this.selectedFile = undefined
   }
@@ -219,7 +218,7 @@ export class AddFileComponent implements AfterViewInit{
     } else {
       this.AddFileService.areBtnDisabled= false
       this.HeaderService.transformTheHeaderStorageInfoByDefault()
-      document.getElementById('progress-bar')!.innerText = "No file selected"
+      // document.getElementById('progress-bar')!.innerText = "No file selected"
     }
   }
 }
