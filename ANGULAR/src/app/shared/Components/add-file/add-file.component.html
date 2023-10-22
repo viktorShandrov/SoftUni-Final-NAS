@@ -23,9 +23,9 @@
       </div>
     </div>
     <div class="navigation">
-      <div class="proceed">
+      <div  class="proceed">
 
-        <button [disabled]="AddFileService.areBtnDisabled" class="btn" id="proceedBtn" type="submit">Upload</button>
+        <button [disabled]="AddFileService.areBtnDisabled||!this.selectedFile" class="btn" id="proceedBtn" type="submit">Upload</button>
       </div>
       <div class="abort">
 
@@ -34,5 +34,5 @@
       </div>
     </div>
   </form>
-  <label id="progress-bar"></label>
+<!--  <label id="progress-bar"></label>-->
 </div>
