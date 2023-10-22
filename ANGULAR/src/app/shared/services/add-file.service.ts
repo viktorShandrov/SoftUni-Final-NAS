@@ -23,31 +23,31 @@ export class AddFileService {
   ) { }
 
   areBtnDisabled:Boolean= false
-  storeFileToMongoDB(file:any,fileName:string){
-    this.HttpService.httpPOSTRequest("api/files/createNewFileOnServer",{
-      fileName,
-      size:file?.size,
-      type:file?.name.slice(file?.name.lastIndexOf(".")+1),
-      parentFolderId:enviroments.currentFolder
-    }).subscribe(
-      (res:any)=>{
-        const fileServerRecord = res.file
-        this.getGCsignedKey(file,fileServerRecord)
+  // storeFileToMongoDB(file:any,fileName:string){
+  //   this.HttpService.httpPOSTRequest("api/files/createNewFileOnServer",{
+  //     fileName,
+  //     size:file?.size,
+  //     type:file?.name.slice(file?.name.lastIndexOf(".")+1),
+  //     parentFolderId:enviroments.currentFolder
+  //   }).subscribe(
+  //     (res:any)=>{
+  //       const fileServerRecord = res.file
+  //       this.getGCsignedKey(file,fileServerRecord)
+  //
+  //     },
+  //     (error)=>{
+  //       this.areBtnDisabled= false
+  //       this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+  //     }
+  //   )
+  // }
 
-      },
-      (error)=>{
-        this.areBtnDisabled= false
-        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-      }
-    )
-  }
-
-  uploadToGC(signedGCKey:string,file:any,fileServerRecord:any){
+  uploadToGC(signedGCKey:string,fileServerRecord:any,fileBuffer:any){
 
 
     fetch(signedGCKey, {
       method: 'PUT',
-      body: file,
+      body: fileBuffer,
     })
       .then(response => {
         if (response.status === 200) {
@@ -69,17 +69,25 @@ export class AddFileService {
   deleteFileFromServer(){
 
   }
-  getGCsignedKey(file:any,fileServerRecord:any){
+  getGCsignedKey(
+    fileBuffer:any,
+    fileType:string,
+    fileName:string,
+    parentFolderId:string
+  ){
     this.HttpService.httpPOSTRequest('api/files/signedGC-URI',
       {
-        originalname:fileServerRecord._id.toString(),
-        bytes:file!.size,
+        bytes:fileBuffer!.size,
         action:"write",
-        elementType:"file"
+        elementType:"file",
+        fileType,
+        fileName,
+        parentFolderId
       }).subscribe(
       (res:any)=>{
-        const signedGCKey = res.key[0]
-        this.uploadToGC(signedGCKey,file,fileServerRecord)
+        const {key,file} = res
+
+        this.uploadToGC(key[0],file,fileBuffer)
       },
       (error)=>{
         this.areBtnDisabled= false
@@ -87,9 +95,10 @@ export class AddFileService {
       }
     )
   }
-  startUploading(file:any, fileName:string){
+  startUploading(fileBuffer:any, fileName:string,currentFolder:string){
+    const fileType = fileName.substring(fileName.lastIndexOf(".")+1)
 
-    this.storeFileToMongoDB(file,fileName)
+    this.getGCsignedKey(fileBuffer,fileType,fileName,currentFolder)
 
   }
 }

@@ -21,34 +21,36 @@ router.use(express.json({ limit: "1gb" }))
 
 router.post('/signedGC-URI', async (req, res) => {
   try {
-    const {originalname,bytes,action,elementType} =req.body
-    const {rootId} = req.user
+    const {originalname,fileName,bytes,action,elementType,parentFolderId,fileType} =req.body
+    const {rootId,_id} = req.user
     if(action==="write"){
       await fileManager.checkIfStorageHaveEnoughtSpace(null,rootId,bytes)
     }
     let key
+    let file
     if(elementType==="file"){
-      key=await fileManager.getSignedURIFroFileUploadOrDownload(originalname,action)
+      file = await fileManager.newFile(fileName,bytes,fileType,rootId,_id,parentFolderId)
+      key=await fileManager.getSignedURIFroFileUploadOrDownload(file._id,action)
     }else {
       key = await fileManager.signGCkeysForFolder(originalname)
     }
-    res.status(201).json({key})
+    res.status(201).json({key,file})
 
   } catch (error) {
     res.status(400).json({message:error.message})
   }
 });
-router.post('/createNewFileOnServer', async (req, res) => {
-  try {
-    const {fileName,size,type,parentFolderId} =req.body
-    const {rootId,_id} = req.user
-    const file = await fileManager.newFile(fileName,size,type,rootId,_id,parentFolderId)
-    res.status(201).json({file})
-
-  } catch (error) {
-    res.status(400).json({message:error.message})
-  }
-});
+// router.post('/createNewFileOnServer', async (req, res) => {
+//   try {
+//     const {fileName,size,type,parentFolderId} =req.body
+//     const {rootId,_id} = req.user
+//     const file = await fileManager.newFile(fileName,size,type,rootId,_id,parentFolderId)
+//     res.status(201).json({file})
+//
+//   } catch (error) {
+//     res.status(400).json({message:error.message})
+//   }
+// });
 /* mongodb storing legacy*/; router.post('/upload', upload.single('file'), async (req, res) => {
   try {
 
@@ -83,21 +85,21 @@ router.get('/:id/:elementType/getElementInfo', async (req, res) => {
     res.status(400).json({message:"No such file"})
   }
 });
-router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, res) => {
-  try {
-
-    const {parentFolderId,name} = req.params
-    const alreadyExists = await fileManager.checkIfFileNameAlreadyExists(parentFolderId,name)
-    if(alreadyExists){
-      res.status(409).send(JSON.stringify({message:"File with same name and type already exist"}))
-    }else{
-      res.status(200).send()
-    }
-  } catch (error) {
-
-    res.status(400).json({message:error.message})
-  }
-});
+// router.get('/:parentFolderId/:name/checkIfFileNameAlreadyExists', async (req, res) => {
+//   try {
+//
+//     const {parentFolderId,name} = req.params
+//     const alreadyExists = await fileManager.checkIfFileNameAlreadyExists(parentFolderId,name)
+//     if(alreadyExists){
+//       res.status(409).send(JSON.stringify({message:"File with same name and type already exist"}))
+//     }else{
+//       res.status(200).send()
+//     }
+//   } catch (error) {
+//
+//     res.status(400).json({message:error.message})
+//   }
+// });
 
 
 
@@ -263,20 +265,20 @@ router.get("/getSharedWithMeFolders", isAuth, async (req, res) => {
     res.status(400).json({message:error.message})
   }
 })
-router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
-  try {
-    console.log('req.body: ', req.body);
-    const Bytes = req.body.Bytes
-    const rootId = req.body.rootId
-    console.log('Bytes: ', Bytes);
-    console.log('rootId: ', rootId);
-    await fileManager.checkIfStorageHaveEnoughtSpace(undefined,rootId,Bytes)
-    console.log("end");
-    res.status(200).end()
-  } catch (error) {
-    res.status(400).json({message:error.message})
-  }
-})
+// router.post("/checkIfStorageHaveEnoughtSpace", async (req, res) => {
+//   try {
+//     console.log('req.body: ', req.body);
+//     const Bytes = req.body.Bytes
+//     const rootId = req.body.rootId
+//     console.log('Bytes: ', Bytes);
+//     console.log('rootId: ', rootId);
+//     await fileManager.checkIfStorageHaveEnoughtSpace(undefined,rootId,Bytes)
+//     console.log("end");
+//     res.status(200).end()
+//   } catch (error) {
+//     res.status(400).json({message:error.message})
+//   }
+// })
 router.post("/:folderId/autoriseUserToFolder", async (req, res) => {
   try {
     const {_id,rootId} = req.user
