@@ -19,7 +19,7 @@ exports.createRoot = async (ownerId) => {
     return await rootModel.create({ownerId, dirComponents: [], autorised: [ownerId], isPublic: false,storageVolume:10000000000,usedStorage:0 })
 }
 exports.createFileContainer = async (type,ownerId,rootId,storageVolumeGB)=>{
-    const fileContainer = await fileContainerModel.create({type,ownerId,rootId,fileComponents:[],storageVolume:storageVolumeGB*1000000000})
+    const fileContainer = await fileContainerModel.create({type,ownerId,rootId,usedStorage:0,fileComponents:[],storageVolume:storageVolumeGB*1000000000})
     return fileContainer._id
 }
 exports.lockPaidContainer = async (containerId)=>{
@@ -38,20 +38,22 @@ exports.getFileInfo = (fileId) => {
 exports.getFolderInfo = (folderId) => {
     return folderModel.findById(folderId)
 }
-exports.checkIfFileNameAlreadyExists = async (parentFolderId,name) => {
+ const checkIfFileNameAlreadyExists= async (parentFolderId,name) => {
 
-    const file = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")
-    const onlyName = name.substring(0,name.lastIndexOf("."))
+    const folder = await folderModel.findById(parentFolderId).populate("fileComponents") || await rootModel.findById(parentFolderId).populate("fileComponents")
+
+
+     const onlyName = name.substring(0,name.lastIndexOf("."))
     const extension = name.substring(name.lastIndexOf(".")+1)
-    for (const component of file.fileComponents) {
-        if(component.fileName===onlyName&&component.type===extension){
-            return true
+
+    for (const file of folder.fileComponents) {
+        if(file.fileName===onlyName&&file.type===extension){
+            throw new Error("file with same name and type already exists")
         }
     }
-    return false
 }
 
-
+exports.checkIfFileNameAlreadyExists =checkIfFileNameAlreadyExists
 exports.getAuthorisedWithUsersFolder = async (rootId,ownerId) => {
    const root = await rootModel.findById(rootId).populate("allSharedFolders.userId").populate("allSharedFolders.sharedFolderId");
 const payload = []
@@ -181,9 +183,14 @@ async function putInFileContainer(file,root){
     if(root.freeFileContainer.storageVolume>=file.length){
         root.freeFileContainer.fileComponents.push(file._id)
        await root.freeFileContainer.save()
-    }else{
+    }else if(root.paidFileContainer){
+        if(root.paidFileContainer.isLocked){
+            throw new Error("your paid features are locked")
+        }
         root.paidFileContainer.fileComponents.push(file._id)
        await root.paidFileContainer.save()
+    }else{
+        throw new Error("There is no enough space")
     }
 
     return root.save()
@@ -276,6 +283,20 @@ const addToUsedStorage =async (root,file)=>{
 const removeToUsedStorage = (root,file)=>{
     root.usedStorage-=file.length
 }
+// exports.addToRootTotalVolume = async(bytes,root,rootId)=>{
+//     if(!root) root = await rootModel.findById(rootId)
+//
+//     root.storageVolume+=bytes
+//
+//     return root.save()
+// }
+// exports.removeFromRootTotalVolume = async(bytes,root,rootId)=>{
+//     if(!root) root = await rootModel.findById(rootId)
+//
+//     root.storageVolume-=bytes
+//
+//     return root.save()
+// }
 const createNewMongoDBfileRecord =async (fileName,size,type,rootId,userId)=>{
 
     return await fileModel.create({
@@ -329,10 +350,12 @@ const unAttachFileFromEveryPlace = async (fileId,rootId,parentFolderId,userId)=>
 }
 exports.unAttachFileFromEveryPlace = unAttachFileFromEveryPlace
 exports.newFile = async (fileName,size,type,rootId,userId,parentFolderId)=>{
+
+    await checkIfFileNameAlreadyExists(parentFolderId,fileName)
+
     const file = await  createNewMongoDBfileRecord(fileName,size,type,rootId,userId)
 
-
-    saveFileIntoRightPlaces(rootId,parentFolderId,file)
+    await saveFileIntoRightPlaces(rootId,parentFolderId,file)
 
 
     return file
@@ -394,8 +417,6 @@ exports.addBytesToStorage= async(rootId,Bytes)=>{
     root.usedStorage+=Bytes
     await root.save()
 }
-checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
-    if(!root)  root = await rootModel.findById(rootId)
 const checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
     if(!root)  root = await rootModel.findById(rootId).populate("freeFileContainer paidFileContainer")
     const freeC = root.freeFileContainer
@@ -406,9 +427,12 @@ const checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
         isPaidCFull = Number(paidC.usedStorage)+Bytes>Number(paidC.storageVolume)
     }
 
-    if(root.usedStorage+Bytes>root.storageVolume){
-        throw new Error("There is no enough space")
+    if(isFreeCFull){
+        if(!paidC||paidC.isLocked||isPaidCFull){
+            throw new Error("No enough space")
+        }
     }
+
 
 }
 
