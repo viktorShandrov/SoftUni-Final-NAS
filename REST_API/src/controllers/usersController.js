@@ -97,6 +97,7 @@ router.post("/loginViaGoogle",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+
 router.post("/login",async (req,res)=>{
     try {
         //TODO: req.body=> JSON.parse(req.body)

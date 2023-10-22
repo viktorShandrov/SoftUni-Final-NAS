@@ -117,10 +117,16 @@ export class AddFileComponent implements AfterViewInit{
       FinalFileName = this.checkForFileNameInput(fileNameFromForm,FinalFileName)
 
         this.AddFileService.areBtnDisabled= true
+
+
+        this.HeaderService.transformTheHeaderStorageInfoForUpload(this.selectedFileSizeInMB as number)
+
+
+        this.AddFileService.startUploading(this.selectedFile,FinalFileName,enviroments.currentFolder)
       // this.HttpService.httpPOSTRequest("api/files/checkIfStorageHaveEnoughtSpace",JSON.stringify({Bytes:this.selectedFile.size,rootId:this.UserService.rootId})).subscribe(
       //   (response)=>{
-          this.HttpService.httpGETRequest(`api/files/${enviroments.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`).subscribe(
-              (response: any) => {
+      //     this.HttpService.httpGETRequest(`api/files/${enviroments.currentFolder}/${FinalFileName}/checkIfFileNameAlreadyExists`).subscribe(
+      //         (response: any) => {
                 // const originalName = this.selectedFile!.name; //contains the extension of the file
 
                 // formData.append('file', this.selectedFile!, FinalFileName);
@@ -133,10 +139,7 @@ export class AddFileComponent implements AfterViewInit{
 
 
 
-                this.HeaderService.transformTheHeaderStorageInfoForUpload(this.selectedFileSizeInMB as number)
 
-
-                this.AddFileService.startUploading(this.selectedFile,FinalFileName)
 
                 // this.HttpService.httpPOSTRequest('api/files/upload',formData,{
                 //   reportProgress: true,
@@ -198,14 +201,14 @@ export class AddFileComponent implements AfterViewInit{
                 //     this.areBtnDisabled= false
                 //     this.HeaderService.transformTheHeaderStorageInfoByDefault()
                 //     this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-                //   });
-              },
-              (error) => {
-                this.AddFileService.areBtnDisabled= false
-                this.HeaderService.transformTheHeaderStorageInfoByDefault()
-                this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
-              }
-            );
+            //     //   });
+            //   },
+            //   (error) => {
+            //     this.AddFileService.areBtnDisabled= false
+            //     this.HeaderService.transformTheHeaderStorageInfoByDefault()
+            //     this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+            //   }
+            // );
         // },
         // (error)=>{
         //   this.areBtnDisabled= false
