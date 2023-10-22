@@ -22,6 +22,11 @@ exports.createFileContainer = async (type,ownerId,rootId,storageVolumeGB)=>{
     const fileContainer = await fileContainerModel.create({type,ownerId,rootId,fileComponents:[],storageVolume:storageVolumeGB*1000000000})
     return fileContainer._id
 }
+exports.lockPaidContainer = async (containerId)=>{
+    const fileContainer = await fileContainerModel.findById(containerId)
+    fileContainer.isLocked = true
+    return fileContainer.save()
+}
 exports.getFileInfo = (fileId) => {
     return fileModel.findById(fileId)
 }
