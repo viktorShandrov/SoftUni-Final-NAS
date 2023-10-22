@@ -166,6 +166,17 @@ router.get("/:rootId/getTopFolders", async (req, res) => {
     res.status(409).json({message:"Problem with fetching top file extensions info"})
   }
 })
+router.get("/:rootId/getStorageVolumeInfo", async (req, res) => {
+  try {
+    const { rootId } = req.params
+    // const userId = req.user._id
+    const payload = await fileManager.getStorageVolumeInfo(rootId)
+    res.status(200).json(payload)
+  } catch (error) {
+    console.log(error.message);
+    res.status(409).json({message:"Problem with fetching top file extensions info"})
+  }
+})
 router.post("/deleteItem", async (req, res) => {
   try {
     const {elementId,elementType, parentFolderId } = req.body
@@ -173,10 +184,9 @@ router.post("/deleteItem", async (req, res) => {
 
 
       if(elementType === "file"){
-        // await fileManager.deleteFile(elementId,parentFolderId,rootId,_id)
         await fileManager.deleteFileOnServer(elementId,rootId,parentFolderId,_id)
       }else if(elementType === "directory"){
-        await fileManager.deleteFolder(elementId, parentFolderId,_id)
+        await fileManager.deleteFolder(elementId, parentFolderId,_id,rootId)
       }
     res.status(200).end()
   } catch (error) {
