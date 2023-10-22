@@ -85,15 +85,15 @@ setTopFoldersBarsWidth(Renderer2:Renderer2,foldersQ:QueryList<ElementRef>,res:an
   getStorageVolumeInfo(){
 
     return new Promise((resolve,reject)=>{
-      this.HttpClient.get(`api/files/${this.UserService.rootId}/getOnlyRootInfo`).subscribe(
+      this.HttpClient.get(`api/files/${this.UserService.rootId}/getStorageVolumeInfo`).subscribe(
         (response: any) => {
-          const { folder } = response;
+          console.log(response)
           this.HeaderService.updateUsedStorage(
-            folder.storageVolume,
-            folder.usedStorage
+            response.storageVolume,
+            response.usedStorage
           );
-          this.storageVolume=folder.storageVolume
-          this.usedStorage=folder.usedStorage
+          this.storageVolume=response.storageVolume
+          this.usedStorage=response.usedStorage
           this.storageLeft=this.storageVolume-this.usedStorage
           resolve(1)
         },
