@@ -25,9 +25,9 @@ export class RegisterService {
    registerViaGoogle=(user:any)=>{
     this.HttpService.httpPOSTRequest("api/users/registerViaGoogle",JSON.stringify(user)).subscribe(
       (res:any)=>{
-        const {token,rootId} = res
-        if(token&&rootId){
-          this.saveToLocalStorage(token,rootId)
+        const {token,rootId,email} = res
+        if(token&&rootId&&email){
+          this.saveToLocalStorage(token,rootId,email)
           this.DarkModeService.setTheTheme()
           this.ToastrService.success("registered","Successfully",constants.toastrOptions)
           this.Router.navigate(['/storage', { outlets: { 'storage-outlet': rootId } }])
@@ -48,10 +48,11 @@ export class RegisterService {
       })
 
   }
-  saveToLocalStorage(token:string,rootId:string){
+  saveToLocalStorage(token:string,rootId:string,email:string){
     this.UserService.rootId=rootId
     localStorage.setItem("token",token)
     localStorage.setItem("rootId",rootId)
+    localStorage.setItem("email",email)
   }
 
   register(email:string,password:string,rePass:string,renderer:Renderer2){
@@ -63,10 +64,10 @@ export class RegisterService {
 
     this.HttpService.httpPOSTRequest(constants.api.register,JSON.stringify(payload)).subscribe(
       (res:any)=>{
-        const {token,rootId} = res
+        const {token,rootId,email} = res
 
-        if(token&&rootId){
-          this.saveToLocalStorage(token,rootId)
+        if(token&&rootId&&email){
+          this.saveToLocalStorage(token,rootId,email)
 
 
           this.DarkModeService.setTheTheme()
