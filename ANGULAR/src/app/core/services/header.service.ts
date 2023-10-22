@@ -141,9 +141,9 @@ export class HeaderService {
     this.totalVolume=totalVolume-usedStorage
     let usedPercentage = (usedStorage / totalVolume) * 100;
     this.usedStoragePercentage = usedPercentage
-    if(usedPercentage<3){
-      usedPercentage=3
-    }
+    // if(usedPercentage<3){
+    //   usedPercentage=3
+    // }
     this.HTMLElementsService.usedStorageBar.nativeElement.style.width =usedPercentage+"%"
     // this.HTMLElementsService.storageUsed.nativeElement.textContent =this.transform(this.usedStorage)
     // this.HTMLElementsService.storageLeft.nativeElement.textContent = this.transform(this.totalVolume)
