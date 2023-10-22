@@ -5,7 +5,7 @@ const userModel = require("../models/userModel")
 const fileContainerModel = require("../models/fileContainerModel")
 const mongoose = require("mongoose")
 const uuid = require("uuid")
-const { ObjectId } = require('mongodb');
+const { ObjectId, Decimal128} = require('mongodb');
 const archiver = require("archiver");
 const { Storage } = require('@google-cloud/storage');
 const storage = new Storage();
@@ -182,11 +182,13 @@ async function putInFileContainer(file,root){
     root = await root.populate("freeFileContainer paidFileContainer")
     if(root.freeFileContainer.storageVolume>=file.length){
         root.freeFileContainer.fileComponents.push(file._id)
+        root.freeFileContainer.usedStorage=Number(root.freeFileContainer.usedStorage)+Number(file.length)
        await root.freeFileContainer.save()
     }else if(root.paidFileContainer){
         if(root.paidFileContainer.isLocked){
             throw new Error("your paid features are locked")
         }
+        root.paidFileContainer.usedStorage=Number(root.paidFileContainer.usedStorage)+Number(file.length)
         root.paidFileContainer.fileComponents.push(file._id)
        await root.paidFileContainer.save()
     }else{
@@ -204,6 +206,7 @@ async function removeFromFileContainer(file,root){
                 root.freeFileContainer.fileComponents.findIndex(f=>f.equals(file._id)),
                 1
             )
+        root.freeFileContainer.usedStorage-=file.length
         await root.freeFileContainer.save()
     }else if(root.paidFileContainer.fileComponents.some(f=>f.equals(file._id))){
         root.paidFileContainer.fileComponents
@@ -211,6 +214,7 @@ async function removeFromFileContainer(file,root){
                 root.paidFileContainer.fileComponents.findIndex(f=>f.equals(file._id)),
                 1
             )
+        root.paidFileContainer.usedStorage-=file.length
         await root.paidFileContainer.save()
     }
 
@@ -280,9 +284,7 @@ const addToUsedStorage =async (root,file)=>{
     root.usedStorage+=Number(file.length)
     await root.save()
 }
-const removeToUsedStorage = (root,file)=>{
-    root.usedStorage-=file.length
-}
+
 // exports.addToRootTotalVolume = async(bytes,root,rootId)=>{
 //     if(!root) root = await rootModel.findById(rootId)
 //
@@ -309,6 +311,19 @@ const createNewMongoDBfileRecord =async (fileName,size,type,rootId,userId)=>{
     })
 }
 
+
+exports.deleteFileOnGC =async (fileId)=> {
+
+    const bucket = storage.bucket(GCbucketName);
+    const file = bucket.file(fileId.toString());
+    return file.delete();
+
+}
+
+// exports.deleteFolder = async (folderId)=>{
+//     const folder
+// }
+
 const saveFileIntoRightPlaces =async (rootId,parentFolderId,file)=>{
     const root = await getRoot(rootId,"fileComponents")
 
@@ -332,10 +347,15 @@ async function deleteFileRecord(fileId){
     return fileModel.findByIdAndDelete(fileId)
 }
 exports.deleteFileOnServer=async(fileId,rootId,parentFolderId,userId)=>{
+    const file = await fileModel.findById(fileId)
+    if(!file.ownerId.equals(userId)) throw new Error("you do not own this file")
 
     await unAttachFileFromEveryPlace(fileId,rootId,parentFolderId,userId)
     await deleteFileRecord(fileId)
+    await exports.deleteFileOnGC(fileId)
 }
+
+
 const unAttachFileFromEveryPlace = async (fileId,rootId,parentFolderId,userId)=>{
     const root = await rootModel.findById(rootId)
     let parentFolder = await folderModel.findById(parentFolderId)
@@ -344,7 +364,7 @@ const unAttachFileFromEveryPlace = async (fileId,rootId,parentFolderId,userId)=>
     const file = await fileModel.findById(fileId)
 
     await unAttachFromFolder(parentFolder,userId,fileId)
-    removeToUsedStorage(root,file)
+
     await removeFromFileContainer(file,root)
 
 }
@@ -359,16 +379,7 @@ exports.newFile = async (fileName,size,type,rootId,userId,parentFolderId)=>{
 
 
     return file
-    // storage
-    //     .bucket(GCbucketName)
-    //     .file(fileName)
-    //     .setMetadata({ name:fileName})
-    //     .then(() => {
-    //         console.log('Metadata set successfully');
-    //     })
-    //     .catch((err) => {
-    //         console.error('Error:', err);
-    //     });
+
 }
 
  /* MONGODB storing LEgacy */ ;  exports.createFile = async (originalname, buffer, size, rootId, parentFolderId,userId) => {
@@ -411,12 +422,7 @@ exports.newFile = async (fileName,size,type,rootId,userId,parentFolderId)=>{
     return newFile
 }
 
-exports.addBytesToStorage= async(rootId,Bytes)=>{
-    const root = await rootModel.findById(rootId)
-    console.log('root1: ', root);
-    root.usedStorage+=Bytes
-    await root.save()
-}
+
 const checkIfStorageHaveEnoughtSpace= async(root,rootId,Bytes)=>{
     if(!root)  root = await rootModel.findById(rootId).populate("freeFileContainer paidFileContainer")
     const freeC = root.freeFileContainer
@@ -455,9 +461,24 @@ exports.createFolder = async (name, rootId, parentFolderId) => {
 
     return newFolder
 }
+async function unAttachFolderFromFolder(parentFolder,deletedFolderId){
 
+    parentFolder.dirComponents.splice(parentFolder.dirComponents.findIndex(objId => objId.toString() === deletedFolderId), 1)
+    return parentFolder.save()
+}
 
-exports.deleteFolder = async (folderId, parentFolderId,userId) => {
+async function deleteSingleFolder(folderId,rootId,userId){
+     const folder = await folderModel.findById(folderId)
+    for (const fileId of folder.fileComponents) {
+       await exports.deleteFileOnServer(fileId,rootId,folder._id,userId)
+    }
+    for (const dirComponent of folder.dirComponents) {
+        await deleteSingleFolder(dirComponent,rootId,userId)
+    }
+    return folderModel.findByIdAndDelete(folder._id)
+}
+
+exports.deleteFolder = async (folderId, parentFolderId,userId,rootId) => {
 
     const parentFolder = await folderModel.findById(parentFolderId) || await rootModel.findById(parentFolderId)
 
@@ -465,11 +486,10 @@ exports.deleteFolder = async (folderId, parentFolderId,userId) => {
         throw new Error("You are not able to delete that due to ownership issues")
     }
     const folder = await folderModel.findById(folderId)
-    folder.autorised.splice(0)
 
-    parentFolder.dirComponents.splice(parentFolder.dirComponents.findIndex(objId => objId.toString() === folderId), 1)
-    parentFolder.save()
-    folder.save()
+    await unAttachFolderFromFolder(parentFolder,folder._id)
+    await deleteSingleFolder(folderId,rootId,userId)
+
 }
 /*LEGACY*/ exports.deleteFile = async (fileId, parentFolderId,rootId,userId) => {
 
@@ -549,6 +569,24 @@ exports.getTopFolders=async(rootId,userId)=>{
     
     return {topFolders:payload.slice(0,3),fileCount:files.length}
 }
+exports.getStorageVolumeInfo = async (rootId)=>{
+    const root = await rootModel.findById(rootId).populate("freeFileContainer paidFileContainer")
+    const freeC = root.freeFileContainer
+    const paidC = root.paidFileContainer
+
+    let used = Number(freeC.usedStorage)
+    let total = Number(freeC.storageVolume)
+    if(paidC){
+        if(!paidC.isLocked){
+            used+=Number(paidC.usedStorage)
+            total+=Number(paidC.storageVolume)
+        }
+    }
+    return  {
+        usedStorage:used,
+        storageVolume:total
+    }
+}
 
 // exports.autoriseUserToFolder = async (folderId,email)=>{
 //     const user = await userModel.findOne({email})
@@ -611,7 +649,7 @@ exports.getSharedWithMeFolders = async (userId)=>{
 }
 
 
-exports.downloadFile=async(fileId,res)=>{
+/*LEGACY*/ exports.downloadFile=async(fileId,res)=>{
     const fileFromDB = await fileModel.findById(fileId)
     const gridFile = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
         bucketName: 'files'
@@ -628,7 +666,7 @@ exports.downloadFile=async(fileId,res)=>{
 }
 
 
-exports.downloadFolder=async (folderId,res)=>{
+/*LEGACY*/exports.downloadFolder=async (folderId,res)=>{
     const zip = archiver('zip', {
         zlib: { level: 9 },
     });
@@ -685,7 +723,7 @@ exports.signGCkeysForFolder=async(folderId)=>{
 
 
 
- async function populateFolder(folderTreeNames,folderId){
+/*LEGACY*/async function populateFolder(folderTreeNames,folderId){
     const folder = await folderModel.findById(folderId)
     const updatedFolderTreeNames=[...folderTreeNames,folder.name]
     const filePath = updatedFolderTreeNames.join("/")
