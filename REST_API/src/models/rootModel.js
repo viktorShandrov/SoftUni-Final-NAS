@@ -5,8 +5,8 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId ,
         ref:"User"
     }, 
-    storageVolume:Number,
-    usedStorage:Number,
+    // storageVolume:Number,
+    // usedStorage:Number,
     dirComponents:[
         {
             type: mongoose.Schema.Types.ObjectId,
