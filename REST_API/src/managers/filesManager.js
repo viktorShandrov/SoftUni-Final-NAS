@@ -27,6 +27,11 @@ exports.lockPaidContainer = async (containerId)=>{
     fileContainer.isLocked = true
     return fileContainer.save()
 }
+exports.unlockPaidContainer = async (containerId)=>{
+    const fileContainer = await fileContainerModel.findById(containerId)
+    fileContainer.isLocked = false
+    return fileContainer.save()
+}
 exports.getFileInfo = (fileId) => {
     return fileModel.findById(fileId)
 }
