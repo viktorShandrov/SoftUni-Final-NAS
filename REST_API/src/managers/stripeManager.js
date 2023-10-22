@@ -1,3 +1,11 @@
+
+const filesManager = require("./filesManager")
+
+
+
+
+
+
 exports.paymentIsSuccessful = async(user)=>{
             const root = await filesManager.getOnlyRootInfo(user.rootId)
             if(root.paidFileContainer){
@@ -10,4 +18,10 @@ exports.paymentIsSuccessful = async(user)=>{
             }
             return root.save()
 
+}
+exports.paymentIsUnsuccessful = async(user)=>{
+            const root = await filesManager.getOnlyRootInfo(user.rootId)
+            await filesManager.lockPaidContainer(root.paidFileContainer)
+            await filesManager.removeFromRootTotalVolume(100000000000,root)
+            return  root.save()
 }
