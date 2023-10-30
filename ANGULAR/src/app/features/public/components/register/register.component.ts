@@ -16,7 +16,7 @@ declare const google: any;
 })
 
 export class RegisterComponent implements AfterViewInit {
-  formGroup: FormGroup;
+  // formGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,12 +25,12 @@ export class RegisterComponent implements AfterViewInit {
     private HttpService: HttpService,
     private renderer:Renderer2
   ) {
-    this.formGroup = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(5)]],
-        rePass: ['', Validators.required]
-      }
-      ,{validator:passwordMatchValidator()});
+    // this.formGroup = this.formBuilder.group({
+    //     email: ['', [Validators.required, Validators.email]],
+    //     password: ['', [Validators.required, Validators.minLength(5)]],
+    //     rePass: ['', Validators.required]
+    //   }
+    //   ,{validator:passwordMatchValidator()});
   }
 
 
@@ -55,13 +55,13 @@ export class RegisterComponent implements AfterViewInit {
   //     // Perform further actions or logic here
   //   });
   // }
-  onSubmit(): void {
+  onSubmit(form:any): void {
 
-    if (this.formGroup.valid) {
-      const email = this.formGroup.get("email")!.value
-      const password = this.formGroup.get("password")!.value
-      const rePass = this.formGroup.get("rePass")!.value
-      this.RegisterService.sendConfirmationEmail(email,password,rePass)
+    if (form.valid) {
+      const email = form!.value.email
+      const password = form!.value.password
+      const rePass = form!.value.repeatedPassword
+      this.RegisterService.checkIfEmailAlreadyExists(email,password,rePass)
     }
   }
 }

@@ -48,6 +48,18 @@ export class RegisterService {
       })
 
   }
+  checkIfEmailAlreadyExists(email:string,password:string,repeatPassword:string){
+    this.HttpService.httpGETRequest(`api/users/checkIfEmailAlreadyExists/${email}`).subscribe(
+      (res)=>{
+        this.sendConfirmationEmail(email,password,repeatPassword)
+      },
+      (error)=>{
+        this.ToastrService.error(error.error.message,"Error",constants.toastrOptions)
+
+      }
+
+    )
+  }
   saveToLocalStorage(token:string,rootId:string,email:string){
     this.UserService.rootId=rootId
     localStorage.setItem("token",token)

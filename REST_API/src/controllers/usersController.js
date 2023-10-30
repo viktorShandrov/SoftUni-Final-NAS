@@ -6,7 +6,7 @@ const { admins, stripeSecret ,stripeSecretKey} = require("../utils/utils");
 const bodyParser = require("body-parser");
 const express = require("express");
 const router = require("express").Router()
-
+const userModel = require( "../models/userModel")
 
 
 
@@ -94,6 +94,17 @@ router.post("/loginViaGoogle",async (req,res)=>{
         res.status(200).json(payload)
     } catch (error) {
 
+        res.status(400).json({message:error.message})
+    }
+})
+router.get("/checkIfEmailAlreadyExists/:email",async (req,res)=>{
+    try {
+       const {email} = req.params
+        if(await userModel.find({email})){
+            throw new Error("User with same email already exist")
+        }
+        res.status(200).end()
+    } catch (error) {
         res.status(400).json({message:error.message})
     }
 })

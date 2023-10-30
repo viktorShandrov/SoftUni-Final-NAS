@@ -32,17 +32,17 @@ export class LoginComponent implements AfterViewInit {
       client_id: '341272107557-fp6lu6llorj0912vt59nj8j4mrstekst.apps.googleusercontent.com',
       callback: this.LoginService.loginViaGoogle
     });
-    this.toggleGoogleSignMenu()
+    // this.toggleGoogleSignMenu()
   }
 
   toggleGoogleSignMenu(){
     google.accounts.id.prompt();
   }
-  onSubmit(formGroup:FormGroup,renderer:Renderer2){
+  onSubmit(formGroup:FormGroup){
     if (formGroup.valid) {
       const email = formGroup.get("email")!.value
       const password = formGroup.get("password")!.value
-      this.LoginService.login(email,password,renderer)
+      this.LoginService.login(email,password,this.renderer)
     }
   }
 

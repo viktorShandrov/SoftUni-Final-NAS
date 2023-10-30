@@ -29,7 +29,9 @@ nav li:hover{
   color: white;
 }
 
-
+button.buyBtn:disabled{
+  cursor: not-allowed;
+}
 
 .wrapper{
   display: flex;

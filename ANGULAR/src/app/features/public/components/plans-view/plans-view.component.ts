@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {HttpService} from "../../../../shared/services/http.service";
 import {StipeService} from "../../services/stipe.service";
+import {UserService} from "../../../../core/services/user.service";
 
 
 
@@ -15,7 +16,8 @@ export class PlansViewComponent implements OnInit {
   constructor(
     private element: ElementRef,
     private Renderer2: Renderer2,
-    private StipeService: StipeService,
+    public StipeService: StipeService,
+    public UserService: UserService,
     private HttpService: HttpService,
   ) {
     this.Renderer2.setStyle(this.element.nativeElement, "display", "flex")
@@ -24,6 +26,5 @@ export class PlansViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.StipeService.checkout()
   }
 }

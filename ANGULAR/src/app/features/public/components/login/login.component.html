@@ -1,3 +1,285 @@
+
+
+
+
+
+
+
+<div class="container">
+  <div class="left">
+    <form #form="ngForm" (ngSubmit)="onSubmit(formGroup)">
+      <div class="heading-left">
+        <h1>Login to your account</h1>
+        <p class="welcomeBack">Welcome back! Select method to log in:</p>
+      </div>
+      <div class="other-auth">
+        <button (click)="toggleGoogleSignMenu()" class="other-authBtn">
+          <img src="../../../../assets/google.png" alt="google" /> Google
+        </button>
+<!--        <button class="other-authBtn">-->
+<!--          <img src="../../../../assets/facebook.png" alt="facebook" /> Facebook-->
+<!--        </button>-->
+      </div>
+      <hr />
+      <div class="centered-text">or log in with email</div>
+
+      <div class="inputsC">
+        <div class="inputC">
+          <i class="fa-regular fa-envelope"></i>
+          <input
+            type="text"
+            required
+            #emailInput="ngModel"
+            ngModel
+            name="email"
+            placeholder="Email"
+          />
+        </div>
+        <div class="inputC">
+          <i class="fa-solid fa-key"></i>
+          <input
+            type="password"
+            required
+            #passwordInput="ngModel"
+            ngModel
+            name="password"
+            placeholder="Password"
+          />
+        </div>
+        <div class="rememberMeC">
+          <input
+            type="checkbox"
+            #rememberMeInput="ngModel"
+            ngModel
+            name="rememberMe"
+          />
+          <span>Remember me</span>
+        </div>
+      </div>
+      <button class="loginBtn" type="submit">Log In</button>
+      <p class="last-p">
+        Don’t have account?
+        <a [routerLink]="['/users', { outlets: { 'users-view': 'register' } }]" class="register-link">Create an account</a>
+      </p>
+    </form>
+  </div>
+  <div class="right">
+    <img src="../../../../assets/login.png" alt="login" />
+    <div class="heading-right">Connect with any device.</div>
+    <p>Everything you need is an internet connection.</p>
+  </div>
+</div>
+
+<!-- <div class="body">
+  <form class="main">
+    <input type="checkbox" id="chk" aria-hidden="true" />
+
+    <div class="signup">
+      <form #registerForm="ngForm" (ngSubmit)="onRegisterSubmit(registerForm)">
+        <label for="chk" aria-hidden="true">Sign up</label>
+
+        <select
+          #selectUserType
+          name="selectUserType"
+          id="selectUserType"
+          ngModel=""
+        >
+          <option value="Businessman">Businessman</option>
+          <option value="Client">Client</option>
+        </select>
+
+        <input
+          #firstNameInput="ngModel"
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          ngModel=""
+          required
+        />
+
+        <input
+          #firstNameInput="ngModel"
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+          ngModel=""
+          required
+        />
+
+        <input
+          #emailInput="ngModel"
+          type="text"
+          name="email"
+          placeholder="Email"
+          ngModel="viktor1@abv.bg"
+          email
+          required
+        />
+        <div
+          class="emailErrorsContainer errorsContainer"
+          *ngIf="emailInput.invalid && (emailInput.touched || emailInput.dirty)"
+        >
+          <h6 *ngIf="emailInput.errors?.['required']" class="errorMessage">
+            Email is required
+          </h6>
+          <h6 *ngIf="emailInput.errors?.['email']" class="errorMessage">
+            Wrong email format
+          </h6>
+        </div>
+        <input
+          #passwordInput="ngModel"
+          type="text"
+          name="password"
+          placeholder="Password"
+          ngModel="ivan"
+          minlength="8"
+          required
+        />
+        <div
+          class="passwordErrorsContainer errorsContainer"
+          *ngIf="
+            passwordInput.invalid &&
+            (passwordInput.touched || passwordInput.dirty)
+          "
+        >
+          <h6 *ngIf="passwordInput.errors?.['required']" class="errorMessage">
+            Password is required
+          </h6>
+          <h6 *ngIf="passwordInput.errors?.['minlength']" class="errorMessage">
+            Password must be at least 8 chars
+          </h6>
+        </div>
+        <input
+          #repeatedPasswordInput="ngModel"
+          type="text"
+          name="repeatedPassword"
+          placeholder="Repeated password"
+          ngModel="ivan"
+          required
+        />
+        <div
+          class="passwordErrorsContainer errorsContainer"
+          *ngIf="
+            repeatedPasswordInput.invalid &&
+            (repeatedPasswordInput.touched || repeatedPasswordInput.dirty)
+          "
+        >
+          <h6
+            *ngIf="repeatedPasswordInput.errors?.['required']"
+            class="errorMessage"
+          >
+            Password is required
+          </h6>
+          <h6
+            *ngIf="repeatedPasswordInput.errors?.['minlength']"
+            class="errorMessage"
+          >
+            Password must be at least 8 chars
+          </h6>
+        </div>
+
+        <input
+          #companyInput="ngModel"
+          type="text"
+          name="company"
+          placeholder="Your company"
+          *ngIf="selectUserType.value === 'Businessman'"
+          ngModel=""
+          required
+        />
+
+        <button type="submit">Sign up</button>
+      </form>
+    </div>
+
+    <div class="login">
+      <form #formLogin="ngForm" (ngSubmit)="onLoginSubmit(formLogin)">
+        <label for="chk" aria-hidden="true">Login</label>
+        <input
+          #emailInputLoging="ngModel"
+          type="text"
+          name="email"
+          placeholder="Email"
+          ngModel="viktor1@abv.bg"
+          email
+          required
+        />
+        <div
+          class="emailErrorsContainer errorsContainer"
+          *ngIf="
+            emailInputLoging.invalid &&
+            (emailInputLoging.touched || emailInputLoging.dirty)
+          "
+        >
+          <h6
+            *ngIf="emailInputLoging.errors?.['required']"
+            class="errorMessage"
+          >
+            Email is required
+          </h6>
+          <h6 *ngIf="emailInputLoging.errors?.['email']" class="errorMessage">
+            Wrong email format
+          </h6>
+        </div>
+        <input
+          #passwordInputLogin="ngModel"
+          type="text"
+          name="password"
+          placeholder="Password"
+          ngModel="ivan"
+          required
+        />
+        <div
+          class="passwordErrorsContainer errorsContainer"
+          *ngIf="
+            passwordInputLogin.invalid &&
+            (passwordInputLogin.touched || passwordInputLogin.dirty)
+          "
+        >
+          <h6
+            *ngIf="passwordInputLogin.errors?.['required']"
+            class="errorMessage"
+          >
+            Password is required
+          </h6>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </form>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--<div class="register-wrapper">-->
 <!--  <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup,renderer)">-->
 <!--    <div class="email">-->
@@ -32,40 +314,43 @@
 <!--  </form>-->
 <!--</div>-->
 
-<div class="register-wrapper">
-  <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup,renderer)">
-    <div class="email">
-      <div class="input">
-        <!--        <label for="email">Email:-->
-        <!--        </label>-->
-        <input formControlName="email" type="text" id="email" placeholder="Email">
-      </div>
-      <div *ngIf="formGroup.get('email')?.touched" class="invalidInputSection">
-        <p *ngIf="formGroup.get('email')?.errors?.['required']">Email is required</p>
-        <p *ngIf="formGroup.get('email')?.errors?.['email']">Email is not valid</p>
-      </div>
+<!--_________________________________-->
 
-    </div>
-    <div class="password">
-      <div class="input">
-        <!--        <label for="password">Password:-->
-        <!--        </label>-->
-        <input formControlName="password" type="password" id="password" placeholder="Password">
-      </div>
-      <div *ngIf="formGroup?.get('password')?.touched" class="invalidInputSection">
-        <p *ngIf="formGroup?.get('password')?.errors?.['required']">Password is required</p>
-        <p *ngIf="formGroup.get('password')?.errors?.['minlength']">
-          Password must be at least 5 chars long
-        </p>
-      </div>
 
-    </div>
-    <button type="submit">Login</button>
-    <button (click)="toggleGoogleSignMenu()" class="googleBtn" ><img src="assets/google.png" alt="google"></button>
-    <!--    <p class="errorContainer"></p>-->
-    <div class="register">
-      <p>Don't have an account?</p> <a
-      [routerLink]="['/users', { outlets: { 'users-view': 'register' } }]">Register</a>
-    </div>
-  </form>
-</div>
+<!--<div class="register-wrapper">-->
+<!--  <form #form="ngForm" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup,renderer)">-->
+<!--    <div class="email">-->
+<!--      <div class="input">-->
+<!--        &lt;!&ndash;        <label for="email">Email:&ndash;&gt;-->
+<!--        &lt;!&ndash;        </label>&ndash;&gt;-->
+<!--        <input formControlName="email" type="text" id="email" placeholder="Email">-->
+<!--      </div>-->
+<!--      <div *ngIf="formGroup.get('email')?.touched" class="invalidInputSection">-->
+<!--        <p *ngIf="formGroup.get('email')?.errors?.['required']">Email is required</p>-->
+<!--        <p *ngIf="formGroup.get('email')?.errors?.['email']">Email is not valid</p>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--    <div class="password">-->
+<!--      <div class="input">-->
+<!--        &lt;!&ndash;        <label for="password">Password:&ndash;&gt;-->
+<!--        &lt;!&ndash;        </label>&ndash;&gt;-->
+<!--        <input formControlName="password" type="password" id="password" placeholder="Password">-->
+<!--      </div>-->
+<!--      <div *ngIf="formGroup?.get('password')?.touched" class="invalidInputSection">-->
+<!--        <p *ngIf="formGroup?.get('password')?.errors?.['required']">Password is required</p>-->
+<!--        <p *ngIf="formGroup.get('password')?.errors?.['minlength']">-->
+<!--          Password must be at least 5 chars long-->
+<!--        </p>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--    <button type="submit">Login</button>-->
+<!--    <button (click)="toggleGoogleSignMenu()" class="googleBtn" ><img src="assets/google.png" alt="google"></button>-->
+<!--    &lt;!&ndash;    <p class="errorContainer"></p>&ndash;&gt;-->
+<!--    <div class="register">-->
+<!--      <p>Don't have an account?</p> <a-->
+<!--      [routerLink]="['/users', { outlets: { 'users-view': 'register' } }]">Register</a>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
